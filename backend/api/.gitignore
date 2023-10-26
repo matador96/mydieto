@@ -1,0 +1,9 @@
+.env
+node_modules
+.vscode
+logs
+
+
+
+error-logs
+logs

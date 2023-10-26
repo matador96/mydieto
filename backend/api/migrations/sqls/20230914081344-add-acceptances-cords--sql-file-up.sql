@@ -1,0 +1,6 @@
+ALTER TABLE
+    "acceptances"
+ADD
+    COLUMN "geoLat" VARCHAR(20) NOT NULL DEFAULT '0.00',
+ADD
+    COLUMN "geoLon" VARCHAR(20) NOT NULL DEFAULT '0.00';

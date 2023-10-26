@@ -1,0 +1,22 @@
+{
+  "defaultEnv": { "ENV": "pg" },
+  "pg": {
+    "driver": "pg",
+    "user": { "ENV": "DB_USER" },
+    "password": { "ENV": "DB_PASSWORD" },
+    "host": { "ENV": "DB_HOST_IP" },
+    "database": { "ENV": "DB_DATABASE" },
+    "port": { "ENV": "DB_PORT" },
+    "schema": "public"
+  },
+  "test_migrate": {
+    "driver": "pg",
+    "user": { "ENV": "DB_USER" },
+    "password": { "ENV": "DB_PASSWORD" },
+    "host": { "ENV": "DB_HOST_IP" },
+    "database": "test_migrate",
+    "port": { "ENV": "DB_PORT" },
+    "schema": "test_migrate"
+  },
+  "sql-file": true
+}

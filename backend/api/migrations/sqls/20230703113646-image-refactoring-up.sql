@@ -1,0 +1,5 @@
+ALTER TABLE "images" DROP COLUMN "status";
+
+ALTER TABLE "leads" DROP COLUMN "images";
+
+ALTER TABLE "images" ADD "leadId" INTEGER DEFAULT NULL;

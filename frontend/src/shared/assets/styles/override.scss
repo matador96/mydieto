@@ -1,0 +1,203 @@
+$base-color: #474a53;
+$successColor: #2f9461;
+
+body {
+   color: $base-color;
+}
+
+.menu.ant-menu {
+   position: sticky;
+   top: 0;
+}
+
+.ant-steps
+   .ant-steps-item-finish
+   > .ant-steps-item-container
+   > .ant-steps-item-tail::after,
+.ant-steps
+   .ant-steps-item-finish
+   .ant-steps-item-icon
+   > .ant-steps-icon
+   .ant-steps-icon-dot,
+.ant-steps
+   .ant-steps-item-process
+   .ant-steps-item-icon
+   > .ant-steps-icon
+   .ant-steps-icon-dot {
+   background-color: #474a53;
+}
+
+.ant-steps.ant-steps-label-vertical .ant-steps-item-content {
+   margin-top: 5px;
+}
+
+.ant-drawer-title {
+   color: $base-color !important;
+}
+
+.ant-modal .ant-modal-header {
+   border-bottom: 1px solid #f0f0f0;
+   padding-bottom: 15px;
+}
+
+.ant-progress-steps-item {
+   border-radius: 2px;
+}
+
+.ant-radio-wrapper .ant-radio-checked::after {
+   border-color: $base-color;
+}
+
+.ant-table-wrapper .ant-table-column-sorter-up.active,
+.ant-table-wrapper .ant-table-column-sorter-down.active {
+   color: $base-color;
+}
+
+.ant-radio-wrapper:hover .ant-radio-inner {
+   border-color: $base-color;
+}
+.ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
+   border-color: $base-color;
+   background-color: $base-color;
+}
+
+.ant-input:hover,
+.ant-input:focus {
+   border-color: $base-color;
+   box-shadow: none;
+}
+
+.ant-pagination .ant-pagination-item-active {
+   border-color: $base-color;
+
+   a {
+      color: $base-color;
+   }
+}
+
+.ant-radio-button-wrapper {
+   border-color: $base-color;
+
+   &:hover {
+      border-color: $base-color;
+      outline: none;
+      box-shadow: none;
+   }
+
+   &-checked {
+      border-color: $base-color;
+      color: #fff;
+      background-color: $base-color !important;
+   }
+}
+
+.ant-select {
+   .ant-select-selector:hover,
+   .ant-select-selector:focus {
+      box-shadow: none;
+      outline: none;
+      border-color: $base-color !important;
+   }
+}
+.ant-btn {
+   font-size: 12px;
+   text-transform: uppercase;
+   font-weight: 600;
+   letter-spacing: 0.6px;
+
+   .anticon {
+      font-size: 14px;
+   }
+
+   &-link {
+      color: $base-color;
+
+      &:hover {
+         color: #4b4b4b !important;
+      }
+   }
+
+   &-default:not(:disabled):hover,
+   &-default:not(:disabled):hover {
+      border-color: $base-color;
+      color: $base-color;
+   }
+
+   &-primary {
+      background-color: $base-color;
+
+      &.ant-btn-dangerous {
+         &:not(:disabled):hover,
+         &:not(:disabled):focus {
+            background-color: #a13232d4 !important;
+         }
+      }
+
+      &:not(:disabled):hover,
+      &:not(:disabled):focus {
+         background-color: #474a53d4 !important;
+      }
+   }
+
+   .ant-btn-default:not(:disabled):hover {
+      color: $base-color;
+      border-color: $base-color;
+   }
+}
+
+#root {
+   h1,
+   h2,
+   h3,
+   h4 {
+      color: $base-color;
+   }
+
+   .ant-menu-item-disabled {
+      cursor: default !important;
+   }
+
+   .ant-menu {
+      &-item,
+      &-submenu {
+         height: 32px;
+         line-height: 32px;
+         border-top-left-radius: 0;
+         border-bottom-left-radius: 0;
+         border-left: 2px transparent solid;
+         color: $base-color;
+         font-size: 12px;
+         font-weight: 500;
+
+         &-selected {
+            background-color: $base-color;
+            border-left: 2px $successColor solid;
+            background: #4fe1472e;
+         }
+      }
+   }
+
+   .ant-layout {
+      .ant-layout-sider {
+         border-right: 1px rgba(199, 199, 199, 0.88) solid;
+         background: #fff;
+      }
+   }
+
+   .ant-layout .ant-layout-sider-trigger {
+      color: $base-color;
+      background: #ffffff;
+      border-right: 1px rgba(199, 199, 199, 0.88) solid;
+   }
+
+   .ant-card {
+      box-shadow:
+         0px 1px 1px 0px rgba(0, 0, 0, 0.12),
+         0px 0px 0px 1px rgba(103, 110, 118, 0.16),
+         0px 2px 5px 0px rgba(103, 110, 118, 0.08);
+
+      // box-shadow:
+      //    0px 5px 30px 0px rgba(103, 110, 118, 0.08),
+      //    0px 2px 15px 0px rgba(73, 75, 74, 0.15);
+   }
+}

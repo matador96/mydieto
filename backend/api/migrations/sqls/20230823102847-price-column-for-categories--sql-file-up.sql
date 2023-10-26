@@ -1,0 +1,3 @@
+ALTER TABLE "entityCategories"
+ADD
+    COLUMN "price" INTEGER NOT NULL DEFAULT 0;
