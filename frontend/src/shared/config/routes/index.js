@@ -3,12 +3,10 @@ import NotFoundPage from '@pages/notfound';
 import NotPermissionPage from '@pages/notpermission';
 
 import WelcomePage from '@pages/main';
-import MaterialCategoriesPage from '@pages/materialCategories';
+import CatalogsPage from '@pages/catalogs';
 
 import UsersPage from '@pages/users';
 import LogsPage from '@pages/logs';
-
-import ContentPage from '@pages/content';
 
 import ProfilePage from '@pages/profile';
 
@@ -21,10 +19,9 @@ const AppRoutes = {
    NOT_FOUND: 'not_found',
    DASHBOARD: 'dashboard',
    USERS: 'users',
-   MATERIAL_CATEGORIES: 'materialcategories',
+   CATALOGS: 'catalogs',
    PROFILE: 'profile',
    LOGS: 'logs',
-   CONTENT: 'content',
    NOT_PERMISSION: 'not_permission'
 };
 
@@ -44,8 +41,7 @@ export const RoutePath = {
    [AppRoutes.DASHBOARD]: '/dashboard',
    [AppRoutes.USERS]: '/users',
    [AppRoutes.LOGS]: '/logs',
-   [AppRoutes.CONTENT]: '/content',
-   [AppRoutes.MATERIAL_CATEGORIES]: '/materialcategories'
+   [AppRoutes.CATALOGS]: '/catalogs'
 };
 
 export const routeList = {
@@ -59,9 +55,9 @@ export const routeList = {
       layout: AppLayout.dashboard,
       authOnly: true
    },
-   [AppRoutes.MATERIAL_CATEGORIES]: {
-      path: RoutePath[AppRoutes.MATERIAL_CATEGORIES],
-      element: <MaterialCategoriesPage />,
+   [AppRoutes.CATALOGS]: {
+      path: RoutePath[AppRoutes.CATALOGS],
+      element: <CatalogsPage />,
       layout: AppLayout.dashboard,
       authOnly: true,
       permission: 'can_view_categories'
@@ -72,13 +68,6 @@ export const routeList = {
       layout: AppLayout.dashboard,
       authOnly: true,
       permission: 'can_view_users'
-   },
-   [AppRoutes.CONTENT]: {
-      path: RoutePath[AppRoutes.CONTENT],
-      element: <ContentPage />,
-      layout: AppLayout.dashboard,
-      authOnly: true,
-      exact: true
    },
    [AppRoutes.PROFILE]: {
       path: RoutePath[AppRoutes.PROFILE],

@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import MaterialCategoryForm from './MaterialCategoryForm';
+import CatalogForm from './CatalogForm';
 import { CreateCategory } from '../model/services/CreateCategory';
 import { UpdateCategory } from '../model/services/UpdateCategory';
 import { GetCategory } from '../model/services/GetCategory';
 import _ from 'lodash';
 import { message } from 'antd';
 
-const CreateOrEditMaterialCategory = ({
-   id = null,
-   callbackOnSuccess = () => {}
-}) => {
+const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
    const isEditForm = !!id;
    const [initialValues, setIntialValues] = useState({ unit: 'kg' });
    const [loadForm, setLoadForm] = useState(false);
@@ -61,7 +58,7 @@ const CreateOrEditMaterialCategory = ({
    }
 
    return (
-      <MaterialCategoryForm
+      <CatalogForm
          initialValues={initialValues}
          isEditForm={isEditForm}
          onSuccess={onSuccess}
@@ -69,4 +66,4 @@ const CreateOrEditMaterialCategory = ({
    );
 };
 
-export default CreateOrEditMaterialCategory;
+export default CreateOrEditCatalog;

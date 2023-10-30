@@ -5,7 +5,7 @@ import { GetCategoriesListByParentId } from '../model/services/GetCategoriesList
 import { statusesOfCategories } from '@shared/const/statuses';
 import { unitSettings } from '@shared/const/units';
 
-const MaterialCategoryForm = (props) => {
+const CatalogForm = (props) => {
    const [isLoading, setIsLoading] = useState(false);
    // eslint-disable-next-line no-unused-vars
    const [isLoadingCategories, setIsLoadingCategories] = useState(false);
@@ -68,8 +68,7 @@ const MaterialCategoryForm = (props) => {
          onFinishFailed={onFinishFailed}
          onValuesChange={() => setIsDisabledButton(false)}
          hideRequiredMark
-         layout="vertical"
-      >
+         layout="vertical">
          <Row gutter={16}>
             <Col span={24}>
                <Form.Item
@@ -80,8 +79,7 @@ const MaterialCategoryForm = (props) => {
                         required: true,
                         message: 'Введите название'
                      }
-                  ]}
-               >
+                  ]}>
                   <Input />
                </Form.Item>
             </Col>
@@ -97,8 +95,7 @@ const MaterialCategoryForm = (props) => {
                         required: true,
                         message: 'Выберите категорию'
                      }
-                  ]}
-               >
+                  ]}>
                   <Select
                      placeholder="Выберите категорию"
                      label="role"
@@ -124,26 +121,6 @@ const MaterialCategoryForm = (props) => {
          <Row gutter={16}>
             <Col span={8}>
                <Form.Item
-                  name="unit"
-                  label="Единица измерения"
-                  rules={[
-                     {
-                        required: true,
-                        message: 'Пропустили поле'
-                     }
-                  ]}
-               >
-                  <Select
-                     defaultValue="kg"
-                     style={{
-                        width: '100%'
-                     }}
-                     options={unitSettings}
-                  />
-               </Form.Item>
-            </Col>
-            <Col span={8}>
-               <Form.Item
                   name="priority"
                   label="Приоритет"
                   rules={[
@@ -151,8 +128,7 @@ const MaterialCategoryForm = (props) => {
                         required: true,
                         message: 'Укажите приоритет'
                      }
-                  ]}
-               >
+                  ]}>
                   <Input
                      style={{
                         width: '100%'
@@ -171,8 +147,7 @@ const MaterialCategoryForm = (props) => {
                         message: 'Выберите статус'
                      }
                   ]}
-                  defaultValue={statusesOfCategories.active}
-               >
+                  defaultValue={statusesOfCategories.active}>
                   <Select
                      style={{
                         width: '100%'
@@ -195,8 +170,7 @@ const MaterialCategoryForm = (props) => {
                type="primary"
                htmlType="submit"
                loading={isLoading}
-               disabled={isDisabledButton}
-            >
+               disabled={isDisabledButton}>
                {isEditForm ? 'Сохранить' : 'Создать'}
             </Button>
          </Form.Item>
@@ -204,4 +178,4 @@ const MaterialCategoryForm = (props) => {
    );
 };
 
-export default MaterialCategoryForm;
+export default CatalogForm;

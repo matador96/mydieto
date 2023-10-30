@@ -3,15 +3,11 @@ import { Space, Table, Tag, Tooltip } from 'antd';
 import { Button, VerticalSpace } from '@shared/ui';
 import { GetCategoriesListByParentId } from '../model/services/GetCategoriesListByParentId';
 import { EditOutlined } from '@ant-design/icons';
-import ModalMaterialCategoryForm from './ModalMaterialCategoryForm';
-import { Divider } from 'antd';
+import ModalCatalogForm from './ModalCatalogForm';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
-import ModalButtonCategoryCreate from './ModalButtonCategoryCreate';
+import ModalButtonCatalogCreate from './ModalButtonCatalogCreate';
 import CanDo from '@shared/lib/CanDo';
 import { statusesOfCategories } from '@shared/const/statuses';
-import { unitSettings } from '@shared/const/units';
-
-import { deleteCategoryById } from '@shared/api/all/category';
 
 const columns = [
    {
@@ -20,7 +16,7 @@ const columns = [
       key: 'id'
    },
    {
-      title: 'Подкатегория',
+      title: 'Название каталога',
       dataIndex: 'name',
       key: 'name'
    },
@@ -28,13 +24,6 @@ const columns = [
       title: 'Приоритет',
       dataIndex: 'priority',
       key: 'priority'
-   },
-
-   {
-      title: 'Единица изм.',
-      dataIndex: 'unit',
-      key: 'unit',
-      render: (_) => <>{unitSettings.find((e) => e.value === _)?.label}</>
    },
    {
       title: 'Статус',
@@ -95,7 +84,7 @@ const NestedTableCategories = ({ id, selectedCategory, setSelectedCategory }) =>
    );
 };
 
-const TableCategories = () => {
+const TableCatalogs = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
    const [selectedCategory, setSelectedCategory] = useState(null);
@@ -117,14 +106,6 @@ const TableCategories = () => {
                      </Button>
                   </Tooltip>
                </CanDo>{' '}
-               {record.status === 'archive' && (
-                  <DeleteEntityButton
-                     id={record.id}
-                     callbackFetch={deleteCategoryById}
-                     update={fetchData}
-                     permission="can_delete_categories"
-                  />
-               )}
             </Space>
          )
       }
@@ -174,14 +155,14 @@ const TableCategories = () => {
 
    return (
       <>
-         <ModalMaterialCategoryForm
+         <ModalCatalogForm
             selectedCategory={selectedCategory}
             closeModal={closeModal}
          />
 
          <CanDo permission="can_create_categories">
             <Space style={{ display: 'flex', justifyContent: 'flex-start' }}>
-               <ModalButtonCategoryCreate closeModal={closeModal} />
+               <ModalButtonCatalogCreate closeModal={closeModal} />
             </Space>
          </CanDo>
          <VerticalSpace />
@@ -217,4 +198,4 @@ const TableCategories = () => {
    );
 };
 
-export default TableCategories;
+export default TableCatalogs;

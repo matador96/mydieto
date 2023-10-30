@@ -32,12 +32,12 @@ function getItem(label, key, icon, children, disabled) {
 }
 const allMenuItems = [
    getItem('Панель', 'dashboard', <DashboardOutlined />),
-   getItem('Пользователи', 'users', <UsergroupAddOutlined />),
+   // getItem('Пользователи', 'users', <UsergroupAddOutlined />),
+   // getItem('Продавцы', 'users', <UsergroupAddOutlined />),
+   // getItem('Заявки', 'users', <UsergroupAddOutlined />),
    getItem('Журнал действий', 'logs', <AlignLeftOutlined />),
 
-   getItem('Категории сырья', 'materialcategories', <UnorderedListOutlined />),
-
-   getItem('Контент', 'content', <FileTextOutlined />)
+   getItem('Каталог', 'catalogs', <UnorderedListOutlined />)
 ];
 
 const DashboardLayout = (props) => {

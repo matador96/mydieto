@@ -1,8 +1,8 @@
 import { Modal } from 'antd';
 import { useState, useEffect } from 'react';
-import CreateOrEditMaterialCategory from './CreateOrEditMaterialCategory';
+import CreateOrEditCatalog from './CreateOrEditCatalog';
 
-const ModalMaterialCategoryForm = ({ selectedCategory, closeModal }) => {
+const ModalCatalogForm = ({ selectedCategory, closeModal }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
 
    useEffect(() => {
@@ -29,10 +29,9 @@ const ModalMaterialCategoryForm = ({ selectedCategory, closeModal }) => {
          onCancel={handleCancel}
          footer={null}
          destroyOnClose={true}
-         width={600}
-      >
+         width={600}>
          {isHaveData && (
-            <CreateOrEditMaterialCategory
+            <CreateOrEditCatalog
                id={selectedCategory.id}
                callbackOnSuccess={closeModal}
             />
@@ -41,4 +40,4 @@ const ModalMaterialCategoryForm = ({ selectedCategory, closeModal }) => {
    );
 };
 
-export default ModalMaterialCategoryForm;
+export default ModalCatalogForm;

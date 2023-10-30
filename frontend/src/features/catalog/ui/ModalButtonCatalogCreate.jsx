@@ -1,9 +1,9 @@
 import { Button, Modal } from 'antd';
 import { useState } from 'react';
-import CreateOrEditMaterialCategory from './CreateOrEditMaterialCategory';
+import CreateOrEditCatalog from './CreateOrEditCatalog';
 import { PlusOutlined } from '@ant-design/icons';
 
-const ModalButtonCategoryCreate = ({ closeModal }) => {
+const ModalButtonCatalogCreate = ({ closeModal }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
 
    const showModal = () => {
@@ -33,10 +33,10 @@ const ModalButtonCategoryCreate = ({ closeModal }) => {
             footer={null}
             width={600}
             destroyOnClose={true}>
-            <CreateOrEditMaterialCategory callbackOnSuccess={handleCancel} />
+            <CreateOrEditCatalog callbackOnSuccess={handleCancel} />
          </Modal>
       </>
    );
 };
 
-export default ModalButtonCategoryCreate;
+export default ModalButtonCatalogCreate;
