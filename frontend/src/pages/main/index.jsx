@@ -5,7 +5,7 @@ import { Content, Title } from '@shared/ui';
 const WelcomePage = () => {
    return (
       <Content>
-         <Title>Добро пожаловать</Title>
+         <Title>Добро пожаловать в админ панель</Title>
       </Content>
    );
 };

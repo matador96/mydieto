@@ -33,8 +33,7 @@ module.exports = () => ({
                from: 'public/widget.html',
                to: 'widget.html',
                toType: 'file'
-            },
-            { from: './src/shared/assets/images', to: '/images' }
+            }
          ]
       }),
       new webpack.ProvidePlugin({

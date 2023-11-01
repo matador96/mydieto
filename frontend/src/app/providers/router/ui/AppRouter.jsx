@@ -1,6 +1,11 @@
 import { memo, Suspense, useCallback } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { DefaultLayout, DashboardLayout, CenteredLayout } from '@widgets/Layout';
+import {
+   DefaultLayout,
+   DashboardLayout,
+   CenteredLayout,
+   SellerLayout
+} from '@widgets/Layout';
 import { PageLoader } from '@widgets/PageLoader';
 import { routeList, AppLayout } from '@shared/config/routes';
 import { RequireAuth } from './RequireAuth';
@@ -16,6 +21,14 @@ const AppRouter = () => {
       if (route.layout === AppLayout.dashboard) {
          element = <DashboardLayout>{route.element}</DashboardLayout>;
       }
+
+      // if (route.layout === AppLayout.dashboard) {
+      //    element = <SellerLayout>{route.element}</SellerLayout>;
+      // }
+
+      // if (route.layout === AppLayout.sellerLayout) {
+      //    element = <SellerLayout>{route.element}</SellerLayout>;
+      // }
 
       if (route.layout === AppLayout.centered) {
          element = <CenteredLayout>{route.element}</CenteredLayout>;

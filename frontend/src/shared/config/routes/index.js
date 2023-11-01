@@ -1,12 +1,13 @@
-import { AuthPage, LogoutPage } from '@pages/auth';
-import NotFoundPage from '@pages/notfound';
-import NotPermissionPage from '@pages/notpermission';
+import { AuthPage, LogoutPage } from '@pages/general/auth';
+import NotFoundPage from '@pages/general/notfound';
+import NotPermissionPage from '@pages/general/notpermission';
 
 import WelcomePage from '@pages/main';
-import CatalogsPage from '@pages/catalogs';
+import CatalogsPage from '@pages/seller/catalogs';
+import ManageCatalogsPage from '@pages/admin/catalogs';
 
-import UsersPage from '@pages/users';
-import LogsPage from '@pages/logs';
+import UsersPage from '@pages/admin/users';
+import LogsPage from '@pages/admin/logs';
 
 import ProfilePage from '@pages/profile';
 
@@ -14,34 +15,42 @@ import { Navigate } from 'react-router-dom';
 
 const AppRoutes = {
    MAIN: 'main',
-   AUTH: 'auth',
+   PROFILE: 'profile',
+   // General
+   LOGIN: 'login',
+   REGISTER: 'register',
    LOGOUT: 'logout',
    NOT_FOUND: 'not_found',
-   DASHBOARD: 'dashboard',
-   USERS: 'users',
-   CATALOGS: 'catalogs',
-   PROFILE: 'profile',
-   LOGS: 'logs',
-   NOT_PERMISSION: 'not_permission'
+   NOT_PERMISSION: 'not_permission',
+   // Admin
+   ADMIN_USERS: 'admin-users',
+   ADMIN_CATALOGS: 'admin-catalogs',
+   ADMIN_DASHBOARD: 'admin-dashboard',
+   // ADMIN_LOGS: 'admin-logs',
+   // Seller
+   SELLER_CATALOGS: 'seller-catalogs'
 };
 
 export const AppLayout = {
    default: 'default',
    dashboard: 'dashboard',
+   sellerLayout: 'sellerLayout',
    centered: 'centered'
 };
 
 export const RoutePath = {
    [AppRoutes.MAIN]: '/',
-   [AppRoutes.AUTH]: '/auth',
+   [AppRoutes.LOGIN]: '/login',
+   [AppRoutes.REGISTER]: '/register',
    [AppRoutes.PROFILE]: '/profile',
    [AppRoutes.LOGOUT]: '/logout',
    [AppRoutes.NOT_FOUND]: '/404',
    [AppRoutes.NOT_PERMISSION]: '/401',
-   [AppRoutes.DASHBOARD]: '/dashboard',
-   [AppRoutes.USERS]: '/users',
-   [AppRoutes.LOGS]: '/logs',
-   [AppRoutes.CATALOGS]: '/catalogs'
+   [AppRoutes.ADMIN_DASHBOARD]: '/admin/dashboard',
+   [AppRoutes.ADMIN_USERS]: '/admin/users',
+   // [AppRoutes.ADMIN_LOGS]: '/admin/logs',
+   [AppRoutes.SELLER_CATALOGS]: '/seller/catalogs',
+   [AppRoutes.ADMIN_CATALOGS]: '/admin/catalogs'
 };
 
 export const routeList = {
@@ -49,21 +58,27 @@ export const routeList = {
       path: RoutePath[AppRoutes.MAIN],
       element: <Navigate to={RoutePath.dashboard} />
    },
-   [AppRoutes.DASHBOARD]: {
-      path: RoutePath[AppRoutes.DASHBOARD],
+   [AppRoutes.ADMIN_DASHBOARD]: {
+      path: RoutePath[AppRoutes.ADMIN_DASHBOARD],
       element: <WelcomePage />,
       layout: AppLayout.dashboard,
       authOnly: true
    },
-   [AppRoutes.CATALOGS]: {
-      path: RoutePath[AppRoutes.CATALOGS],
+   [AppRoutes.SELLER_CATALOGS]: {
+      path: RoutePath[AppRoutes.SELLER_CATALOGS],
       element: <CatalogsPage />,
       layout: AppLayout.dashboard,
       authOnly: true,
       permission: 'can_view_categories'
    },
-   [AppRoutes.USERS]: {
-      path: RoutePath[AppRoutes.USERS],
+   [AppRoutes.ADMIN_CATALOGS]: {
+      path: RoutePath[AppRoutes.ADMIN_CATALOGS],
+      element: <ManageCatalogsPage />,
+      layout: AppLayout.dashboard,
+      authOnly: true
+   },
+   [AppRoutes.ADMIN_USERS]: {
+      path: RoutePath[AppRoutes.ADMIN_USERS],
       element: <UsersPage />,
       layout: AppLayout.dashboard,
       authOnly: true,
@@ -75,16 +90,21 @@ export const routeList = {
       layout: AppLayout.dashboard,
       authOnly: true
    },
-   [AppRoutes.LOGS]: {
-      path: RoutePath[AppRoutes.LOGS],
-      element: <LogsPage />,
-      layout: AppLayout.dashboard,
-      authOnly: true,
-      permission: 'can_view_userlogs'
+   // [AppRoutes.ADMIN_LOGS]: {
+   //    path: RoutePath[AppRoutes.ADMIN_LOGS],
+   //    element: <LogsPage />,
+   //    layout: AppLayout.dashboard,
+   //    authOnly: true,
+   //    permission: 'can_view_userlogs'
+   // },
+   [AppRoutes.LOGIN]: {
+      path: RoutePath[AppRoutes.LOGIN],
+      element: <AuthPage isLoginForm={true} />,
+      layout: AppLayout.centered
    },
-   [AppRoutes.AUTH]: {
-      path: RoutePath[AppRoutes.AUTH],
-      element: <AuthPage />,
+   [AppRoutes.REGISTER]: {
+      path: RoutePath[AppRoutes.REGISTER],
+      element: <AuthPage isLoginForm={false} />,
       layout: AppLayout.centered
    },
    [AppRoutes.LOGOUT]: {

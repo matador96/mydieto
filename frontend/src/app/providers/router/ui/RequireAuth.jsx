@@ -17,7 +17,7 @@ export function RequireAuth({ children, permission }) {
    }, [permission, userPermissions]);
 
    if (!isUserAuthorized) {
-      return <Navigate to={RoutePath.auth} state={{ from: location }} replace />;
+      return <Navigate to={RoutePath.login} state={{ from: location }} replace />;
    }
 
    if (!hasRequiredPermissions) {

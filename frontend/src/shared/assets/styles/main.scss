@@ -66,15 +66,24 @@
    }
 }
 .left-side-logo {
-   background-image: url('../images/logo.png');
+   color: #474a53;
+   font-weight: 600;
+   font-size: 38px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
    height: 64px;
    width: 100%;
    cursor: pointer;
-   display: block;
    background-repeat: no-repeat;
    background-position: center;
    background-size: 144px;
    margin-bottom: 5px;
+}
+
+.auth-page {
+   &_right {
+   }
 }
 
 .log-description {
@@ -132,6 +141,24 @@
    padding-right: 0;
    svg {
       color: #474a53;
+   }
+}
+
+.erp-header-seller {
+   background: #ffffff;
+   border-bottom: 1px rgb(199 199 199 / 88%) solid;
+   padding-right: 0;
+   svg {
+      color: #474a53;
+   }
+
+   &-items {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > .menu {
+         width: 100%;
+      }
    }
 }
 
