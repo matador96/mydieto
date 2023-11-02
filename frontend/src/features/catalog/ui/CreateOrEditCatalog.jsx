@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import CatalogForm from './CatalogForm';
-import { CreateCategory } from '../model/services/CreateCategory';
-import { UpdateCategory } from '../model/services/UpdateCategory';
-import { GetCategory } from '../model/services/GetCategory';
+import { CreateCatalog } from '../model/services/CreateCatalog';
+import { UpdateCatalog } from '../model/services/UpdateCatalog';
+import { GetCatalog } from '../model/services/GetCatalog';
 import _ from 'lodash';
 import { message } from 'antd';
 
 const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
    const isEditForm = !!id;
-   const [initialValues, setIntialValues] = useState({ unit: 'kg' });
+   const [initialValues, setIntialValues] = useState({});
    const [loadForm, setLoadForm] = useState(false);
 
    useEffect(() => {
@@ -16,7 +16,7 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
          return;
       }
 
-      GetCategory(id).then((res) => {
+      GetCatalog(id).then((res) => {
          setIntialValues({ ...initialValues, ...res });
          setLoadForm(true);
       });
@@ -26,7 +26,7 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
       setLoading(true);
 
       if (isEditForm) {
-         const categoryId = initialValues.id;
+         const catalogId = initialValues.id;
 
          const mergedObj = { ...initialValues, ...values };
          const updatedFields = _.pickBy(
@@ -34,10 +34,10 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
             (v, k) => !_.isEqual(initialValues[k], v)
          );
 
-         await UpdateCategory(updatedFields, categoryId)
+         await UpdateCatalog(updatedFields, catalogId)
             .then(() => {
                callbackOnSuccess();
-               message.success('Категория изменена');
+               message.success('Каталог изменен');
             })
             .catch(() => message.error('Возникла ошибка при сохранении'))
             .finally(() => setLoading(false));
@@ -45,10 +45,10 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
          return;
       }
 
-      await CreateCategory(values).then(() => {
+      await CreateCatalog(values).then(() => {
          setLoading(false);
-         callbackOnSuccess();
-         message.success('Категория создана');
+         // callbackOnSuccess();
+         message.success('Каталог создан');
       });
    };
 

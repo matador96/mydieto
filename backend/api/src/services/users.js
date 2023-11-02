@@ -1,12 +1,11 @@
 const Users = require("../models/users");
+const Sellers = require("../models/sellers");
+const Admins = require("../models/admins");
 const { generateDatabaseSetting } = require("../helpers/db");
 
 const { ApplicationError } = require("./../classes/Errors");
 
-const public_fields = [
-  "id",
-  "email",
-];
+const public_fields = ["id", "email"];
 
 module.exports.getCount = async () => {
   const data = await Users.count();
@@ -25,7 +24,13 @@ module.exports.getActiveCount = async () => {
 };
 
 module.exports.getUserById = async (id) => {
-  const user = await Users.findByPk(id);
+  const user = await Users.findByPk(id, {
+    include: [Sellers, Admins],
+    attributes: public_fields,
+    raw: true,
+    nest: true,
+    distinct: true,
+  });
 
   if (!user)
     throw new ApplicationError("Данные не верны", {
@@ -36,9 +41,12 @@ module.exports.getUserById = async (id) => {
 };
 
 module.exports.getByEmail = async (email) => {
-
   const data = await Users.findOne({
+    include: [Sellers, Admins],
     where: { email: email },
+    raw: true,
+    nest: true,
+    distinct: true,
   });
   return data;
 };
@@ -47,8 +55,7 @@ module.exports.getUsersWithParams = async (queryParams) => {
   const data = await Users.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "user"),
     attributes: public_fields,
-    }
-  );
+  });
 
   return { data: data.rows, count: data.count };
 };

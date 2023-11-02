@@ -19,23 +19,7 @@ const allRoutes = [
   ...require("./catalogs"),
   ...require("./sellers"),
   ...require("./users"),
-
-  ...require("./acceptances"),
-  ...require("./driver"),
-  ...require("./categories"),
-  ...require("./leads"),
-  ...require("./images"),
   ...require("./liveness"),
-  ...require("./routes"), // маршруты
-  ...require("./ratings"),
-  ...require("./addresses"),
-  ...require("./faqs"),
-  ...require("./auctions"),
-  ...require("./stats"),
-  ...require("./const"),
-  ...require("./logs"),
-  ...require("./mobileNumbers"),
-  ...require("./notifications"),
 ];
 
 module.exports = (app) => {

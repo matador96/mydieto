@@ -2,7 +2,6 @@ const Sequelize = require("sequelize");
 const sequelize = require("../core/db");
 
 const { statusesOfSellers } = require("../config/statusSettings");
-const Users = require("./users");
 
 const Sellers = sequelize.define(
   "sellers",
@@ -43,9 +42,5 @@ const Sellers = sequelize.define(
     timestamps: true,
   },
 );
-
-Sellers.belongsTo(Users, {
-  foreignKey: "userId",
-});
 
 module.exports = Sellers;

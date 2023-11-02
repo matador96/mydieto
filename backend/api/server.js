@@ -6,8 +6,6 @@ const authentication = require("./src/core/auth/base");
 const fileUpload = require("express-fileupload");
 const sequelize = require("./src/core/db");
 
-require("./src/cron");
-
 require("dotenv").config();
 const app = express();
 

@@ -33,7 +33,7 @@ const AuthProvider = (props) => {
                return;
             }
 
-            if (res?.json?.data?.login) {
+            if (res?.json?.data?.email) {
                dispatch(userActions.loginUser(res?.json?.data));
             }
 

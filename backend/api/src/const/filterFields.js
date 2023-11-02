@@ -37,15 +37,4 @@ module.exports = {
       status: "$eq",
     },
   },
-
-  // nameOfTables: {
-  //   lead: "leads",
-  //   driver: "drivers",
-  //   route: "routes",
-  //   seller: "sellers",
-  //   faq: "faqs",
-  //   acceptance: "acceptances",
-  //   auction: "auctions",
-  //   rating: "ratings",
-  // },
 };

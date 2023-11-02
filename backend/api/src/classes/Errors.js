@@ -1,7 +1,5 @@
 require("dotenv").config();
 
-const { errorLogger } = require("../core/logger");
-
 const errorTemplateForRequest = (err) => {
   return {
     message: err.getMessage(),
@@ -12,9 +10,7 @@ const errorTemplateForRequest = (err) => {
   };
 };
 
-const addToLogger = (err) => {
-  errorLogger(err.requestObj());
-};
+const addToLogger = () => {};
 
 module.exports.ApplicationError = class ApplicationError extends Error {
   constructor(message, extra) {

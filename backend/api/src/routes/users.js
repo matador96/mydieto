@@ -19,33 +19,16 @@ module.exports = [
   },
   {
     type: "get",
-    url: "/api/v1/user/profile",
-    middlewares: [
-      authenticate,
-      validationChecker,
-    ],
+    url: "/api/v1/user",
+    middlewares: [authenticate, validationChecker],
     method: UserController.get,
   },
   {
     type: "get",
-    url: "/api/v1/user/:id/reset",
-    middlewares: [
-      authenticate,
-      validationChecker,
-    ],
-    method: UserController.reset,
-  },
-
-  {
-    type: "get",
     url: "/api/v1/users",
-    middlewares: [
-      authenticate,
-      validationChecker,
-    ],
+    middlewares: [authenticate, validationChecker],
     method: UserController.getUsersWithParams,
   },
-
   {
     type: "post",
     url: "/api/v1/user",
@@ -55,24 +38,10 @@ module.exports = [
     ],
     method: UserController.create,
   },
-
   {
     type: "put",
     url: "/api/v1/user/:id",
-    middlewares: [
-      authenticate,
-      validationChecker,
-    ],
+    middlewares: [authenticate, validationChecker],
     method: UserController.update,
-  },
-
-  {
-    type: "delete",
-    url: "/api/v1/user/:id",
-    middlewares: [
-      authenticate,
-      validationChecker,
-    ],
-    method: UserController.delete,
   },
 ];

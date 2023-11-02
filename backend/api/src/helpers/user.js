@@ -1,14 +1,15 @@
-const {
-  getPermissionsByRoleId,
-  getRoleNameByRoleId,
-} = require("../config/roleSettings");
-
 const userInfoTemplate = (user) => {
-  const roleId = user.roleId;
-  const permissions = getPermissionsByRoleId(roleId);
-  const role = getRoleNameByRoleId(roleId);
+  let type;
 
-  return { ...user, role, permissions };
+  if (user?.seller?.id) {
+    type = "seller";
+  }
+
+  if (user?.admin?.id) {
+    type = "admin";
+  }
+
+  return { ...user, type };
 };
 
 module.exports = {

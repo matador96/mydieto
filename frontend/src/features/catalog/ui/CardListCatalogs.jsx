@@ -13,7 +13,7 @@ import {
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { Button, VerticalSpace } from '@shared/ui';
-import { GetCategoriesListByParentId } from '../model/services/GetCategoriesListByParentId';
+import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 import { EditOutlined, SettingOutlined, EllipsisOutlined } from '@ant-design/icons';
 import ModalCatalogForm from './ModalCatalogForm';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
@@ -21,7 +21,7 @@ import ModalButtonCatalogCreate from './ModalButtonCatalogCreate';
 import CanDo from '@shared/lib/CanDo';
 import { statusesOfCategories } from '@shared/const/statuses';
 
-const CardListCatalogs = () => {
+const CatalogCardsByParentId = ({ id }) => {
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
 
@@ -31,7 +31,7 @@ const CardListCatalogs = () => {
 
    const fetchData = () => {
       setIsLoading(true);
-      GetCategoriesListByParentId(0, {
+      GetCatalogsListByParentId(id, {
          page: 1,
          limit: 1000,
          sort: 'priority',
@@ -45,8 +45,7 @@ const CardListCatalogs = () => {
 
    return (
       <>
-         <Row gutter={16}>
-            <Divider orientation="left">Платы</Divider>
+         <Row gutter={24}>
             {data.map((item) => (
                <Col span={6} key={`${item.id}-${item.name}`}>
                   <Card
@@ -72,7 +71,40 @@ const CardListCatalogs = () => {
                </Col>
             ))}
          </Row>
-         <VerticalSpace />
+      </>
+   );
+};
+
+const CardListCatalogs = () => {
+   const [isLoading, setIsLoading] = useState(false);
+   const [data, setData] = useState([]);
+
+   useEffect(() => {
+      fetchData();
+   }, []);
+
+   const fetchData = () => {
+      setIsLoading(true);
+      GetCatalogsListByParentId(0, {
+         page: 1,
+         limit: 1000,
+         sort: 'priority',
+         order: 'asc'
+      }).then((res) => {
+         setIsLoading(false);
+         const tableData = res.data.filter((item) => item.id !== 0);
+         setData(tableData);
+      });
+   };
+
+   return (
+      <>
+         {data.map((item) => (
+            <React.Fragment key={`${item.id}-${item.name}`}>
+               <Divider orientation="left">{item.name}</Divider>
+               <CatalogCardsByParentId id={item.id} />
+            </React.Fragment>
+         ))}
       </>
    );
 };

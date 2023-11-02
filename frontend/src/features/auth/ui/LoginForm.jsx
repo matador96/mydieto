@@ -13,10 +13,11 @@ const LoginForm = () => {
    const navigate = useNavigate();
    const auth = useSelector(getUserAuthData);
    const isUserAuthorized = !!auth?.id;
+   const userType = auth?.type;
 
    useEffect(() => {
       if (isUserAuthorized) {
-         navigate('/admin/dashboard');
+         navigate(`/${userType}/dashboard`);
       }
    }, []);
 
@@ -25,8 +26,8 @@ const LoginForm = () => {
       AuthByLoginAndPassword(values)
          .then((res) => {
             dispatch(userActions.loginUser(res));
-            message.info(`Добро пожаловать ${res.login}!`);
-            navigate('/admin/dashboard');
+            message.info(`Добро пожаловать ${res.email}!`);
+            navigate(`/${res.type}/dashboard`);
          })
          .catch((e) => message.error(e.message))
          .finally(() => {
@@ -54,8 +55,8 @@ const LoginForm = () => {
          onFinish={onFinish}
          onFinishFailed={onFinishFailed}>
          <Form.Item
-            label="Логин"
-            name="login"
+            label="Email"
+            name="email"
             rules={[
                {
                   required: true,

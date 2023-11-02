@@ -1,45 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Form, Input } from '@shared/ui';
-import { AuthByLoginAndPassword } from '@features/auth/model/services/AuthByLoginAndPassword';
-import { useDispatch } from 'react-redux';
-import { userActions, getUserAuthData } from '@entitles/User';
-import { useNavigate } from 'react-router-dom';
+/* eslint-disable react/jsx-no-duplicate-props */
+import React, { useState } from 'react';
+import { Title, VerticalSpace } from '@shared/ui';
 import { useSelector } from 'react-redux';
-import { message } from 'antd';
+import {
+   Descriptions,
+   Button,
+   Tag,
+   Modal,
+   Collapse,
+   Row,
+   Col,
+   Card,
+   Form,
+   Input,
+   Select,
+   Divider
+} from 'antd';
+import { getUserAuthData } from '@entitles/User';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import UserForm from '@features/user/UserForm';
+import statuses from '@shared/const/statuses';
+import CanDo from '@shared/lib/CanDo';
+import { userRolesColors, userRolesLabels } from '@shared/const/userRoles';
+
+const { confirm } = Modal;
 
 const prefixSelector = <Form.Item noStyle>+7</Form.Item>;
 
-const RegisterForm = () => {
+const SellerForm = () => {
    const [isLoading, setIsLoading] = useState(false);
-   const dispatch = useDispatch();
-   const navigate = useNavigate();
-   const auth = useSelector(getUserAuthData);
-   const isUserAuthorized = !!auth?.id;
-   const userType = auth?.type;
 
-   useEffect(() => {
-      if (isUserAuthorized) {
-         navigate(`/${userType}/dashboard`);
-      }
-   }, []);
+   const onFinish = (values) => {};
 
-   const onFinish = (values) => {
-      setIsLoading(true);
-      AuthByLoginAndPassword(values)
-         .then((res) => {
-            dispatch(userActions.loginUser(res));
-            message.info(`Добро пожаловать ${res.login}!`);
-            navigate(`/${res.type}/dashboard`);
-         })
-         .catch((e) => message.error(e.message))
-         .finally(() => {
-            setIsLoading(false);
-         });
-   };
-
-   const onFinishFailed = () => {
-      setIsLoading(false);
-   };
+   const onFinishFailed = () => {};
 
    return (
       <Form
@@ -140,11 +134,38 @@ const RegisterForm = () => {
                span: 16
             }}>
             <Button type="primary" htmlType="submit" loading={isLoading}>
-               Зарегистрироваться
+               Сохранить
             </Button>
          </Form.Item>
       </Form>
    );
 };
 
-export default RegisterForm;
+const ProfilePage = ({ isadmin }) => {
+   const userData = useSelector(getUserAuthData);
+   const navigate = useNavigate();
+
+   const showConfirm = () => {
+      return confirm({
+         title: 'Вы точно хотите выйти?',
+         icon: <ExclamationCircleFilled />,
+         maskClosable: true,
+         onOk() {
+            navigate('/logout');
+         },
+         okText: 'Выйти',
+         cancelText: 'Отмена'
+      });
+   };
+
+   return (
+      <div>
+         <Divider orientation="left">Данные для входа</Divider>
+         <UserForm />
+         <Divider orientation="left">Мои адреса</Divider>
+         <UserForm />
+      </div>
+   );
+};
+
+export default ProfilePage;

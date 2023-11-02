@@ -11,7 +11,9 @@ const MenuProfile = ({ isCollapsed }) => {
    const userData = useSelector(getUserAuthData);
 
    return (
-      <div className="menu-profile" onClick={() => navigate('/profile')}>
+      <div
+         className="menu-profile"
+         onClick={() => navigate(`/${userData.type}/profile`)}>
          {[userData].map((user) => (
             <React.Fragment key={`user-${user}`}>
                <Avatar
@@ -23,14 +25,9 @@ const MenuProfile = ({ isCollapsed }) => {
                />
                {!isCollapsed && (
                   <div className="menu-profile-info">
-                     <span className="menu-profile-info_login">{user.login}</span>
+                     <span className="menu-profile-info_login">{user.email}</span>
 
-                     <Tag
-                        className="menu-profile-info_role"
-                        color={userRolesColors[user.role]}
-                        key={user.role}>
-                        {userRolesLabels[user.role]}
-                     </Tag>
+                     <Tag className="menu-profile-info_role">{userData.type}</Tag>
                   </div>
                )}
             </React.Fragment>

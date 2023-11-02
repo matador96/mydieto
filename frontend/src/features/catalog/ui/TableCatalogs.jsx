@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Space, Table, Tag, Tooltip } from 'antd';
 import { Button, VerticalSpace } from '@shared/ui';
-import { GetCategoriesListByParentId } from '../model/services/GetCategoriesListByParentId';
+import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 import { EditOutlined } from '@ant-design/icons';
 import ModalCatalogForm from './ModalCatalogForm';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
@@ -48,15 +48,11 @@ const NestedTableCategories = ({ id, selectedCategory, setSelectedCategory }) =>
          key: 'action',
          render: (_, record) => (
             <Space size="small">
-               <CanDo permission="can_edit_categories">
-                  <Tooltip placement="top" title={'Редактировать'}>
-                     <Button
-                        onClick={() => setSelectedCategory(record)}
-                        type="primary">
-                        <EditOutlined />
-                     </Button>
-                  </Tooltip>
-               </CanDo>
+               <Tooltip placement="top" title={'Редактировать'}>
+                  <Button onClick={() => setSelectedCategory(record)} type="primary">
+                     <EditOutlined />
+                  </Button>
+               </Tooltip>
             </Space>
          )
       }
@@ -69,7 +65,7 @@ const NestedTableCategories = ({ id, selectedCategory, setSelectedCategory }) =>
    }, [selectedCategory]);
 
    const fetchData = () => {
-      GetCategoriesListByParentId(id, 1, 1000).then((res) => {
+      GetCatalogsListByParentId(id, 1, 1000).then((res) => {
          setData(res.data);
       });
    };
@@ -97,15 +93,11 @@ const TableCatalogs = () => {
          key: 'action',
          render: (_, record) => (
             <Space size="small">
-               <CanDo permission="can_edit_categories">
-                  <Tooltip placement="top" title={'Редактировать'}>
-                     <Button
-                        onClick={() => setSelectedCategory(record)}
-                        type="primary">
-                        <EditOutlined />
-                     </Button>
-                  </Tooltip>
-               </CanDo>{' '}
+               <Tooltip placement="top" title={'Редактировать'}>
+                  <Button onClick={() => setSelectedCategory(record)} type="primary">
+                     <EditOutlined />
+                  </Button>
+               </Tooltip>
             </Space>
          )
       }
@@ -125,7 +117,7 @@ const TableCatalogs = () => {
       pageSize = pagination.pageSize
    ) => {
       setIsLoading(true);
-      GetCategoriesListByParentId(0, {
+      GetCatalogsListByParentId(0, {
          page: current,
          limit: pageSize,
          sort: 'priority',
@@ -160,11 +152,9 @@ const TableCatalogs = () => {
             closeModal={closeModal}
          />
 
-         <CanDo permission="can_create_categories">
-            <Space style={{ display: 'flex', justifyContent: 'flex-start' }}>
-               <ModalButtonCatalogCreate closeModal={closeModal} />
-            </Space>
-         </CanDo>
+         <Space style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <ModalButtonCatalogCreate closeModal={closeModal} />
+         </Space>
          <VerticalSpace />
          <Table
             rowKey="id"

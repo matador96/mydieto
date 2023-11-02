@@ -2,8 +2,6 @@ const Sellers = require("../models/sellers");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
 const sequelize = require("../core/db");
-const AddressesService = require("./addresses");
-const EntityCategoriesService = require("./entityCategories");
 
 module.exports.getCount = async () => {
   const data = await Sellers.count();
@@ -22,22 +20,6 @@ module.exports.getActiveCount = async () => {
 };
 
 module.exports.deleteSeller = async (whereObj, settings = {}) => {
-  await EntityCategoriesService.deleteWithParams(
-    {
-      entityName: "seller",
-      entityId: whereObj.id,
-    },
-    settings,
-  );
-
-  await AddressesService.deleteWithParams(
-    {
-      entityName: "seller",
-      entityId: whereObj.id,
-    },
-    settings,
-  );
-
   return await Sellers.destroy({ where: whereObj, ...settings });
 };
 

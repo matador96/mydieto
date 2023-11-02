@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input, Select } from '@shared/ui';
 import { Col, Row } from 'antd';
-import { GetCategoriesListByParentId } from '../model/services/GetCategoriesListByParentId';
+import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 import { statusesOfCategories } from '@shared/const/statuses';
 import { unitSettings } from '@shared/const/units';
 
@@ -16,13 +16,13 @@ const CatalogForm = (props) => {
 
    const fetchCategories = () => {
       setIsLoadingCategories(true);
-      GetCategoriesListByParentId(
+      GetCatalogsListByParentId(
          0, // Main categories
          {
             page: 1,
             limit: 1000,
-            sort: 'id',
-            order: 'desc'
+            sort: 'priority',
+            order: 'asc'
          }
       ).then((res) => {
          setCategories(res.data);
@@ -87,19 +87,12 @@ const CatalogForm = (props) => {
 
          <Row gutter={16}>
             <Col span={24}>
-               <Form.Item
-                  name="parentId"
-                  label="Категория"
-                  rules={[
-                     {
-                        required: true,
-                        message: 'Выберите категорию'
-                     }
-                  ]}>
+               <Form.Item name="parentId" label="Категория">
                   <Select
                      placeholder="Выберите категорию"
                      label="role"
                      name="parentId"
+                     allowClear
                      onFocus={() => fetchCategories()}
                      disabled={isDisabledCategoryChoose}
                      rules={[

@@ -1,5 +1,4 @@
 const passport = require("passport");
-const { isBlocked } = require("../helpers/status");
 
 module.exports = {
   authenticate: (req, res, next) => {
@@ -19,12 +18,6 @@ module.exports = {
         return res
           .status(401)
           .json({ error: { message: "Пользователь не авторизован" } });
-      }
-
-      if (isBlocked(user.profile)) {
-        return res
-          .status(423)
-          .json({ error: { message: "Пользователь заблокирован" } });
       }
 
       req.user = user;

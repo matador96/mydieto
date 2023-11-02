@@ -29,7 +29,7 @@ const ModalButtonCatalogCreate = ({ closeModal }) => {
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
-            title={`Создать категорию`}
+            title={`Создать каталог`}
             footer={null}
             width={600}
             destroyOnClose={true}>

@@ -2,7 +2,6 @@ const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
 
 const { statusesOfAdmins } = require("../config/statusSettings");
-const Users = require("./users");
 
 const Admins = sequelize.define(
   "admins",
@@ -30,9 +29,5 @@ const Admins = sequelize.define(
     timestamps: true,
   },
 );
-
-Admins.belongsTo(Users, {
-  foreignKey: "userId",
-});
 
 module.exports = Admins;

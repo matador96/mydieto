@@ -24,6 +24,10 @@ const Sellers = sequelize.define(
       field: "parentId",
       type: DataTypes.INTEGER,
     },
+    priority: {
+      field: "priority",
+      type: DataTypes.INTEGER,
+    },
     status: {
       field: "status",
       type: DataTypes.ENUM(statusesOfCatalogs),

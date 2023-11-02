@@ -1,8 +1,6 @@
 const { body, param, query } = require("express-validator");
 const Validations = require("../const/validatorSettings");
 const { allStatuses } = require("../config/statusSettings");
-const { ApplicationError } = require("./../classes/Errors");
-const Encrypt = require("../core/encrypt");
 
 const CatalogService = require("../services/catalogs");
 
@@ -18,20 +16,22 @@ module.exports.getWithParams = async (req) => {
   return { data: result.data, count: result.count };
 };
 
+module.exports.getCatalogsWithParamsByParentId = async (req) => {
+  const { parentId } = req.params;
+
+  const result = await CatalogService.getWithParamsByParentId({
+    ...req.query,
+    parentId,
+  });
+
+  return { data: result.data, count: result.count };
+};
+
 module.exports.create = async (req, res, transaction) => {
   const catalogData = {
     ...req.body,
   };
   const data = await CatalogService.create(catalogData, { transaction });
-
-  // userLogger(
-  //   loggerActions.CREATE_SELLER,
-  //   {
-  //     dataFromRequest: sellerData,
-  //     result: data,
-  //   },
-  //   req,
-  // );
 
   return {
     data,
@@ -48,15 +48,6 @@ module.exports.update = async (req, res, transaction) => {
     { id },
     { transaction },
   );
-
-  // userLogger(
-  //   loggerActions.UPDATE_SELLER,
-  //   {
-  //     dataFromRequest: { ...req.body, id: sellerData.id },
-  //     result: sellerData,
-  //   },
-  //   req,
-  // );
 
   return {
     data: catalog,
@@ -95,6 +86,7 @@ module.exports.validate = (method) => {
         body("surName").isString(),
         body("organization").isString(),
         body("email").optional(),
+        body("priority").isInt().optional(),
         body("address").optional(),
         body("entityCategories").exists(), // в будущем переделать
         body("mobileNumber").isString(), // .isMobilePhone("ru-RU")
@@ -111,6 +103,7 @@ module.exports.validate = (method) => {
         body("organization").isString().optional(),
         body("email").isEmail().optional(),
         body("address").optional(),
+        body("priority").isInt().optional(),
         body("entityCategories").optional(), // в будущем переделать
         body("mobileNumber").isString().optional(), // .isMobilePhone("ru-RU")
         body("status").isIn(allStatuses).optional(),

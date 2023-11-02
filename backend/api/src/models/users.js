@@ -1,5 +1,7 @@
 const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
+const Sellers = require("./sellers");
+const Admins = require("./admins");
 
 const Users = sequelize.define(
   "users",
@@ -24,5 +26,13 @@ const Users = sequelize.define(
     timestamps: true,
   },
 );
+
+Users.hasOne(Sellers, {
+  foreignKey: "userId",
+});
+
+Users.hasOne(Admins, {
+  foreignKey: "userId",
+});
 
 module.exports = Users;

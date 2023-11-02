@@ -29,4 +29,10 @@ module.exports = [
     withTransaction: true,
     method: CatalogController.update,
   },
+  {
+    type: "get",
+    url: "/api/v1/catalogs/parent/:parentId",
+    middlewares: [authenticate, validationChecker],
+    method: CatalogController.getCatalogsWithParamsByParentId,
+  },
 ];

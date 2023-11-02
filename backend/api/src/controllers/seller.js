@@ -1,11 +1,8 @@
 const { body, param, query } = require("express-validator");
 const Validations = require("../const/validatorSettings");
 const { allStatuses } = require("../config/statusSettings");
-const { userLogger } = require("../core/logger");
-const loggerActions = require("./../enums/loggerActions");
 const { ApplicationError } = require("./../classes/Errors");
 const Encrypt = require("../core/encrypt");
-const { isBlocked } = require("../helpers/status");
 const jwt = require("jsonwebtoken");
 const jwtOptions = require("../core/auth/jwtConfig");
 
@@ -72,26 +69,8 @@ module.exports.login = async (req) => {
     });
   }
 
-  if (isBlocked(user)) {
-    throw new ApplicationError("Пользователь заблокирован", {
-      path: "controller",
-    });
-  }
-
   const payload = { id: user.id };
   const token = jwt.sign(payload, jwtOptions.secretOrKey);
-
-  // const obj = {};
-  // obj.user = { profile: user };
-  //
-  // userLogger(
-  //   loggerActions.AUTH,
-  //   {
-  //     dataFromRequest: {},
-  //     result: {},
-  //   },
-  //   obj,
-  // );
 
   return {
     jwt: token,
@@ -116,15 +95,6 @@ module.exports.create = async (req, res, transaction) => {
   };
   const data = await SellerService.create(sellerData, { transaction });
 
-  // userLogger(
-  //   loggerActions.CREATE_SELLER,
-  //   {
-  //     dataFromRequest: sellerData,
-  //     result: data,
-  //   },
-  //   req,
-  // );
-
   return {
     data,
   };
@@ -134,15 +104,6 @@ module.exports.delete = async (req, res, transaction) => {
   const { id } = req.params;
 
   await SellerService.deleteSeller({ id }, { transaction });
-
-  // userLogger(
-  //   loggerActions.DELETE_SELLER,
-  //   {
-  //     dataFromRequest: { id },
-  //     result: { id },
-  //   },
-  //   req,
-  // );
 
   return {};
 };
@@ -157,15 +118,6 @@ module.exports.update = async (req, res, transaction) => {
     { id },
     { transaction },
   );
-
-  // userLogger(
-  //   loggerActions.UPDATE_SELLER,
-  //   {
-  //     dataFromRequest: { ...req.body, id: sellerData.id },
-  //     result: sellerData,
-  //   },
-  //   req,
-  // );
 
   return {
     data: sellerData,
