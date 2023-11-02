@@ -2,15 +2,11 @@ const Statuses = require("../enums/statuses");
 
 const allStatuses = [...Object.values(Statuses)];
 
-const statusesOfSellers = [
-  Statuses.ACTIVE,
-  Statuses.BLOCKED,
-];
+const statusesOfSellers = [Statuses.ACTIVE, Statuses.BLOCKED];
 
-const statusesOfAdmins = [
-  Statuses.ACTIVE,
-  Statuses.BLOCKED,
-];
+const statusesOfAdmins = [Statuses.ACTIVE, Statuses.BLOCKED];
+
+const statusesOfCatalogs = [Statuses.ACTIVE, Statuses.BLOCKED];
 
 const statusOfLeads = [
   Statuses.ACTIVE,
@@ -43,8 +39,9 @@ const statusesOfRatings = [Statuses.ACTIVE, Statuses.ARCHIVE];
 
 module.exports = {
   allStatuses,
-  statusesOfSellers,
   statusesOfAdmins,
+  statusesOfCatalogs,
+  statusesOfSellers,
 
   statusOfLeads,
   statusesOfRoutes,

@@ -15,10 +15,13 @@ async function tryCatchResponseWrapper(req, res, callback, withTransaction = fal
 }
 
 const allRoutes = [
+  ...require("./admins"),
+  ...require("./catalogs"),
+  ...require("./sellers"),
+  ...require("./users"),
+
   ...require("./acceptances"),
-  ...require("./user"),
   ...require("./driver"),
-  ...require("./seller"),
   ...require("./categories"),
   ...require("./leads"),
   ...require("./images"),

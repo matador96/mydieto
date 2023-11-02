@@ -1,5 +1,5 @@
-const Sequelize = require("sequelize");
 const sequelize = require("../core/db");
+const { DataTypes } = require("sequelize");
 
 const { statusesOfAdmins } = require("../config/statusSettings");
 const Users = require("./users");
@@ -9,13 +9,13 @@ const Admins = sequelize.define(
   {
     id: {
       field: "id",
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     userId: {
       field: "userId",
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       references: {
         model: "users",
         key: "id",
@@ -23,7 +23,7 @@ const Admins = sequelize.define(
     },
     status: {
       field: "status",
-      type: Sequelize.ENUM(statusesOfAdmins),
+      type: DataTypes.ENUM(statusesOfAdmins),
     },
   },
   {

@@ -43,7 +43,7 @@ module.exports.getById = async (req) => {
 };
 
 module.exports.getWithParams = async (req) => {
-  const result = await SellerService.getSellersWithParams(req.query);
+  const result = await SellerService.getWithParams(req.query);
   return { data: result.data, count: result.count };
 };
 
@@ -114,7 +114,7 @@ module.exports.create = async (req, res, transaction) => {
     ...req.body,
     userId: user.id,
   };
-  const data = await SellerService.createSeller(sellerData, { transaction });
+  const data = await SellerService.create(sellerData, { transaction });
 
   // userLogger(
   //   loggerActions.CREATE_SELLER,
@@ -150,7 +150,7 @@ module.exports.delete = async (req, res, transaction) => {
 module.exports.update = async (req, res, transaction) => {
   const { id } = req.params;
 
-  const sellerData = await SellerService.updateSeller(
+  const sellerData = await SellerService.update(
     {
       ...req.body,
     },

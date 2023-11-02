@@ -80,7 +80,7 @@ module.exports.getByField = async (field) => {
   return data;
 };
 
-module.exports.getSellersWithParams = async (queryParams) => {
+module.exports.getWithParams = async (queryParams) => {
   const data = await Sellers.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "seller"),
     raw: false,
@@ -90,7 +90,7 @@ module.exports.getSellersWithParams = async (queryParams) => {
   return { data: data.rows, count: data.count };
 };
 
-module.exports.createSeller = async (obj, settings = {}) => {
+module.exports.create = async (obj, settings = {}) => {
   const seller = await Sellers.create(obj, { ...settings }).then((resultEntity) => {
     const dataObj = resultEntity.get({ plain: true });
     return dataObj;
@@ -99,7 +99,7 @@ module.exports.createSeller = async (obj, settings = {}) => {
   return seller;
 };
 
-module.exports.updateSeller = async (obj, whereObj, settings = {}) => {
+module.exports.update = async (obj, whereObj, settings = {}) => {
   await Sellers.update(obj, {
     where: whereObj,
     ...settings,

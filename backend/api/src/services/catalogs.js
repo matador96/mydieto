@@ -1,31 +1,31 @@
-const Admins = require("../models/admins");
+const Catalogs = require("../models/catalogs");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
 
 module.exports.getById = async (id) => {
-  const admin = await Admins.findByPk(id, {
+  const seller = await Catalogs.findByPk(id, {
     raw: false,
     nest: true,
   });
 
-  if (!admin)
-    throw new ApplicationError("Администратор не найден", {
+  if (!seller)
+    throw new ApplicationError("Каталог не найден", {
       path: "controllers",
     });
 
-  return admin;
+  return seller;
 };
 
 module.exports.getByField = async (field) => {
-  const data = await Admins.findOne({
+  const data = await Catalogs.findOne({
     where: { ...field },
   });
   return data;
 };
 
 module.exports.getWithParams = async (queryParams) => {
-  const data = await Admins.findAndCountAll({
-    ...generateDatabaseSetting(queryParams, "admin"),
+  const data = await Catalogs.findAndCountAll({
+    ...generateDatabaseSetting(queryParams, "catalog"),
     raw: false,
     nest: true,
   });
@@ -34,26 +34,28 @@ module.exports.getWithParams = async (queryParams) => {
 };
 
 module.exports.create = async (obj, settings = {}) => {
-  const admin = await Admins.create(obj, { ...settings }).then((resultEntity) => {
-    const dataObj = resultEntity.get({ plain: true });
-    return dataObj;
-  });
+  const catalog = await Catalogs.create(obj, { ...settings }).then(
+    (resultEntity) => {
+      const dataObj = resultEntity.get({ plain: true });
+      return dataObj;
+    },
+  );
 
-  return admin;
+  return catalog;
 };
 
 module.exports.update = async (obj, whereObj, settings = {}) => {
-  await Admins.update(obj, {
+  await Catalogs.update(obj, {
     where: whereObj,
     ...settings,
     // returning: true, Не подходит получение данных после апдейта, так как оно не фильтровано
     // plain: true,
   });
 
-  const updatedAdmin = await Admins.findOne({
+  const updatedCatalog = await Catalogs.findOne({
     where: whereObj,
     ...settings,
   });
 
-  return updatedAdmin;
+  return updatedCatalog;
 };
