@@ -54,7 +54,7 @@ const AuthProvider = (props) => {
       Logout().then(() => {
          dispatch(userActions.logoutUser());
          setIsBlocked(false);
-         navigate('/auth');
+         navigate('/login');
       });
    };
 

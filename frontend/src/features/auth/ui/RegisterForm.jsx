@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { message } from 'antd';
 
-const LoginForm = () => {
+const prefixSelector = <Form.Item noStyle>+7</Form.Item>;
+
+const RegisterForm = () => {
    const [isLoading, setIsLoading] = useState(false);
    const dispatch = useDispatch();
    const navigate = useNavigate();
@@ -54,8 +56,50 @@ const LoginForm = () => {
          onFinish={onFinish}
          onFinishFailed={onFinishFailed}>
          <Form.Item
-            label="Логин"
-            name="login"
+            label="Имя"
+            name="firstname"
+            rules={[
+               {
+                  required: true,
+                  message: 'Поле не может быть пустым'
+               }
+            ]}>
+            <Input />
+         </Form.Item>
+
+         <Form.Item
+            label="Фамилия"
+            name="lastName"
+            rules={[
+               {
+                  required: true,
+                  message: 'Поле не может быть пустым'
+               }
+            ]}>
+            <Input />
+         </Form.Item>
+
+         <Form.Item
+            label="Телефон"
+            name="mobile"
+            rules={[
+               {
+                  required: true,
+                  message: 'Поле не может быть пустым'
+               }
+            ]}>
+            <Input
+               type="number"
+               addonBefore={prefixSelector}
+               style={{
+                  width: '100%'
+               }}
+            />
+         </Form.Item>
+
+         <Form.Item
+            label="Email"
+            name="email"
             rules={[
                {
                   required: true,
@@ -74,6 +118,18 @@ const LoginForm = () => {
                   message: 'Поле не может быть пустым'
                }
             ]}>
+            <Input type="password" />
+         </Form.Item>
+
+         <Form.Item
+            label="Повторите пароль"
+            name="password2"
+            rules={[
+               {
+                  required: true,
+                  message: 'Поле не может быть пустым'
+               }
+            ]}>
             <Input.Password />
          </Form.Item>
 
@@ -83,11 +139,11 @@ const LoginForm = () => {
                span: 16
             }}>
             <Button type="primary" htmlType="submit" loading={isLoading}>
-               Войти
+               Зарегистрироваться
             </Button>
          </Form.Item>
       </Form>
    );
 };
 
-export default LoginForm;
+export default RegisterForm;

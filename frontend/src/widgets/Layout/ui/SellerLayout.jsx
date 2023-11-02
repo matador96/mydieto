@@ -10,6 +10,8 @@ import { Menu, Layout } from 'antd';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { RoutePath, routeList } from '@shared/config/routes';
+import Container from '@widgets/Container';
+
 import { SIDEBAR_LOCALSTORAGE_KEY } from '@shared/const/localStorage';
 import { MenuProfile } from '@shared/ui/MenuProfile';
 import { useSelector } from 'react-redux';
@@ -31,16 +33,16 @@ function getItem(label, key, icon, children, disabled) {
    };
 }
 const allMenuItems = [
-   getItem('Панель', 'admin-dashboard', <DashboardOutlined />),
+   // getItem('Панель', 'dashboard', <DashboardOutlined />),
    // getItem('Пользователи', 'users', <UsergroupAddOutlined />),
    // getItem('Продавцы', 'users', <UsergroupAddOutlined />),
    // getItem('Заявки', 'users', <UsergroupAddOutlined />),
    // getItem('Журнал действий', 'logs', <AlignLeftOutlined />),
 
-   getItem('Каталог', 'admin-catalogs', <UnorderedListOutlined />)
+   getItem('Каталог плат и деталей', 'seller-catalogs', <UnorderedListOutlined />)
 ];
 
-const DashboardLayout = (props) => {
+const SellerLayout = (props) => {
    const navigate = useNavigate();
    const location = useLocation();
    const [collapsed, setCollapsed] = useState(false);
@@ -86,34 +88,26 @@ const DashboardLayout = (props) => {
          style={{
             minHeight: '100vh'
          }}>
-         <Sider
-            collapsible
-            collapsed={collapsed}
-            onCollapse={onCollapse}
-            trigger={false}
-            className="left-sider-menu">
-            <div
-               className="left-side-logo"
-               onClick={() => navigate('/admin/dashboard')}>
-               РЭЛ
-            </div>
-            <Menu
-               onClick={onClick}
-               mode="inline"
-               items={actualItems}
-               className="menu"
-               selectedKeys={selectedRoute}
-               defaultSelectedKeys={selectedRoute}
-            />
-         </Sider>
          <Layout>
-            <Header className="erp-header">
-               <div />
-
-               <div style={{ display: 'flex' }}>
-                  <MenuProfile isCollapsed={collapsed} />
-               </div>
-            </Header>
+            {' '}
+            <Header className="erp-header-seller">
+               <Container>
+                  <div className="erp-header-seller-items">
+                     {' '}
+                     <Menu
+                        onClick={onClick}
+                        mode="horizontal"
+                        items={actualItems}
+                        className="menu"
+                        selectedKeys={selectedRoute}
+                        defaultSelectedKeys={selectedRoute}
+                     />{' '}
+                     <div style={{ display: 'flex' }}>
+                        <MenuProfile isCollapsed={collapsed} />
+                     </div>
+                  </div>
+               </Container>
+            </Header>{' '}
             <Content
                style={{
                   margin: '0 16px'
@@ -123,7 +117,7 @@ const DashboardLayout = (props) => {
                      padding: '0 24px',
                      minHeight: 360
                   }}>
-                  {props.children}
+                  <Container> {props.children} </Container>
                </div>
             </Content>
             <Footer
@@ -136,4 +130,4 @@ const DashboardLayout = (props) => {
       </Layout>
    );
 };
-export default DashboardLayout;
+export default SellerLayout;
