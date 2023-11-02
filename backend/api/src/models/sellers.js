@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../core/db");
 
 const { statusesOfSellers } = require("../config/statusSettings");
+const Addresses = require("./addresses");
 
 const Sellers = sequelize.define(
   "sellers",
@@ -42,5 +43,9 @@ const Sellers = sequelize.define(
     timestamps: true,
   },
 );
+
+Sellers.hasOne(Addresses, {
+  foreignKey: "sellerId",
+});
 
 module.exports = Sellers;
