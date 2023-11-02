@@ -4,6 +4,7 @@ const { ApplicationError } = require("./../classes/Errors");
 const sequelize = require("../core/db");
 const AddressesService = require("./addresses");
 const EntityCategoriesService = require("./entityCategories");
+const Addresses = require("../models/addresses");
 
 module.exports.getCount = async () => {
   const data = await Sellers.count();
@@ -75,6 +76,7 @@ module.exports.getGroupedByDate = async () => {
 
 module.exports.getByField = async (field) => {
   const data = await Sellers.findOne({
+    include: [Addresses],
     where: { ...field },
   });
   return data;
@@ -83,6 +85,7 @@ module.exports.getByField = async (field) => {
 module.exports.getWithParams = async (queryParams) => {
   const data = await Sellers.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "seller"),
+    include: [Addresses],
     raw: false,
     nest: true,
   });

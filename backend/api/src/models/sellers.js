@@ -3,6 +3,7 @@ const sequelize = require("../core/db");
 
 const { statusesOfSellers } = require("../config/statusSettings");
 const Users = require("./users");
+const Addresses = require("./addresses");
 
 const Sellers = sequelize.define(
   "sellers",
@@ -46,6 +47,10 @@ const Sellers = sequelize.define(
 
 Sellers.belongsTo(Users, {
   foreignKey: "userId",
+});
+
+Sellers.hasOne(Addresses, {
+  foreignKey: "sellerId",
 });
 
 module.exports = Sellers;

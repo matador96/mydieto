@@ -1,54 +1,58 @@
-const Sequelize = require("sequelize");
 const sequelize = require("../core/db");
+const { DataTypes } = require("sequelize");
 
 const Addresses = sequelize.define(
   "addresses",
   {
     id: {
       field: "id",
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    entityId: {
-      field: "entityId",
-      type: Sequelize.INTEGER,
+    name: {
+      field: "name",
+      type: DataTypes.STRING,
     },
-    entityName: {
-      field: "entityName",
-      type: Sequelize.STRING,
+    sellerId: {
+      field: "sellerId",
+      type: DataTypes.INTEGER,
+      references: {
+        model: "sellers",
+        key: "id",
+      },
     },
     districtId: {
       field: "districtId",
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     districtName: {
       field: "districtName",
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     cityId: {
       field: "cityId",
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     cityName: {
       field: "cityName",
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     geoLat: {
       field: "geoLat",
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     geoLon: {
       field: "geoLon",
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     address: {
       field: "address",
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     comment: {
       field: "comment",
-      type: Sequelize.TEXT,
+      type: DataTypes.TEXT,
     },
   },
   {

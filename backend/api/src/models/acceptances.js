@@ -53,7 +53,7 @@ const Acceptances = sequelize.define(
   },
 );
 
-Acceptances.hasOne(Addresses, { foreignKey: "entityId" });
+//Acceptances.hasOne(Addresses, { foreignKey: "entityId" });
 Acceptances.belongsTo(Drivers, {
   foreignKey: "driverId",
 });
