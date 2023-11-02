@@ -1,7 +1,0 @@
-ALTER TABLE "sellers"
-ADD
-    COLUMN "organization" VARCHAR(50) NOT NULL DEFAULT '';
-
-ALTER TABLE "sellers"
-ADD
-    COLUMN "surName" VARCHAR(50) NOT NULL DEFAULT '';

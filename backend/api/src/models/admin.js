@@ -1,11 +1,11 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../core/db");
 
-const { statusesOfSellers } = require("../config/statusSettings");
+const { statusesOfAdmins } = require("../config/statusSettings");
 const Users = require("./users");
 
-const Sellers = sequelize.define(
-  "sellers",
+const Admins = sequelize.define(
+  "admins",
   {
     id: {
       field: "id",
@@ -21,22 +21,9 @@ const Sellers = sequelize.define(
         key: "id",
       },
     },
-    firstName: {
-      field: "firstName",
-      type: Sequelize.STRING,
-    },
-    lastName: {
-      field: "lastName",
-      type: Sequelize.STRING,
-    },
-    mobileNumber: {
-      field: "mobileNumber",
-      type: Sequelize.STRING,
-      unique: true,
-    },
     status: {
       field: "status",
-      type: Sequelize.ENUM(statusesOfSellers),
+      type: Sequelize.ENUM(statusesOfAdmins),
     },
   },
   {
@@ -44,8 +31,8 @@ const Sellers = sequelize.define(
   },
 );
 
-Sellers.belongsTo(Users, {
+Admins.belongsTo(Users, {
   foreignKey: "userId",
 });
 
-module.exports = Sellers;
+module.exports = Admins;

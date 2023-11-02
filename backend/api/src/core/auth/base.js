@@ -9,7 +9,7 @@ module.exports = () => {
     new JwtStrategy(jwtOptions, async (jwt_payload, next) => {
       const user = await Users.findOne({
         where: { id: jwt_payload.id },
-        attributes: ["id", "login", "roleId", "status", "firstName", "lastName"],
+        attributes: ["id", "email"],
       });
 
       if (user) {

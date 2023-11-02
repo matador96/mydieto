@@ -1,15 +1,13 @@
 const { body, param, query } = require("express-validator");
 const Validations = require("../const/validatorSettings");
 const { allStatuses } = require("../config/statusSettings");
-const { userLogger } = require("../core/logger");
-const loggerActions = require("./../enums/loggerActions");
 const { ApplicationError } = require("./../classes/Errors");
 const Encrypt = require("../core/encrypt");
 const { isBlocked } = require("../helpers/status");
 const jwt = require("jsonwebtoken");
 const jwtOptions = require("../core/auth/jwtConfig");
 
-const SellerService = require("../services/sellers");
+const AdminService = require("../services/admins");
 const UserService = require("../services/users");
 
 module.exports.getFromSession = async (req) => {
@@ -20,7 +18,7 @@ module.exports.getFromSession = async (req) => {
       path: "controller",
     });
   }
-  const sellerData = await SellerService.getByField({
+  const sellerData = await AdminService.getByField({
     userId: currentSessionUserId,
   });
 
@@ -37,13 +35,13 @@ module.exports.getFromSession = async (req) => {
 
 module.exports.getById = async (req) => {
   const { id } = req.params;
-  const seller = await SellerService.getById(id);
+  const seller = await AdminService.getById(id);
 
   return { data: seller };
 };
 
 module.exports.getWithParams = async (req) => {
-  const result = await SellerService.getSellersWithParams(req.query);
+  const result = await AdminService.getAdminsWithParams(req.query);
   return { data: result.data, count: result.count };
 };
 
@@ -95,7 +93,7 @@ module.exports.login = async (req) => {
 
   return {
     jwt: token,
-    data: { user: user, type: "seller" },
+    data: { user: user, type: "admin" },
   };
 };
 
@@ -110,11 +108,11 @@ module.exports.create = async (req, res, transaction) => {
   };
   const user = await UserService.createUser(userData, { transaction });
 
-  const sellerData = {
+  const adminData = {
     ...req.body,
     userId: user.id,
   };
-  const data = await SellerService.createSeller(sellerData, { transaction });
+  const data = await AdminService.createAdmin(adminData, { transaction });
 
   // userLogger(
   //   loggerActions.CREATE_SELLER,
@@ -130,27 +128,10 @@ module.exports.create = async (req, res, transaction) => {
   };
 };
 
-module.exports.delete = async (req, res, transaction) => {
-  const { id } = req.params;
-
-  await SellerService.deleteSeller({ id }, { transaction });
-
-  // userLogger(
-  //   loggerActions.DELETE_SELLER,
-  //   {
-  //     dataFromRequest: { id },
-  //     result: { id },
-  //   },
-  //   req,
-  // );
-
-  return {};
-};
-
 module.exports.update = async (req, res, transaction) => {
   const { id } = req.params;
 
-  const sellerData = await SellerService.updateSeller(
+  const sellerData = await AdminService.updateAdmin(
     {
       ...req.body,
     },

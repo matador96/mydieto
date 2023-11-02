@@ -5,45 +5,33 @@ const { validationChecker } = require("../middleware/validationChecker");
 module.exports = [
   {
     type: "post",
-    url: "/api/v1/seller/login",
+    url: "/api/v1/admin/login",
     middlewares: [],
     method: SellerController.login,
   },
   {
     type: "get",
-    url: "/api/v1/seller/logout",
+    url: "/api/v1/admin/logout",
     middlewares: [],
     method: SellerController.logout,
   },
 
   {
     type: "get",
-    url: "/api/v1/seller/profile",
+    url: "/api/v1/admin/profile",
     middlewares: [authenticate, validationChecker],
     method: SellerController.getFromSession,
   },
   {
-    type: "get",
-    url: "/api/v1/seller/:id",
-    middlewares: [authenticate, validationChecker],
-    method: SellerController.getById,
-  },
-  {
-    type: "get",
-    url: "/api/v1/sellers",
-    middlewares: [authenticate, validationChecker],
-    method: SellerController.getWithParams,
-  },
-  {
     type: "post",
-    url: "/api/v1/seller",
+    url: "/api/v1/admin",
     middlewares: [],
     withTransaction: true,
     method: SellerController.create,
   },
   {
     type: "put",
-    url: "/api/v1/seller/:id",
+    url: "/api/v1/admin/:id",
     middlewares: [authenticate, validationChecker],
     withTransaction: true,
     method: SellerController.update,

@@ -5,12 +5,7 @@ const { ApplicationError } = require("./../classes/Errors");
 
 const public_fields = [
   "id",
-  "login",
   "email",
-  "roleId",
-  "firstName",
-  "lastName",
-  "post",
 ];
 
 module.exports.getCount = async () => {
@@ -40,17 +35,19 @@ module.exports.getUserById = async (id) => {
   return user;
 };
 
-module.exports.getUserByLogin = async (userLogin) => {
-  const user = await Users.findOne({
-    where: { login: userLogin },
-  });
+module.exports.getByEmail = async (email) => {
 
-  return user;
+  const data = await Users.findOne({
+    where: { email: email },
+  });
+  return data;
 };
 
 module.exports.getUsersWithParams = async (queryParams) => {
-  const data = await Users.findAndCountAll(
-    generateDatabaseSetting(queryParams, "user"),
+  const data = await Users.findAndCountAll({
+    ...generateDatabaseSetting(queryParams, "user"),
+    attributes: public_fields,
+    }
   );
 
   return { data: data.rows, count: data.count };

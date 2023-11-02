@@ -1,8 +1,5 @@
 const Sellers = require("../models/sellers");
-const Categories = require("../models/categories");
 const { generateDatabaseSetting } = require("../helpers/db");
-const Addresses = require("./../models/addresses");
-const EntityCategories = require("./../models/entityCategories");
 const { ApplicationError } = require("./../classes/Errors");
 const sequelize = require("../core/db");
 const AddressesService = require("./addresses");
@@ -44,21 +41,8 @@ module.exports.deleteSeller = async (whereObj, settings = {}) => {
   return await Sellers.destroy({ where: whereObj, ...settings });
 };
 
-module.exports.getSellerById = async (id) => {
+module.exports.getById = async (id) => {
   const seller = await Sellers.findByPk(id, {
-    include: [
-      {
-        model: Addresses,
-        where: { entityName: "seller" },
-        required: false,
-      },
-      {
-        model: EntityCategories,
-        where: { entityName: "seller" },
-        required: false,
-        include: Categories,
-      },
-    ],
     raw: false,
     nest: true,
   });
@@ -89,37 +73,18 @@ module.exports.getGroupedByDate = async () => {
   return data;
 };
 
-module.exports.getByMobileNumber = async (mobile) => {
-  try {
-    const data = await Sellers.findOne({
-      where: { mobileNumber: mobile },
-    });
-    return data;
-  } catch (e) {
-    throw Error(e.message);
-  }
+module.exports.getByField = async (field) => {
+  const data = await Sellers.findOne({
+    where: { ...field },
+  });
+  return data;
 };
 
 module.exports.getSellersWithParams = async (queryParams) => {
   const data = await Sellers.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "seller"),
-    include: [
-      {
-        model: Addresses,
-        separate: true,
-        where: { entityName: "seller" },
-        required: false,
-      },
-      {
-        separate: true,
-        model: EntityCategories,
-        where: { entityName: "seller" },
-        include: Categories,
-      },
-    ],
     raw: false,
     nest: true,
-    distriction: true,
   });
 
   return { data: data.rows, count: data.count };

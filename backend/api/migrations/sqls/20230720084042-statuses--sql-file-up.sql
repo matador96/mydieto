@@ -1,1 +1,0 @@
-UPDATE "users" SET "status" = 'active' WHERE "login" = 'test';

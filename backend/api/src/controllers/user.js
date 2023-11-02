@@ -21,14 +21,7 @@ const { ApplicationError } = require("./../classes/Errors");
 module.exports.getUsersWithParams = async (req) => {
   const result = await UserService.getUsersWithParams(req.query);
 
-  const normalizedData = result.data.map((item) => {
-    return {
-      ...item,
-      role: roleIds[item.roleId],
-    };
-  });
-
-  return { data: normalizedData, count: result.count };
+  return { data: result.data, count: result.count };
 };
 
 module.exports.delete = async (req) => {
@@ -91,52 +84,49 @@ module.exports.reset = async (req) => {
 };
 
 module.exports.create = async (req, res) => {
-  const { role } = req.body;
+  // const { role } = req.body;
 
-  if (!allRoles.includes(role)) {
-    return res.status(401).json({ message: "Такой роли не существует" });
-  }
+  // if (!allRoles.includes(role)) {
+  //   return res.status(401).json({ message: "Такой роли не существует" });
+  // }
 
-  // TODO Написать позже проверка сгенерированных логинов на наличие в бд
-  const generatedUserData = generateLoginAndPassword();
-  const roleId = parseInt(getRoleId(role));
+  // // TODO Написать позже проверка сгенерированных логинов на наличие в бд
+  // const generatedUserData = generateLoginAndPassword();
+  // const roleId = parseInt(getRoleId(role));
 
   const userData = {
     ...req.body,
-    ...generatedUserData,
-    roleId,
-    role: roleIds[roleId],
   };
 
-  if (req?.user?.profile.roleId > roleId) {
-    throw new ApplicationError("Нельзя ставить роли выше своего", {
-      path: "controller",
-    });
-  }
+  // if (req?.user?.profile.roleId > roleId) {
+  //   throw new ApplicationError("Нельзя ставить роли выше своего", {
+  //     path: "controller",
+  //   });
+  // }
 
-  const email = userData.email;
-  if (email) {
-    await Mailer.notifyAboutChangingCredentials(email, {
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      login: userData.login,
-      password: userData.password,
-    });
-  }
+  // const email = userData.email;
+  // if (email) {
+  //   await Mailer.notifyAboutChangingCredentials(email, {
+  //     firstName: userData.firstName,
+  //     lastName: userData.lastName,
+  //     login: userData.login,
+  //     password: userData.password,
+  //   });
+  // }
 
   const createdUser = await UserService.createUser({
     ...userData,
     password: await Encrypt.cryptPassword(userData.password),
   });
 
-  userLogger(
-    loggerActions.CREATE_USER,
-    {
-      dataFromRequest: req.body,
-      result: createdUser,
-    },
-    req,
-  );
+  // userLogger(
+  //   loggerActions.CREATE_USER,
+  //   {
+  //     dataFromRequest: req.body,
+  //     result: createdUser,
+  //   },
+  //   req,
+  // );
 
   return {
     data: userData,
@@ -144,18 +134,19 @@ module.exports.create = async (req, res) => {
 };
 
 module.exports.update = async (req, res) => {
-  const { role, status, login } = req.body;
+  //const { role, status, login } = req.body;
   const { id } = req.params;
+  const { status } = req.body;
 
-  if (role && !allRoles.includes(role)) {
-    return res.status(401).json({ message: "Такой роли не существует" });
-  }
+  // if (role && !allRoles.includes(role)) {
+  //   return res.status(401).json({ message: "Такой роли не существует" });
+  // }
 
-  const roleId = parseInt(getRoleId(role));
-  const currentSessionRoleId = req?.user?.profile.roleId;
+  // const roleId = parseInt(getRoleId(role));
+  // const currentSessionRoleId = req?.user?.profile.roleId;
 
-  const prevDataChangedUser = await UserService.getUserById(id);
-
+  // const prevDataChangedUser = await UserService.getUserById(id);
+  //
   if (status === Statuses.BLOCKED) {
     if (id == req?.user?.profile?.id) {
       throw new ApplicationError("Нельзя ставить себе статус заблокирован", {
@@ -163,65 +154,65 @@ module.exports.update = async (req, res) => {
       });
     }
 
-    if (currentSessionRoleId > prevDataChangedUser.roleId) {
-      throw new ApplicationError(
-        "Нельзя ставить статус заблокирован супер админам",
-        {
-          path: "controller",
-        },
-      );
-    }
+    // if (currentSessionRoleId > prevDataChangedUser.roleId) {
+    //   throw new ApplicationError(
+    //     "Нельзя ставить статус заблокирован супер админам",
+    //     {
+    //       path: "controller",
+    //     },
+    //   );
+    // }
   }
 
-  if (roleId) {
-    if (currentSessionRoleId > roleId) {
-      throw new ApplicationError("Нельзя ставить роли выше своего", {
-        path: "controller",
-      });
-    }
+  // if (roleId) {
+  //   if (currentSessionRoleId > roleId) {
+  //     throw new ApplicationError("Нельзя ставить роли выше своего", {
+  //       path: "controller",
+  //     });
+  //   }
+  //
+  //   if (prevDataChangedUser.roleId < currentSessionRoleId) {
+  //     throw new ApplicationError(
+  //       "Нельзя менять роль у пользователя у которого роль выше чем у вас",
+  //       {
+  //         path: "controller",
+  //       },
+  //     );
+  //   }
+  //
+  //   if (currentSessionRoleId > roleId) {
+  //     throw new ApplicationError("Нельзя ставить роли выше своего", {
+  //       path: "controller",
+  //     });
+  //   }
+  // }
 
-    if (prevDataChangedUser.roleId < currentSessionRoleId) {
-      throw new ApplicationError(
-        "Нельзя менять роль у пользователя у которого роль выше чем у вас",
-        {
-          path: "controller",
-        },
-      );
-    }
-
-    if (currentSessionRoleId > roleId) {
-      throw new ApplicationError("Нельзя ставить роли выше своего", {
-        path: "controller",
-      });
-    }
-  }
-
-  if (login) {
-    const user = await UserService.getUserByLogin(login);
-
-    if (user) {
-      throw new ApplicationError("Такой логин уже существует", {
-        path: "controller",
-      });
-    }
-  }
+  // if (login) {
+  //   const user = await UserService.getUserByLogin(login);
+  //
+  //   if (user) {
+  //     throw new ApplicationError("Такой логин уже существует", {
+  //       path: "controller",
+  //     });
+  //   }
+  // }
 
   const userObj = { ...req.body };
 
-  if (roleId !== undefined && roleId > -1) {
-    userObj.roleId = roleId;
-  }
+  // if (roleId !== undefined && roleId > -1) {
+  //   userObj.roleId = roleId;
+  // }
 
   const userData = await UserService.updateUser({ ...userObj }, { id });
 
-  userLogger(
-    loggerActions.UPDATE_USER,
-    {
-      dataFromRequest: { ...req.body, id },
-      result: userData,
-    },
-    req,
-  );
+  // userLogger(
+  //   loggerActions.UPDATE_USER,
+  //   {
+  //     dataFromRequest: { ...req.body, id },
+  //     result: userData,
+  //   },
+  //   req,
+  // );
 
   return {
     data: userData,
@@ -229,15 +220,15 @@ module.exports.update = async (req, res) => {
 };
 
 module.exports.login = async (req) => {
-  const { login, password } = req.body;
+  const { email, password } = req.body;
 
-  if (!login && !password) {
-    throw new ApplicationError("Логин и пароль не задан", {
+  if (!email && !password) {
+    throw new ApplicationError("email и пароль не задан", {
       path: "controller",
     });
   }
 
-  const user = await UserService.getUserByLogin(login);
+  const user = await UserService.getByEmail(email);
 
   if (!user) {
     throw new ApplicationError("Данные не верны", {
@@ -253,31 +244,30 @@ module.exports.login = async (req) => {
     });
   }
 
-  if (isBlocked(user)) {
-    throw new ApplicationError("Пользователь заблокирован", {
-      path: "controller",
-    });
-  }
+  // if (isBlocked(user)) {
+  //   throw new ApplicationError("Пользователь заблокирован", {
+  //     path: "controller",
+  //   });
+  // }
 
   const payload = { id: user.id };
   const token = jwt.sign(payload, jwtOptions.secretOrKey);
 
-  const userInfo = userInfoTemplate(user);
-  const obj = {};
-  obj.user = { profile: userInfo };
-
-  userLogger(
-    loggerActions.AUTH,
-    {
-      dataFromRequest: {},
-      result: {},
-    },
-    obj,
-  );
+  // const obj = {};
+  // obj.user = { profile: user };
+  //
+  // userLogger(
+  //   loggerActions.AUTH,
+  //   {
+  //     dataFromRequest: {},
+  //     result: {},
+  //   },
+  //   obj,
+  // );
 
   return {
     jwt: token,
-    data: userInfo,
+    data: { user: user, type: "user" },
   };
 };
 
