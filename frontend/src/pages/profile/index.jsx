@@ -2,7 +2,7 @@
 import React from 'react';
 import { Title, VerticalSpace } from '@shared/ui';
 import { useSelector } from 'react-redux';
-import { Descriptions, Button, Tag, Modal, Collapse, Row, Col } from 'antd';
+import { Descriptions, Button, Tag, Modal, Collapse, Row, Col, Card } from 'antd';
 import { getUserAuthData } from '@entitles/User';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
@@ -28,41 +28,29 @@ const ProfilePage = () => {
       });
    };
 
-   const generatePermissionsList = (arr) => {
-      const html = [];
-
-      arr.map((v) =>
-         html.push(
-            <div>
-               {v
-                  .replaceAll('_', ' ')
-                  .replace('can', 'Может')
-                  .replace('edit', 'редактировать')
-                  .replace('delete', 'удалять')
-                  .replace('create', 'создавать')
-                  .replace('reset password of', 'сбрасывать пароль')
-                  .replace('view', 'просматривать')
-                  .replace('drivers', 'водителей')
-                  .replace('leads', 'заявки')
-                  .replace('users', 'пользователей')
-                  .replace('sellers', 'продавцов')
-                  .replace('categories', 'категории')
-                  .replace('routes', 'маршруты')
-                  .replace('addresses', 'адреса продавцов')
-                  .replace('faqs', 'faqs')
-                  .replace('acceptances', 'приемки')
-                  .replace('auctions', 'торги')
-                  .replace('images', 'картинки')}
-            </div>
-         )
-      );
-      return html;
-   };
-
    return (
       <div>
-         <Title>Профиль</Title>
-         <VerticalSpace />
+         <Title>Мой профиль</Title>
+         {/* <VerticalSpace /> */}
+
+         <Card></Card>
+         <Title>Мои адреса</Title>
+         <Card style={{ marginTop: '25px' }}>
+            Вы сможете:
+            <ul>
+               <li>
+                  легко организовать свои онлайн каталог в личном интернет
+                  пространстве
+               </li>
+               <li>
+                  получить доступ ко всему рынку Покупатетей электронного лома
+                  продать
+               </li>
+               <li>
+                  весть каталог или отдельные позиции по самой выгодной цене на рынке
+               </li>
+            </ul>{' '}
+         </Card>
          {[userData].map((user) => (
             <Row gutter={[16, 24]} key={`user${user.id}`}>
                <Col
@@ -106,28 +94,6 @@ const ProfilePage = () => {
                      </Descriptions.Item>
                   </Descriptions>
                </Col>
-               <Col className="gutter-row" span={8} className="stats-card-count-col">
-                  <Collapse
-                     items={[
-                        {
-                           key: '1',
-                           label: 'Все разрешения пользователя',
-                           children: generatePermissionsList(user.permissions)
-                        }
-                     ]}
-                  />
-               </Col>
-
-               <CanDo permission="can_view_userlogs">
-                  <Col
-                     className="gutter-row"
-                     span={2}
-                     className="stats-card-count-col">
-                     <Button danger onClick={() => navigate('/logs')}>
-                        Логи
-                     </Button>
-                  </Col>
-               </CanDo>
             </Row>
          ))}
       </div>

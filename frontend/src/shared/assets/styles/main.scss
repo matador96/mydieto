@@ -11,6 +11,29 @@
    }
 }
 
+.header-button {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+   padding: 10px;
+   align-items: center;
+   margin: 0 5px;
+
+   &_label {
+      line-height: 1;
+      font-weight: 600;
+      font-size: 12px;
+   }
+
+   &:hover {
+      cursor: pointer;
+   }
+
+   svg {
+      font-size: 28px;
+   }
+}
+
 .ant-table-thead {
    position: sticky;
    top: 0;

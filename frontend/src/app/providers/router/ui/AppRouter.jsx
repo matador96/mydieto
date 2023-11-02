@@ -18,13 +18,13 @@ const AppRouter = () => {
          element = <DefaultLayout>{route.element}</DefaultLayout>;
       }
 
-      if (route.layout === AppLayout.dashboard) {
-         element = <DashboardLayout>{route.element}</DashboardLayout>;
-      }
-
       // if (route.layout === AppLayout.dashboard) {
-      //    element = <SellerLayout>{route.element}</SellerLayout>;
+      //    element = <DashboardLayout>{route.element}</DashboardLayout>;
       // }
+
+      if (route.layout === AppLayout.dashboard) {
+         element = <SellerLayout>{route.element}</SellerLayout>;
+      }
 
       // if (route.layout === AppLayout.sellerLayout) {
       //    element = <SellerLayout>{route.element}</SellerLayout>;

@@ -4,9 +4,11 @@ import {
    UsergroupAddOutlined,
    DashboardOutlined,
    AlignLeftOutlined,
-   UnorderedListOutlined
+   UnorderedListOutlined,
+   InboxOutlined,
+   ShoppingCartOutlined
 } from '@ant-design/icons';
-import { Menu, Layout } from 'antd';
+import { Menu, Layout, Badge } from 'antd';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { RoutePath, routeList } from '@shared/config/routes';
@@ -36,10 +38,11 @@ const allMenuItems = [
    // getItem('Панель', 'dashboard', <DashboardOutlined />),
    // getItem('Пользователи', 'users', <UsergroupAddOutlined />),
    // getItem('Продавцы', 'users', <UsergroupAddOutlined />),
-   // getItem('Заявки', 'users', <UsergroupAddOutlined />),
    // getItem('Журнал действий', 'logs', <AlignLeftOutlined />),
 
-   getItem('Каталог плат и деталей', 'seller-catalogs', <UnorderedListOutlined />)
+   getItem('Каталог плат и деталей', 'seller-catalogs', <UnorderedListOutlined />),
+
+   getItem('Мои заказы', 'seller-leads', <UsergroupAddOutlined />)
 ];
 
 const SellerLayout = (props) => {
@@ -103,6 +106,21 @@ const SellerLayout = (props) => {
                         defaultSelectedKeys={selectedRoute}
                      />{' '}
                      <div style={{ display: 'flex' }}>
+                        <div
+                           className="header-button"
+                           onClick={() => navigate(`/seller/storage`)}>
+                           <Badge count={99} size="small">
+                              <InboxOutlined />
+                           </Badge>
+
+                           <span className="header-button_label">Cклад</span>
+                        </div>
+
+                        <div className="header-button">
+                           <ShoppingCartOutlined />
+                           <span className="header-button_label">Корзина</span>
+                        </div>
+
                         <MenuProfile isCollapsed={collapsed} />
                      </div>
                   </div>

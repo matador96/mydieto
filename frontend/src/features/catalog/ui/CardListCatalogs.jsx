@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, Tooltip, Card, Row, Col, Avatar, Divider } from 'antd';
+import {
+   Space,
+   Table,
+   Tag,
+   Tooltip,
+   Card,
+   Row,
+   Col,
+   Avatar,
+   Divider,
+   InputNumber
+} from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
 import { Button, VerticalSpace } from '@shared/ui';
 import { GetCategoriesListByParentId } from '../model/services/GetCategoriesListByParentId';
 import { EditOutlined, SettingOutlined, EllipsisOutlined } from '@ant-design/icons';
@@ -47,11 +59,15 @@ const CardListCatalogs = () => {
                      }
                      hoverable
                      actions={[
-                        <SettingOutlined key="setting" />,
-                        <EditOutlined key="edit" />,
-                        <EllipsisOutlined key="ellipsis" />
+                        <Space key="sssssasf">
+                           <InputNumber min={1} max={10} default={1} value={1} />
+
+                           <Button type="primary" icon={<InboxOutlined />}>
+                              В склад
+                           </Button>
+                        </Space>
                      ]}>
-                     <Card.Meta title={item.name} />
+                     {item.name}
                   </Card>
                </Col>
             ))}
