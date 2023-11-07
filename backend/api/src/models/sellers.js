@@ -1,5 +1,5 @@
-const Sequelize = require("sequelize");
 const sequelize = require("../core/db");
+const { DataTypes } = require("sequelize");
 
 const { statusesOfSellers } = require("../config/statusSettings");
 const Addresses = require("./addresses");
@@ -9,13 +9,13 @@ const Sellers = sequelize.define(
   {
     id: {
       field: "id",
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     userId: {
       field: "userId",
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       references: {
         model: "users",
         key: "id",
@@ -23,20 +23,20 @@ const Sellers = sequelize.define(
     },
     firstName: {
       field: "firstName",
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     lastName: {
       field: "lastName",
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     mobileNumber: {
       field: "mobileNumber",
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       unique: true,
     },
     status: {
       field: "status",
-      type: Sequelize.ENUM(statusesOfSellers),
+      type: DataTypes.ENUM(statusesOfSellers),
     },
   },
   {
