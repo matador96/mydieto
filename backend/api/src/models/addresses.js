@@ -1,6 +1,8 @@
 const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
 
+const { statusesOfAddresses } = require("../config/statusSettings");
+
 const Addresses = sequelize.define(
   "addresses",
   {
@@ -49,6 +51,10 @@ const Addresses = sequelize.define(
     address: {
       field: "address",
       type: DataTypes.STRING,
+    },
+    status: {
+      field: "status",
+      type: DataTypes.ENUM(statusesOfAddresses),
     },
     comment: {
       field: "comment",

@@ -1,7 +1,6 @@
 const Addresses = require("../models/addresses");
-const LeadsService = require("../services/leads");
 const { generateDatabaseSetting } = require("../helpers/db");
-const { getSuggestionsOfAddress, getAddressInfo } = require("../core/dadata");
+const { getSuggestionsOfAddress } = require("../core/dadata");
 const { ApplicationError } = require("./../classes/Errors");
 
 const _ = require("lodash");
@@ -13,6 +12,7 @@ module.exports.getCount = async () => {
 
 const getSuggestions = async (address, count) => {
   const data = await getSuggestionsOfAddress(address, count);
+
   if (!data)
     throw new ApplicationError("Нет подходящих результатовт", {
       path: "controllers",
@@ -27,17 +27,6 @@ const getById = async (id) => {
       path: "controllers",
     });
   return data;
-};
-
-const getWithParamsOfEntity = async (entityId, entityName) => {
-  // Пока так
-  const data = await Addresses.findAndCountAll({
-    page: 1,
-    limit: 100,
-    where: { entityId, entityName },
-  });
-
-  return { data: data.rows, count: data.count };
 };
 
 const getWithParams = async (queryParams) => {

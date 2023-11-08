@@ -24,6 +24,24 @@ module.exports = [
   },
   {
     type: "get",
+    url: "/api/v1/seller/addresses",
+    middlewares: [authenticate, validationChecker],
+    method: SellerController.getAddresses,
+  },
+  {
+    type: "post",
+    url: "/api/v1/seller/address",
+    middlewares: [authenticate, validationChecker],
+    method: SellerController.createAddress,
+  },
+  {
+    type: "put",
+    url: "/api/v1/seller/address/:id",
+    middlewares: [authenticate, validationChecker],
+    method: SellerController.updateAddress,
+  },
+  {
+    type: "get",
     url: "/api/v1/seller/:id",
     middlewares: [authenticate, validationChecker],
     method: SellerController.getById,

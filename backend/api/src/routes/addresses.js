@@ -24,7 +24,7 @@ module.exports = [
   {
     type: "post",
     url: "/api/v1/address",
-    middlewares: [],
+    middlewares: [authenticate, validationChecker],
     withTransaction: true,
     method: AddressController.create,
   },

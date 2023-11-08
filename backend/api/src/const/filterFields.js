@@ -10,12 +10,14 @@ const sellerFieldsCanBeFilter = [
 ];
 
 const userFieldsCanBeFilter = ["id", "email"];
+const addressFieldsCanBeFilter = ["id", "sellerId", "status"];
 
 module.exports = {
   admin: adminFieldsCanBeFilter,
   catalog: catalogFieldsCanBeFilter,
   seller: sellerFieldsCanBeFilter,
   user: userFieldsCanBeFilter,
+  address: addressFieldsCanBeFilter,
   fieldOpSettings: {
     admin: {
       id: "$eq",
@@ -34,6 +36,11 @@ module.exports = {
       mobileNumber: "$like",
       firstName: "$like",
       lastName: "$like",
+      status: "$eq",
+    },
+    address: {
+      id: "$eq",
+      sellerId: "$eq",
       status: "$eq",
     },
   },

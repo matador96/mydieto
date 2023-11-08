@@ -1,6 +1,6 @@
 const { query } = require("express-validator");
 const AddressesService = require("../services/addresses");
-const { ApplicationError } = require("../classes/Errors");
+const UserService = require("../services/users");
 
 module.exports.getAddressesWithSuggestions = async (req) => {
   let { count, address } = req.query;
@@ -34,16 +34,8 @@ module.exports.create = async (req, res, transaction) => {
   const addressData = {
     ...req.body,
   };
-  const data = await AddressesService.create(addressData, { transaction });
 
-  // userLogger(
-  //   loggerActions.CREATE_SELLER,
-  //   {
-  //     dataFromRequest: sellerData,
-  //     result: data,
-  //   },
-  //   req,
-  // );
+  const data = await AddressesService.create(addressData, { transaction });
 
   return {
     data,
@@ -61,15 +53,6 @@ module.exports.update = async (req, res, transaction) => {
     { transaction },
   );
 
-  // userLogger(
-  //   loggerActions.UPDATE_SELLER,
-  //   {
-  //     dataFromRequest: { ...req.body, id: sellerData.id },
-  //     result: sellerData,
-  //   },
-  //   req,
-  // );
-
   return {
     data: address,
   };
@@ -78,29 +61,13 @@ module.exports.update = async (req, res, transaction) => {
 module.exports.delete = async (req, res, transaction) => {
   const { id } = req.params;
 
-  const result = await AddressesService.getWithParams({
-    routeId: id,
-  });
-
-  if (result.count > 0) {
-    throw new ApplicationError(
-      "Невозможно удалить, так как у маршрута есть заявки, уберите их",
-      {
-        path: "controller",
-      },
-    );
-  }
-
-  await AddressesService.deleteById(id, { transaction });
-
-  // userLogger(
-  //   loggerActions.DELETE_ROUTE,
-  //   {
-  //     dataFromRequest: { id },
-  //     result: { id },
-  //   },
-  //   req,
-  // );
+  await AddressesService.update(
+    {
+      status: "blocked",
+    },
+    { id },
+    { transaction },
+  );
 
   return {};
 };

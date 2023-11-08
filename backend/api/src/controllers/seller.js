@@ -2,6 +2,7 @@ const { body, param, query } = require("express-validator");
 const Validations = require("../const/validatorSettings");
 const { allStatuses } = require("../config/statusSettings");
 const { ApplicationError } = require("./../classes/Errors");
+const AddressesService = require("../services/addresses");
 const Encrypt = require("../core/encrypt");
 const jwt = require("jsonwebtoken");
 const jwtOptions = require("../core/auth/jwtConfig");
@@ -69,7 +70,7 @@ module.exports.login = async (req) => {
     });
   }
 
-  const payload = { id: user.id };
+  const payload = { ...user };
   const token = jwt.sign(payload, jwtOptions.secretOrKey);
 
   return {
@@ -80,6 +81,70 @@ module.exports.login = async (req) => {
 
 module.exports.logout = async () => {
   return { message: "Успешный выход" };
+};
+
+module.exports.getAddresses = async (req) => {
+  const currentSessionUserId = req?.user?.profile?.id;
+
+  const userData = await UserService.getUserById(currentSessionUserId);
+
+  if (!userData?.seller?.id) {
+    throw new ApplicationError("Вы делаете запрос не из продавца", {
+      path: "controller",
+    });
+  }
+
+  const result = await AddressesService.getWithParams({
+    ...req.query,
+    sellerId: userData?.seller?.id,
+  });
+
+  return { data: result.data, count: result.count };
+};
+
+module.exports.createAddress = async (req, res, transaction) => {
+  const currentSessionUserId = req?.user?.profile?.id;
+
+  const userData = await UserService.getUserById(currentSessionUserId);
+
+  if (!userData?.seller?.id) {
+    throw new ApplicationError("Вы делаете запрос не из продавца", {
+      path: "controller",
+    });
+  }
+
+  const addressData = {
+    ...req.body,
+    sellerId: userData?.seller?.id,
+  };
+
+  const data = await AddressesService.create(addressData, { transaction });
+
+  return {
+    data,
+  };
+};
+
+module.exports.updateAddress = async (req) => {
+  const { id } = req.params;
+  const currentSessionUserId = req?.user?.profile?.id;
+
+  const userData = await UserService.getUserById(currentSessionUserId);
+
+  if (!userData?.seller?.id) {
+    throw new ApplicationError("Вы делаете запрос не из продавца", {
+      path: "controller",
+    });
+  }
+
+  const data = await AddressesService.update(
+    {
+      ...req.body,
+    },
+    { id, sellerId: userData?.seller?.id },
+  );
+
+  return { data };
 };
 
 module.exports.create = async (req, res, transaction) => {

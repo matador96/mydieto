@@ -18,6 +18,7 @@ const allRoutes = [
   ...require("./admins"),
   ...require("./catalogs"),
   ...require("./sellers"),
+  ...require("./addresses"),
   ...require("./users"),
   ...require("./liveness"),
 ];
