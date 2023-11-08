@@ -40,9 +40,9 @@ const allMenuItems = [
    // getItem('Продавцы', 'users', <UsergroupAddOutlined />),
    // getItem('Журнал действий', 'logs', <AlignLeftOutlined />),
 
-   getItem('Каталог плат и деталей', 'seller-catalogs', <UnorderedListOutlined />),
+   getItem('Каталог плат и деталей', 'seller-catalogs', <UnorderedListOutlined />)
 
-   getItem('Мои заказы', 'seller-leads', <UsergroupAddOutlined />)
+   // getItem('Мои заказы', 'seller-leads', <UsergroupAddOutlined />)
 ];
 
 const SellerLayout = (props) => {
@@ -109,17 +109,15 @@ const SellerLayout = (props) => {
                         <div
                            className="header-button"
                            onClick={() => navigate(`/seller/storage`)}>
-                           <Badge count={99} size="small">
-                              <InboxOutlined />
-                           </Badge>
+                           <InboxOutlined />
 
-                           <span className="header-button_label">Cклад</span>
+                           <span className="header-button_label">Моя склад</span>
                         </div>
 
-                        <div className="header-button">
+                        {/* <div className="header-button">
                            <ShoppingCartOutlined />
                            <span className="header-button_label">Корзина</span>
-                        </div>
+                        </div> */}
 
                         <MenuProfile isCollapsed={collapsed} />
                      </div>

@@ -158,6 +158,13 @@ body {
    }
 
    .ant-menu {
+      &-horizontal {
+         .ant-menu-item {
+            font-size: 14px;
+            height: 62px;
+            line-height: 62px;
+         }
+      }
       &-item,
       &-submenu {
          height: 32px;

@@ -5,7 +5,7 @@ import TableLogs from '@features/list-log/ui/TableLogs';
 
 const LogsPage = () => {
    return (
-      <Content>
+      <>
          <Title>Сегодняшние логи</Title>
 
          <VerticalSpace />
@@ -13,7 +13,7 @@ const LogsPage = () => {
          <Row gutter={[16, 24]}>
             <TableLogs />
          </Row>
-      </Content>
+      </>
    );
 };
 

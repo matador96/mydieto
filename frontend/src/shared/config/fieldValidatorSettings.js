@@ -20,7 +20,7 @@ const onlyNumberPattern = [
    }
 ];
 
-const mobileNumberRequired = [
+const mobileRequired = [
    {
       required: true,
       message: 'Вы оставили поле пустым'
@@ -49,7 +49,7 @@ const onlyAlphabetRuAndEnAndNumbers = [
 export {
    russianOneWordRequired,
    onlyNumberPattern,
-   mobileNumberRequired,
+   mobileRequired,
    onlyAlphabetAndNumbers,
    onlyAlphabetRuAndEnAndNumbers
 };

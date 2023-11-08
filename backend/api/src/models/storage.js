@@ -1,10 +1,10 @@
 const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
-const Sellers = require("./sellers");
+// const Sellers = require("./sellers");
 const Catalogs = require("./catalogs");
 
-const StorageItems = sequelize.define(
-  "storageItems",
+const Storage = sequelize.define(
+  "storage",
   {
     id: {
       field: "id",
@@ -38,12 +38,12 @@ const StorageItems = sequelize.define(
   },
 );
 
-Sellers.belongsTo(StorageItems, {
-  foreignKey: "sellerId",
-});
+// Sellers.belongsTo(storage, {
+//   foreignKey: "sellerId",
+// });
 
-Catalogs.belongsTo(StorageItems, {
+Storage.belongsTo(Catalogs, {
   foreignKey: "catalogId",
 });
 
-module.exports = StorageItems;
+module.exports = Storage;

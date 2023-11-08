@@ -21,6 +21,7 @@ const allRoutes = [
   ...require("./addresses"),
   ...require("./users"),
   ...require("./liveness"),
+  ...require("./storage"),
 ];
 
 module.exports = (app) => {

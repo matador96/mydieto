@@ -14,8 +14,7 @@ const CenteredLayout = (props) => (
                   justifyContent: 'center',
                   alignItems: 'center',
                   minHeight: '95vh'
-               }}
-            >
+               }}>
                {props.children}
             </Space>
          </div>

@@ -1,36 +1,73 @@
 const { body, param, query } = require("express-validator");
 const Validations = require("../const/validatorSettings");
 const { allStatuses } = require("../config/statusSettings");
-
-const StorageItemsService = require("../services/storageItems");
+const UserService = require("../services/users");
+const { ApplicationError } = require("./../classes/Errors");
+const storageService = require("../services/storage");
 
 module.exports.getById = async (req) => {
   const { id } = req.params;
-  const storageItem = await StorageItemsService.getById(id);
+  const storage = await storageService.getById(id);
 
-  return { data: storageItem };
+  return { data: storage };
 };
 
 module.exports.getWithParams = async (req) => {
-  const result = await StorageItemsService.getWithParams(req.query);
+  const currentSessionUserId = req?.user?.profile?.id;
+
+  const sellerData = await UserService.getUserById(currentSessionUserId);
+  const sellerId = sellerData?.seller?.id;
+
+  if (!sellerId) {
+    throw new ApplicationError("Нет айди продавца", {
+      path: "controller",
+    });
+  }
+
+  const result = await storageService.getWithParams({ ...req.query, sellerId });
   return { data: result.data, count: result.count };
 };
 
-module.exports.create = async (req, res, transaction) => {
-  const storageItemData = {
-    ...req.body,
-  };
-  const data = await StorageItemsService.create(storageItemData, { transaction });
+module.exports.add = async (req) => {
+  const { quantity, catalogId } = req.body;
 
-  return {
-    data,
-  };
+  const currentSessionUserId = req?.user?.profile?.id;
+
+  const sellerData = await UserService.getUserById(currentSessionUserId);
+  const sellerId = sellerData?.seller?.id;
+
+  if (!sellerId) {
+    throw new ApplicationError("Нет айди продавца", {
+      path: "controller",
+    });
+  }
+
+  const current = await storageService.getByField({
+    catalogId,
+    sellerId,
+  });
+
+  if (!current) {
+    await storageService.create({ catalogId, quantity, sellerId });
+  } else {
+    await storageService.update(
+      {
+        quantity: current.quantity + quantity,
+      },
+      {
+        catalogId,
+        sellerId,
+      },
+    );
+  }
+
+  return {};
 };
 
 module.exports.update = async (req, res, transaction) => {
   const { id } = req.params;
 
-  const storageItem = await StorageItemsService.update(
+  const storage = await storageService.update(
     {
       ...req.body,
     },
@@ -38,15 +75,19 @@ module.exports.update = async (req, res, transaction) => {
     { transaction },
   );
 
+  console.log(id);
+  console.log(req.body);
+  console.log(storage);
+
   return {
-    data: storageItem,
+    data: storage,
   };
 };
 
 module.exports.delete = async (req) => {
   const { id } = req.params;
 
-  await StorageItemsService.delete({ id });
+  await storageService.delete({ id });
 
   // userLogger(
   //   loggerActions.DELETE_RATING,
@@ -60,7 +101,7 @@ module.exports.delete = async (req) => {
   return {};
 };
 
-const validationSellerFilterFields = [query("mobileNumber").isString().optional()];
+const validationSellerFilterFields = [query("mobile").isString().optional()];
 
 module.exports.validate = (method) => {
   switch (method) {
@@ -95,7 +136,7 @@ module.exports.validate = (method) => {
         body("priority").isInt().optional(),
         body("address").optional(),
         body("entityCategories").exists(), // в будущем переделать
-        body("mobileNumber").isString(), // .isMobilePhone("ru-RU")
+        body("mobile").isString(), // .isMobilePhone("ru-RU")
         body("status").isIn(allStatuses).optional(),
       ];
     }
@@ -111,7 +152,7 @@ module.exports.validate = (method) => {
         body("address").optional(),
         body("priority").isInt().optional(),
         body("entityCategories").optional(), // в будущем переделать
-        body("mobileNumber").isString().optional(), // .isMobilePhone("ru-RU")
+        body("mobile").isString().optional(), // .isMobilePhone("ru-RU")
         body("status").isIn(allStatuses).optional(),
       ];
     }

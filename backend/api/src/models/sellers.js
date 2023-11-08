@@ -29,8 +29,8 @@ const Sellers = sequelize.define(
       field: "lastName",
       type: DataTypes.STRING,
     },
-    mobileNumber: {
-      field: "mobileNumber",
+    mobile: {
+      field: "mobile",
       type: DataTypes.STRING,
       unique: true,
     },

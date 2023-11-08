@@ -189,7 +189,7 @@ module.exports.update = async (req, res, transaction) => {
   };
 };
 
-const validationSellerFilterFields = [query("mobileNumber").isString().optional()];
+const validationSellerFilterFields = [query("mobile").isString().optional()];
 
 module.exports.validate = (method) => {
   switch (method) {
@@ -223,7 +223,7 @@ module.exports.validate = (method) => {
         body("email").optional(),
         body("address").optional(),
         body("entityCategories").exists(), // в будущем переделать
-        body("mobileNumber").isString(), // .isMobilePhone("ru-RU")
+        body("mobile").isString(), // .isMobilePhone("ru-RU")
         body("status").isIn(allStatuses).optional(),
       ];
     }
@@ -238,7 +238,7 @@ module.exports.validate = (method) => {
         body("email").isEmail().optional(),
         body("address").optional(),
         body("entityCategories").optional(), // в будущем переделать
-        body("mobileNumber").isString().optional(), // .isMobilePhone("ru-RU")
+        body("mobile").isString().optional(), // .isMobilePhone("ru-RU")
         body("status").isIn(allStatuses).optional(),
       ];
     }

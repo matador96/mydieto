@@ -1,31 +1,33 @@
-const StorageItems = require("../models/storageItems");
+const Storage = require("../models/storage");
+const Catalog = require("../models/catalogs");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
 
 module.exports.getById = async (id) => {
-  const storageItem = await StorageItems.findByPk(id, {
+  const storage = await Storage.findByPk(id, {
     raw: false,
     nest: true,
   });
 
-  if (!storageItem)
+  if (!storage)
     throw new ApplicationError("Вещь со склада не найдена", {
       path: "controllers",
     });
 
-  return storageItem;
+  return storage;
 };
 
 module.exports.getByField = async (field) => {
-  const data = await StorageItems.findOne({
+  const data = await Storage.findOne({
     where: { ...field },
   });
   return data;
 };
 
 module.exports.getWithParams = async (queryParams) => {
-  const data = await StorageItems.findAndCountAll({
-    ...generateDatabaseSetting(queryParams, "storageItem"),
+  const data = await Storage.findAndCountAll({
+    ...generateDatabaseSetting(queryParams, "storage"),
+    include: [Catalog],
     raw: false,
     nest: true,
   });
@@ -34,25 +36,23 @@ module.exports.getWithParams = async (queryParams) => {
 };
 
 module.exports.create = async (obj, settings = {}) => {
-  const storageItem = await StorageItems.create(obj, { ...settings }).then(
-    (resultEntity) => {
-      const dataObj = resultEntity.get({ plain: true });
-      return dataObj;
-    },
-  );
+  const storage = await Storage.create(obj, { ...settings }).then((resultEntity) => {
+    const dataObj = resultEntity.get({ plain: true });
+    return dataObj;
+  });
 
-  return storageItem;
+  return storage;
 };
 
 module.exports.update = async (obj, whereObj, settings = {}) => {
-  await StorageItems.update(obj, {
+  await Storage.update(obj, {
     where: whereObj,
     ...settings,
     // returning: true, Не подходит получение данных после апдейта, так как оно не фильтровано
     // plain: true,
   });
 
-  const updatedCatalog = await StorageItems.findOne({
+  const updatedCatalog = await Storage.findOne({
     where: whereObj,
     ...settings,
   });
@@ -61,5 +61,5 @@ module.exports.update = async (obj, whereObj, settings = {}) => {
 };
 
 module.exports.delete = async (whereObj, settings = {}) => {
-  return await StorageItems.destroy({ where: whereObj, ...settings });
+  return await Storage.destroy({ where: whereObj, ...settings });
 };

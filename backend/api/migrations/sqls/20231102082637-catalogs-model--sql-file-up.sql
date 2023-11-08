@@ -4,7 +4,7 @@ CREATE TABLE
     "catalogs" (
         "id" SERIAL PRIMARY KEY,
         "name" VARCHAR(100) NOT NULL,
-        "img" VARCHAR(200) DEFAULT '{}' NOT NULL,
+        "img" VARCHAR(200) DEFAULT '' NOT NULL,
         "parentId" INTEGER NOT NULL DEFAULT 0,
         "priority" INTEGER NOT NULL DEFAULT 0,
         "status" catalogs_status DEFAULT 'active' NOT NULL,

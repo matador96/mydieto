@@ -10,7 +10,6 @@ const prefixSelector = <Form.Item noStyle>+7</Form.Item>;
 
 const EditMySellerForm = (props) => {
    const [isLoading, setIsLoading] = useState(false);
-   const [initialValues, setIntialValues] = useState({});
    const { onSuccess, isEditForm } = props;
    const [form] = Form.useForm();
 
@@ -20,8 +19,7 @@ const EditMySellerForm = (props) => {
 
    const fetchData = () => {
       GetMySellerProfile().then((res) => {
-         console.log(res);
-         setIntialValues({ ...initialValues, ...res });
+         form.setFieldsValue(res);
       });
    };
 
@@ -51,6 +49,8 @@ const EditMySellerForm = (props) => {
             maxWidth: 460,
             minWidth: 320
          }}
+         form={form}
+         hideRequiredMark
          onFinish={onFinish}
          onFinishFailed={onFinishFailed}>
          <Form.Item
@@ -95,19 +95,7 @@ const EditMySellerForm = (props) => {
             />
          </Form.Item>
 
-         <Form.Item
-            label="Email"
-            name="email"
-            rules={[
-               {
-                  required: true,
-                  message: 'Поле не может быть пустым'
-               }
-            ]}>
-            <Input />
-         </Form.Item>
-
-         <Form.Item
+         {/* <Form.Item
             wrapperCol={{
                offset: 8,
                span: 16
@@ -115,7 +103,7 @@ const EditMySellerForm = (props) => {
             <Button type="primary" htmlType="submit" loading={isLoading}>
                Сохранить изменения
             </Button>
-         </Form.Item>
+         </Form.Item> */}
       </Form>
    );
 };

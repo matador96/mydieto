@@ -85,11 +85,11 @@ const ManageSellerAddressesList = () => {
 
    return (
       <div>
+         <ModalButtonAddressCreate closeModal={fetchData} />
          <ModalAddressForm
             selectedAddress={selectedAddress}
             closeModal={closeModal}
          />
-
          <List
             itemLayout="horizontal"
             dataSource={data}
@@ -139,8 +139,6 @@ const ManageSellerAddressesList = () => {
                </List.Item>
             )}
          />
-
-         <ModalButtonAddressCreate closeModal={fetchData} />
       </div>
    );
 };

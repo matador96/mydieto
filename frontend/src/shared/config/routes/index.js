@@ -61,8 +61,8 @@ export const RoutePath = {
    // Seller
    [AppRoutes.SELLER_DASHBOARD]: '/seller/dashboard',
    [AppRoutes.SELLER_PROFILE]: '/seller/profile',
-   [AppRoutes.SELLER_CATALOGS]: '/seller/catalogs'
-   // [AppRoutes.SELLER_STORAGE]: '/seller/storage',
+   [AppRoutes.SELLER_CATALOGS]: '/seller/catalogs',
+   [AppRoutes.SELLER_STORAGE]: '/seller/storage'
    // [AppRoutes.SELLER_LEADS]: '/seller/leads'
 };
 
@@ -88,13 +88,12 @@ export const routeList = {
       element: <CatalogsPage />,
       authOnly: true
    },
-   // [AppRoutes.SELLER_STORAGE]: {
-   //    path: RoutePath[AppRoutes.SELLER_STORAGE],
-   //    element: <StoragePage />,
-   //    layout: AppLayout.sellerLayout,
-   //    authOnly: true,
-   //    permission: 'can_view_categories'
-   // },
+   [AppRoutes.SELLER_STORAGE]: {
+      path: RoutePath[AppRoutes.SELLER_STORAGE],
+      element: <StoragePage />,
+      layout: AppLayout.sellerLayout,
+      authOnly: true
+   },
    // [AppRoutes.SELLER_LEADS]: {
    //    path: RoutePath[AppRoutes.SELLER_LEADS],
    //    element: <LeadsPage />,

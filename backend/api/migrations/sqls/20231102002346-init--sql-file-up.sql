@@ -7,7 +7,6 @@ CREATE TABLE
         "updatedAt" TIMESTAMPTZ
     );
 
-
 CREATE TYPE admins_status AS ENUM ('active', 'blocked');
 
 CREATE TABLE
@@ -27,7 +26,7 @@ CREATE TABLE
         "userId" INTEGER NOT NULL REFERENCES "users" ("id"),
         "firstName" VARCHAR(100) NOT NULL,
         "lastName" VARCHAR(100) NOT NULL,
-        "mobileNumber" VARCHAR(100) NOT NULL UNIQUE,
+        "mobile" VARCHAR(100) NOT NULL UNIQUE,
         "status" sellers_status DEFAULT 'active' NOT NULL,
         "createdAt" TIMESTAMPTZ DEFAULT NOW(),
         "updatedAt" TIMESTAMPTZ
