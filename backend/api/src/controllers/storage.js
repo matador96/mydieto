@@ -75,10 +75,6 @@ module.exports.update = async (req, res, transaction) => {
     { transaction },
   );
 
-  console.log(id);
-  console.log(req.body);
-  console.log(storage);
-
   return {
     data: storage,
   };

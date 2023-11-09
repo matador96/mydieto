@@ -18,6 +18,7 @@ import { SIDEBAR_LOCALSTORAGE_KEY } from '@shared/const/localStorage';
 import { MenuProfile } from '@shared/ui/MenuProfile';
 import { useSelector } from 'react-redux';
 import { getUserPermissions } from '@entitles/User';
+import DrawerCart from '@features/cart/ui/DrawerCart';
 import {
    getLocalStorageByKey,
    setLocalStorageByKey
@@ -114,10 +115,14 @@ const SellerLayout = (props) => {
                            <span className="header-button_label">Моя склад</span>
                         </div>
 
-                        {/* <div className="header-button">
-                           <ShoppingCartOutlined />
-                           <span className="header-button_label">Корзина</span>
-                        </div> */}
+                        <DrawerCart
+                           button={
+                              <div className="header-button">
+                                 <ShoppingCartOutlined />
+                                 <span className="header-button_label">Корзина</span>
+                              </div>
+                           }
+                        />
 
                         <MenuProfile isCollapsed={collapsed} />
                      </div>
