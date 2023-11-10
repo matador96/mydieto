@@ -1,9 +1,11 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import userReducer from '@entitles/User/model/store/reducers/user';
+import cartReducer from '@entitles/Cart/model/store/reducers/cart';
 
 const rootReducer = combineReducers({
-   user: userReducer
+   user: userReducer,
+   cart: cartReducer
 });
 
 const composeEnhancers =

@@ -13,13 +13,11 @@ const SelectAddress = (props) => {
          count: 10,
          address: str
       }).then((res) => {
-         console.log(res);
          const modifiedData = res.json.data.map((item) => ({
             ...item,
             label: item,
             value: item
          }));
-         console.log(modifiedData);
          setAddresses(modifiedData);
       });
    };

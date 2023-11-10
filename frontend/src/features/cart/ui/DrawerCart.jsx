@@ -15,10 +15,15 @@ import { VerticalSpace } from '@shared/ui';
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
+import { cartActions } from '@entitles/Cart';
+import { useDispatch } from 'react-redux';
 import { GetMyAddressList } from '@features/seller/model/GetMyAddressList';
 import ModalButtonAddressCreate from '@features/seller/ModalButtonAddressCreate';
 
+import { useSelector } from 'react-redux';
 import { GetStorageWithParams } from '@features/storage/model/GetStorageWithParams';
+
+import { getCartItems } from '@entitles/Cart';
 
 const AddressList = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -72,35 +77,20 @@ const AddressList = () => {
    );
 };
 
-const StorageList = () => {
-   const [isLoading, setIsLoading] = useState(false);
+const CartList = () => {
+   const cartData = useSelector(getCartItems);
+   const dispatch = useDispatch();
 
-   const [data, setData] = useState([]);
-
-   useEffect(() => {
-      fetchData();
-   }, []);
-
-   const fetchData = () => {
-      setIsLoading(true);
-      GetStorageWithParams({
-         page: 1,
-         limit: 1000,
-         sort: 'id',
-         order: 'asc'
-      }).then((res) => {
-         setIsLoading(false);
-         const tableData = res.data.filter((item) => item.id !== 0);
-         setData(tableData);
-      });
+   const deleteByIdCart = (id) => {
+      dispatch(cartActions.deleteFromCart(id));
+      message.success('Убрано из корзины');
    };
 
    return (
       <div>
          <List
             itemLayout="horizontal"
-            dataSource={data}
-            loading={isLoading}
+            dataSource={cartData}
             className="list-my-storage"
             renderItem={(item) => (
                <List.Item
@@ -119,10 +109,13 @@ const StorageList = () => {
                   ]}>
                   <List.Item.Meta
                      key={`${item.id}-`}
-                     title={item.catalog.name}
+                     title={item.name}
                      description={
-                        <span className="green-span-url" type="link">
-                           Удалить
+                        <span
+                           className="green-span-url"
+                           type="link"
+                           onClick={() => deleteByIdCart(item.id)}>
+                           Убрать из корзины
                         </span>
                      }
                   />
@@ -134,12 +127,20 @@ const StorageList = () => {
 };
 
 const DrawerCart = (props) => {
-   const [open, setOpen] = useState(true);
+   const [open, setOpen] = useState(false);
+
+   const dispatch = useDispatch();
+
    const showDrawer = () => {
       setOpen(true);
    };
    const onClose = () => {
       setOpen(false);
+   };
+
+   const cleanCart = () => {
+      dispatch(cartActions.cleanCart());
+      message.success('Корзина очищена');
    };
 
    return (
@@ -150,9 +151,17 @@ const DrawerCart = (props) => {
             placement="right"
             onClose={onClose}
             width={600}
-            open={open}>
+            open={open}
+            extra={
+               <Space>
+                  <Button onClick={onClose}>Закрыть</Button>
+                  <Button type="primary" danger onClick={cleanCart}>
+                     Очистить корзину
+                  </Button>
+               </Space>
+            }>
             <Divider orientation="left">Позиции заказа</Divider>
-            <StorageList />
+            <CartList />
 
             <Divider orientation="left">Адрес вывоза</Divider>
             <AddressList />

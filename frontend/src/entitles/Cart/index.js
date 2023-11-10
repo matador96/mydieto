@@ -1,23 +1,6 @@
-import { getUserAuthData } from './model/selectors/getUserAuthData';
-import {
-   getUserRoles,
-   isUserAdmin,
-   isUserManager,
-   isUserAuthorized,
-   getUserPermissions
-} from './model/selectors/roleSelectors';
-import userReducer from './model/store/reducers/user';
-import userActions from './model/store/actions/user';
-import { UserRole } from './model/consts/consts';
+import cartReducer from './model/store/reducers/cart';
+import cartActions from './model/store/actions/cart';
+import { getCartItems } from './model/selectors/getCartItems';
+import { getCartCount } from './model/selectors/getCartCount';
 
-export {
-   userReducer,
-   userActions,
-   getUserAuthData,
-   getUserRoles,
-   isUserAdmin,
-   isUserAuthorized,
-   isUserManager,
-   UserRole,
-   getUserPermissions
-};
+export { cartReducer, cartActions, getCartItems, getCartCount };

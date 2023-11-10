@@ -9,7 +9,8 @@ import {
    Avatar,
    message,
    Modal,
-   InputNumber
+   InputNumber,
+   Divider
 } from 'antd';
 
 import {
@@ -22,6 +23,10 @@ import {
 import { GetStorageWithParams } from '../model/GetStorageWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
+import { GetCatalogsListByParentId } from '@features/catalog/model/services/GetCatalogsListByParentId';
+
+import { cartActions } from '@entitles/Cart';
+import { useDispatch } from 'react-redux';
 
 const { confirm } = Modal;
 
@@ -32,10 +37,16 @@ const StorageListQuantityWithSave = (props) => {
    } = props;
    const [isLoading, setIsLoading] = useState(false);
    const [currentQuantity, setQuantity] = useState(0);
+   const dispatch = useDispatch();
 
    useEffect(() => {
       setQuantity(quantity);
    }, [quantity]);
+
+   const addToCart = (obj) => {
+      dispatch(cartActions.addToCart(obj));
+      message.success('Добавлено в корзину');
+   };
 
    const save = () => {
       setIsLoading(true);
@@ -65,11 +76,17 @@ const StorageListQuantityWithSave = (props) => {
                value={currentQuantity}
                onChange={(v) => setQuantity(v)}
             />
-            <Tooltip placement="top" title={'Сохранить'}>
+            <Tooltip placement="top" title={'Добавить в корзину'}>
                <Button
                   type="primary"
                   loading={isLoading}
-                  onClick={save}
+                  onClick={() =>
+                     addToCart({
+                        id,
+                        name: props.storage.catalog.name,
+                        quantity: 1
+                     })
+                  }
                   icon={<ShoppingCartOutlined />}>
                   В корзину
                </Button>
@@ -96,9 +113,31 @@ const StorageList = () => {
          sort: 'id',
          order: 'asc'
       }).then((res) => {
-         setIsLoading(false);
-         const tableData = res.data.filter((item) => item.id !== 0);
-         setData(tableData);
+         const storageData = res.data;
+
+         GetCatalogsListByParentId(0, {
+            page: 1,
+            limit: 1000,
+            sort: 'priority',
+            order: 'asc'
+         }).then((r) => {
+            const tableData = r.data;
+
+            const newModifiedList = [];
+
+            tableData.map((e) => {
+               let items = [];
+               storageData.map((o) => {
+                  if (o.catalog.parentId === e.id) {
+                     items.push(o);
+                  }
+               });
+               newModifiedList.push({ catalog: e, items });
+            });
+
+            setIsLoading(false);
+            setData(newModifiedList.filter((p) => p.items.length));
+         });
       });
    };
 
@@ -120,38 +159,43 @@ const StorageList = () => {
 
    return (
       <div>
-         <List
-            itemLayout="horizontal"
-            dataSource={data}
-            loading={isLoading}
-            className="list-my-storage"
-            renderItem={(item) => (
-               <List.Item
-                  actions={[
-                     <StorageListQuantityWithSave
-                        key={`${item.id}-g`}
-                        storage={item}
-                        callBack={fetchData}
-                     />
-                  ]}>
-                  <img
-                     src={`https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png`}
-                  />
-                  <List.Item.Meta
-                     key={`${item.id}-`}
-                     title={item.catalog.name}
-                     description={
-                        <span
-                           className="green-span-url"
-                           type="link"
-                           onClick={() => showConfirmDelete(item.id)}>
-                           Удалить
-                        </span>
-                     }
-                  />
-               </List.Item>
-            )}
-         />
+         {data.map((item) => (
+            <React.Fragment key={`storage-catalog-${item.id}`}>
+               <Divider orientation="left">{item.catalog.name}</Divider>
+               <List
+                  itemLayout="horizontal"
+                  dataSource={item.items}
+                  loading={isLoading}
+                  className="list-my-storage"
+                  renderItem={(item) => (
+                     <List.Item
+                        actions={[
+                           <StorageListQuantityWithSave
+                              key={`${item.id}-g`}
+                              storage={item}
+                              callBack={fetchData}
+                           />
+                        ]}>
+                        <img
+                           src={`https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png`}
+                        />
+                        <List.Item.Meta
+                           key={`${item.id}-`}
+                           title={item.catalog.name}
+                           description={
+                              <span
+                                 className="green-span-url"
+                                 type="link"
+                                 onClick={() => showConfirmDelete(item.id)}>
+                                 Удалить из склада
+                              </span>
+                           }
+                        />
+                     </List.Item>
+                  )}
+               />
+            </React.Fragment>
+         ))}
       </div>
    );
 };

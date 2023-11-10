@@ -23,6 +23,7 @@ import {
    getLocalStorageByKey,
    setLocalStorageByKey
 } from '@shared/lib/localStorage';
+import { getCartCount } from '@entitles/Cart';
 
 const { Footer, Sider, Content, Header } = Layout;
 
@@ -49,6 +50,8 @@ const allMenuItems = [
 const SellerLayout = (props) => {
    const navigate = useNavigate();
    const location = useLocation();
+
+   const cartCount = useSelector(getCartCount);
    const [collapsed, setCollapsed] = useState(false);
    const permissions = useSelector(getUserPermissions);
 
@@ -118,7 +121,13 @@ const SellerLayout = (props) => {
                         <DrawerCart
                            button={
                               <div className="header-button">
-                                 <ShoppingCartOutlined />
+                                 <Badge
+                                    showZero
+                                    count={cartCount}
+                                    size="small"
+                                    status="success">
+                                    <ShoppingCartOutlined />
+                                 </Badge>
                                  <span className="header-button_label">Корзина</span>
                               </div>
                            }
