@@ -1,9 +1,11 @@
 const Catalogs = require("../models/catalogs");
+const Images = require("../models/images");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
 
 module.exports.getById = async (id) => {
   const seller = await Catalogs.findByPk(id, {
+    include: [Images],
     raw: false,
     nest: true,
   });
@@ -26,6 +28,7 @@ module.exports.getByField = async (field) => {
 module.exports.getWithParamsByParentId = async (queryParams) => {
   const data = await Catalogs.findAndCountAll({
     ...generateDatabaseSetting({ ...queryParams }, "catalog"),
+    include: [Images],
   });
 
   return { data: data.rows, count: data.count };
@@ -34,6 +37,7 @@ module.exports.getWithParamsByParentId = async (queryParams) => {
 module.exports.getWithParams = async (queryParams) => {
   const data = await Catalogs.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "catalog"),
+    include: [Images],
     raw: false,
     nest: true,
   });

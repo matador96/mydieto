@@ -22,6 +22,7 @@ const allRoutes = [
   ...require("./users"),
   ...require("./liveness"),
   ...require("./storage"),
+  ...require("./images"),
 ];
 
 module.exports = (app) => {

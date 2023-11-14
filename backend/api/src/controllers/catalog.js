@@ -3,6 +3,7 @@ const Validations = require("../const/validatorSettings");
 const { allStatuses } = require("../config/statusSettings");
 
 const CatalogService = require("../services/catalogs");
+const ImageService = require("../services/images");
 
 module.exports.getById = async (req) => {
   const { id } = req.params;
@@ -31,15 +32,29 @@ module.exports.create = async (req, res, transaction) => {
   const catalogData = {
     ...req.body,
   };
-  const data = await CatalogService.create(catalogData, { transaction });
+  let catalog = await CatalogService.create(catalogData, { transaction });
+
+  const { images } = req.body;
+
+  if (images) {
+    await ImageService.normalizeImages(images, catalog.id, transaction);
+    catalog = await CatalogService.getById(catalog.id);
+  }
 
   return {
-    data,
+    data: catalog,
   };
 };
 
 module.exports.update = async (req, res, transaction) => {
   const { id } = req.params;
+  const { images } = req.body;
+
+  const prevData = await CatalogService.getById(id, { transaction });
+
+  if (images) {
+    await ImageService.normalizeImages(images, prevData.id, transaction);
+  }
 
   const catalog = await CatalogService.update(
     {

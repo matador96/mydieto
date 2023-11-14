@@ -1,9 +1,11 @@
 const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
 
+const Images = require("./images");
+
 const { statusesOfCatalogs } = require("../config/statusSettings");
 
-const Sellers = sequelize.define(
+const Catalogs = sequelize.define(
   "catalogs",
   {
     id: {
@@ -16,10 +18,10 @@ const Sellers = sequelize.define(
       field: "name",
       type: DataTypes.STRING,
     },
-    img: {
-      field: "img",
-      type: DataTypes.STRING,
-    },
+    // img: {
+    //   field: "img",
+    //   type: DataTypes.STRING,
+    // },
     parentId: {
       field: "parentId",
       type: DataTypes.INTEGER,
@@ -38,4 +40,6 @@ const Sellers = sequelize.define(
   },
 );
 
-module.exports = Sellers;
+Catalogs.hasOne(Images, { foreignKey: "catalogId" });
+
+module.exports = Catalogs;
