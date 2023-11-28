@@ -18,7 +18,7 @@ module.exports = [
   {
     type: "post",
     url: "/api/v1/catalog",
-    middlewares: [],
+    middlewares: [authenticate, validationChecker],
     withTransaction: true,
     method: CatalogController.create,
   },
