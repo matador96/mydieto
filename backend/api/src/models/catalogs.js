@@ -1,8 +1,6 @@
 const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
 
-const Images = require("./images");
-
 const { statusesOfCatalogs } = require("../config/statusSettings");
 
 const Catalogs = sequelize.define(
@@ -18,10 +16,16 @@ const Catalogs = sequelize.define(
       field: "name",
       type: DataTypes.STRING,
     },
-    // img: {
-    //   field: "img",
-    //   type: DataTypes.STRING,
-    // },
+    img: {
+      field: "img",
+      type: DataTypes.STRING,
+    },
+    imgUrl: {
+      type: new DataTypes.VIRTUAL(),
+      get() {
+        return "https://drive.google.com/uc?export=download&id=" + this.get("img");
+      },
+    },
     parentId: {
       field: "parentId",
       type: DataTypes.INTEGER,
@@ -39,7 +43,5 @@ const Catalogs = sequelize.define(
     timestamps: true,
   },
 );
-
-Catalogs.hasOne(Images, { foreignKey: "catalogId" });
 
 module.exports = Catalogs;

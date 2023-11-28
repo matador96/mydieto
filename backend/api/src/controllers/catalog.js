@@ -34,11 +34,12 @@ module.exports.create = async (req, res, transaction) => {
   };
   let catalog = await CatalogService.create(catalogData, { transaction });
 
-  const { images } = req.body;
-
-  if (images) {
-    await ImageService.normalizeImages(images, catalog.id, transaction);
-    catalog = await CatalogService.getById(catalog.id);
+  if (req.files){
+    const { image } = req.files;
+    if (image) {
+      const imageFromDisk = await ImageService.uploadImageToDisk(image, catalog);
+      catalog = await CatalogService.update({img: imageFromDisk.id}, {id: catalog.id}, {transaction})
+    }
   }
 
   return {
@@ -48,18 +49,22 @@ module.exports.create = async (req, res, transaction) => {
 
 module.exports.update = async (req, res, transaction) => {
   const { id } = req.params;
-  const { images } = req.body;
+  const catalogData = {
+    ...req.body,
+  };
 
   const prevData = await CatalogService.getById(id, { transaction });
 
-  if (images) {
-    await ImageService.normalizeImages(images, prevData.id, transaction);
+  if (req.files){
+    const { image } = req.files;
+    if (image) {
+      await ImageService.deleteImage(prevData.img);
+      const imageFromDisk = await ImageService.uploadImageToDisk(image, prevData);
+      catalogData.img = imageFromDisk.id;
+    }
   }
 
-  const catalog = await CatalogService.update(
-    {
-      ...req.body,
-    },
+  const catalog = await CatalogService.update(catalogData,
     { id },
     { transaction },
   );
@@ -69,28 +74,19 @@ module.exports.update = async (req, res, transaction) => {
   };
 };
 
-const validationSellerFilterFields = [query("mobile").isString().optional()];
+const validationSellerFilterFields = [];
 
 module.exports.validate = (method) => {
   switch (method) {
-    case "getSellerById": {
+    case "getCatalogById": {
       return [param("id").isInt()];
     }
 
-    case "getSellersWithParams": {
+    case "getCatalogsWithParams": {
       return [
         ...validationSellerFilterFields,
         ...Validations.pagination,
         ...Validations.sorting,
-      ];
-    }
-
-    case "getSellerByMobile": {
-      return [
-        param("mobile")
-          // eslint-disable-next-line no-useless-escape
-          .matches(/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/)
-          .withMessage("Неправильный ввод телефона"),
       ];
     }
 
