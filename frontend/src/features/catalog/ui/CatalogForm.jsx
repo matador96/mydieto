@@ -178,6 +178,29 @@ const CatalogForm = (props) => {
                </Form.Item>
             </Col>
          </Row>
+
+         <Row gutter={16}>
+            <Col span={16}>
+               <Form.Item
+                  name="unit"
+                  label="Единица измерения"
+                  rules={[
+                     {
+                        required: true,
+                        message: 'Пропустили поле'
+                     }
+                  ]}>
+                  <Select
+                     defaultValue="kg"
+                     style={{
+                        width: '100%'
+                     }}
+                     options={unitSettings}
+                  />
+               </Form.Item>
+            </Col>
+         </Row>
+
          <Row gutter={16}>
             <Col span={8}>
                <Form.Item

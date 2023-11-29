@@ -8,7 +8,7 @@ import { message } from 'antd';
 
 const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
    const isEditForm = !!id;
-   const [initialValues, setIntialValues] = useState({});
+   const [initialValues, setIntialValues] = useState({ unit: 'kg' });
    const [loadForm, setLoadForm] = useState(false);
 
    useEffect(() => {

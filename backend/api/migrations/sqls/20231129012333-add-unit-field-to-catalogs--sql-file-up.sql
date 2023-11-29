@@ -1,4 +1,3 @@
-ALTER TABLE
-    "catalogs"
+ALTER TABLE "catalogs"
 ADD
-    COLUMN "unit" VARCHAR(10) NOT NULL DEFAULT '';
+    COLUMN "unit" VARCHAR(10) NOT NULL DEFAULT 'kg';
