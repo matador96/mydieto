@@ -20,7 +20,17 @@ const googleAuth = new google.auth.GoogleAuth({
 
 const drive = google.drive({ version: "v3", auth: googleAuth.fromJSON(AUTH) });
 
-module.exports.uploadImageFile = async (imageFile) => {
+module.exports.generateId = async () => {
+  try {
+    const result = await drive.files.generateIds({count: 1});
+    const ids = result.data.ids;
+    return ids[0];
+  } catch (e) {
+    throw new AnotherServiceError(e.message);
+  }
+};
+
+module.exports.uploadImageFile = async (imageFile, fileName, id) => {
   try {
     const imageStream = new Readable();
     imageStream.push(imageFile.data);
@@ -28,7 +38,8 @@ module.exports.uploadImageFile = async (imageFile) => {
 
     const pathParameters = {
       resource: {
-        name: imageFile.name,
+        id: id,
+        name: fileName || imageFile.name,
         mimeType: imageFile.mimeType,
         parents: FOLDERS,
       },
@@ -51,10 +62,10 @@ module.exports.uploadImageFile = async (imageFile) => {
   }
 };
 
-module.exports.deleteImageFile = async (imageFile) => {
+module.exports.deleteImageFile = async (imageFileId) => {
   try {
     await drive.files.delete({
-      fileId: imageFile.id,
+      fileId: imageFileId,
     });
   } catch (e) {
     throw new AnotherServiceError(e.message);

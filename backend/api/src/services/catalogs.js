@@ -1,21 +1,19 @@
 const Catalogs = require("../models/catalogs");
-const Images = require("../models/images");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
 
 module.exports.getById = async (id) => {
-  const seller = await Catalogs.findByPk(id, {
-    include: [Images],
+  const catalog = await Catalogs.findByPk(id, {
     raw: false,
     nest: true,
   });
 
-  if (!seller)
+  if (!catalog)
     throw new ApplicationError("Каталог не найден", {
       path: "controllers",
     });
 
-  return seller;
+  return catalog;
 };
 
 module.exports.getByField = async (field) => {
@@ -37,7 +35,6 @@ module.exports.getWithParamsByParentId = async (queryParams) => {
 module.exports.getWithParams = async (queryParams) => {
   const data = await Catalogs.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "catalog"),
-    include: [Images],
     raw: false,
     nest: true,
   });
@@ -67,6 +64,8 @@ module.exports.update = async (obj, whereObj, settings = {}) => {
   const updatedCatalog = await Catalogs.findOne({
     where: whereObj,
     ...settings,
+    raw: false,
+    nest: true,
   });
 
   return updatedCatalog;

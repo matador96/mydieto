@@ -34,11 +34,12 @@ module.exports.create = async (req, res, transaction) => {
   };
   let catalog = await CatalogService.create(catalogData, { transaction });
 
-  const { images } = req.body;
-
-  if (images) {
-    await ImageService.normalizeImages(images, catalog.id, transaction);
-    catalog = await CatalogService.getById(catalog.id);
+  if (req.files){
+    const { image } = req.files;
+    if (image) {
+      const imageFromDisk = await ImageService.uploadImageToDisk(image, catalog);
+      catalog = await CatalogService.update({img: imageFromDisk.id}, {id: catalog.id}, {transaction})
+    }
   }
 
   return {
@@ -48,18 +49,22 @@ module.exports.create = async (req, res, transaction) => {
 
 module.exports.update = async (req, res, transaction) => {
   const { id } = req.params;
-  const { images } = req.body;
+  const catalogData = {
+    ...req.body,
+  };
 
   const prevData = await CatalogService.getById(id, { transaction });
 
-  if (images) {
-    await ImageService.normalizeImages(images, prevData.id, transaction);
+  if (req.files){
+    const { image } = req.files;
+    if (image) {
+      await ImageService.deleteImage(prevData.img);
+      const imageFromDisk = await ImageService.uploadImageToDisk(image, prevData);
+      catalogData.img = imageFromDisk.id;
+    }
   }
 
-  const catalog = await CatalogService.update(
-    {
-      ...req.body,
-    },
+  const catalog = await CatalogService.update(catalogData,
     { id },
     { transaction },
   );
@@ -69,15 +74,15 @@ module.exports.update = async (req, res, transaction) => {
   };
 };
 
-const validationSellerFilterFields = [query("mobile").isString().optional()];
+const validationSellerFilterFields = [];
 
 module.exports.validate = (method) => {
   switch (method) {
-    case "getSellerById": {
+    case "getCatalogById": {
       return [param("id").isInt()];
     }
 
-    case "getSellersWithParams": {
+    case "getCatalogsWithParams": {
       return [
         ...validationSellerFilterFields,
         ...Validations.pagination,
@@ -85,26 +90,12 @@ module.exports.validate = (method) => {
       ];
     }
 
-    case "getSellerByMobile": {
-      return [
-        param("mobile")
-          // eslint-disable-next-line no-useless-escape
-          .matches(/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/)
-          .withMessage("Неправильный ввод телефона"),
-      ];
-    }
-
     case "create": {
       return [
-        body("firstName").isString(),
-        body("lastName").isString(),
-        body("surName").isString(),
-        body("organization").isString(),
-        body("email").optional(),
-        body("priority").isInt().optional(),
-        body("address").optional(),
-        body("entityCategories").exists(), // в будущем переделать
-        body("mobile").isString(), // .isMobilePhone("ru-RU")
+        body("name").isString(),
+        body("img").isString(),
+        body("parentId").isInt(),
+        body("priority").isInt(),
         body("status").isIn(allStatuses).optional(),
       ];
     }
@@ -112,15 +103,10 @@ module.exports.validate = (method) => {
     case "update": {
       return [
         param("id").isInt(),
-        body("firstName").isString().optional(),
-        body("lastName").isString().optional(),
-        body("surName").isString().optional(),
-        body("organization").isString().optional(),
-        body("email").isEmail().optional(),
-        body("address").optional(),
+        body("name").isString().optional(),
+        body("img").isString().optional(),
+        body("parentId").isInt().optional(),
         body("priority").isInt().optional(),
-        body("entityCategories").optional(), // в будущем переделать
-        body("mobile").isString().optional(), // .isMobilePhone("ru-RU")
         body("status").isIn(allStatuses).optional(),
       ];
     }
