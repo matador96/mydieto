@@ -7,6 +7,7 @@ import ModalCatalogForm from './ModalCatalogForm';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import ModalButtonCatalogCreate from './ModalButtonCatalogCreate';
 import CanDo from '@shared/lib/CanDo';
+import { unitSettings } from '@shared/const/units';
 import { statusesOfCategories } from '@shared/const/statuses';
 
 const columns = [
@@ -24,6 +25,12 @@ const columns = [
       title: 'Приоритет',
       dataIndex: 'priority',
       key: 'priority'
+   },
+   {
+      title: 'Единица изм.',
+      dataIndex: 'unit',
+      key: 'unit',
+      render: (_) => <>{unitSettings.find((e) => e.value === _)?.label}</>
    },
    {
       title: 'Статус',

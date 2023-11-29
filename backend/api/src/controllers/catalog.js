@@ -34,11 +34,15 @@ module.exports.create = async (req, res, transaction) => {
   };
   let catalog = await CatalogService.create(catalogData, { transaction });
 
-  if (req.files){
+  if (req.files) {
     const { image } = req.files;
     if (image) {
       const imageFromDisk = await ImageService.uploadImageToDisk(image, catalog);
-      catalog = await CatalogService.update({img: imageFromDisk.id}, {id: catalog.id}, {transaction})
+      catalog = await CatalogService.update(
+        { img: imageFromDisk.id },
+        { id: catalog.id },
+        { transaction },
+      );
     }
   }
 
@@ -55,7 +59,7 @@ module.exports.update = async (req, res, transaction) => {
 
   const prevData = await CatalogService.getById(id, { transaction });
 
-  if (req.files){
+  if (req.files) {
     const { image } = req.files;
     if (image) {
       await ImageService.deleteImage(prevData.img);
@@ -64,10 +68,7 @@ module.exports.update = async (req, res, transaction) => {
     }
   }
 
-  const catalog = await CatalogService.update(catalogData,
-    { id },
-    { transaction },
-  );
+  const catalog = await CatalogService.update(catalogData, { id }, { transaction });
 
   return {
     data: catalog,
@@ -96,6 +97,7 @@ module.exports.validate = (method) => {
         body("img").isString(),
         body("parentId").isInt(),
         body("priority").isInt(),
+        body("unit").isString().optional(),
         body("status").isIn(allStatuses).optional(),
       ];
     }
@@ -105,6 +107,7 @@ module.exports.validate = (method) => {
         param("id").isInt(),
         body("name").isString().optional(),
         body("img").isString().optional(),
+        body("unit").isString().optional(),
         body("parentId").isInt().optional(),
         body("priority").isInt().optional(),
         body("status").isIn(allStatuses).optional(),
