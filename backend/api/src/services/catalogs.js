@@ -28,7 +28,7 @@ module.exports.getByField = async (field) => {
 module.exports.getWithParamsByParentId = async (queryParams) => {
   const data = await Catalogs.findAndCountAll({
     ...generateDatabaseSetting({ ...queryParams }, "catalog"),
-    include: [Images],
+    // include: [Images],
   });
 
   return { data: data.rows, count: data.count };

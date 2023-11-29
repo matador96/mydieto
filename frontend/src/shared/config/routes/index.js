@@ -79,7 +79,7 @@ export const routeList = {
    },
    [AppRoutes.SELLER_DASHBOARD]: {
       path: RoutePath[AppRoutes.SELLER_DASHBOARD],
-      element: <WelcomePage />,
+      element: <Navigate to={RoutePath[AppRoutes.SELLER_CATALOGS]} />,
       layout: AppLayout.sellerLayout,
       authOnly: true
    },

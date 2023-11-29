@@ -160,8 +160,9 @@ const ProfilePage = ({ isadmin }) => {
 
    return (
       <div>
-         <Divider orientation="left">Данные для входа</Divider>
-         <UserForm /> <Button onClick={showConfirm}>Выйти</Button>
+         <Divider orientation="left">Профиль</Divider>
+         {/* <UserForm /> */}
+         <Button onClick={showConfirm}>Выйти</Button>
       </div>
    );
 };

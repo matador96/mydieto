@@ -26,6 +26,10 @@ const Catalogs = sequelize.define(
       field: "parentId",
       type: DataTypes.INTEGER,
     },
+    unit: {
+      field: "unit",
+      type: DataTypes.STRING,
+    },
     priority: {
       field: "priority",
       type: DataTypes.INTEGER,

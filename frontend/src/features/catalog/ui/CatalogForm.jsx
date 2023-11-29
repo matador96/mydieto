@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input, Select } from '@shared/ui';
-import { Col, Row } from 'antd';
+import { Col, Row, Upload } from 'antd';
 import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 import { statusesOfCategories } from '@shared/const/statuses';
 import { unitSettings } from '@shared/const/units';
+import { PlusOutlined } from '@ant-design/icons';
+
+const normFile = (e) => {
+   if (Array.isArray(e)) {
+      return e;
+   }
+   return e?.fileList;
+};
+
+const getBase64 = (file) =>
+   new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+   });
 
 const CatalogForm = (props) => {
    const [isLoading, setIsLoading] = useState(false);
@@ -13,6 +29,22 @@ const CatalogForm = (props) => {
    const [categories, setCategories] = useState([]);
    const { initialValues, onSuccess, isEditForm } = props;
    const [form] = Form.useForm();
+
+   const [previewOpen, setPreviewOpen] = useState(false);
+   const [previewImage, setPreviewImage] = useState('');
+   const [previewTitle, setPreviewTitle] = useState('');
+   const [fileList, setFileList] = useState([]);
+
+   const handlePreview = async (file) => {
+      if (!file.url && !file.preview) {
+         file.preview = await getBase64(file.originFileObj);
+      }
+      setPreviewImage(file.url || file.preview);
+      setPreviewOpen(true);
+      setPreviewTitle(
+         file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
+      );
+   };
 
    const fetchCategories = () => {
       setIsLoadingCategories(true);
@@ -54,6 +86,42 @@ const CatalogForm = (props) => {
    };
 
    const isDisabledCategoryChoose = isEditForm && initialValues.parentId === 0; // Если это редактируемая форма, и категория является главной то ее нельзя менять
+
+   const fetchImage = async (file) => {
+      const formData = new FormData();
+      formData.append('image', file, file.uid);
+
+      setFileList((prev) => [
+         ...prev,
+         {
+            uid: file.uid,
+            name: file.name,
+            status: 'uploading'
+         }
+      ]);
+   };
+
+   const onRemove = (file) => {
+      if (!file?.id) {
+         return;
+      }
+
+      setFileList((prev) =>
+         prev.filter((item) => item.name !== file.name || item.id !== file.id)
+      );
+   };
+
+   const uploadButton = (
+      <div>
+         <PlusOutlined />
+         <div
+            style={{
+               marginTop: 8
+            }}>
+            Загрузить
+         </div>
+      </div>
+   );
 
    return (
       <Form
@@ -107,6 +175,26 @@ const CatalogForm = (props) => {
                      }}
                      options={categories}
                   />
+               </Form.Item>
+            </Col>
+         </Row>
+         <Row gutter={16}>
+            <Col span={8}>
+               <Form.Item
+                  label="Картинка"
+                  name="images"
+                  valuePropName="images"
+                  getValueFromEvent={normFile}>
+                  <Upload
+                     accept="image/png, image/jpeg"
+                     listType="picture-card"
+                     fileList={fileList}
+                     onPreview={handlePreview}
+                     onRemove={onRemove}
+                     action={fetchImage}
+                     maxCount={1}>
+                     <span>{fileList.length >= 1 ? null : uploadButton}</span>
+                  </Upload>
                </Form.Item>
             </Col>
          </Row>

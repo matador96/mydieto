@@ -62,7 +62,7 @@ const EditMySellerForm = (props) => {
                   message: 'Поле не может быть пустым'
                }
             ]}>
-            <Input />
+            <Input disabled={true} />
          </Form.Item>
 
          <Form.Item
@@ -74,7 +74,7 @@ const EditMySellerForm = (props) => {
                   message: 'Поле не может быть пустым'
                }
             ]}>
-            <Input />
+            <Input disabled={true} />
          </Form.Item>
 
          <Form.Item
@@ -92,6 +92,7 @@ const EditMySellerForm = (props) => {
                style={{
                   width: '100%'
                }}
+               disabled={true}
             />
          </Form.Item>
 

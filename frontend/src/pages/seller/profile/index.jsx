@@ -37,18 +37,23 @@ const ProfilePage = () => {
                <Divider orientation="left">Профиль</Divider>
                <EditMySellerForm />
             </Col>
+
             <Col span={12}>
+               <Divider orientation="left">Мои адреса доставки</Divider>
+               <ManageSellerAddressesList />
+            </Col>
+            {/* <Col span={12}>
                <Divider orientation="left">Данные для входа</Divider>
                <UserForm />
-            </Col>
+            </Col> */}
          </Row>
 
-         <Row gutter={24}>
+         {/* <Row gutter={24}>
             <Col span={24}>
                <Divider orientation="left">Мои адреса доставки</Divider>
                <ManageSellerAddressesList />
             </Col>
-         </Row>
+         </Row> */}
       </div>
    );
 };

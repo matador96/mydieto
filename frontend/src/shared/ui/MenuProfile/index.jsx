@@ -6,6 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@entitles/User';
 
+const userType = {
+   seller: 'Продавец',
+   admin: 'Администратор'
+};
+
 const MenuProfile = ({ isCollapsed }) => {
    const navigate = useNavigate();
    const userData = useSelector(getUserAuthData);
@@ -25,9 +30,15 @@ const MenuProfile = ({ isCollapsed }) => {
                />
                {!isCollapsed && (
                   <div className="menu-profile-info">
-                     <span className="menu-profile-info_login">{user.email}</span>
+                     <span className="menu-profile-info_login">
+                        {userData?.firstName
+                           ? `${userData?.firstName} ${userData?.lastName}`
+                           : user.email}
+                     </span>
 
-                     <Tag className="menu-profile-info_role">{userData.type}</Tag>
+                     <Tag className="menu-profile-info_role">
+                        {userType[userData.type]}
+                     </Tag>
                   </div>
                )}
             </React.Fragment>

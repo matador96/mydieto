@@ -97,7 +97,7 @@ module.exports.get = async (req) => {
 
   const userInfo = userInfoTemplate(userData);
 
-  const type = "seller"; // admin or seller
+  const type = userInfo?.seller?.id ? "seller" : "admin"; // admin or seller
 
   return {
     data: { ...userInfo, type },

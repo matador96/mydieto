@@ -29,7 +29,7 @@ module.exports.getFromSession = async (req) => {
   }
 
   return {
-    data: sellerData,
+    data: { ...sellerData, type: "seller" },
   };
 };
 
