@@ -1,9 +1,8 @@
-const { body, param, query } = require("express-validator");
+const { body, param } = require("express-validator");
 const Validations = require("../const/validatorSettings");
 const { statusesOfOrders } = require("../config/statusSettings");
 
 const OrderService = require("../services/orders");
-const OrderItemService = require("../services/orderItems");
 
 module.exports.getById = async (req) => {
   const { id } = req.params;

@@ -29,6 +29,24 @@ module.exports = [
     method: SellerController.getAddresses,
   },
   {
+    type: "get",
+    url: "/api/v1/seller/orders",
+    middlewares: [authenticate, validationChecker],
+    method: SellerController.getOrdersWithParams,
+  },
+  {
+    type: "post",
+    url: "/api/v1/seller/order",
+    middlewares: [authenticate, validationChecker],
+    method: SellerController.createOrder,
+  },
+  {
+    type: "put",
+    url: "/api/v1/seller/order/:id",
+    middlewares: [authenticate, validationChecker],
+    method: SellerController.updateOrder,
+  },
+  {
     type: "post",
     url: "/api/v1/seller/address",
     middlewares: [authenticate, validationChecker],

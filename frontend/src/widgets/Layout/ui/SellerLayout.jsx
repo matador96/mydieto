@@ -6,6 +6,7 @@ import {
    AlignLeftOutlined,
    UnorderedListOutlined,
    InboxOutlined,
+   ShoppingOutlined,
    ShoppingCartOutlined
 } from '@ant-design/icons';
 import { Menu, Layout, Badge } from 'antd';
@@ -42,8 +43,8 @@ const allMenuItems = [
    // getItem('Продавцы', 'users', <UsergroupAddOutlined />),
    // getItem('Журнал действий', 'logs', <AlignLeftOutlined />),
 
-   getItem('Каталог плат и деталей', 'seller-catalogs', <UnorderedListOutlined />)
-
+   getItem('Каталог плат и деталей', 'seller-catalogs', <UnorderedListOutlined />),
+   getItem('Мои заказы', 'seller-orders', <ShoppingOutlined />)
    // getItem('Мои заказы', 'seller-leads', <UsergroupAddOutlined />)
 ];
 

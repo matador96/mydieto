@@ -4,7 +4,8 @@ import {
    UsergroupAddOutlined,
    DashboardOutlined,
    AlignLeftOutlined,
-   UnorderedListOutlined
+   UnorderedListOutlined,
+   ShoppingOutlined
 } from '@ant-design/icons';
 import { Menu, Layout } from 'antd';
 import { useState } from 'react';
@@ -37,7 +38,8 @@ const allMenuItems = [
    // getItem('Заявки', 'users', <UsergroupAddOutlined />),
    // getItem('Журнал действий', 'logs', <AlignLeftOutlined />),
 
-   getItem('Каталог', 'admin-catalogs', <UnorderedListOutlined />)
+   getItem('Каталог', 'admin-catalogs', <UnorderedListOutlined />),
+   getItem('Заказы', 'admin-orders', <ShoppingOutlined />)
 ];
 
 const AdminLayout = (props) => {

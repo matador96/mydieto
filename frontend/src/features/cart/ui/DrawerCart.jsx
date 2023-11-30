@@ -128,7 +128,7 @@ const CartList = () => {
 
 const DrawerCart = (props) => {
    const [open, setOpen] = useState(false);
-
+   const cartData = useSelector(getCartItems);
    const dispatch = useDispatch();
 
    const showDrawer = () => {
@@ -141,6 +141,22 @@ const DrawerCart = (props) => {
    const cleanCart = () => {
       dispatch(cartActions.cleanCart());
       message.success('Корзина очищена');
+   };
+
+   const createOrder = () => {
+      const addressId = 3;
+      const price = 0;
+
+      const orderItems = cartData.map((e) => ({
+         catalogId: e.id,
+         capacity: e.quantity
+      }));
+
+      const orderData = {
+         addressId,
+         price,
+         orderItems
+      };
    };
 
    return (
@@ -166,7 +182,7 @@ const DrawerCart = (props) => {
             <Divider orientation="left">Адрес вывоза</Divider>
             <AddressList />
 
-            <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+            <Button type="primary" onClick={createOrder} style={{ width: '100%' }}>
                Отправить заказ
             </Button>
          </Drawer>

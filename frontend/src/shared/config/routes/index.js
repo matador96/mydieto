@@ -4,10 +4,13 @@ import NotPermissionPage from '@pages/general/notpermission';
 
 import WelcomePage from '@pages/main';
 import CatalogsPage from '@pages/seller/catalogs';
+import OrdersPage from '@pages/seller/orders';
+
 import StoragePage from '@pages/seller/storage';
 import LeadsPage from '@pages/seller/leads';
 
 import ManageCatalogsPage from '@pages/admin/catalogs';
+import ManageOrdersPage from '@pages/admin/orders';
 
 import UsersPage from '@pages/admin/users';
 import LogsPage from '@pages/admin/logs';
@@ -30,11 +33,13 @@ const AppRoutes = {
    ADMIN_PROFILE: 'admin-profile',
    ADMIN_USERS: 'admin-users',
    ADMIN_CATALOGS: 'admin-catalogs',
+   ADMIN_ORDERS: 'admin-orders',
    ADMIN_DASHBOARD: 'admin-dashboard',
    // Seller
    SELLER_DASHBOARD: 'seller-dashboard',
    SELLER_PROFILE: 'seller-profile',
    SELLER_CATALOGS: 'seller-catalogs',
+   SELLER_ORDERS: 'seller-orders',
    SELLER_LEADS: 'seller-leads',
    SELLER_STORAGE: 'seller-storage'
 };
@@ -58,10 +63,12 @@ export const RoutePath = {
    [AppRoutes.ADMIN_PROFILE]: '/admin/profile',
    // [AppRoutes.ADMIN_USERS]: '/admin/users',
    [AppRoutes.ADMIN_CATALOGS]: '/admin/catalogs',
+   [AppRoutes.ADMIN_ORDERS]: '/admin/orders',
    // Seller
    [AppRoutes.SELLER_DASHBOARD]: '/seller/dashboard',
    [AppRoutes.SELLER_PROFILE]: '/seller/profile',
    [AppRoutes.SELLER_CATALOGS]: '/seller/catalogs',
+   [AppRoutes.SELLER_ORDERS]: '/seller/orders',
    [AppRoutes.SELLER_STORAGE]: '/seller/storage'
    // [AppRoutes.SELLER_LEADS]: '/seller/leads'
 };
@@ -88,6 +95,11 @@ export const routeList = {
       element: <CatalogsPage />,
       authOnly: true
    },
+   [AppRoutes.SELLER_ORDERS]: {
+      path: RoutePath[AppRoutes.SELLER_ORDERS],
+      element: <OrdersPage />,
+      authOnly: true
+   },
    [AppRoutes.SELLER_STORAGE]: {
       path: RoutePath[AppRoutes.SELLER_STORAGE],
       element: <StoragePage />,
@@ -104,6 +116,12 @@ export const routeList = {
    [AppRoutes.ADMIN_CATALOGS]: {
       path: RoutePath[AppRoutes.ADMIN_CATALOGS],
       element: <ManageCatalogsPage />,
+      layout: AppLayout.adminLayout,
+      authOnly: true
+   },
+   [AppRoutes.ADMIN_ORDERS]: {
+      path: RoutePath[AppRoutes.ADMIN_ORDERS],
+      element: <ManageOrdersPage />,
       layout: AppLayout.adminLayout,
       authOnly: true
    },
