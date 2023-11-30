@@ -7,12 +7,14 @@ const sellerFieldsCanBeFilter = ["id", "mobile", "firstName", "lastName", "statu
 const userFieldsCanBeFilter = ["id", "email"];
 const addressFieldsCanBeFilter = ["id", "sellerId", "status"];
 const orderFieldsCanBeFilter = ["id", "sellerId", "price", "status"];
+const orderItemFieldsCanBeFilter = ["id", "catalogId", "status"];
 
 module.exports = {
   admin: adminFieldsCanBeFilter,
   address: addressFieldsCanBeFilter,
   catalog: catalogFieldsCanBeFilter,
   order: orderFieldsCanBeFilter,
+  orderItem: orderItemFieldsCanBeFilter,
   seller: sellerFieldsCanBeFilter,
   storage: storageFieldsCanBeFilter,
   user: userFieldsCanBeFilter,
@@ -36,6 +38,11 @@ module.exports = {
       id: "$eq",
       sellerId: "$eq",
       price: "$eq",
+      status: "$eq",
+    },
+    orderItem: {
+      id: "$eq",
+      catalogId: "$eq",
       status: "$eq",
     },
     seller: {

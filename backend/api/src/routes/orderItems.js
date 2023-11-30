@@ -1,32 +1,32 @@
-const OrderController = require("../controllers/order");
+const OrderItemController = require("../controllers/orderItem");
 const { authenticate } = require("../middleware/authenticate");
 const { validationChecker } = require("../middleware/validationChecker");
 
 module.exports = [
   {
     type: "get",
-    url: "/api/v1/order/:id",
+    url: "/api/v1/orderItem/:id",
     middlewares: [authenticate, validationChecker],
-    method: OrderController.getById,
+    method: OrderItemController.getById,
   },
   {
     type: "get",
-    url: "/api/v1/orders",
+    url: "/api/v1/orderItems",
     middlewares: [authenticate, validationChecker],
-    method: OrderController.getWithParams,
+    method: OrderItemController.getWithParams,
   },
   {
     type: "post",
-    url: "/api/v1/order",
+    url: "/api/v1/orderItem",
     middlewares: [authenticate, validationChecker],
     withTransaction: true,
-    method: OrderController.create,
+    method: OrderItemController.create,
   },
   {
     type: "put",
-    url: "/api/v1/order/:id",
+    url: "/api/v1/orderItem/:id",
     middlewares: [authenticate, validationChecker],
     withTransaction: true,
-    method: OrderController.update,
+    method: OrderItemController.update,
   },
 ];
