@@ -6,17 +6,25 @@ const sellerFieldsCanBeFilter = ["id", "mobile", "firstName", "lastName", "statu
 
 const userFieldsCanBeFilter = ["id", "email"];
 const addressFieldsCanBeFilter = ["id", "sellerId", "status"];
+const orderFieldsCanBeFilter = ["id", "sellerId", "price", "status"];
 
 module.exports = {
   admin: adminFieldsCanBeFilter,
-  catalog: catalogFieldsCanBeFilter,
-  seller: sellerFieldsCanBeFilter,
-  user: userFieldsCanBeFilter,
   address: addressFieldsCanBeFilter,
+  catalog: catalogFieldsCanBeFilter,
+  order: orderFieldsCanBeFilter,
+  seller: sellerFieldsCanBeFilter,
   storage: storageFieldsCanBeFilter,
+  user: userFieldsCanBeFilter,
+
   fieldOpSettings: {
     admin: {
       id: "$eq",
+    },
+    address: {
+      id: "$eq",
+      sellerId: "$eq",
+      status: "$eq",
     },
     catalog: {
       id: "$eq",
@@ -24,9 +32,11 @@ module.exports = {
       name: "$like",
       parentId: "$eq",
     },
-    user: {
+    order: {
       id: "$eq",
-      email: "$like",
+      sellerId: "$eq",
+      price: "$eq",
+      status: "$eq",
     },
     seller: {
       id: "$eq",
@@ -35,15 +45,15 @@ module.exports = {
       lastName: "$like",
       status: "$eq",
     },
-    address: {
-      id: "$eq",
-      sellerId: "$eq",
-      status: "$eq",
-    },
+
     storage: {
       id: "$eq",
       sellerId: "$eq",
       catalogId: "$eq",
+    },
+    user: {
+      id: "$eq",
+      email: "$like",
     },
   },
 };
