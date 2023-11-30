@@ -176,9 +176,10 @@ const StorageList = () => {
                               callBack={fetchData}
                            />
                         ]}>
-                        <img
-                           src={`https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png`}
-                        />
+                        {item.catalog.imgUrl ? (
+                           <img alt={item.catalog.name} src={item.catalog.imgUrl} />
+                        ) : null}
+
                         <List.Item.Meta
                            key={`${item.id}-`}
                            title={item.catalog.name}
