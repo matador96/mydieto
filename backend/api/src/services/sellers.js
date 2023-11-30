@@ -57,7 +57,6 @@ module.exports.getGroupedByDate = async () => {
 };
 
 module.exports.getByField = async (field) => {
-  console.log(field);
   const data = await Sellers.findOne({
     // include: [Addresses],
     where: { ...field },

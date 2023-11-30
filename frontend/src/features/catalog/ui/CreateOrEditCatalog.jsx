@@ -34,7 +34,23 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
             (v, k) => !_.isEqual(initialValues[k], v)
          );
 
-         await UpdateCatalog(updatedFields, catalogId)
+         const formData = new FormData();
+
+         for (let key in updatedFields) {
+            if (key === 'image') {
+               console.log('image');
+               console.log(updatedFields[key][0]);
+               formData.append(
+                  key,
+                  updatedFields[key][0].originFileObj,
+                  updatedFields[key][0].name
+               );
+            } else {
+               formData.append(key, updatedFields[key]);
+            }
+         }
+
+         await UpdateCatalog(formData, catalogId)
             .then(() => {
                callbackOnSuccess();
                message.success('Каталог изменен');
@@ -45,7 +61,13 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
          return;
       }
 
-      await CreateCatalog(values).then(() => {
+      const formDataCreate = new FormData();
+
+      for (let key in values) {
+         formDataCreate.append(key, values[key]);
+      }
+
+      await CreateCatalog(formDataCreate).then(() => {
          setLoading(false);
          // callbackOnSuccess();
          message.success('Каталог создан');

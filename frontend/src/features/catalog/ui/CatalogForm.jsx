@@ -49,6 +49,7 @@ const CatalogForm = (props) => {
    }, [form, initialValues]);
 
    const onFinish = (values) => {
+      console.log(values);
       onSuccess(values, setIsLoading).then(() => {
          if (isEditForm) {
             return;

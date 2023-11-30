@@ -34,7 +34,11 @@ const CatalogCardsByParentId = ({ id }) => {
                <Col span={6} key={`${item.id}-${item.name}`}>
                   <Card
                      loading={isLoading}
-                     cover={<img alt="example" src={item.imgUrl} />}
+                     cover={
+                        item.imgUrl ? (
+                           <img alt="item.name" src={item.imgUrl} />
+                        ) : null
+                     }
                      hoverable
                      actions={[
                         <AddToCartWithQuantity
