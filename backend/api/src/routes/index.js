@@ -16,12 +16,14 @@ async function tryCatchResponseWrapper(req, res, callback, withTransaction = fal
 
 const allRoutes = [
   ...require("./admins"),
-  ...require("./catalogs"),
-  ...require("./sellers"),
   ...require("./addresses"),
-  ...require("./users"),
+  ...require("./catalogs"),
   ...require("./liveness"),
+  ...require("./orders"),
+  ...require("./orderItems"),
+  ...require("./sellers"),
   ...require("./storage"),
+  ...require("./users"),
 ];
 
 module.exports = (app) => {
