@@ -34,12 +34,7 @@ const CatalogCardsByParentId = ({ id }) => {
                <Col span={6} key={`${item.id}-${item.name}`}>
                   <Card
                      loading={isLoading}
-                     cover={
-                        <img
-                           alt="example"
-                           src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                        />
-                     }
+                     cover={<img alt="example" src={item.imgUrl} />}
                      hoverable
                      actions={[
                         <AddToCartWithQuantity

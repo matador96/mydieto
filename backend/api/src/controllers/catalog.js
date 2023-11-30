@@ -34,16 +34,15 @@ module.exports.create = async (req, res, transaction) => {
   };
   let catalog = await CatalogService.create(catalogData, { transaction });
 
-  if (req.files) {
-    const { image } = req.files;
-    if (image) {
-      const imageFromDisk = await ImageService.uploadImageToDisk(image, catalog);
-      catalog = await CatalogService.update(
-        { img: imageFromDisk.id },
-        { id: catalog.id },
-        { transaction },
-      );
-    }
+  const image = req?.body?.image[0];
+
+  if (image) {
+    const imageFromDisk = await ImageService.uploadImageToDisk(image, catalog);
+    catalog = await CatalogService.update(
+      { img: imageFromDisk.id },
+      { id: catalog.id },
+      { transaction },
+    );
   }
 
   return {
@@ -59,13 +58,15 @@ module.exports.update = async (req, res, transaction) => {
 
   const prevData = await CatalogService.getById(id, { transaction });
 
-  if (req.files) {
-    const { image } = req.files;
-    if (image) {
+  const image = req?.body?.image[0];
+
+  if (image) {
+    if (prevData?.img) {
       await ImageService.deleteImage(prevData.img);
-      const imageFromDisk = await ImageService.uploadImageToDisk(image, prevData);
-      catalogData.img = imageFromDisk.id;
     }
+
+    const imageFromDisk = await ImageService.uploadImageToDisk(image, prevData);
+    catalogData.img = imageFromDisk.id;
   }
 
   const catalog = await CatalogService.update(catalogData, { id }, { transaction });

@@ -23,7 +23,12 @@ const Catalogs = sequelize.define(
     imgUrl: {
       type: new DataTypes.VIRTUAL(),
       get() {
-        return "https://drive.google.com/uc?export=download&id=" + this.get("img");
+        const img = this.get("img");
+        if (img) {
+          return `https://drive.google.com/uc?export=download&id=${img}`;
+        }
+
+        return null;
       },
     },
     parentId: {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, Tooltip } from 'antd';
+import { Space, Table, Tag, Tooltip, Avatar } from 'antd';
 import { Button, VerticalSpace } from '@shared/ui';
 import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 import { EditOutlined } from '@ant-design/icons';
@@ -17,15 +17,21 @@ const columns = [
       key: 'id'
    },
    {
+      title: 'Картинка',
+      dataIndex: 'imgUrl',
+      key: 'imgUrl',
+      render: (_) => <Avatar src={_} shape="square" size={64} />
+   },
+   {
       title: 'Название каталога',
       dataIndex: 'name',
       key: 'name'
    },
-   {
-      title: 'Приоритет',
-      dataIndex: 'priority',
-      key: 'priority'
-   },
+   // {
+   //    title: 'Приоритет',
+   //    dataIndex: 'priority',
+   //    key: 'priority'
+   // },
    {
       title: 'Единица изм.',
       dataIndex: 'unit',

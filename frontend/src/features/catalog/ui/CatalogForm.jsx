@@ -4,7 +4,7 @@ import { Col, Row, Upload } from 'antd';
 import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 import { statusesOfCategories } from '@shared/const/statuses';
 import { unitSettings } from '@shared/const/units';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 
 const normFile = (e) => {
    if (Array.isArray(e)) {
@@ -12,14 +12,6 @@ const normFile = (e) => {
    }
    return e?.fileList;
 };
-
-const getBase64 = (file) =>
-   new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-   });
 
 const CatalogForm = (props) => {
    const [isLoading, setIsLoading] = useState(false);
@@ -30,21 +22,7 @@ const CatalogForm = (props) => {
    const { initialValues, onSuccess, isEditForm } = props;
    const [form] = Form.useForm();
 
-   const [previewOpen, setPreviewOpen] = useState(false);
-   const [previewImage, setPreviewImage] = useState('');
-   const [previewTitle, setPreviewTitle] = useState('');
    const [fileList, setFileList] = useState([]);
-
-   const handlePreview = async (file) => {
-      if (!file.url && !file.preview) {
-         file.preview = await getBase64(file.originFileObj);
-      }
-      setPreviewImage(file.url || file.preview);
-      setPreviewOpen(true);
-      setPreviewTitle(
-         file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
-      );
-   };
 
    const fetchCategories = () => {
       setIsLoadingCategories(true);
@@ -88,37 +66,24 @@ const CatalogForm = (props) => {
    const isDisabledCategoryChoose = isEditForm && initialValues.parentId === 0; // Если это редактируемая форма, и категория является главной то ее нельзя менять
 
    const fetchImage = async (file) => {
-      const formData = new FormData();
-      formData.append('image', file, file.uid);
-
       setFileList((prev) => [
          ...prev,
          {
             uid: file.uid,
             name: file.name,
-            status: 'uploading'
+            status: 'finished'
          }
       ]);
    };
 
-   const onRemove = (file) => {
-      if (!file?.id) {
-         return;
-      }
-
-      setFileList((prev) =>
-         prev.filter((item) => item.name !== file.name || item.id !== file.id)
-      );
-   };
-
    const uploadButton = (
       <div>
-         <PlusOutlined />
+         {initialValues?.img ? <ReloadOutlined /> : <PlusOutlined />}
          <div
             style={{
                marginTop: 8
             }}>
-            Загрузить
+            {initialValues?.img ? `Заменить картинку` : `Загрузить картинку`}
          </div>
       </div>
    );
@@ -152,32 +117,33 @@ const CatalogForm = (props) => {
                </Form.Item>
             </Col>
          </Row>
-
-         <Row gutter={16}>
-            <Col span={24}>
-               <Form.Item name="parentId" label="Категория">
-                  <Select
-                     placeholder="Выберите категорию"
-                     label="role"
-                     name="parentId"
-                     allowClear
-                     onFocus={() => fetchCategories()}
-                     disabled={isDisabledCategoryChoose}
-                     rules={[
-                        {
-                           required: true,
-                           message: 'Поле не может быть пустым'
-                        }
-                     ]}
-                     fieldNames={{
-                        label: 'name',
-                        value: 'id'
-                     }}
-                     options={categories}
-                  />
-               </Form.Item>
-            </Col>
-         </Row>
+         {initialValues.parentId !== 0 && (
+            <Row gutter={16}>
+               <Col span={24}>
+                  <Form.Item name="parentId" label="Категория">
+                     <Select
+                        placeholder="Выберите категорию"
+                        label="role"
+                        name="parentId"
+                        allowClear
+                        onFocus={() => fetchCategories()}
+                        disabled={isDisabledCategoryChoose}
+                        rules={[
+                           {
+                              required: true,
+                              message: 'Поле не может быть пустым'
+                           }
+                        ]}
+                        fieldNames={{
+                           label: 'name',
+                           value: 'id'
+                        }}
+                        options={categories}
+                     />
+                  </Form.Item>
+               </Col>
+            </Row>
+         )}
 
          <Row gutter={16}>
             <Col span={16}>
@@ -205,18 +171,19 @@ const CatalogForm = (props) => {
             <Col span={8}>
                <Form.Item
                   label="Картинка"
-                  name="images"
-                  valuePropName="images"
+                  name="image"
+                  valuePropName="image"
                   getValueFromEvent={normFile}>
                   <Upload
                      accept="image/png, image/jpeg"
                      listType="picture-card"
                      fileList={fileList}
-                     onPreview={handlePreview}
-                     onRemove={onRemove}
-                     action={fetchImage}
+                     className="upload-catalog-img"
+                     beforeUpload={fetchImage}
+                     onPreview={null}
+                     onRemove={null}
                      maxCount={1}>
-                     <span>{fileList.length >= 1 ? null : uploadButton}</span>
+                     {fileList.length >= 1 ? null : <span>{uploadButton}</span>}
                   </Upload>
                </Form.Item>
             </Col>

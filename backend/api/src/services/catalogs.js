@@ -27,6 +27,8 @@ module.exports.getWithParamsByParentId = async (queryParams) => {
   const data = await Catalogs.findAndCountAll({
     ...generateDatabaseSetting({ ...queryParams }, "catalog"),
     // include: [Images],
+    raw: false,
+    nest: true,
   });
 
   return { data: data.rows, count: data.count };

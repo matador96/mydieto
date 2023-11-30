@@ -10,6 +10,10 @@ body {
    top: 0;
 }
 
+.upload-catalog-img .ant-upload-list-item-actions {
+   display: none;
+}
+
 .ant-steps
    .ant-steps-item-finish
    > .ant-steps-item-container
