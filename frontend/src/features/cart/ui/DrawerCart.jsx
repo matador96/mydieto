@@ -23,12 +23,13 @@ import ModalButtonAddressCreate from '@features/seller/ModalButtonAddressCreate'
 import { useSelector } from 'react-redux';
 import { GetStorageWithParams } from '@features/storage/model/GetStorageWithParams';
 
+import { CreateMyOrder } from '@features/order/model/services/CreateMyOrder';
+
 import { getCartItems } from '@entitles/Cart';
 
-const AddressList = () => {
+const AddressList = ({ selectedAddressId, setSelectedAddressId }) => {
    const [isLoading, setIsLoading] = useState(false);
 
-   const [selectedAddress, setSelectedAddress] = useState(null);
    const [data, setData] = useState([]);
 
    useEffect(() => {
@@ -37,6 +38,7 @@ const AddressList = () => {
 
    const fetchData = () => {
       setIsLoading(true);
+
       GetMyAddressList({
          page: 1,
          status: 'active',
@@ -57,7 +59,11 @@ const AddressList = () => {
             dataSource={data}
             renderItem={(item) => (
                <List.Item>
-                  <Radio />
+                  <Radio
+                     onClick={() => setSelectedAddressId(item.id)}
+                     checked={selectedAddressId === item.id}
+                     value={item.id}
+                  />
                   <List.Item.Meta
                      key={`${item.id}-${item.address}`}
                      title={item.name}
@@ -128,6 +134,7 @@ const CartList = () => {
 
 const DrawerCart = (props) => {
    const [open, setOpen] = useState(false);
+   const [selectedAddressId, setSelectedAddressId] = useState(null);
    const cartData = useSelector(getCartItems);
    const dispatch = useDispatch();
 
@@ -144,19 +151,32 @@ const DrawerCart = (props) => {
    };
 
    const createOrder = () => {
-      const addressId = 3;
-      const price = 0;
-
       const orderItems = cartData.map((e) => ({
          catalogId: e.id,
          capacity: e.quantity
       }));
 
+      if (!selectedAddressId) {
+         message.error('Выберите адрес');
+         return;
+      }
+
+      if (orderItems.length === 0) {
+         message.error('Заказ пустой');
+         return;
+      }
+
       const orderData = {
-         addressId,
-         price,
+         addressId: selectedAddressId,
          orderItems
       };
+
+      CreateMyOrder(orderData).then(() => {
+         message.success('Заказ создан');
+         onClose();
+         setSelectedAddressId(null);
+         dispatch(cartActions.cleanCart());
+      });
    };
 
    return (
@@ -180,7 +200,10 @@ const DrawerCart = (props) => {
             <CartList />
 
             <Divider orientation="left">Адрес вывоза</Divider>
-            <AddressList />
+            <AddressList
+               selectedAddressId={selectedAddressId}
+               setSelectedAddressId={setSelectedAddressId}
+            />
 
             <Button type="primary" onClick={createOrder} style={{ width: '100%' }}>
                Отправить заказ

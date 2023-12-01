@@ -43,7 +43,12 @@ module.exports.createOrder = async (req, res, transaction) => {
   }
 
   if (orderItems) {
-    orderItems = orderItems.map((e) => JSON.parse(e));
+    orderItems = orderItems.map((e) => {
+      if (typeof e !== "object") {
+        return JSON.parse(e);
+      }
+      return e;
+    });
     orderData.orderItems = orderItems;
   }
 
