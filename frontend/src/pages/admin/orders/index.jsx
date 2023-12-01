@@ -1,12 +1,12 @@
 import React from 'react';
-import TableCatalogs from '@features/catalog/ui/TableCatalogs';
+import TableOrders from '@features/order/ui/TableOrders';
 import { Title } from '@shared/ui';
 
 const ManageOrdersPage = () => {
    return (
       <div>
          <Title>Заказы</Title>
-         <TableCatalogs />
+         <TableOrders />
       </div>
    );
 };

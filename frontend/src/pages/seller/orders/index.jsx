@@ -1,12 +1,12 @@
 import React from 'react';
-import CardListCatalogs from '@features/catalog/ui/CardListCatalogs';
+import OrderTabs from '@features/order/ui/OrderTabs';
 import { Title } from '@shared/ui';
 
 const OrdersPage = () => {
    return (
       <div>
          <Title>Мои заказы</Title>
-         <CardListCatalogs />
+         <OrderTabs />
       </div>
    );
 };
