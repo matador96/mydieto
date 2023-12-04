@@ -14,6 +14,7 @@ const orderFieldsCanBeFilter = [
   "status",
 ];
 const orderItemFieldsCanBeFilter = ["id", "catalogId", "status"];
+const orderStatusFieldsCanBeFilter = ["id", "orderId", "status"];
 
 module.exports = {
   admin: adminFieldsCanBeFilter,
@@ -21,6 +22,7 @@ module.exports = {
   catalog: catalogFieldsCanBeFilter,
   order: orderFieldsCanBeFilter,
   orderItem: orderItemFieldsCanBeFilter,
+  orderStatus: orderStatusFieldsCanBeFilter,
   seller: sellerFieldsCanBeFilter,
   storage: storageFieldsCanBeFilter,
   user: userFieldsCanBeFilter,
@@ -46,10 +48,16 @@ module.exports = {
       price: "$eq",
       facticalPrice: "$eq",
       status: "$eq",
+      statusId: "$eq",
     },
     orderItem: {
       id: "$eq",
       catalogId: "$eq",
+      status: "$eq",
+    },
+    orderStatus: {
+      id: "$eq",
+      orderId: "$eq",
       status: "$eq",
     },
     seller: {

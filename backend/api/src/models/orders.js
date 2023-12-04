@@ -3,6 +3,7 @@ const { DataTypes } = require("sequelize");
 
 const { statusesOfOrders } = require("../config/statusSettings");
 const Addresses = require("./addresses");
+const OrderStatuses = require("./orderStatuses");
 const Sellers = require("./sellers");
 
 const Orders = sequelize.define(
@@ -41,6 +42,13 @@ const Orders = sequelize.define(
     status: {
       field: "status",
       type: DataTypes.ENUM(statusesOfOrders),
+    statusId: {
+      field: "statusId",
+      type: DataTypes.INTEGER,
+      references: {
+        model: "orderStatuses",
+        key: "id",
+      },
     },
   },
   {
@@ -55,5 +63,10 @@ Orders.belongsTo(Addresses, {
 Orders.belongsTo(Sellers, {
   foreignKey: "sellerId",
 });
+
+Orders.hasOne(OrderStatuses, {
+  foreignKey: 'statusId'
+})
+
 
 module.exports = Orders;
