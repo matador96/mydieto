@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Divider, Image } from 'antd';
-import defaulPhotoCard from '../../../../../../../iznor/photo_2023-12-01_21-26-38.jpg';
+import defaulPhotoCard from '../../../shared/assets/images/photo_2023-12-01_21-26-38.jpg';
 import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 
 import AddToCartWithQuantity from '@features/storage/ui/AddToCartWithQuantity';
@@ -36,10 +36,15 @@ const CatalogCardsByParentId = ({ id }) => {
                      className="custom-card"
                      loading={isLoading}
                      cover={
-                        // item.imgUrl ? (
-                        //    <img alt="item.name" src={item.imgUrl} />
-                        // ) : null
-                        <Image style={{ height: '150px' }} src={defaulPhotoCard} />
+                        item.imgUrl ? (
+                           <img
+                              style={{ height: '150px' }}
+                              alt="item.name"
+                              src={item.imgUrl}
+                           />
+                        ) : (
+                           <img style={{ height: '150px' }} src={defaulPhotoCard} />
+                        )
                      }
                      hoverable
                      actions={[
@@ -47,8 +52,7 @@ const CatalogCardsByParentId = ({ id }) => {
                            key={`ke${item.id}`}
                            catalogId={item.id}
                         />
-                     ]}
-                  >
+                     ]}>
                      {item.name}
                   </Card>
                </Col>
