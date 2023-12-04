@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Divider, Image } from 'antd';
+import { Card, Row, Col, Divider } from 'antd';
 import defaulPhotoCard from '../../../shared/assets/images/photo_2023-12-01_21-26-38.jpg';
 import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 
@@ -37,13 +37,19 @@ const CatalogCardsByParentId = ({ id }) => {
                      loading={isLoading}
                      cover={
                         item.imgUrl ? (
+                           // <div className='card-background-image'  style={{backgroundImage: `url(${item.image})`}}/>
+
                            <img
-                              style={{ height: '150px' }}
+                              className="card-background-image"
+                              style={{height: '150px'}}
                               alt="item.name"
                               src={item.imgUrl}
                            />
                         ) : (
-                           <img style={{ height: '150px' }} src={defaulPhotoCard} />
+                           <div
+                              className="card-background-image"
+                              style={{ backgroundImage: `url(${defaulPhotoCard})` }}
+                           />
                         )
                      }
                      hoverable
@@ -52,8 +58,7 @@ const CatalogCardsByParentId = ({ id }) => {
                            key={`ke${item.id}`}
                            catalogId={item.id}
                         />
-                     ]}
-                  >
+                     ]}>
                      {item.name}
                   </Card>
                </Col>
