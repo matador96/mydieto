@@ -52,5 +52,4 @@ Orders.belongsTo(Sellers, {
   foreignKey: "sellerId",
 });
 
-
 module.exports = Orders;

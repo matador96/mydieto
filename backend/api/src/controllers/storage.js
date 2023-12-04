@@ -42,7 +42,7 @@ module.exports.add = async (req) => {
     });
   }
 
-  const current = await storageService.getByField({
+  const current = await storageService.getByFields({
     catalogId,
     sellerId,
   });
