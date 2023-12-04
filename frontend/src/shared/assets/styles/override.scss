@@ -164,9 +164,13 @@ body {
    .ant-menu {
       &-horizontal {
          .ant-menu-item {
-            font-size: 14px;
+            font-size: 16px;
             height: 62px;
             line-height: 62px;
+
+            &:hover {
+               border-bottom: none !important;
+            }
          }
       }
       &-item,

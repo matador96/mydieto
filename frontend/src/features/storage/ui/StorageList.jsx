@@ -87,7 +87,8 @@ const StorageListQuantityWithSave = (props) => {
                         quantity: 1
                      })
                   }
-                  icon={<ShoppingCartOutlined />}>
+                  icon={<ShoppingCartOutlined />}
+               >
                   В корзину
                </Button>
             </Tooltip>
@@ -175,7 +176,8 @@ const StorageList = () => {
                               storage={item}
                               callBack={fetchData}
                            />
-                        ]}>
+                        ]}
+                     >
                         {item.catalog.imgUrl ? (
                            <img alt={item.catalog.name} src={item.catalog.imgUrl} />
                         ) : null}
@@ -187,7 +189,8 @@ const StorageList = () => {
                               <span
                                  className="green-span-url"
                                  type="link"
-                                 onClick={() => showConfirmDelete(item.id)}>
+                                 onClick={() => showConfirmDelete(item.id)}
+                              >
                                  Удалить из склада
                               </span>
                            }

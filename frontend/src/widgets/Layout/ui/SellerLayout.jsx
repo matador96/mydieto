@@ -95,13 +95,17 @@ const SellerLayout = (props) => {
       <Layout
          style={{
             minHeight: '100vh'
-         }}>
+         }}
+      >
          <Layout>
             {' '}
-            <Header className="erp-header-seller">
+            <Header style={{ padding: '0' }} className="erp-header-seller">
                <Container>
                   <div className="erp-header-seller-items">
                      {' '}
+                     <div className="header-logo" onClick={() => navigate('/')}>
+                        РЭЛ
+                     </div>
                      <Menu
                         onClick={onClick}
                         mode="horizontal"
@@ -110,10 +114,11 @@ const SellerLayout = (props) => {
                         selectedKeys={selectedRoute}
                         defaultSelectedKeys={selectedRoute}
                      />{' '}
-                     <div style={{ display: 'flex' }}>
+                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <div
                            className="header-button"
-                           onClick={() => navigate(`/seller/storage`)}>
+                           onClick={() => navigate(`/seller/storage`)}
+                        >
                            <InboxOutlined />
 
                            <span className="header-button_label">Моя склад</span>
@@ -126,7 +131,8 @@ const SellerLayout = (props) => {
                                     showZero
                                     count={cartCount}
                                     size="small"
-                                    status="success">
+                                    status="success"
+                                 >
                                     <ShoppingCartOutlined />
                                  </Badge>
                                  <span className="header-button_label">Корзина</span>
@@ -142,19 +148,22 @@ const SellerLayout = (props) => {
             <Content
                style={{
                   margin: '0 16px'
-               }}>
+               }}
+            >
                <div
                   style={{
                      padding: '0 24px',
                      minHeight: 360
-                  }}>
+                  }}
+               >
                   <Container> {props.children} </Container>
                </div>
             </Content>
             <Footer
                style={{
                   textAlign: 'center'
-               }}>
+               }}
+            >
                © 2022 – {new Date().getFullYear()} Ecorium. Все права защищены.
             </Footer>
          </Layout>

@@ -32,7 +32,8 @@ const ModalButtonCatalogCreate = ({ closeModal }) => {
             title={`Создать каталог`}
             footer={null}
             width={600}
-            destroyOnClose={true}>
+            destroyOnClose={true}
+         >
             <CreateOrEditCatalog callbackOnSuccess={handleCancel} />
          </Modal>
       </>
