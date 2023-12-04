@@ -1,3 +1,4 @@
+const Catalogs = require("../models/catalogs");
 const Orders = require("../models/orders");
 const OrderItems = require("../models/orderItems");
 const { generateDatabaseSetting } = require("../helpers/db");
@@ -5,7 +6,10 @@ const { ApplicationError } = require("./../classes/Errors");
 
 module.exports.getById = async (id) => {
   const order = await Orders.findByPk(id, {
-    include: [OrderItems],
+    include: [{
+      model: OrderItems,
+      include: Catalogs,
+    }],
     raw: false,
     nest: true,
   });
@@ -21,7 +25,10 @@ module.exports.getById = async (id) => {
 module.exports.getWithParams = async (queryParams) => {
   const data = await Orders.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "order"),
-    include: [OrderItems],
+    include: [{
+      model: OrderItems,
+      include: Catalogs,
+    }],
     raw: false,
     nest: true,
   });
