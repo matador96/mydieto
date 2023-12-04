@@ -18,7 +18,8 @@ const MenuProfile = ({ isCollapsed }) => {
    return (
       <div
          className="menu-profile"
-         onClick={() => navigate(`/${userData.type}/profile`)}>
+         onClick={() => navigate(`/${userData.type}/profile`)}
+      >
          {[userData].map((user) => (
             <React.Fragment key={`user-${user}`}>
                <Avatar

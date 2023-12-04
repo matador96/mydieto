@@ -23,7 +23,8 @@ const AuthPage = ({ isLoginForm = true }) => {
                      <Button
                         type="link"
                         onClick={() => navigate('/register')}
-                        style={{ padding: '0 3px' }}>
+                        style={{ padding: '0 3px' }}
+                     >
                         <span style={{ textDecoration: 'underline' }}>
                            зарегистрируемся!
                         </span>
@@ -36,7 +37,8 @@ const AuthPage = ({ isLoginForm = true }) => {
                      <Button
                         type="link"
                         onClick={() => navigate('/login')}
-                        style={{ padding: '0 3px' }}>
+                        style={{ padding: '0 3px' }}
+                     >
                         <span style={{ textDecoration: 'underline' }}>
                            авторизуемся!
                         </span>
@@ -47,7 +49,8 @@ const AuthPage = ({ isLoginForm = true }) => {
 
             <Card
                style={{ marginTop: '25px' }}
-               title="Экориум - ваш личный онлайн каталог электронного лома">
+               title="Экориум - ваш личный онлайн каталог электронного лома"
+            >
                Вы сможете:
                <ul>
                   <li>
