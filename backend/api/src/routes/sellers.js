@@ -38,24 +38,28 @@ module.exports = [
     type: "post",
     url: "/api/v1/seller/order",
     middlewares: [authenticate, validationChecker],
+    withTransaction: true,
     method: SellerController.createOrder,
   },
   {
     type: "put",
     url: "/api/v1/seller/order/:id",
     middlewares: [authenticate, validationChecker],
+    withTransaction: true,
     method: SellerController.updateOrder,
   },
   {
     type: "post",
     url: "/api/v1/seller/address",
     middlewares: [authenticate, validationChecker],
+    withTransaction: true,
     method: SellerController.createAddress,
   },
   {
     type: "put",
     url: "/api/v1/seller/address/:id",
     middlewares: [authenticate, validationChecker],
+    withTransaction: true,
     method: SellerController.updateAddress,
   },
   {

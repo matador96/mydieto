@@ -39,7 +39,7 @@ const CatalogCardsByParentId = ({ id }) => {
                         item.imgUrl ? (
                            <img
                               className="card-background-image"
-                              style={{ height: '150px' }}
+                              style={{height: '150px'}}
                               alt="item.name"
                               src={item.imgUrl}
                            />
