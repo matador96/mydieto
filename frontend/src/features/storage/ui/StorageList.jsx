@@ -24,6 +24,7 @@ import { GetStorageWithParams } from '../model/GetStorageWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
 import { GetCatalogsListByParentId } from '@features/catalog/model/services/GetCatalogsListByParentId';
+
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 
 import { cartActions } from '@entitles/Cart';
