@@ -1,10 +1,13 @@
 import React from 'react';
-import { Tabs } from 'antd';
+import { Tabs, Tag } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { Collapse, theme } from 'antd';
 import { useState, useEffect } from 'react';
 import { GetSellerOrders } from '@features/order/model/services/GetSellerOrders';
 import OrderItemData from './OrderItemData';
+import timestampToNormalDate from '@shared/utils/tsToTime';
+import statuses from '@shared/const/statuses';
+
 const text = `
   В разработке
 `;
@@ -38,21 +41,18 @@ const OrderList = () => {
 
    const getItems = (panelStyle) => {
       const collapseList = data.map((e) => {
-         const dateObject = new Date(e.createdAt);
-
-         const year = dateObject.getFullYear();
-         const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
-         const day = dateObject.getDate().toString().padStart(2, '0');
-
-         const hours = dateObject.getHours().toString().padStart(2, '0');
-         const minutes = dateObject.getMinutes().toString().padStart(2, '0');
-
-         const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
-
          return {
             key: e.id,
-            label: `Заказ № ${e.id} от ${formattedDate}`,
-            extra: `${e.price}р`,
+            label: (
+               <>
+                  <Tag>Заказ №{e.id}</Tag> от {timestampToNormalDate(e.createdAt)}
+               </>
+            ),
+            extra: (
+               <Tag color={statuses[e.status]?.color}>
+                  {statuses[e.status]?.label}
+               </Tag>
+            ),
             children: <OrderItemData order={e} />,
             style: panelStyle
          };
@@ -67,15 +67,13 @@ const OrderList = () => {
          expandIcon={({ isActive }) => (
             <CaretRightOutlined rotate={isActive ? 90 : 0} />
          )}
-         style={{ background: 'transparent' }}
-      >
+         style={{ background: 'transparent' }}>
          {collapseItems.map((item) => (
             <Panel
                key={item.key}
                header={item.label}
                extra={item.extra}
-               style={item.style}
-            >
+               style={item.style}>
                {item.children}
             </Panel>
          ))}
@@ -121,6 +119,12 @@ const items = [
 ];
 
 const OrderTabs = () => (
-   <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+   <Tabs
+      defaultActiveKey="1"
+      items={items}
+      type="card"
+      onChange={onChange}
+      style={{ minHeight: '80vh' }}
+   />
 );
 export default OrderTabs;

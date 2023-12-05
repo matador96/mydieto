@@ -12,9 +12,9 @@ import Alert from './Alert';
 import Select from './Select';
 import VerticalSpace from './VerticalSpace';
 import DateWithAgo from './Custom/DateWithAgo';
-import StatusTag from './Custom/StatusTag';
-import StatusProgress from './Custom/StatusProgress';
-import StatusProgressSteps from './Custom/StatusProgressSteps';
+// import StatusTag from './Custom/StatusTag';
+// import StatusProgress from './Custom/StatusProgress';
+// import StatusProgressSteps from './Custom/StatusProgressSteps';
 import { MenuProfile } from './MenuProfile';
 
 export {
@@ -32,8 +32,8 @@ export {
    Select,
    MenuProfile,
    DateWithAgo,
-   StatusProgress,
-   StatusTag,
-   VerticalSpace,
-   StatusProgressSteps
+   // StatusProgress,
+   // StatusProgressSteps
+   // StatusTag,
+   VerticalSpace
 };
