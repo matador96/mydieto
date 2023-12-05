@@ -4,6 +4,8 @@ const { DataTypes } = require("sequelize");
 const { statusesOfOrderItems } = require("../config/statusSettings");
 const Catalogs = require("./catalogs");
 const Orders = require("./orders");
+const StorageService = require("../services/storage");
+const { DatabaseError } = require("../classes/Errors");
 
 const OrderItems = sequelize.define(
   "orderItems",
@@ -40,6 +42,29 @@ const OrderItems = sequelize.define(
     },
   },
   {
+    hooks: {
+      beforeCreate: async (orderItem, options) => {
+        try {
+          const { parentRecord } = options;
+          const sellerId = parentRecord.sellerId;
+          const catalogId = orderItem.catalogId;
+
+          const storageItem = await StorageService.getByFields({
+            sellerId,
+            catalogId,
+          });
+          storageItem.quantity -= orderItem.capacity;
+          await StorageService.update(
+            storageItem,
+            { id: storageItem.id },
+            { transaction: options.transaction },
+          );
+        } catch (e) {
+          const error = new DatabaseError(e.message, e);
+          throw error;
+        }
+      },
+    },
     timestamps: true,
   },
 );

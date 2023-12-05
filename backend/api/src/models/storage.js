@@ -31,6 +31,9 @@ const Storage = sequelize.define(
     quantity: {
       field: "quantity",
       type: DataTypes.INTEGER,
+      validate: {
+        min: 0,
+      },
     },
   },
   {

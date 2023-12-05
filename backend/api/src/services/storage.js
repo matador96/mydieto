@@ -17,9 +17,9 @@ module.exports.getById = async (id) => {
   return storage;
 };
 
-module.exports.getByField = async (field) => {
+module.exports.getByFields = async (fields) => {
   const data = await Storage.findOne({
-    where: { ...field },
+    where: { ...fields },
   });
   return data;
 };
