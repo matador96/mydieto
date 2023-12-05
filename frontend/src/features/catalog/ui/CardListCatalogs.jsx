@@ -37,11 +37,9 @@ const CatalogCardsByParentId = ({ id }) => {
                      loading={isLoading}
                      cover={
                         item.imgUrl ? (
-                           // <div className='card-background-image'  style={{backgroundImage: `url(${item.image})`}}/>
-
                            <img
                               className="card-background-image"
-                              style={{height: '150px'}}
+                              style={{ height: '150px' }}
                               alt="item.name"
                               src={item.imgUrl}
                            />

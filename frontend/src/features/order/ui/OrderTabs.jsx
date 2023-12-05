@@ -4,10 +4,11 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import { Collapse, theme } from 'antd';
 import { useState, useEffect } from 'react';
 import { GetSellerOrders } from '@features/order/model/services/GetSellerOrders';
+import OrderItemData from './OrderItemData';
 const text = `
   В разработке
 `;
-
+const { Panel } = Collapse;
 const OrderList = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
@@ -36,27 +37,47 @@ const OrderList = () => {
    };
 
    const getItems = (panelStyle) => {
-      const collapseList = data.map((e) => ({
-         key: e.id,
-         label: `Заказ № ${e.id}`,
-         children: <p>{text}</p>,
-         style: panelStyle
-      }));
+      const collapseList = data.map((e) => {
+         const dateObject = new Date(e.createdAt);
+
+         const year = dateObject.getFullYear();
+         const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+         const day = dateObject.getDate().toString().padStart(2, '0');
+
+         const hours = dateObject.getHours().toString().padStart(2, '0');
+         const minutes = dateObject.getMinutes().toString().padStart(2, '0');
+
+         const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
+
+         return {
+            key: e.id,
+            label: `Заказ № ${e.id} от ${formattedDate}`,
+            extra: `${e.price}р`,
+            children: <OrderItemData order={e} />,
+            style: { ...panelStyle, color: 'red' }
+         };
+      });
 
       return collapseList;
    };
-
+   const collapseItems = getItems(panelStyle);
    return (
       <Collapse
          bordered={false}
          expandIcon={({ isActive }) => (
             <CaretRightOutlined rotate={isActive ? 90 : 0} />
          )}
-         style={{
-            background: 'transparent'
-         }}
-         items={getItems(panelStyle)}
-      />
+         style={{ background: 'transparent' }}>
+         {collapseItems.map((item) => (
+            <Panel
+               key={item.key}
+               header={item.label}
+               extra={item.extra}
+               style={item.style}>
+               {item.children}
+            </Panel>
+         ))}
+      </Collapse>
    );
 };
 

@@ -24,6 +24,7 @@ import { GetStorageWithParams } from '../model/GetStorageWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
 import { GetCatalogsListByParentId } from '@features/catalog/model/services/GetCatalogsListByParentId';
+import defaulPhotoCard from '../../../shared/assets/images/photo_2023-12-01_21-26-38.jpg';
 
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
@@ -87,8 +88,7 @@ const StorageListQuantityWithSave = (props) => {
                         quantity: 1
                      })
                   }
-                  icon={<ShoppingCartOutlined />}
-               >
+                  icon={<ShoppingCartOutlined />}>
                   В корзину
                </Button>
             </Tooltip>
@@ -176,11 +176,12 @@ const StorageList = () => {
                               storage={item}
                               callBack={fetchData}
                            />
-                        ]}
-                     >
+                        ]}>
                         {item.catalog.imgUrl ? (
                            <img alt={item.catalog.name} src={item.catalog.imgUrl} />
-                        ) : null}
+                        ) : (
+                           <img  alt='default image' src={defaulPhotoCard}/>
+                        )}
 
                         <List.Item.Meta
                            key={`${item.id}-`}
@@ -189,8 +190,7 @@ const StorageList = () => {
                               <span
                                  className="green-span-url"
                                  type="link"
-                                 onClick={() => showConfirmDelete(item.id)}
-                              >
+                                 onClick={() => showConfirmDelete(item.id)}>
                                  Удалить из склада
                               </span>
                            }
