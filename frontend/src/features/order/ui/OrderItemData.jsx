@@ -10,12 +10,15 @@ function OrderItemData({ order }) {
                justifyContent: 'space-between',
                alignItems: 'start',
                fontSize: '16px'
-            }}>вшы
+            }}
+         >
+            вшы
             <div>
                {orderItems.map((item, index) => (
                   <p
                      style={{ display: 'flex', flexDirection: 'column' }}
-                     key={index}>
+                     key={index}
+                  >
                      {item.name}
                   </p>
                ))}
