@@ -100,7 +100,8 @@ const ManageSellerAddressesList = () => {
                         <Tooltip
                            placement="right"
                            title={'Редактировать адрес'}
-                           arrow={false}>
+                           arrow={false}
+                        >
                            <Button
                               type="primary"
                               onClick={() => setSelectedAddress(item)}
@@ -111,7 +112,8 @@ const ManageSellerAddressesList = () => {
                         <Tooltip
                            placement="right"
                            title={'Удалить адрес'}
-                           arrow={false}>
+                           arrow={false}
+                        >
                            <Button
                               type="primary"
                               danger
@@ -120,7 +122,8 @@ const ManageSellerAddressesList = () => {
                            />
                         </Tooltip>
                      </Space>
-                  ]}>
+                  ]}
+               >
                   <List.Item.Meta
                      key={`${item.id}-${item.address}`}
                      title={item.name}

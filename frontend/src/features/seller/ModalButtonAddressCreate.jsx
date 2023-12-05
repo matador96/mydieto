@@ -33,7 +33,8 @@ const ModalButtonAddressCreate = ({ closeModal = () => {} }) => {
             title={`Добавить адрес`}
             footer={null}
             width={600}
-            destroyOnClose={true}>
+            destroyOnClose={true}
+         >
             <CreateOrEditAddress id={null} callbackOnSuccess={handleCancel} />
          </Modal>
       </>

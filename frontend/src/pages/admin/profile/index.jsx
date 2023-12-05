@@ -49,7 +49,8 @@ const SellerForm = () => {
             minWidth: 320
          }}
          onFinish={onFinish}
-         onFinishFailed={onFinishFailed}>
+         onFinishFailed={onFinishFailed}
+      >
          <Form.Item
             label="Имя"
             name="firstname"
@@ -58,7 +59,8 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input />
          </Form.Item>
 
@@ -70,7 +72,8 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input />
          </Form.Item>
 
@@ -82,7 +85,8 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input
                type="number"
                addonBefore={prefixSelector}
@@ -100,7 +104,8 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input />
          </Form.Item>
 
@@ -112,7 +117,8 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input type="password" />
          </Form.Item>
 
@@ -124,7 +130,8 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input.Password />
          </Form.Item>
 
@@ -132,7 +139,8 @@ const SellerForm = () => {
             wrapperCol={{
                offset: 8,
                span: 16
-            }}>
+            }}
+         >
             <Button type="primary" htmlType="submit" loading={isLoading}>
                Сохранить
             </Button>

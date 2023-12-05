@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Divider } from 'antd';
-
+import defaulPhotoCard from '../../../shared/assets/images/photo_2023-12-01_21-26-38.jpg';
 import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 
 import AddToCartWithQuantity from '@features/storage/ui/AddToCartWithQuantity';
@@ -31,13 +31,26 @@ const CatalogCardsByParentId = ({ id }) => {
       <>
          <Row gutter={24}>
             {data.map((item) => (
-               <Col span={6} key={`${item.id}-${item.name}`}>
+               <Col className="custom-col" span={6} key={`${item.id}-${item.name}`}>
                   <Card
+                     className="custom-card"
                      loading={isLoading}
                      cover={
                         item.imgUrl ? (
-                           <img alt="item.name" src={item.imgUrl} />
-                        ) : null
+                           // <div className='card-background-image'  style={{backgroundImage: `url(${item.image})`}}/>
+
+                           <img
+                              className="card-background-image"
+                              style={{height: '150px'}}
+                              alt="item.name"
+                              src={item.imgUrl}
+                           />
+                        ) : (
+                           <div
+                              className="card-background-image"
+                              style={{ backgroundImage: `url(${defaulPhotoCard})` }}
+                           />
+                        )
                      }
                      hoverable
                      actions={[

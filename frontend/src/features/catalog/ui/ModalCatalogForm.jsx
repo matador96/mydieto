@@ -29,7 +29,8 @@ const ModalCatalogForm = ({ selectedCategory, closeModal }) => {
          onCancel={handleCancel}
          footer={null}
          destroyOnClose={true}
-         width={600}>
+         width={600}
+      >
          {isHaveData && (
             <CreateOrEditCatalog
                id={selectedCategory.id}

@@ -38,7 +38,8 @@ const CreateForm = ({ setGeneratedUser, callbackOnSuccess = () => {} }) => {
             minWidth: 320
          }}
          onFinish={onFinish}
-         onFinishFailed={onFinishFailed}>
+         onFinishFailed={onFinishFailed}
+      >
          <Row gutter={16}>
             <Col span={12}>
                <Form.Item
@@ -49,7 +50,8 @@ const CreateForm = ({ setGeneratedUser, callbackOnSuccess = () => {} }) => {
                         required: true,
                         message: 'Выберите статус'
                      }
-                  ]}>
+                  ]}
+               >
                   <Select
                      placeholder="Выберите роль"
                      rules={[
@@ -84,7 +86,8 @@ const CreateForm = ({ setGeneratedUser, callbackOnSuccess = () => {} }) => {
                <Form.Item
                   name="post"
                   label="Должность"
-                  rules={russianOneWordRequired()}>
+                  rules={russianOneWordRequired()}
+               >
                   <Input placeholder="Должность" />
                </Form.Item>
             </Col>
@@ -94,7 +97,8 @@ const CreateForm = ({ setGeneratedUser, callbackOnSuccess = () => {} }) => {
                <Form.Item
                   name="firstName"
                   label="Имя"
-                  rules={russianOneWordRequired()}>
+                  rules={russianOneWordRequired()}
+               >
                   <Input placeholder="Имя" />
                </Form.Item>
             </Col>
@@ -103,7 +107,8 @@ const CreateForm = ({ setGeneratedUser, callbackOnSuccess = () => {} }) => {
                <Form.Item
                   name="lastName"
                   label="Фамилия"
-                  rules={russianOneWordRequired()}>
+                  rules={russianOneWordRequired()}
+               >
                   <Input placeholder="Фамилия" />
                </Form.Item>
             </Col>
@@ -119,7 +124,8 @@ const CreateForm = ({ setGeneratedUser, callbackOnSuccess = () => {} }) => {
                         type: 'email',
                         message: 'Не похоже на почту!'
                      }
-                  ]}>
+                  ]}
+               >
                   <Input placeholder="Почта" />
                </Form.Item>
             </Col>

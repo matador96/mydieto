@@ -30,7 +30,8 @@ const ModalAddressForm = ({ selectedAddress, closeModal = () => {} }) => {
          footer={null}
          width={800}
          key={`modal${selectedAddress?.id}`}
-         destroyOnClose={true}>
+         destroyOnClose={true}
+      >
          {isHaveData && (
             <CreateOrEditAddress
                id={selectedAddress?.id}
