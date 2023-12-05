@@ -3,6 +3,9 @@ import { Descriptions, Table, Divider, Tag } from 'antd';
 import timestampToNormalDate from '@shared/utils/tsToTime';
 import { unitSettings } from '@shared/const/units';
 import statuses from '@shared/const/statuses';
+// import OrderProcessingComponent from './OrderProcessingComponent';
+import CourierForm from './OrderProcessingComponent';
+import OrderCostForm from './OrderCostForm';
 
 function OrderItemData({ order }) {
    const orderItems = order.orderItems.map((item) => ({ ...item, ...item.catalog }));
@@ -66,6 +69,7 @@ function OrderItemData({ order }) {
             bordered={false}
             pagination={false}
          />
+         <CourierForm style={{ marginBottom: '50px' }} />
       </div>
    );
 }
