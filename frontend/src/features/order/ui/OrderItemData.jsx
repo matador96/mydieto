@@ -10,7 +10,7 @@ function OrderItemData({ order }) {
                justifyContent: 'space-between',
                alignItems: 'start',
                fontSize: '16px'
-            }}>
+            }}>вшы
             <div>
                {orderItems.map((item, index) => (
                   <p
