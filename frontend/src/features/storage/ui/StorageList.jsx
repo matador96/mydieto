@@ -25,6 +25,8 @@ import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
 import { GetCatalogsListByParentId } from '@features/catalog/model/services/GetCatalogsListByParentId';
 
+import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
+
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
 
@@ -180,7 +182,9 @@ const StorageList = () => {
                      >
                         {item.catalog.imgUrl ? (
                            <img alt={item.catalog.name} src={item.catalog.imgUrl} />
-                        ) : null}
+                        ) : (
+                           <img alt="default image" src={defaulPhotoCard} />
+                        )}
 
                         <List.Item.Meta
                            key={`${item.id}-`}
