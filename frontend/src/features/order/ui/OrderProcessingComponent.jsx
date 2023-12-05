@@ -13,7 +13,8 @@ const CourierForm = () => {
                className="with-icon"
             />
             <Button
-               style={{ backgroundColor: 'rgb(32, 178, 170)', marginLeft: '8px' }}>
+               style={{ backgroundColor: 'rgb(32, 178, 170)', marginLeft: '8px' }}
+            >
                Заказ выполнен
             </Button>
          </div>

@@ -17,13 +17,15 @@ const OrderCostForm = () => {
             />
             <Button
                style={{ backgroundColor: 'rgb(32, 178, 170)', width: '' }}
-               type="primary">
+               type="primary"
+            >
                Отправить предложение продавцу
             </Button>
          </div>
          <div
             style={{ display: 'flex', justifyContent: 'space-between' }}
-            className="input-wrapper">
+            className="input-wrapper"
+         >
             <Input size="large" className="with-icon" placeholder="Причина отказа" />
             <Button style={{ backgroundColor: 'red' }} type="danger">
                Отклонить заказ
