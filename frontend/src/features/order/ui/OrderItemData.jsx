@@ -12,7 +12,6 @@ function OrderItemData({ order }) {
                fontSize: '16px'
             }}
          >
-            вшы
             <div>
                {orderItems.map((item, index) => (
                   <p

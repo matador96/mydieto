@@ -54,7 +54,7 @@ const OrderList = () => {
             label: `Заказ № ${e.id} от ${formattedDate}`,
             extra: `${e.price}р`,
             children: <OrderItemData order={e} />,
-            style: { ...panelStyle, color: 'red' }
+            style: panelStyle
          };
       });
 
