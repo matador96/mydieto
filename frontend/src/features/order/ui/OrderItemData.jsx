@@ -5,8 +5,8 @@ import { unitSettings } from '@shared/const/units';
 import { Typography } from 'antd';
 import statuses from '@shared/const/statuses';
 // import OrderProcessingComponent from './OrderProcessingComponent';
-import CourierForm from './OrderProcessingComponent';
-import OrderCostForm from './OrderCostForm';
+
+import OrderGradeFromAdminForm from './OrderGradeFromAdminForm';
 
 const { Text } = Typography;
 
@@ -94,7 +94,7 @@ function OrderItemData({ order }) {
             bordered={false}
             pagination={false}
          />
-         <CourierForm style={{ marginBottom: '50px' }} />
+         <OrderGradeFromAdminForm />
       </div>
    );
 }

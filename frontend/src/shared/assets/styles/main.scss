@@ -362,34 +362,3 @@ body {
       }
    }
 }
-
-.input-wrapper {
-   display: flex;
-   align-items: center;
-   margin-bottom: 16px;
-   color: #474a53;
-}
-
-#input-refusal {
-   width: 100%;
-   justify-content: space-between;
-
-   .with-icon {
-      width: 60%;
-   }
-}
-
-.with-icon {
-   position: relative;
-   width: 60%;
-}
-
-.with-icon::before {
-   content: '*';
-   color: red;
-   position: absolute;
-   top: 50%;
-   right: 8px;
-   transform: translateY(-50%);
-   font-size: 14px;
-}
