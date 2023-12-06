@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tag } from 'antd';
+import { Tabs, Tag, Space } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { Collapse, theme } from 'antd';
 import { useState, useEffect } from 'react';
@@ -7,10 +7,17 @@ import { GetSellerOrders } from '@features/order/model/services/GetSellerOrders'
 import OrderItemData from './OrderItemData';
 import timestampToNormalDate from '@shared/utils/tsToTime';
 import statuses from '@shared/const/statuses';
+import { Typography } from 'antd';
+const { Text } = Typography;
 
 const text = `
   В разработке
 `;
+
+const statusTextsForSeller = {
+   onEvaluation: 'Ожидает оценки от покупателя'
+};
+
 const { Panel } = Collapse;
 const OrderList = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -45,15 +52,16 @@ const OrderList = () => {
             key: e.id,
             label: (
                <>
-                  <Tag>Заказ №{e.id}</Tag> от {timestampToNormalDate(e.createdAt)}
+                  <Space direction="horizontal">
+                     <Text strong>Заказ №{e.id}</Text>
+                     <Text type="secondary">
+                        от {timestampToNormalDate(e.createdAt)}
+                     </Text>
+                  </Space>
                </>
             ),
-            extra: (
-               <Tag color={statuses[e.status]?.color}>
-                  {statuses[e.status]?.label}
-               </Tag>
-            ),
-            children: <OrderItemData order={e} />,
+            extra: <Text type="secondary">{statusTextsForSeller[e.status]}</Text>,
+            children: <OrderItemData order={e} showSellerBlock={false} />,
             style: panelStyle
          };
       });

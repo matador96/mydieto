@@ -7,5 +7,6 @@ export const CreateMyOrder = async (fields) => {
       return response.json.data;
    } catch (e) {
       console.log(e);
+      throw new Error(e);
    }
 };

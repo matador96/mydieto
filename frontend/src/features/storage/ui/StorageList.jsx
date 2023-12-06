@@ -82,15 +82,15 @@ const StorageListQuantityWithSave = (props) => {
                <Button
                   type="primary"
                   loading={isLoading}
+                  disabled={quantity === 0}
                   onClick={() =>
                      addToCart({
-                        id,
+                        id: props.storage.catalog.id,
                         name: props.storage.catalog.name,
                         quantity: 1
                      })
                   }
-                  icon={<ShoppingCartOutlined />}
-               >
+                  icon={<ShoppingCartOutlined />}>
                   В корзину
                </Button>
             </Tooltip>
@@ -178,8 +178,7 @@ const StorageList = () => {
                               storage={item}
                               callBack={fetchData}
                            />
-                        ]}
-                     >
+                        ]}>
                         {item.catalog.imgUrl ? (
                            <img alt={item.catalog.name} src={item.catalog.imgUrl} />
                         ) : (
@@ -193,8 +192,7 @@ const StorageList = () => {
                               <span
                                  className="green-span-url"
                                  type="link"
-                                 onClick={() => showConfirmDelete(item.id)}
-                              >
+                                 onClick={() => showConfirmDelete(item.id)}>
                                  Удалить из склада
                               </span>
                            }

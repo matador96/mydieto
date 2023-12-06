@@ -9,10 +9,17 @@ import { GetOrders } from '@features/order/model/services/GetOrders';
 import timestampToNormalDate from '@shared/utils/tsToTime';
 import statuses from '@shared/const/statuses';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
+import { Typography } from 'antd';
+const { Text } = Typography;
 
 const text = `
   В разработке
 `;
+
+const statusTextsForAdmin = {
+   onEvaluation: 'Ожидает вашей оценки'
+};
+
 const { Panel } = Collapse;
 const OrderList = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -64,15 +71,16 @@ const OrderList = () => {
             key: e.id,
             label: (
                <>
-                  <Tag>Заказ №{e.id}</Tag> от {timestampToNormalDate(e.createdAt)}
+                  <Space direction="horizontal">
+                     <Text strong>Заказ №{e.id}</Text>
+                     <Text type="secondary">
+                        от {timestampToNormalDate(e.createdAt)}
+                     </Text>
+                  </Space>
                </>
             ),
-            extra: (
-               <Tag color={statuses[e.status]?.color}>
-                  {statuses[e.status]?.label}
-               </Tag>
-            ),
-            children: <OrderItemData order={e} />,
+            extra: <Text type="secondary">{statusTextsForAdmin[e.status]}</Text>,
+            children: <OrderItemData order={e} showSellerBlock={true} />,
             style: panelStyle
          };
       });

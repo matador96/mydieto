@@ -53,6 +53,7 @@ const OrderItems = sequelize.define(
             sellerId,
             catalogId,
           });
+
           storageItem.quantity -= orderItem.quantity;
           await StorageService.update(
             storageItem,

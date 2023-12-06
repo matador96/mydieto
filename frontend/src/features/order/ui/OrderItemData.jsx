@@ -1,8 +1,10 @@
 import React from 'react';
-import { Descriptions, Table, Divider, Tag } from 'antd';
+import { Descriptions, Table, Divider, Tag, Space } from 'antd';
 import timestampToNormalDate from '@shared/utils/tsToTime';
 import { unitSettings } from '@shared/const/units';
+import { Typography } from 'antd';
 import statuses from '@shared/const/statuses';
+const { Text } = Typography;
 
 function OrderItemData({ order }) {
    const orderItems = order.orderItems.map((item) => ({ ...item, ...item.catalog }));
@@ -43,6 +45,14 @@ function OrderItemData({ order }) {
                </Tag>
             </Descriptions.Item>
 
+            <Descriptions.Item key={`Адрес`} label="Адрес">
+               <Space direction="vertical">
+                  {order.address.address}
+                  <Text type="secondary">Комментарий: {order.address.comment}</Text>
+                  <Text type="secondary">Примечение: {order.address.name}</Text>
+               </Space>
+            </Descriptions.Item>
+
             {order.price && (
                <Descriptions.Item
                   key={`Оценочная стоимость`}
@@ -58,6 +68,18 @@ function OrderItemData({ order }) {
                   {order.facticalPrice} руб.
                </Descriptions.Item>
             )}
+         </Descriptions>
+
+         <Divider orientation="left">Продавец</Divider>
+
+         <Descriptions>
+            <Descriptions.Item key={`ФИО`} label="ФИО">
+               {order.seller.firstName} {order.seller.lastName}
+            </Descriptions.Item>
+
+            <Descriptions.Item key={`Телефон`} label="Телефон">
+               {order.seller.mobile}
+            </Descriptions.Item>
          </Descriptions>
 
          <Divider orientation="left">Товары</Divider>

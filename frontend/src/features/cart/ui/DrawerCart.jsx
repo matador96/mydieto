@@ -151,6 +151,7 @@ const DrawerCart = (props) => {
    };
 
    const createOrder = () => {
+      console.log(cartData);
       const orderItems = cartData.map((e) => ({
          catalogId: e.id,
          quantity: e.quantity
@@ -171,12 +172,14 @@ const DrawerCart = (props) => {
          orderItems
       };
 
-      CreateMyOrder(orderData).then(() => {
-         message.success('Заказ создан');
-         onClose();
-         setSelectedAddressId(null);
-         dispatch(cartActions.cleanCart());
-      });
+      CreateMyOrder(orderData)
+         .then(() => {
+            message.success('Заказ создан');
+            onClose();
+            setSelectedAddressId(null);
+            dispatch(cartActions.cleanCart());
+         })
+         .catch((e) => message.error(e.message));
    };
 
    return (
