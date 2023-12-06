@@ -38,15 +38,15 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
 
          for (let key in updatedFields) {
             if (key === 'image') {
-               console.log('image');
-               console.log(updatedFields[key][0]);
                formData.append(
                   key,
                   updatedFields[key][0].originFileObj,
                   updatedFields[key][0].name
                );
             } else {
-               formData.append(key, updatedFields[key]);
+               if (updatedFields[key]) {
+                  formData.append(key, updatedFields[key]);
+               }
             }
          }
 
@@ -64,12 +64,14 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
       const formDataCreate = new FormData();
 
       for (let key in values) {
-         formDataCreate.append(key, values[key]);
+         if (values[key]) {
+            formDataCreate.append(key, values[key]);
+         }
       }
 
       await CreateCatalog(formDataCreate).then(() => {
          setLoading(false);
-         // callbackOnSuccess();
+         callbackOnSuccess();
          message.success('Каталог создан');
       });
    };
