@@ -4,6 +4,10 @@ import timestampToNormalDate from '@shared/utils/tsToTime';
 import { unitSettings } from '@shared/const/units';
 import { Typography } from 'antd';
 import statuses from '@shared/const/statuses';
+// import OrderProcessingComponent from './OrderProcessingComponent';
+import CourierForm from './OrderProcessingComponent';
+import OrderCostForm from './OrderCostForm';
+
 const { Text } = Typography;
 
 function OrderItemData({ order }) {
@@ -90,6 +94,7 @@ function OrderItemData({ order }) {
             bordered={false}
             pagination={false}
          />
+         <CourierForm style={{ marginBottom: '50px' }} />
       </div>
    );
 }
