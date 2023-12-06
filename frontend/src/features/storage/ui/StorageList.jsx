@@ -20,10 +20,12 @@ import {
    ExclamationCircleFilled,
    ShoppingCartOutlined
 } from '@ant-design/icons';
-import { GetStorageWithParams } from '../model/GetStorageWithParams';
+import { GetStorageMyWithParams } from '../model/GetStorageMyWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
 import { GetCatalogsListByParentId } from '@features/catalog/model/services/GetCatalogsListByParentId';
+
+import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
@@ -80,9 +82,10 @@ const StorageListQuantityWithSave = (props) => {
                <Button
                   type="primary"
                   loading={isLoading}
+                  disabled={quantity === 0}
                   onClick={() =>
                      addToCart({
-                        id,
+                        id: props.storage.catalog.id,
                         name: props.storage.catalog.name,
                         quantity: 1
                      })
@@ -107,7 +110,7 @@ const StorageList = () => {
 
    const fetchData = () => {
       setIsLoading(true);
-      GetStorageWithParams({
+      GetStorageMyWithParams({
          page: 1,
          limit: 1000,
          sort: 'id',
@@ -178,7 +181,9 @@ const StorageList = () => {
                         ]}>
                         {item.catalog.imgUrl ? (
                            <img alt={item.catalog.name} src={item.catalog.imgUrl} />
-                        ) : null}
+                        ) : (
+                           <img alt="default image" src={defaulPhotoCard} />
+                        )}
 
                         <List.Item.Meta
                            key={`${item.id}-`}

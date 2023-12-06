@@ -167,6 +167,10 @@ body {
             font-size: 14px;
             height: 62px;
             line-height: 62px;
+
+            &:hover {
+               border-bottom: none !important;
+            }
          }
       }
       &-item,

@@ -101,7 +101,8 @@ const getConstColumnSearchFilterProps = ({
                minWidth: 200,
                maxWidth: 300
             }}
-            onKeyDown={(e) => e.stopPropagation()}>
+            onKeyDown={(e) => e.stopPropagation()}
+         >
             <Select
                showSearch
                optionFilterProp="children"
@@ -140,7 +141,8 @@ const getConstColumnSearchFilterProps = ({
                   type="link"
                   onClick={() => {
                      close();
-                  }}>
+                  }}
+               >
                   Закрыть
                </Button>
             </Space>
@@ -192,7 +194,8 @@ const getStatusColumnFilterProps = ({
                minWidth: 200,
                maxWidth: 300
             }}
-            onKeyDown={(e) => e.stopPropagation()}>
+            onKeyDown={(e) => e.stopPropagation()}
+         >
             <Radio.Group
                style={{
                   marginBottom: 8,
@@ -201,12 +204,14 @@ const getStatusColumnFilterProps = ({
                onChange={(e) =>
                   setSelectedKeys(e.target.value ? [e.target.value] : [])
                }
-               value={selectedKeys[0]}>
+               value={selectedKeys[0]}
+            >
                {options.map((item) => (
                   <Radio
                      value={item.value}
                      key={item.value}
-                     style={{ padding: '3px' }}>
+                     style={{ padding: '3px' }}
+                  >
                      <Tag color={item.color}>{item.label}</Tag>
                   </Radio>
                ))}
@@ -221,7 +226,8 @@ const getStatusColumnFilterProps = ({
                   type="link"
                   onClick={() => {
                      close();
-                  }}>
+                  }}
+               >
                   Закрыть
                </Button>
             </Space>
@@ -267,7 +273,8 @@ const getColumnSearchProps = ({ dataIndex, handleSearch, type = 'text' }) => ({
                padding: 15,
                minWidth: 300
             }}
-            onKeyDown={(e) => e.stopPropagation()}>
+            onKeyDown={(e) => e.stopPropagation()}
+         >
             <Input
                placeholder={`Поиск по ${dataIndex}`}
                value={selectedKeys[0]}
@@ -286,7 +293,8 @@ const getColumnSearchProps = ({ dataIndex, handleSearch, type = 'text' }) => ({
                   type="primary"
                   onClick={onSearch}
                   icon={<SearchOutlined />}
-                  disabled={!selectedKeys[0]}>
+                  disabled={!selectedKeys[0]}
+               >
                   Поиск
                </Button>
                <Button onClick={onReset}>Сбросить</Button>
@@ -294,7 +302,8 @@ const getColumnSearchProps = ({ dataIndex, handleSearch, type = 'text' }) => ({
                   type="link"
                   onClick={() => {
                      close();
-                  }}>
+                  }}
+               >
                   Закрыть
                </Button>
             </Space>

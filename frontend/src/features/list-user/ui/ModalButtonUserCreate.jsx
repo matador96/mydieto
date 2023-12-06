@@ -39,7 +39,8 @@ const ModalButtonUserCreate = ({ closeModal }) => {
             title={`Создать пользователя`}
             footer={null}
             width={600}
-            destroyOnClose={true}>
+            destroyOnClose={true}
+         >
             <CreateUserForm setGeneratedUser={setGeneratedUser} />
             <CreateResult generatedUser={generatedUser} />
          </Modal>

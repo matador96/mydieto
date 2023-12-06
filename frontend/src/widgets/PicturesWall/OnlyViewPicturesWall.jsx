@@ -39,7 +39,8 @@ const PicturesWall = ({ fileList = [], maxShow = 5 }) => {
             open={previewOpen}
             title={previewTitle}
             footer={null}
-            onCancel={handleCancel}>
+            onCancel={handleCancel}
+         >
             <img
                style={{
                   width: '100%'

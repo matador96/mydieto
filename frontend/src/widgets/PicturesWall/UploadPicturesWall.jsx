@@ -105,7 +105,8 @@ const UploadPicturesWall = ({
          <div
             style={{
                marginTop: 8
-            }}>
+            }}
+         >
             Загрузить
          </div>
       </div>
@@ -120,14 +121,16 @@ const UploadPicturesWall = ({
             onPreview={handlePreview}
             onRemove={onRemove}
             action={fetchImage}
-            disabled={isDisabledEditButton}>
+            disabled={isDisabledEditButton}
+         >
             {fileList.length >= maxCount ? null : uploadButton}
          </Upload>
          <Modal
             open={previewOpen}
             title={previewTitle}
             footer={null}
-            onCancel={handleCancel}>
+            onCancel={handleCancel}
+         >
             <img
                alt="Загруженная картинка"
                style={{

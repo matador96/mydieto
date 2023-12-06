@@ -188,6 +188,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      .header-logo {
+         color: #474a53;
+         font-size: 38px;
+         font-weight: 600;
+      }
+
       > .menu {
          width: 100%;
       }
@@ -330,6 +337,28 @@ body {
             font-weight: 400;
             margin-left: 6px;
          }
+      }
+   }
+}
+
+.custom-col {
+   margin-bottom: 20px;
+
+   .custom-card {
+      font-size: 14px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-weight: 500;
+
+      .card-background-image {
+         height: 150px;
+         width: 100%;
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-position: center;
+         border-radius: 8px 8px 0 0;
       }
    }
 }

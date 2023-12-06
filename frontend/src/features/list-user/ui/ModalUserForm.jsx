@@ -86,7 +86,8 @@ const ModalUserForm = ({ selectedUser, closeModal }) => {
          onCancel={handleCancel}
          footer={null}
          width={600}
-         destroyOnClose={true}>
+         destroyOnClose={true}
+      >
          <Form
             hideRequiredMark
             layout="vertical"
@@ -99,13 +100,15 @@ const ModalUserForm = ({ selectedUser, closeModal }) => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             form={form}
-            onValuesChange={() => setIsDisabledButton(false)}>
+            onValuesChange={() => setIsDisabledButton(false)}
+         >
             <Row gutter={16}>
                <Col span={12}>
                   <Form.Item
                      name="firstName"
                      label="Имя"
-                     rules={russianOneWordRequired}>
+                     rules={russianOneWordRequired}
+                  >
                      <Input placeholder="Имя" />
                   </Form.Item>
                </Col>
@@ -114,7 +117,8 @@ const ModalUserForm = ({ selectedUser, closeModal }) => {
                   <Form.Item
                      name="lastName"
                      label="Фамилия"
-                     rules={russianOneWordRequired}>
+                     rules={russianOneWordRequired}
+                  >
                      <Input placeholder="Фамилия" />
                   </Form.Item>
                </Col>
@@ -130,7 +134,8 @@ const ModalUserForm = ({ selectedUser, closeModal }) => {
                            required: true,
                            message: 'Роль'
                         }
-                     ]}>
+                     ]}
+                  >
                      <Select
                         placeholder="Выберите роль"
                         label="role"
@@ -173,7 +178,8 @@ const ModalUserForm = ({ selectedUser, closeModal }) => {
                            message: 'Выберите статус'
                         }
                      ]}
-                     defaultValue={statuses.active}>
+                     defaultValue={statuses.active}
+                  >
                      <Select
                         allowClear
                         style={{
@@ -210,7 +216,8 @@ const ModalUserForm = ({ selectedUser, closeModal }) => {
                            max: 20,
                            message: 'Максимально 20 символов'
                         }
-                     ]}>
+                     ]}
+                  >
                      <Input placeholder="Логин" />
                   </Form.Item>
                </Col>
@@ -219,7 +226,8 @@ const ModalUserForm = ({ selectedUser, closeModal }) => {
                   <Form.Item
                      name="post"
                      label="Должность"
-                     rules={russianOneWordRequired}>
+                     rules={russianOneWordRequired}
+                  >
                      <Input placeholder="Должность" />
                   </Form.Item>
                </Col>
@@ -235,7 +243,8 @@ const ModalUserForm = ({ selectedUser, closeModal }) => {
                            type: 'email',
                            message: 'Не похоже на почту!'
                         }
-                     ]}>
+                     ]}
+                  >
                      <Input placeholder="Почта" />
                   </Form.Item>
                </Col>
@@ -249,7 +258,8 @@ const ModalUserForm = ({ selectedUser, closeModal }) => {
                            type="primary"
                            htmlType="submit"
                            loading={isLoading}
-                           disabled={isDisabledButton}>
+                           disabled={isDisabledButton}
+                        >
                            Сохранить
                         </Button>
 
