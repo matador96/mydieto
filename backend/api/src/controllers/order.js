@@ -63,6 +63,7 @@ module.exports.validate = (method) => {
         body("sellerId").isInt(),
         body("addressId").isInt(),
         body("price").isInt().optional(),
+        body("facticalPrice").isInt().optional(),
         body("orderItems").isArray().optional(),
         body("status").isIn(statusesOfOrders).optional(),
       ];
@@ -74,6 +75,7 @@ module.exports.validate = (method) => {
         body("sellerId").isInt().optional(),
         body("addressId").isInt().optional(),
         body("price").isInt().optional(),
+        body("facticalPrice").isInt().optional(),
         body("orderItems").isArray().optional(),
         body("status").isIn(statusesOfOrders).optional(),
       ];

@@ -32,8 +32,8 @@ const OrderItems = sequelize.define(
         key: "id",
       },
     },
-    capacity: {
-      field: "capacity",
+    quantity: {
+      field: "quantity",
       type: DataTypes.INTEGER,
     },
     status: {
@@ -53,7 +53,7 @@ const OrderItems = sequelize.define(
             sellerId,
             catalogId,
           });
-          storageItem.quantity -= orderItem.capacity;
+          storageItem.quantity -= orderItem.quantity;
           await StorageService.update(
             storageItem,
             { id: storageItem.id },

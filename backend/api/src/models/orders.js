@@ -34,6 +34,10 @@ const Orders = sequelize.define(
       field: "price",
       type: DataTypes.INTEGER,
     },
+    facticalPrice: {
+      field: "facticalPrice",
+      type: DataTypes.INTEGER,
+    },
     status: {
       field: "status",
       type: DataTypes.ENUM(statusesOfOrders),

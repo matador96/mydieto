@@ -15,8 +15,8 @@ function OrderItemData({ order }) {
       },
       {
          title: 'Объем',
-         dataIndex: 'capacity',
-         key: 'capacity',
+         dataIndex: 'quantity',
+         key: 'quantity',
          render: (_, record) => (
             <>
                {_} {unitSettings.find((e) => e.value === record.unit).shortLabel}
@@ -51,14 +51,16 @@ function OrderItemData({ order }) {
                </Descriptions.Item>
             )}
 
-            {order.factPrice && (
+            {order.facticalPrice && (
                <Descriptions.Item
                   key={`Фактическая стоимость`}
                   label="Фактическая стоимость">
-                  {order.factPrice} руб.
+                  {order.facticalPrice} руб.
                </Descriptions.Item>
             )}
          </Descriptions>
+
+         <Divider orientation="left">Товары</Divider>
 
          <Table
             columns={columns}

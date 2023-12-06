@@ -1,4 +1,10 @@
-CREATE TYPE orders_status AS ENUM ('onEvaluation', 'onConfirmation', 'waitDelivery', 'finished', 'canceled');
+CREATE TYPE orders_status AS ENUM (
+    'onEvaluation',
+    'onConfirmation',
+    'waitDelivery',
+    'finished',
+    'canceled'
+);
 
 CREATE TABLE
     "orders" (
@@ -10,7 +16,6 @@ CREATE TABLE
         "createdAt" TIMESTAMPTZ DEFAULT NOW(),
         "updatedAt" TIMESTAMPTZ
     );
-
 
 CREATE TYPE orderItems_status AS ENUM ('active', 'blocked');
 

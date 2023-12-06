@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table } from 'antd';
+import { Space, Table, Tag, Button } from 'antd';
 import { VerticalSpace } from '@shared/ui';
+import timestampToNormalDate from '@shared/utils/tsToTime';
 import { GetOrders } from '@features/order/model/services/GetOrders';
+import statuses from '@shared/const/statuses';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 
 const columns = [
@@ -14,11 +16,50 @@ const columns = [
             <span
                className="green-span-url"
                style={{ padding: '5px 0' }}
-               onClick={() => {}}
-            >
-               {`Заявка №${_}`}
+               onClick={() => {}}>
+               {`Заказ №${_}`}
             </span>
          </Space>
+      )
+   },
+
+   {
+      title: 'Статус',
+      dataIndex: 'status',
+      key: 'status',
+      render: (_) => <Tag color={statuses[_]?.color}>{statuses[_]?.label}</Tag>
+   },
+
+   {
+      title: 'Дата',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (_) => timestampToNormalDate(_)
+   },
+
+   {
+      title: 'Оценочная стоимость',
+      dataIndex: 'price',
+      key: 'price',
+      render: (_) => <>{_ ? `${_} .руб` : `Не указано`} </>
+   },
+
+   {
+      title: 'Фактическая стоимость',
+      dataIndex: 'facticalPrice',
+      key: 'facticalPrice',
+      render: (_) => <>{_ ? `${_} .руб` : `Не указано`} </>
+   },
+   {
+      title: 'Действие',
+      dataIndex: 'facticalPrice',
+      key: 'facticalPrice',
+      render: (_) => (
+         <>
+            <Button type="primary" size="small" danger>
+               Посмотреть товары
+            </Button>
+         </>
       )
    }
 ];
@@ -41,7 +82,7 @@ const TableOrders = () => {
          page: current,
          limit: pageSize,
          sort: 'id',
-         order: 'asc'
+         order: 'desc'
       }).then((res) => {
          setIsLoading(false);
          setPagination((prev) => ({

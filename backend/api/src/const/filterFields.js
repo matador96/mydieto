@@ -6,7 +6,13 @@ const sellerFieldsCanBeFilter = ["id", "mobile", "firstName", "lastName", "statu
 
 const userFieldsCanBeFilter = ["id", "email"];
 const addressFieldsCanBeFilter = ["id", "sellerId", "status"];
-const orderFieldsCanBeFilter = ["id", "sellerId", "price", "status"];
+const orderFieldsCanBeFilter = [
+  "id",
+  "sellerId",
+  "price",
+  "facticalPrice",
+  "status",
+];
 const orderItemFieldsCanBeFilter = ["id", "catalogId", "status"];
 
 module.exports = {
@@ -38,6 +44,7 @@ module.exports = {
       id: "$eq",
       sellerId: "$eq",
       price: "$eq",
+      facticalPrice: "$eq",
       status: "$eq",
     },
     orderItem: {
