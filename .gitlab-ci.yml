@@ -41,7 +41,7 @@ deploy_front_dev:
   cache: {}
   dependencies: []
   script:
-    - ssh deployer@5.188.130.91 'docker compose pull rdm-front && docker compose up -d rdm-front'
+    - ssh deployer@5.188.130.91 'docker compose pull relfront2 && docker compose up -d relfront2'
 
 deploy_front_prod:
   stage: deploy
@@ -53,7 +53,7 @@ deploy_front_prod:
   cache: {}
   dependencies: []
   script:
-    - ssh deployer@109.71.9.125 'docker compose pull rdm-front && docker compose up -d rdm-front'
+    - ssh deployer@109.71.9.125 'docker compose pull relfront2 && docker compose up -d relfront2'
 
 
 
@@ -83,7 +83,7 @@ deploy_backend_dev:
   cache: {}
   dependencies: []
   script:
-    - ssh deployer@5.188.130.91 'docker compose pull rdm-api && docker compose up -d rdm-api'
+    - ssh deployer@5.188.130.91 'docker compose pull relapi2 && docker compose up -d relapi2'
 
 deploy_backend_prod:
   stage: deploy
@@ -95,6 +95,6 @@ deploy_backend_prod:
   cache: {}
   dependencies: []
   script:
-    - ssh deployer@109.71.9.125 'docker compose pull rdm-api && docker compose up -d rdm-api'
+    - ssh deployer@109.71.9.125 'docker compose pull relapi2 && docker compose up -d relapi2'
 
 
