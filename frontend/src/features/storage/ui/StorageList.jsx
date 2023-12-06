@@ -20,7 +20,7 @@ import {
    ExclamationCircleFilled,
    ShoppingCartOutlined
 } from '@ant-design/icons';
-import { GetStorageWithParams } from '../model/GetStorageWithParams';
+import { GetStorageMyWithParams } from '../model/GetStorageMyWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
 import { GetCatalogsListByParentId } from '@features/catalog/model/services/GetCatalogsListByParentId';
@@ -110,7 +110,7 @@ const StorageList = () => {
 
    const fetchData = () => {
       setIsLoading(true);
-      GetStorageWithParams({
+      GetStorageMyWithParams({
          page: 1,
          limit: 1000,
          sort: 'id',
