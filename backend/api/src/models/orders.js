@@ -39,9 +39,6 @@ const Orders = sequelize.define(
       field: "facticalPrice",
       type: DataTypes.INTEGER,
     },
-    status: {
-      field: "status",
-      type: DataTypes.ENUM(statusesOfOrders),
     statusId: {
       field: "statusId",
       type: DataTypes.INTEGER,
@@ -64,9 +61,13 @@ Orders.belongsTo(Sellers, {
   foreignKey: "sellerId",
 });
 
-Orders.hasOne(OrderStatuses, {
-  foreignKey: 'statusId'
+Orders.belongsTo(OrderStatuses, {
+  foreignKey: "statusId",
+  as: "orderStatus",
 })
 
+Orders.hasMany(OrderStatuses, {
+  foreignKey: "orderId",
+})
 
 module.exports = Orders;

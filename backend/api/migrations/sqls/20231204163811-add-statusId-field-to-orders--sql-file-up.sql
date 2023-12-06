@@ -1,3 +1,3 @@
 ALTER TABLE "orders"
-ADD COLUMN "statusId" INTEGER REFERENCES "orderStatuses" ("id") NOT NULL,
+ADD COLUMN "statusId" INTEGER REFERENCES "orderStatuses" ("id"),
 DROP COLUMN "status";

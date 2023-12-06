@@ -24,7 +24,7 @@ const OrderStatuses = sequelize.define(
       field: "status",
       type: DataTypes.STRING,
       validate: {
-        isIn: statusesOfOrders
+        isIn: [statusesOfOrders],
       }
     },
     comment: {

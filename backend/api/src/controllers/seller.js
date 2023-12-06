@@ -11,6 +11,7 @@ const StorageService = require("../services/storage");
 
 const SellerService = require("../services/sellers");
 const UserService = require("../services/users");
+const OrderStatusesService = require("../services/ordersStatuses");
 
 module.exports.getStorage = async (req) => {
   const currentSessionUserId = req?.user?.profile?.id;
@@ -53,7 +54,7 @@ module.exports.getOrdersWithParams = async (req) => {
 };
 
 module.exports.createOrder = async (req, res, transaction) => {
-  let { orderItems, ...orderData } = req.body;
+  let { orderItems, orderStatus, ...orderData } = req.body;
 
   const currentSessionUserId = req?.user?.profile?.id;
 
@@ -77,25 +78,58 @@ module.exports.createOrder = async (req, res, transaction) => {
 
   orderData.sellerId = userData?.seller?.id;
 
-  const data = await OrderService.create(orderData, { transaction });
+  let order = await OrderService.create(orderData, { transaction });
+
+  if (orderStatus) {
+    const orderStatusObj =
+      orderStatus !== "object" ? JSON.parse(orderStatus) : orderStatus;
+    const orderStatusData = {
+      ...orderStatusObj,
+      orderId: order.id,
+    };
+
+    const status = await OrderStatusesService.create(orderStatusData, {
+      transaction,
+    });
+
+    order = await OrderService.update(
+      { statusId: status.id },
+      { id: order.id },
+      { transaction },
+    );
+  }
 
   return {
-    data,
+    order,
   };
 };
 
 module.exports.updateOrder = async (req, res, transaction) => {
   const { id } = req.params;
-  let { ...orderData } = req.body;
+  let { orderStatus, ...orderData } = req.body;
 
   const currentSessionUserId = req?.user?.profile?.id;
-
   const userData = await UserService.getUserById(currentSessionUserId);
 
   if (!userData?.seller?.id) {
     throw new ApplicationError("Вы делаете запрос не из продавца", {
       path: "controller",
     });
+  }
+
+  if (orderStatus) {
+    const orderStatusObj =
+      orderStatus !== "object" ? JSON.parse(orderStatus) : orderStatus;
+    const orderStatusData = {
+      ...orderStatusObj,
+      orderId: id,
+    };
+
+    const status = await OrderStatusesService.create(orderStatusData, {
+      transaction,
+    });
+
+    orderData.statusId = status.id;
   }
 
   const data = await OrderService.update(

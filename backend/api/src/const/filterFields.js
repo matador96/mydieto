@@ -11,7 +11,7 @@ const orderFieldsCanBeFilter = [
   "sellerId",
   "price",
   "facticalPrice",
-  "status",
+  "statusID",
 ];
 const orderItemFieldsCanBeFilter = ["id", "catalogId", "status"];
 const orderStatusFieldsCanBeFilter = ["id", "orderId", "status"];
@@ -47,7 +47,6 @@ module.exports = {
       sellerId: "$eq",
       price: "$eq",
       facticalPrice: "$eq",
-      status: "$eq",
       statusId: "$eq",
     },
     orderItem: {
