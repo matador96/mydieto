@@ -10,7 +10,8 @@ import {
    message,
    Modal,
    InputNumber,
-   Divider
+   Divider,
+   Input
 } from 'antd';
 
 import {
@@ -34,11 +35,11 @@ const { confirm } = Modal;
 
 const StorageListQuantityWithSave = (props) => {
    const {
-      storage: { quantity, id },
-      callBack
+      storage: { quantity },
+      isLoading,
+      setQuantity
    } = props;
-   const [isLoading, setIsLoading] = useState(false);
-   const [currentQuantity, setQuantity] = useState(0);
+
    const dispatch = useDispatch();
 
    useEffect(() => {
@@ -50,34 +51,11 @@ const StorageListQuantityWithSave = (props) => {
       message.success('Добавлено в корзину');
    };
 
-   const save = () => {
-      setIsLoading(true);
-      UpdateStorage({ quantity: currentQuantity }, id).then(() => {
-         setIsLoading(false);
-         callBack();
-         message.success('Сохранено');
-      });
-   };
-
    return (
       <Space direction="vertical">
          <Space>
-            {' '}
-            <Tooltip placement="top" title={'Сохранить'}>
-               <Button
-                  type="primary"
-                  loading={isLoading}
-                  onClick={save}
-                  icon={<SaveOutlined />}
-               />
-            </Tooltip>
-            <InputNumber
-               min={1}
-               max={100}
-               default={1}
-               value={currentQuantity}
-               onChange={(v) => setQuantity(v)}
-            />
+
+            <Input  disabled={quantity.length <= 0} style={{width: '80px'}} type='number' />
             <Tooltip placement="top" title={'Добавить в корзину'}>
                <Button
                   type="primary"
@@ -101,12 +79,21 @@ const StorageListQuantityWithSave = (props) => {
 
 const StorageList = () => {
    const [isLoading, setIsLoading] = useState(false);
-
    const [data, setData] = useState([]);
+   const [quantityMap, setQuantityMap] = useState({});
 
    useEffect(() => {
       fetchData();
    }, []);
+
+   const save = (itemId) => {
+      setIsLoading(true);
+      UpdateStorage({ quantity: quantityMap[itemId] }, [`${itemId}-g`]).then(() => {
+         setIsLoading(false);
+         fetchData();
+         message.success('Сохранено');
+      });
+   };
 
    const fetchData = () => {
       setIsLoading(true);
@@ -128,9 +115,9 @@ const StorageList = () => {
 
             const newModifiedList = [];
 
-            tableData.map((e) => {
+            tableData.forEach((e) => {
                let items = [];
-               storageData.map((o) => {
+               storageData.forEach((o) => {
                   if (o.catalog.parentId === e.id) {
                      items.push(o);
                   }
@@ -171,33 +158,69 @@ const StorageList = () => {
                   loading={isLoading}
                   className="list-my-storage"
                   renderItem={(item) => (
-                     <List.Item
-                        actions={[
-                           <StorageListQuantityWithSave
-                              key={`${item.id}-g`}
-                              storage={item}
-                              callBack={fetchData}
-                           />
-                        ]}>
-                        {item.catalog.imgUrl ? (
-                           <img alt={item.catalog.name} src={item.catalog.imgUrl} />
-                        ) : (
-                           <img alt="default image" src={defaulPhotoCard} />
-                        )}
+                     <div>
+                        <List.Item
+                           actions={[
+                              <StorageListQuantityWithSave
+                                 setQuantity={(v) =>
+                                    setQuantityMap((prev) => ({
+                                       ...prev,
+                                       [item.id]: v
+                                    }))
+                                 }
+                                 isLoading={isLoading}
+                                 setIsLoading={setIsLoading}
+                                 key={`${item.id}-g`}
+                                 storage={item}
+                                 callBack={fetchData}
+                              />
+                           ]}>
+                           {item.catalog.imgUrl ? (
+                              <img
+                                 alt={item.catalog.name}
+                                 src={item.catalog.imgUrl}
+                              />
+                           ) : (
+                              <img alt="default image" src={defaulPhotoCard} />
+                           )}
 
-                        <List.Item.Meta
-                           key={`${item.id}-`}
-                           title={item.catalog.name}
-                           description={
-                              <span
-                                 className="green-span-url"
-                                 type="link"
-                                 onClick={() => showConfirmDelete(item.id)}>
-                                 Удалить из склада
-                              </span>
+                           <List.Item.Meta
+                              key={`${item.id}-`}
+                              title={item.catalog.name}
+                              description={
+                                 <span
+                                    className="green-span-url"
+                                    type="link"
+                                    onClick={() => showConfirmDelete(item.id)}>
+                                    Удалить из склада
+                                 </span>
+                              }
+                           />
+                        </List.Item>
+
+                        <Tooltip placement="top" title={'Сохранить'}>
+                           <Button
+                              type="primary"
+                              loading={isLoading}
+                              onClick={() => save(item.id)}
+                              icon={<SaveOutlined />}
+                           />
+                        </Tooltip>
+
+                        <InputNumber
+                           style={{ marginLeft: '10px' }}
+                           min={1}
+                           max={100}
+                           defaultValue={1}
+                           value={quantityMap[item.id]}
+                           onChange={(v) =>
+                              setQuantityMap((prev) => ({
+                                 ...prev,
+                                 [item.id]: v
+                              }))
                            }
                         />
-                     </List.Item>
+                     </div>
                   )}
                />
             </React.Fragment>
