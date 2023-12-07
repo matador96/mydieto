@@ -10,7 +10,8 @@ import {
    message,
    Modal,
    InputNumber,
-   Divider
+   Divider,
+   Input
 } from 'antd';
 
 import {
@@ -34,63 +35,56 @@ const { confirm } = Modal;
 
 const StorageListQuantityWithSave = (props) => {
    const {
-      storage: { quantity, id },
-      callBack
+      storage: { quantity },
+      isLoading,
+      setQuantity
    } = props;
-   const [isLoading, setIsLoading] = useState(false);
-   const [currentQuantity, setQuantity] = useState(0);
+   console.log(props.storage.quantity);
+   const [inputQuantity, setInputQuantity] = useState('');
    const dispatch = useDispatch();
-
    useEffect(() => {
-      setQuantity(quantity);
-   }, [quantity]);
+      setQuantity(inputQuantity);
+   }, [inputQuantity]);
 
-   const addToCart = (obj) => {
-      dispatch(cartActions.addToCart(obj));
-      message.success('Добавлено в корзину');
-   };
+   const addToCart = () => {
+      const quantityValue = parseInt(inputQuantity, 10);
 
-   const save = () => {
-      setIsLoading(true);
-      UpdateStorage({ quantity: currentQuantity }, id).then(() => {
-         setIsLoading(false);
-         callBack();
-         message.success('Сохранено');
-      });
+      if (
+         !isNaN(quantityValue) &&
+         quantityValue > 0 &&
+         inputQuantity <= props.storage.quantity
+      ) {
+         dispatch(
+            cartActions.addToCart({
+               id: props.storage.catalog.id,
+               name: props.storage.catalog.name,
+               quantity: quantityValue
+            })
+         );
+         message.success('Добавлено в корзину');
+      } else {
+         message.error('Введите корректное количество товара');
+      }
    };
 
    return (
       <Space direction="vertical">
          <Space>
-            {' '}
-            <Tooltip placement="top" title={'Сохранить'}>
-               <Button
-                  type="primary"
-                  loading={isLoading}
-                  onClick={save}
-                  icon={<SaveOutlined />}
-               />
-            </Tooltip>
-            <InputNumber
-               min={1}
-               max={100}
-               default={1}
-               value={currentQuantity}
-               onChange={(v) => setQuantity(v)}
+            <Input
+               disabled={quantity.length <= 0}
+               style={{ width: '80px' }}
+               type="number"
+               value={inputQuantity}
+               onChange={(e) => setInputQuantity(e.target.value)}
             />
             <Tooltip placement="top" title={'Добавить в корзину'}>
                <Button
                   type="primary"
                   loading={isLoading}
                   disabled={quantity === 0}
-                  onClick={() =>
-                     addToCart({
-                        id: props.storage.catalog.id,
-                        name: props.storage.catalog.name,
-                        quantity: 1
-                     })
-                  }
-                  icon={<ShoppingCartOutlined />}>
+                  onClick={addToCart}
+                  icon={<ShoppingCartOutlined />}
+               >
                   В корзину
                </Button>
             </Tooltip>
@@ -101,12 +95,21 @@ const StorageListQuantityWithSave = (props) => {
 
 const StorageList = () => {
    const [isLoading, setIsLoading] = useState(false);
-
    const [data, setData] = useState([]);
+   const [quantityMap, setQuantityMap] = useState({});
 
    useEffect(() => {
       fetchData();
    }, []);
+
+   const save = (itemId) => {
+      setIsLoading(true);
+      UpdateStorage({ quantity: quantityMap[itemId] }, [`${itemId}-g`]).then(() => {
+         setIsLoading(false);
+         fetchData();
+         message.success('Сохранено');
+      });
+   };
 
    const fetchData = () => {
       setIsLoading(true);
@@ -128,9 +131,9 @@ const StorageList = () => {
 
             const newModifiedList = [];
 
-            tableData.map((e) => {
+            tableData.forEach((e) => {
                let items = [];
-               storageData.map((o) => {
+               storageData.forEach((o) => {
                   if (o.catalog.parentId === e.id) {
                      items.push(o);
                   }
@@ -171,33 +174,71 @@ const StorageList = () => {
                   loading={isLoading}
                   className="list-my-storage"
                   renderItem={(item) => (
-                     <List.Item
-                        actions={[
-                           <StorageListQuantityWithSave
-                              key={`${item.id}-g`}
-                              storage={item}
-                              callBack={fetchData}
-                           />
-                        ]}>
-                        {item.catalog.imgUrl ? (
-                           <img alt={item.catalog.name} src={item.catalog.imgUrl} />
-                        ) : (
-                           <img alt="default image" src={defaulPhotoCard} />
-                        )}
+                     <div>
+                        <List.Item
+                           actions={[
+                              <StorageListQuantityWithSave
+                                 // quantity={item.quantity}
+                                 setQuantity={(v) =>
+                                    setQuantityMap((prev) => ({
+                                       ...prev,
+                                       [item.id]: v
+                                    }))
+                                 }
+                                 isLoading={isLoading}
+                                 setIsLoading={setIsLoading}
+                                 key={`${item.id}-g`}
+                                 storage={item}
+                                 callBack={fetchData}
+                              />
+                           ]}
+                        >
+                           {item.catalog.imgUrl ? (
+                              <img
+                                 alt={item.catalog.name}
+                                 src={item.catalog.imgUrl}
+                              />
+                           ) : (
+                              <img alt="default image" src={defaulPhotoCard} />
+                           )}
 
-                        <List.Item.Meta
-                           key={`${item.id}-`}
-                           title={item.catalog.name}
-                           description={
-                              <span
-                                 className="green-span-url"
-                                 type="link"
-                                 onClick={() => showConfirmDelete(item.id)}>
-                                 Удалить из склада
-                              </span>
+                           <List.Item.Meta
+                              key={`${item.id}-`}
+                              title={item.catalog.name}
+                              description={
+                                 <span
+                                    className="green-span-url"
+                                    type="link"
+                                    onClick={() => showConfirmDelete(item.id)}
+                                 >
+                                    Удалить из склада
+                                 </span>
+                              }
+                           />
+                        </List.Item>
+
+                        <Tooltip placement="top" title={'Сохранить'}>
+                           <Button
+                              type="primary"
+                              loading={isLoading}
+                              onClick={() => save(item.id)}
+                              icon={<SaveOutlined />}
+                           />
+                        </Tooltip>
+                        <InputNumber
+                           style={{ marginLeft: '10px' }}
+                           min={1}
+                           max={100}
+                           defaultValue={1}
+                           value={item.quantity}
+                           onChange={(v) =>
+                              setQuantityMap((prev) => ({
+                                 ...prev,
+                                 [item.id]: v
+                              }))
                            }
                         />
-                     </List.Item>
+                     </div>
                   )}
                />
             </React.Fragment>
