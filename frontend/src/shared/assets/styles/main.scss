@@ -112,6 +112,12 @@
    background-size: 144px;
    margin-bottom: 5px;
 }
+.left-side-logo.collapsed {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   font-size: 35px;
+}
 
 .auth-page {
    &_right {
@@ -362,3 +368,13 @@ body {
       }
    }
 }
+
+// .order-tabs {
+//    .ant-tabs-tab {
+//       // padding-left: 5px !important;
+
+//       // &-active {
+//       //    background: #00000005 !important;
+//       // }
+//    }
+// }

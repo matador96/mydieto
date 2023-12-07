@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Form, Input } from '@shared/ui';
-import { Col, Row } from 'antd';
 import SelectAddress from '@widgets/FormItems/SelectAddress';
 
 const { TextArea } = Input;
@@ -34,21 +33,18 @@ const AddressForm = (props) => {
          onFinish={onFinish}
          onFinishFailed={onFinishFailed}
          hideRequiredMark
-         layout="vertical"
-      >
+         layout="vertical">
          <Form.Item
             label="Адрес"
             name={'address'}
-            rules={[{ required: true, message: 'Укажите адрес' }]}
-         >
+            rules={[{ required: true, message: 'Укажите адрес' }]}>
             <SelectAddress />
          </Form.Item>
 
          <Form.Item
             name="name"
             label="Название адреса"
-            rules={[{ required: true, message: 'Укажите адрес' }]}
-         >
+            rules={[{ required: true, message: 'Укажите адрес' }]}>
             <Input placeholder="Пометка к адресу" />
          </Form.Item>
 

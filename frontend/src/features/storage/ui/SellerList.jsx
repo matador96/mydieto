@@ -8,9 +8,38 @@ import { GetSellersList } from '@features/storage/model/GetSellersList';
 import StorageListOfSeller from './StorageListOfSeller';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import { Typography } from 'antd';
+import { List } from 'antd';
 const { Text } = Typography;
 
 const { Panel } = Collapse;
+
+const AddressList = ({ addressList }) => {
+   return (
+      <List
+         itemLayout="vertical"
+         dataSource={addressList}
+         renderItem={(item) => (
+            <List.Item>
+               <List.Item.Meta
+                  key={`${item.id}-${item.address}`}
+                  title={`Название: ${item.name}`}
+                  description={
+                     <Descriptions size="small">
+                        <Descriptions.Item label="Адрес" span={3}>
+                           {item.address || 'Не найден'}
+                        </Descriptions.Item>
+
+                        <Descriptions.Item label="Комментарий" span={3}>
+                           {item.comment || 'Не указан'}
+                        </Descriptions.Item>
+                     </Descriptions>
+                  }
+               />
+            </List.Item>
+         )}
+      />
+   );
+};
 
 const SellerList = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -75,6 +104,10 @@ const SellerList = () => {
                      </Descriptions.Item>
                   </Descriptions>
 
+                  <Divider orientation="left">Адреса продавца</Divider>
+
+                  <AddressList addressList={e?.addresses || []} />
+
                   <Divider orientation="left">Склад продавца</Divider>
 
                   <StorageListOfSeller sellerId={e.id} />
@@ -99,13 +132,15 @@ const SellerList = () => {
             expandIcon={({ isActive }) => (
                <CaretRightOutlined rotate={isActive ? 90 : 0} />
             )}
-            style={{ background: 'transparent' }}>
+            style={{ background: 'transparent' }}
+         >
             {collapseItems.map((item) => (
                <Panel
                   key={item.key}
                   header={item.label}
                   extra={item.extra}
-                  style={item.style}>
+                  style={item.style}
+               >
                   {item.children}
                </Panel>
             ))}

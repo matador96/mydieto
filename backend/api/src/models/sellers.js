@@ -44,7 +44,7 @@ const Sellers = sequelize.define(
   },
 );
 
-Sellers.hasOne(Addresses, {
+Sellers.hasMany(Addresses, {
   foreignKey: "sellerId",
 });
 

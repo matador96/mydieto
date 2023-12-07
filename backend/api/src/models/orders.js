@@ -1,7 +1,6 @@
 const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
 
-const { statusesOfOrders } = require("../config/statusSettings");
 const Addresses = require("./addresses");
 const OrderStatuses = require("./orderStatuses");
 const Sellers = require("./sellers");
@@ -31,14 +30,6 @@ const Orders = sequelize.define(
         key: "id",
       },
     },
-    price: {
-      field: "price",
-      type: DataTypes.INTEGER,
-    },
-    facticalPrice: {
-      field: "facticalPrice",
-      type: DataTypes.INTEGER,
-    },
     statusId: {
       field: "statusId",
       type: DataTypes.INTEGER,
@@ -64,10 +55,10 @@ Orders.belongsTo(Sellers, {
 Orders.belongsTo(OrderStatuses, {
   foreignKey: "statusId",
   as: "orderStatus",
-})
+});
 
 Orders.hasMany(OrderStatuses, {
   foreignKey: "orderId",
-})
+});
 
 module.exports = Orders;

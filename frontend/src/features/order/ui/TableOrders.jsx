@@ -35,32 +35,6 @@ const columns = [
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (_) => timestampToNormalDate(_)
-   },
-
-   {
-      title: 'Оценочная стоимость',
-      dataIndex: 'price',
-      key: 'price',
-      render: (_) => <>{_ ? `${_} .руб` : `Не указано`} </>
-   },
-
-   {
-      title: 'Фактическая стоимость',
-      dataIndex: 'facticalPrice',
-      key: 'facticalPrice',
-      render: (_) => <>{_ ? `${_} .руб` : `Не указано`} </>
-   },
-   {
-      title: 'Действие',
-      dataIndex: 'facticalPrice',
-      key: 'facticalPrice',
-      render: (_) => (
-         <>
-            <Button type="primary" size="small" danger>
-               Посмотреть товары
-            </Button>
-         </>
-      )
    }
 ];
 

@@ -6,7 +6,7 @@ import { Typography } from 'antd';
 import statuses from '@shared/const/statuses';
 // import OrderProcessingComponent from './OrderProcessingComponent';
 
-import OrderGradeFromAdminForm from './OrderGradeFromAdminForm';
+import OrderGradeSuccess from './OrderGradeSuccess';
 
 const { Text } = Typography;
 
@@ -56,22 +56,6 @@ function OrderItemData({ order }) {
                   <Text type="secondary">Примечение: {order.address.name}</Text>
                </Space>
             </Descriptions.Item>
-
-            {order.price && (
-               <Descriptions.Item
-                  key={`Оценочная стоимость`}
-                  label="Оценочная стоимость">
-                  {order.price} руб.
-               </Descriptions.Item>
-            )}
-
-            {order.facticalPrice && (
-               <Descriptions.Item
-                  key={`Фактическая стоимость`}
-                  label="Фактическая стоимость">
-                  {order.facticalPrice} руб.
-               </Descriptions.Item>
-            )}
          </Descriptions>
 
          <Divider orientation="left">Продавец</Divider>
@@ -94,7 +78,8 @@ function OrderItemData({ order }) {
             bordered={false}
             pagination={false}
          />
-         <OrderGradeFromAdminForm />
+
+         <OrderGradeSuccess currentStatus={order.status} />
       </div>
    );
 }
