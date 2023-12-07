@@ -36,6 +36,10 @@ const OrderItems = sequelize.define(
       field: "quantity",
       type: DataTypes.INTEGER,
     },
+    unitPrice: {
+      field: "unitPrice",
+      type: DataTypes.INTEGER,
+    },
     status: {
       field: "status",
       type: DataTypes.ENUM(statusesOfOrderItems),
