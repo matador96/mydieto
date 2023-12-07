@@ -53,7 +53,6 @@ const StorageListQuantityWithSave = (props) => {
          !isNaN(quantityValue) &&
          quantityValue > 0 &&
          inputQuantity <= props.storage.quantity
-
       ) {
          dispatch(
             cartActions.addToCart({
@@ -86,7 +85,6 @@ const StorageListQuantityWithSave = (props) => {
                   onClick={addToCart}
                   icon={<ShoppingCartOutlined />}
                >
-
                   В корзину
                </Button>
             </Tooltip>
@@ -195,7 +193,6 @@ const StorageList = () => {
                               />
                            ]}
                         >
-
                            {item.catalog.imgUrl ? (
                               <img
                                  alt={item.catalog.name}

@@ -87,16 +87,19 @@ const AdminLayout = (props) => {
       <Layout
          style={{
             minHeight: '100vh'
-         }}>
+         }}
+      >
          <Sider
             collapsible
             collapsed={collapsed}
             onCollapse={onCollapse}
             trigger={false}
-            className="left-sider-menu">
+            className="left-sider-menu"
+         >
             <div
                className={`left-side-logo ${collapsed ? 'collapsed' : ''}`}
-               onClick={() => navigate('/')}>
+               onClick={() => navigate('/')}
+            >
                РЭЛ
             </div>
             <Menu
@@ -119,19 +122,22 @@ const AdminLayout = (props) => {
             <Content
                style={{
                   margin: '0 16px'
-               }}>
+               }}
+            >
                <div
                   style={{
                      padding: '0 24px',
                      minHeight: 360
-                  }}>
+                  }}
+               >
                   {props.children}
                </div>
             </Content>
             <Footer
                style={{
                   textAlign: 'center'
-               }}>
+               }}
+            >
                © 2022 – {new Date().getFullYear()} Ecorium. Все права защищены.
             </Footer>
          </Layout>
