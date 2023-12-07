@@ -2,26 +2,28 @@ import React from 'react';
 import { Tabs, Tag, Space } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { Collapse, theme } from 'antd';
+import { VerticalSpace } from '@shared/ui';
 import { useState, useEffect } from 'react';
 import { GetSellerOrders } from '@features/order/model/services/GetSellerOrders';
 import OrderItemData from './OrderItemData';
 import timestampToNormalDate from '@shared/utils/tsToTime';
-import statuses from '@shared/const/statuses';
+import { Empty } from 'antd';
+import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import { Typography } from 'antd';
 const { Text } = Typography;
 
-const text = `
-  В разработке
-`;
-
 const statusTextsForSeller = {
-   onEvaluation: 'Ожидает оценки от покупателя'
+   onEvaluation: 'Ожидает оценки от покупателя',
+   canceled: 'Отмененный'
 };
 
 const { Panel } = Collapse;
-const OrderList = () => {
+
+const OrderList = (props) => {
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
+   const [pagination, setPagination] = useState({ ...initialPaginationSettings() });
+   const { status } = props;
    const { token } = theme.useToken();
    const panelStyle = {
       marginBottom: 12,
@@ -32,18 +34,39 @@ const OrderList = () => {
 
    useEffect(() => {
       fetchData();
-   }, []);
+   }, [status]);
 
-   const fetchData = () => {
+   const fetchData = (
+      current = pagination.current,
+      pageSize = pagination.pageSize
+   ) => {
       setIsLoading(true);
-      GetSellerOrders({
-         limit: 1000,
+
+      const fetchSettings = {
+         page: current,
+         limit: pageSize,
          sort: 'id',
          order: 'desc'
-      }).then((res) => {
+      };
+
+      if (status) {
+         fetchSettings.status = status;
+      }
+      GetSellerOrders(fetchSettings).then((res) => {
          setIsLoading(false);
-         setData(res.data);
+         setPagination((prev) => ({
+            ...prev,
+            total: res.count,
+            current,
+            pageSize
+         }));
+         const tableData = res.data.filter((item) => item.id !== 0);
+         setData(tableData);
       });
+   };
+
+   const onChangePagination = (current, pageSize) => {
+      fetchData(current, pageSize);
    };
 
    const getItems = (panelStyle) => {
@@ -68,69 +91,76 @@ const OrderList = () => {
    };
    const collapseItems = getItems(panelStyle);
    return (
-      <Collapse
-         bordered={false}
-         expandIcon={({ isActive }) => (
-            <CaretRightOutlined rotate={isActive ? 90 : 0} />
+      <>
+         {collapseItems.length === 0 ? (
+            <Empty />
+         ) : (
+            <Collapse
+               bordered={false}
+               expandIcon={({ isActive }) => (
+                  <CaretRightOutlined rotate={isActive ? 90 : 0} />
+               )}
+               style={{ background: 'transparent' }}>
+               {collapseItems.map((item) => (
+                  <Panel
+                     key={item.key}
+                     header={item.label}
+                     extra={item.extra}
+                     style={item.style}>
+                     {item.children}
+                  </Panel>
+               ))}
+            </Collapse>
          )}
-         style={{ background: 'transparent' }}>
-         {collapseItems.map((item) => (
-            <Panel
-               key={item.key}
-               header={item.label}
-               extra={item.extra}
-               style={item.style}>
-               {item.children}
-            </Panel>
-         ))}
-      </Collapse>
-   );
-};
 
-const onChange = (key) => {
-   console.log(key);
+         <VerticalSpace />
+         <Space style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            {!!pagination.total && (
+               <Pagination
+                  pagination={pagination}
+                  onChangePagination={onChangePagination}
+                  isLoading={isLoading}
+               />
+            )}
+         </Space>
+      </>
+   );
 };
 
 const items = [
    {
-      key: '1',
+      key: null,
       label: 'Все заказы',
-      children: <OrderList />
+      children: <OrderList status={null} />
    },
    {
-      key: '2',
-      label: 'Ожидают моей оценки',
-      children: text
+      key: 'onEvaluation',
+      label: 'Ожидают оценки покупателя',
+      children: <OrderList status={'onEvaluation'} />
    },
    {
-      key: '3',
-      label: 'Ожидают согласия продавца',
-      children: text
+      key: 'onConfirmation',
+      label: 'Ожидают вашего согласия',
+      children: <OrderList status={'onConfirmation'} />
    },
    {
-      key: '4',
+      key: 'waitDelivery',
       label: 'Ожидают курьера',
-      children: text
+      children: <OrderList status={'waitDelivery'} />
    },
    {
-      key: '5',
+      key: 'finished',
       label: 'Выполненные',
-      children: text
+      children: <OrderList status={'finished'} />
    },
    {
-      key: '6',
+      key: 'canceled',
       label: 'Отмененные',
-      children: text
+      children: <OrderList status={'canceled'} />
    }
 ];
 
-const OrderTabs = () => (
-   <Tabs
-      defaultActiveKey="1"
-      items={items}
-      type="card"
-      onChange={onChange}
-      style={{ minHeight: '80vh' }}
-   />
-);
+const OrderTabs = () => {
+   return <Tabs defaultActiveKey="1" items={items} style={{ minHeight: '80vh' }} />;
+};
 export default OrderTabs;
