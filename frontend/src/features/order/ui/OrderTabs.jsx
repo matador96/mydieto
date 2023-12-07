@@ -51,14 +51,12 @@ const OrderList = () => {
          return {
             key: e.id,
             label: (
-               <>
-                  <Space direction="horizontal">
-                     <Text strong>Заказ №{e.id}</Text>
-                     <Text type="secondary">
-                        от {timestampToNormalDate(e.createdAt)}
-                     </Text>
-                  </Space>
-               </>
+               <Space direction="horizontal">
+                  <Text strong>Заказ №{e.id}</Text>
+                  <Text type="secondary">
+                     от {timestampToNormalDate(e.createdAt)}
+                  </Text>
+               </Space>
             ),
             extra: <Text type="secondary">{statusTextsForSeller[e.status]}</Text>,
             children: <OrderItemData order={e} showSellerBlock={false} />,
@@ -75,15 +73,13 @@ const OrderList = () => {
          expandIcon={({ isActive }) => (
             <CaretRightOutlined rotate={isActive ? 90 : 0} />
          )}
-         style={{ background: 'transparent' }}
-      >
+         style={{ background: 'transparent' }}>
          {collapseItems.map((item) => (
             <Panel
                key={item.key}
                header={item.label}
                extra={item.extra}
-               style={item.style}
-            >
+               style={item.style}>
                {item.children}
             </Panel>
          ))}

@@ -15,7 +15,12 @@ module.exports = [
     middlewares: [],
     method: SellerController.logout,
   },
-
+  {
+    type: "get",
+    url: "/api/v1/seller/storage",
+    middlewares: [authenticate, validationChecker],
+    method: SellerController.getStorage,
+  },
   {
     type: "get",
     url: "/api/v1/seller/profile",

@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import {
-   FileTextOutlined,
-   UsergroupAddOutlined,
    DashboardOutlined,
-   AlignLeftOutlined,
    UnorderedListOutlined,
-   ShoppingOutlined
+   HddOutlined,
+   ContainerOutlined
 } from '@ant-design/icons';
 import { Menu, Layout } from 'antd';
 import { useState } from 'react';
@@ -39,7 +37,8 @@ const allMenuItems = [
    // getItem('Журнал действий', 'logs', <AlignLeftOutlined />),
 
    getItem('Каталог', 'admin-catalogs', <UnorderedListOutlined />),
-   getItem('Заказы', 'admin-orders', <ShoppingOutlined />)
+   getItem('Заказы', 'admin-orders', <ContainerOutlined />),
+   getItem('Склады', 'admin-sellers-storage', <HddOutlined />)
 ];
 
 const AdminLayout = (props) => {
@@ -87,8 +86,7 @@ const AdminLayout = (props) => {
       <Layout
          style={{
             minHeight: '100vh'
-         }}
-      >
+         }}>
          <Sider
             collapsible
             collapsed={collapsed}
@@ -122,22 +120,19 @@ const AdminLayout = (props) => {
             <Content
                style={{
                   margin: '0 16px'
-               }}
-            >
+               }}>
                <div
                   style={{
                      padding: '0 24px',
                      minHeight: 360
-                  }}
-               >
+                  }}>
                   {props.children}
                </div>
             </Content>
             <Footer
                style={{
                   textAlign: 'center'
-               }}
-            >
+               }}>
                © 2022 – {new Date().getFullYear()} Ecorium. Все права защищены.
             </Footer>
          </Layout>

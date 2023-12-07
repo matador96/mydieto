@@ -11,6 +11,7 @@ import LeadsPage from '@pages/seller/leads';
 
 import ManageCatalogsPage from '@pages/admin/catalogs';
 import ManageOrdersPage from '@pages/admin/orders';
+import SellerStoragesPage from '@pages/admin/sellers';
 
 import UsersPage from '@pages/admin/users';
 import LogsPage from '@pages/admin/logs';
@@ -35,6 +36,7 @@ const AppRoutes = {
    ADMIN_CATALOGS: 'admin-catalogs',
    ADMIN_ORDERS: 'admin-orders',
    ADMIN_DASHBOARD: 'admin-dashboard',
+   ADMIN_SELLER_STORAGES: 'admin-sellers-storage',
    // Seller
    SELLER_DASHBOARD: 'seller-dashboard',
    SELLER_PROFILE: 'seller-profile',
@@ -60,6 +62,7 @@ export const RoutePath = {
    [AppRoutes.NOT_PERMISSION]: '/401',
    // ADMIN
    [AppRoutes.ADMIN_DASHBOARD]: '/admin/dashboard',
+   [AppRoutes.ADMIN_SELLER_STORAGES]: '/admin/storages',
    [AppRoutes.ADMIN_PROFILE]: '/admin/profile',
    // [AppRoutes.ADMIN_USERS]: '/admin/users',
    [AppRoutes.ADMIN_CATALOGS]: '/admin/catalogs',
@@ -125,6 +128,13 @@ export const routeList = {
       layout: AppLayout.adminLayout,
       authOnly: true
    },
+   [AppRoutes.ADMIN_SELLER_STORAGES]: {
+      path: RoutePath[AppRoutes.ADMIN_SELLER_STORAGES],
+      element: <SellerStoragesPage />,
+      layout: AppLayout.adminLayout,
+      authOnly: true
+   },
+
    // [AppRoutes.ADMIN_USERS]: {
    //    path: RoutePath[AppRoutes.ADMIN_USERS],
    //    element: <UsersPage />,
