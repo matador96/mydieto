@@ -92,6 +92,7 @@ const CartList = () => {
       message.success('Убрано из корзины');
    };
 
+  
    return (
       <div>
          <List
