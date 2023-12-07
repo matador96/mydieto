@@ -11,6 +11,7 @@ const StorageService = require("../services/storage");
 
 const SellerService = require("../services/sellers");
 const UserService = require("../services/users");
+const OrderStatusesService = require("../services/ordersStatuses");
 
 module.exports.getStorage = async (req) => {
   const currentSessionUserId = req?.user?.profile?.id;
@@ -52,62 +53,95 @@ module.exports.getOrdersWithParams = async (req) => {
   return { data: result.data, count: result.count };
 };
 
-module.exports.createOrder = async (req, res, transaction) => {
-  let { orderItems, ...orderData } = req.body;
+// module.exports.createOrder = async (req, res, transaction) => {
+//   let { orderItems, orderStatus, ...orderData } = req.body;
 
-  const currentSessionUserId = req?.user?.profile?.id;
+//   const currentSessionUserId = req?.user?.profile?.id;
 
-  const userData = await UserService.getUserById(currentSessionUserId);
+//   const userData = await UserService.getUserById(currentSessionUserId);
 
-  if (!userData?.seller?.id) {
-    throw new ApplicationError("Вы делаете запрос не из продавца", {
-      path: "controller",
-    });
-  }
+//   if (!userData?.seller?.id) {
+//     throw new ApplicationError("Вы делаете запрос не из продавца", {
+//       path: "controller",
+//     });
+//   }
 
-  if (orderItems) {
-    orderItems = orderItems.map((e) => {
-      if (typeof e !== "object") {
-        return JSON.parse(e);
-      }
-      return e;
-    });
-    orderData.orderItems = orderItems;
-  }
+//   if (orderItems) {
+//     orderItems = orderItems.map((e) => {
+//       if (typeof e !== "object") {
+//         return JSON.parse(e);
+//       }
+//       return e;
+//     });
+//     orderData.orderItems = orderItems;
+//   }
 
-  orderData.sellerId = userData?.seller?.id;
+//   orderData.sellerId = userData?.seller?.id;
 
-  const data = await OrderService.create(orderData, { transaction });
+//   let order = await OrderService.create(orderData, { transaction });
 
-  return {
-    data,
-  };
-};
+//   if (orderStatus) {
+//     const orderStatusObj =
+//       orderStatus !== "object" ? JSON.parse(orderStatus) : orderStatus;
+//     const orderStatusData = {
+//       ...orderStatusObj,
+//       orderId: order.id,
+//     };
 
-module.exports.updateOrder = async (req, res, transaction) => {
-  const { id } = req.params;
-  let { ...orderData } = req.body;
+//     const status = await OrderStatusesService.create(orderStatusData, {
+//       transaction,
+//     });
 
-  const currentSessionUserId = req?.user?.profile?.id;
+//     order = await OrderService.update(
+//       { statusId: status.id },
+//       { id: order.id },
+//       { transaction },
+//     );
+//   }
 
-  const userData = await UserService.getUserById(currentSessionUserId);
+//   return {
+//     order,
+//   };
+// };
 
-  if (!userData?.seller?.id) {
-    throw new ApplicationError("Вы делаете запрос не из продавца", {
-      path: "controller",
-    });
-  }
+// module.exports.updateOrder = async (req, res, transaction) => {
+//   const { id } = req.params;
+//   let { orderStatus, ...orderData } = req.body;
 
-  const data = await OrderService.update(
-    orderData,
-    { id, sellerId: userData?.seller?.id },
-    { transaction },
-  );
+//   const currentSessionUserId = req?.user?.profile?.id;
+//   const userData = await UserService.getUserById(currentSessionUserId);
 
-  return {
-    data,
-  };
-};
+//   if (!userData?.seller?.id) {
+//     throw new ApplicationError("Вы делаете запрос не из продавца", {
+//       path: "controller",
+//     });
+//   }
+
+//   if (orderStatus) {
+//     const orderStatusObj =
+//       orderStatus !== "object" ? JSON.parse(orderStatus) : orderStatus;
+//     const orderStatusData = {
+//       ...orderStatusObj,
+//       orderId: id,
+//     };
+
+//     const status = await OrderStatusesService.create(orderStatusData, {
+//       transaction,
+//     });
+
+//     orderData.statusId = status.id;
+//   }
+
+//   const data = await OrderService.update(
+//     orderData,
+//     { id, sellerId: userData?.seller?.id },
+//     { transaction },
+//   );
+
+//   return {
+//     data,
+//   };
+// };
 
 module.exports.getFromSession = async (req) => {
   const currentSessionUserId = req?.user?.profile?.id;

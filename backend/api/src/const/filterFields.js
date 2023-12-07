@@ -6,8 +6,9 @@ const sellerFieldsCanBeFilter = ["id", "mobile", "firstName", "lastName", "statu
 
 const userFieldsCanBeFilter = ["id", "email"];
 const addressFieldsCanBeFilter = ["id", "sellerId", "status"];
-const orderFieldsCanBeFilter = ["id", "sellerId", "status"];
+const orderFieldsCanBeFilter = ["id", "sellerId", "statusId"];
 const orderItemFieldsCanBeFilter = ["id", "catalogId", "status"];
+const orderStatusFieldsCanBeFilter = ["id", "orderId", "status"];
 
 module.exports = {
   admin: adminFieldsCanBeFilter,
@@ -15,6 +16,7 @@ module.exports = {
   catalog: catalogFieldsCanBeFilter,
   order: orderFieldsCanBeFilter,
   orderItem: orderItemFieldsCanBeFilter,
+  orderStatus: orderStatusFieldsCanBeFilter,
   seller: sellerFieldsCanBeFilter,
   storage: storageFieldsCanBeFilter,
   user: userFieldsCanBeFilter,
@@ -37,11 +39,16 @@ module.exports = {
     order: {
       id: "$eq",
       sellerId: "$eq",
-      status: "$eq",
+      statusId: "$eq",
     },
     orderItem: {
       id: "$eq",
       catalogId: "$eq",
+      status: "$eq",
+    },
+    orderStatus: {
+      id: "$eq",
+      orderId: "$eq",
       status: "$eq",
     },
     seller: {

@@ -1,4 +1,5 @@
 const SellerController = require("../controllers/seller");
+const OrderController = require("../controllers/order");
 const { authenticate } = require("../middleware/authenticate");
 const { validationChecker } = require("../middleware/validationChecker");
 
@@ -44,14 +45,14 @@ module.exports = [
     url: "/api/v1/seller/order",
     middlewares: [authenticate, validationChecker],
     withTransaction: true,
-    method: SellerController.createOrder,
+    method: OrderController.create,
   },
   {
     type: "put",
     url: "/api/v1/seller/order/:id",
     middlewares: [authenticate, validationChecker],
     withTransaction: true,
-    method: SellerController.updateOrder,
+    method: OrderController.update,
   },
   {
     type: "post",

@@ -2,6 +2,7 @@ const Addresses = require("../models/addresses");
 const Catalogs = require("../models/catalogs");
 const Orders = require("../models/orders");
 const OrderItems = require("../models/orderItems");
+const OrderStatuses = require("../models/orderStatuses");
 const Sellers = require("../models/sellers");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
@@ -14,6 +15,8 @@ module.exports.getById = async (id) => {
         model: OrderItems,
         include: Catalogs,
       },
+      OrderItems,
+      "status",
       Sellers,
     ],
     raw: false,
@@ -37,8 +40,22 @@ module.exports.getWithParams = async (queryParams) => {
         model: OrderItems,
         include: Catalogs,
       },
+      OrderItems,
+      {
+        model: OrderStatuses,
+        as: "orderStatus",
+        ...(queryParams.status !== undefined
+          ? {
+              where: {
+                status: queryParams.status,
+              },
+            }
+          : {}),
+      },
+      OrderStatuses,
       Sellers,
     ],
+    order: [[OrderStatuses, "createdAt", "DESC"]],
     raw: false,
     nest: true,
   });
@@ -65,7 +82,7 @@ module.exports.update = async (obj, whereObj, settings = {}) => {
 
   const updatedOrder = await Orders.findOne({
     where: whereObj,
-    include: [OrderItems],
+    include: [OrderItems, OrderStatuses],
     ...settings,
     raw: false,
     nest: true,

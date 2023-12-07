@@ -1,9 +1,9 @@
 module.exports = {
   ACTIVE: "active",
   BLOCKED: "blocked",
-  ONEVALUATION: "onEvaluation",
-  ONCONFIRMATION: "onConfirmation",
-  WAITDELIVERY: "waitDelivery",
+  EVALUATIVE_PRICE: "onEvaluation",
+  CONFIRM_PRICE: "onConfirmation",
+  WAITING_DELIVERY: "waitDelivery",
   FINISHED: "finished",
   CANCELED: "canceled",
 };

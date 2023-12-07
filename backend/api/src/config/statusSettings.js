@@ -5,9 +5,9 @@ const allStatuses = [...Object.values(Statuses)];
 const statusesOfAddresses = [...allStatuses];
 const statusesOfCatalogs = [...allStatuses];
 const statusesOfOrders = [
-  Statuses.ONEVALUATION,
-  Statuses.ONCONFIRMATION,
-  Statuses.WAITDELIVERY,
+  Statuses.EVALUATIVE_PRICE,
+  Statuses.CONFIRM_PRICE,
+  Statuses.WAITING_DELIVERY,
   Statuses.FINISHED,
   Statuses.CANCELED,
 ];
