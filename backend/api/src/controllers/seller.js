@@ -7,9 +7,32 @@ const Encrypt = require("../core/encrypt");
 const jwt = require("jsonwebtoken");
 const OrderService = require("../services/orders");
 const jwtOptions = require("../core/auth/jwtConfig");
+const StorageService = require("../services/storage");
 
 const SellerService = require("../services/sellers");
 const UserService = require("../services/users");
+
+module.exports.getStorage = async (req) => {
+  const currentSessionUserId = req?.user?.profile?.id;
+  const userData = await UserService.getUserById(currentSessionUserId);
+
+  if (!userData?.seller?.id) {
+    throw new ApplicationError("Вы делаете запрос не из продавца", {
+      path: "controller",
+    });
+  }
+
+  const sellerId = userData?.seller?.id;
+
+  if (!sellerId) {
+    throw new ApplicationError("Нет айди продавца", {
+      path: "controller",
+    });
+  }
+
+  const result = await StorageService.getWithParams({ ...req.query, sellerId });
+  return { data: result.data, count: result.count };
+};
 
 module.exports.getOrdersWithParams = async (req) => {
   const currentSessionUserId = req?.user?.profile?.id;

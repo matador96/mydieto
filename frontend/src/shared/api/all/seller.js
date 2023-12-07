@@ -11,6 +11,11 @@ export const getMyAddresses = (params) =>
 export const getMyOrders = (params) =>
    get(generateQueryParams(`/seller/orders`, params));
 
+export const getMyStorage = (params) =>
+   get(generateQueryParams(`/seller/storage`, params));
+
+export const getSellers = (params) => get(generateQueryParams(`/sellers`, params));
+
 export const createMyOrder = (fields) =>
    post(
       '/seller/order',

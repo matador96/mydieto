@@ -13,18 +13,7 @@ module.exports.getById = async (req) => {
 };
 
 module.exports.getWithParams = async (req) => {
-  const currentSessionUserId = req?.user?.profile?.id;
-
-  const sellerData = await UserService.getUserById(currentSessionUserId);
-  const sellerId = sellerData?.seller?.id;
-
-  if (!sellerId) {
-    throw new ApplicationError("Нет айди продавца", {
-      path: "controller",
-    });
-  }
-
-  const result = await storageService.getWithParams({ ...req.query, sellerId });
+  const result = await storageService.getWithParams({ ...req.query });
   return { data: result.data, count: result.count };
 };
 
