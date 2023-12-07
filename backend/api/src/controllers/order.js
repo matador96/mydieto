@@ -40,24 +40,25 @@ module.exports.create = async (req, res, transaction) => {
 
   let order = await OrderService.create(orderData, { transaction });
 
+  const orderStatusData = {
+    comment: statusComment || "",
+    orderId: order.id,
+    userId: currentSessionUserId,
+  };
+
   if (status) {
-    const orderStatusData = {
-      status,
-      comment: statusComment || "",
-      orderId: order.id,
-      userId: currentSessionUserId,
-    };
-
-    const orderStatus = await OrderStatusesService.create(orderStatusData, {
-      transaction,
-    });
-
-    order = await OrderService.update(
-      { statusId: orderStatus.id },
-      { id: order.id },
-      { transaction },
-    );
+    orderStatusData.status = status;
   }
+
+  const orderStatus = await OrderStatusesService.create(orderStatusData, {
+    transaction,
+  });
+
+  order = await OrderService.update(
+    { statusId: orderStatus.id },
+    { id: order.id },
+    { transaction },
+  );
 
   return {
     order,
