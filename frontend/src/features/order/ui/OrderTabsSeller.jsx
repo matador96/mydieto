@@ -113,7 +113,6 @@ const OrderList = (props) => {
             </Collapse>
          )}
 
-
          <VerticalSpace />
          <Space style={{ display: 'flex', justifyContent: 'flex-end' }}>
             {!!pagination.total && (
@@ -161,7 +160,7 @@ const items = [
    }
 ];
 
-const OrderTabs = () => {
+const OrderTabsSeller = () => {
    return <Tabs defaultActiveKey="1" items={items} style={{ minHeight: '80vh' }} />;
 };
-export default OrderTabs;
+export default OrderTabsSeller;

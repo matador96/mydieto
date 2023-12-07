@@ -56,24 +56,6 @@ function OrderItemData({ order }) {
                   <Text type="secondary">Примечение: {order.address.name}</Text>
                </Space>
             </Descriptions.Item>
-
-            {order.price && (
-               <Descriptions.Item
-                  key={`Оценочная стоимость`}
-                  label="Оценочная стоимость"
-               >
-                  {order.price} руб.
-               </Descriptions.Item>
-            )}
-
-            {order.facticalPrice && (
-               <Descriptions.Item
-                  key={`Фактическая стоимость`}
-                  label="Фактическая стоимость"
-               >
-                  {order.facticalPrice} руб.
-               </Descriptions.Item>
-            )}
          </Descriptions>
 
          <Divider orientation="left">Продавец</Divider>

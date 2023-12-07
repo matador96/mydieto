@@ -36,19 +36,14 @@ const CatalogCardsByParentId = ({ id }) => {
                      className="custom-card"
                      loading={isLoading}
                      cover={
-                        item.imgUrl ? (
-                           <img
-                              className="card-background-image"
-                              style={{ height: '150px' }}
-                              alt="item.name"
-                              src={item.imgUrl}
-                           />
-                        ) : (
-                           <div
-                              className="card-background-image"
-                              style={{ backgroundImage: `url(${defaulPhotoCard})` }}
-                           />
-                        )
+                        <div
+                           className="card-background-image"
+                           style={{
+                              backgroundImage: `url(${
+                                 item.imgUrl || defaulPhotoCard
+                              })`
+                           }}
+                        />
                      }
                      hoverable
                      actions={[
@@ -56,8 +51,7 @@ const CatalogCardsByParentId = ({ id }) => {
                            key={`ke${item.id}`}
                            catalogId={item.id}
                         />
-                     ]}
-                  >
+                     ]}>
                      {item.name}
                   </Card>
                </Col>
