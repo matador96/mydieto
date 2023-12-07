@@ -4,7 +4,7 @@ const { statusesOfOrders } = require("../config/statusSettings");
 
 const OrderService = require("../services/orders");
 const UserService = require("../services/users");
-const {ApplicationError} = require("../classes/Errors");
+const { ApplicationError } = require("../classes/Errors");
 const OrderStatusesService = require("../services/ordersStatuses");
 
 module.exports.getById = async (req) => {
@@ -45,6 +45,7 @@ module.exports.create = async (req, res, transaction) => {
       status,
       comment: statusComment || "",
       orderId: order.id,
+      userId: currentSessionUserId,
     };
 
     const orderStatus = await OrderStatusesService.create(orderStatusData, {
@@ -85,6 +86,7 @@ module.exports.update = async (req, res, transaction) => {
       status,
       comment: statusComment || "",
       orderId: id,
+      userId: currentSessionUserId,
     };
 
     const orderStatus = await OrderStatusesService.create(orderStatusData, {

@@ -20,12 +20,20 @@ const OrderStatuses = sequelize.define(
         key: "id",
       },
     },
+    userId: {
+      field: "userId",
+      type: DataTypes.INTEGER,
+      references: {
+        model: "users",
+        key: "id",
+      },
+    },
     status: {
       field: "status",
       type: DataTypes.STRING,
       validate: {
         isIn: [statusesOfOrders],
-      }
+      },
     },
     comment: {
       field: "comment",
@@ -36,6 +44,5 @@ const OrderStatuses = sequelize.define(
     timestamps: true,
   },
 );
-
 
 module.exports = OrderStatuses;
