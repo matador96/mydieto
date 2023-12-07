@@ -63,7 +63,8 @@ const LoginForm = () => {
          }}
          style={{
             maxWidth: 460,
-            minWidth: 320
+            minWidth: 320,
+            position: 'relative'
          }}
          onFinish={onFinish}
          onFinishFailed={onFinishFailed}
@@ -100,13 +101,19 @@ const LoginForm = () => {
             }}
          >
             {fargotPassword && (
-               <Text
-                  style={{ display: 'block' }}
-                  onClick={handleForgotPassword}
-                  underline
+               <div
+                  style={{
+                     position: 'absolute',
+                     bottom: 32,
+                     cursor: 'pointer'
+                  }}
                >
-                  Забыли пароль?
-               </Text>
+                  {fargotPassword && (
+                     <Text onClick={handleForgotPassword} underline>
+                        Забыли пароль?
+                     </Text>
+                  )}
+               </div>
             )}
             <PasswordRecoveryForm visible={modalVisible} onCancel={handleCancel} />
 

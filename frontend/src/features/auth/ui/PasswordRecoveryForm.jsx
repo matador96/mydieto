@@ -5,7 +5,12 @@ function PasswordRecoveryForm({ visible, onCancel }) {
 
    return (
       <>
-         <Modal open={visible} title="Восстановление пароля" onCancel={onCancel}>
+         <Modal
+            okText={'Сбросить пароль'}
+            open={visible}
+            title="Восстановление пароля"
+            onCancel={onCancel}
+         >
             <Form form={form}>
                <Form.Item
                   label="Email"
