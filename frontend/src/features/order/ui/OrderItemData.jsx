@@ -60,7 +60,8 @@ function OrderItemData({ order }) {
             {order.price && (
                <Descriptions.Item
                   key={`Оценочная стоимость`}
-                  label="Оценочная стоимость">
+                  label="Оценочная стоимость"
+               >
                   {order.price} руб.
                </Descriptions.Item>
             )}
@@ -68,7 +69,8 @@ function OrderItemData({ order }) {
             {order.facticalPrice && (
                <Descriptions.Item
                   key={`Фактическая стоимость`}
-                  label="Фактическая стоимость">
+                  label="Фактическая стоимость"
+               >
                   {order.facticalPrice} руб.
                </Descriptions.Item>
             )}

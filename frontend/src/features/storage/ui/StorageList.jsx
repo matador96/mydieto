@@ -39,36 +39,52 @@ const StorageListQuantityWithSave = (props) => {
       isLoading,
       setQuantity
    } = props;
-
+   console.log(props.storage.quantity);
+   const [inputQuantity, setInputQuantity] = useState('');
    const dispatch = useDispatch();
-
    useEffect(() => {
-      setQuantity(quantity);
-   }, [quantity]);
+      setQuantity(inputQuantity);
+   }, [inputQuantity]);
 
-   const addToCart = (obj) => {
-      dispatch(cartActions.addToCart(obj));
-      message.success('Добавлено в корзину');
+   const addToCart = () => {
+      const quantityValue = parseInt(inputQuantity, 10);
+
+      if (
+         !isNaN(quantityValue) &&
+         quantityValue > 0 &&
+         inputQuantity <= props.storage.quantity
+      ) {
+         dispatch(
+            cartActions.addToCart({
+               id: props.storage.catalog.id,
+               name: props.storage.catalog.name,
+               quantity: quantityValue
+            })
+         );
+         message.success('Добавлено в корзину');
+      } else {
+         message.error('Введите корректное количество товара');
+      }
    };
 
    return (
       <Space direction="vertical">
          <Space>
-
-            <Input  disabled={quantity.length <= 0} style={{width: '80px'}} type='number' />
+            <Input
+               disabled={quantity.length <= 0}
+               style={{ width: '80px' }}
+               type="number"
+               value={inputQuantity}
+               onChange={(e) => setInputQuantity(e.target.value)}
+            />
             <Tooltip placement="top" title={'Добавить в корзину'}>
                <Button
                   type="primary"
                   loading={isLoading}
                   disabled={quantity === 0}
-                  onClick={() =>
-                     addToCart({
-                        id: props.storage.catalog.id,
-                        name: props.storage.catalog.name,
-                        quantity: 1
-                     })
-                  }
-                  icon={<ShoppingCartOutlined />}>
+                  onClick={addToCart}
+                  icon={<ShoppingCartOutlined />}
+               >
                   В корзину
                </Button>
             </Tooltip>
@@ -162,6 +178,7 @@ const StorageList = () => {
                         <List.Item
                            actions={[
                               <StorageListQuantityWithSave
+                                 // quantity={item.quantity}
                                  setQuantity={(v) =>
                                     setQuantityMap((prev) => ({
                                        ...prev,
@@ -174,7 +191,8 @@ const StorageList = () => {
                                  storage={item}
                                  callBack={fetchData}
                               />
-                           ]}>
+                           ]}
+                        >
                            {item.catalog.imgUrl ? (
                               <img
                                  alt={item.catalog.name}
@@ -191,7 +209,8 @@ const StorageList = () => {
                                  <span
                                     className="green-span-url"
                                     type="link"
-                                    onClick={() => showConfirmDelete(item.id)}>
+                                    onClick={() => showConfirmDelete(item.id)}
+                                 >
                                     Удалить из склада
                                  </span>
                               }
@@ -206,13 +225,12 @@ const StorageList = () => {
                               icon={<SaveOutlined />}
                            />
                         </Tooltip>
-
                         <InputNumber
                            style={{ marginLeft: '10px' }}
                            min={1}
                            max={100}
                            defaultValue={1}
-                           value={quantityMap[item.id]}
+                           value={item.quantity}
                            onChange={(v) =>
                               setQuantityMap((prev) => ({
                                  ...prev,
