@@ -19,7 +19,8 @@ function PasswordRecoveryForm({ visible, onCancel }) {
                         required: true,
                         message: 'Введите ваш email'
                      }
-                  ]}>
+                  ]}
+               >
                   <Input />
                </Form.Item>
             </Form>
