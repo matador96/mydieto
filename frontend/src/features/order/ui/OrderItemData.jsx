@@ -6,7 +6,7 @@ import { Typography } from 'antd';
 import statuses from '@shared/const/statuses';
 // import OrderProcessingComponent from './OrderProcessingComponent';
 
-import OrderGradeFromAdminForm from './OrderGradeFromAdminForm';
+import OrderGradeSuccess from './OrderGradeSuccess';
 
 const { Text } = Typography;
 
@@ -78,7 +78,8 @@ function OrderItemData({ order }) {
             bordered={false}
             pagination={false}
          />
-         <OrderGradeFromAdminForm />
+
+         <OrderGradeSuccess currentStatus={order.status} />
       </div>
    );
 }

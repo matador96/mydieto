@@ -10,11 +10,15 @@ import timestampToNormalDate from '@shared/utils/tsToTime';
 import { Empty } from 'antd';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import { Typography } from 'antd';
+import statuses from '@shared/const/statuses';
 const { Text } = Typography;
 
 const statusTextsForSeller = {
    onEvaluation: 'Ожидает оценки от покупателя',
-   canceled: 'Отмененный'
+   onConfirmation: 'Согласуйте предложенную цену',
+   waitDelivery: 'Ожидаем курьера',
+   finished: 'Завершен',
+   canceled: 'Отменено'
 };
 
 const { Panel } = Collapse;
@@ -127,10 +131,16 @@ const OrderList = (props) => {
    );
 };
 
+// label: (
+//    <>
+//       <Tag color={statuses['onEvaluation']?.color}>22</Tag> Ожидают оценки
+//    </>
+// ),
+
 const items = [
    {
       key: null,
-      label: 'Все заказы',
+      label: 'Все',
       children: <OrderList status={null} />
    },
    {
@@ -140,7 +150,7 @@ const items = [
    },
    {
       key: 'onConfirmation',
-      label: 'Ожидают вашего согласия',
+      label: 'Ожидают согласия',
       children: <OrderList status={'onConfirmation'} />
    },
    {
@@ -161,6 +171,14 @@ const items = [
 ];
 
 const OrderTabsSeller = () => {
-   return <Tabs defaultActiveKey="1" items={items} style={{ minHeight: '80vh' }} />;
+   return (
+      <Tabs
+         className="order-tabs"
+         // tabPosition={'left'}
+         defaultActiveKey="1"
+         items={items}
+         style={{ minHeight: '80vh' }}
+      />
+   );
 };
 export default OrderTabsSeller;
