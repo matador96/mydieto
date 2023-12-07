@@ -66,7 +66,8 @@ const LoginForm = () => {
             minWidth: 320
          }}
          onFinish={onFinish}
-         onFinishFailed={onFinishFailed}>
+         onFinishFailed={onFinishFailed}
+      >
          <Form.Item
             label="Email"
             name="email"
@@ -75,7 +76,8 @@ const LoginForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input />
          </Form.Item>
 
@@ -87,19 +89,22 @@ const LoginForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input.Password />
          </Form.Item>
          <Form.Item
             wrapperCol={{
                offset: 8,
                span: 16
-            }}>
+            }}
+         >
             {fargotPassword && (
                <Text
                   style={{ display: 'block' }}
                   onClick={handleForgotPassword}
-                  underline>
+                  underline
+               >
                   Забыли пароль?
                </Text>
             )}
