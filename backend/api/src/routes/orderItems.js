@@ -29,4 +29,11 @@ module.exports = [
     withTransaction: true,
     method: OrderItemController.update,
   },
+  {
+    type: "patch",
+    url: "/api/v1/orderItem/:id",
+    middlewares: [authenticate, validationChecker],
+    withTransaction: true,
+    method: OrderItemController.update,
+  },
 ];
