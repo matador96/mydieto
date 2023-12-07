@@ -83,7 +83,11 @@ const OrderList = () => {
                   </Space>
                </>
             ),
-            extra: <Text type="secondary">{statusTextsForAdmin[e.status]}</Text>,
+            extra: (
+               <Text type="secondary">
+                  {statusTextsForAdmin[e.orderStatus.status]}
+               </Text>
+            ),
             children: <OrderItemData order={e} showSellerBlock={true} />,
             style: panelStyle
          };
@@ -100,15 +104,13 @@ const OrderList = () => {
             expandIcon={({ isActive }) => (
                <CaretRightOutlined rotate={isActive ? 90 : 0} />
             )}
-            style={{ background: 'transparent' }}
-         >
+            style={{ background: 'transparent' }}>
             {collapseItems.map((item) => (
                <Panel
                   key={item.key}
                   header={item.label}
                   extra={item.extra}
-                  style={item.style}
-               >
+                  style={item.style}>
                   {item.children}
                </Panel>
             ))}

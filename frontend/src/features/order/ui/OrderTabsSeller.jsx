@@ -85,7 +85,11 @@ const OrderList = (props) => {
                   </Text>
                </Space>
             ),
-            extra: <Text type="secondary">{statusTextsForSeller[e.status]}</Text>,
+            extra: (
+               <Text type="secondary">
+                  {statusTextsForSeller[e.orderStatus.status]}
+               </Text>
+            ),
             children: <OrderItemData order={e} showSellerBlock={false} />,
             style: panelStyle
          };

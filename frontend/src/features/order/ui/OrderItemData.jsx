@@ -44,8 +44,8 @@ function OrderItemData({ order }) {
             </Descriptions.Item>
 
             <Descriptions.Item key={`Статус`} label="Статус">
-               <Tag color={statuses[order.status]?.color}>
-                  {statuses[order.status]?.label}
+               <Tag color={statuses[order.orderStatus.status]?.color}>
+                  {statuses[order.orderStatus.status]?.label}
                </Tag>
             </Descriptions.Item>
 
@@ -79,7 +79,7 @@ function OrderItemData({ order }) {
             pagination={false}
          />
 
-         <OrderGradeSuccess currentStatus={order.status} />
+         <OrderGradeSuccess currentStatus={order.orderStatus.status} />
       </div>
    );
 }
