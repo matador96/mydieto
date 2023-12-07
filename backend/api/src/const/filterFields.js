@@ -6,13 +6,7 @@ const sellerFieldsCanBeFilter = ["id", "mobile", "firstName", "lastName", "statu
 
 const userFieldsCanBeFilter = ["id", "email"];
 const addressFieldsCanBeFilter = ["id", "sellerId", "status"];
-const orderFieldsCanBeFilter = [
-  "id",
-  "sellerId",
-  "price",
-  "facticalPrice",
-  "statusId",
-];
+const orderFieldsCanBeFilter = ["id", "sellerId", "statusId"];
 const orderItemFieldsCanBeFilter = ["id", "catalogId", "status"];
 const orderStatusFieldsCanBeFilter = ["id", "orderId", "status"];
 
