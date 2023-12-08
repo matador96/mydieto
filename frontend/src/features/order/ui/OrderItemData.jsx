@@ -57,7 +57,7 @@ const UnitPriceComponent = (props) => {
    const isAdmin = auth.type === 'admin';
 
    if (isAdmin) {
-      if (orderStatus === 'onEvaluation') {
+      if (orderStatus === 'onEvaluation' || orderStatus === 'waitDelivery') {
          // onEvaluation Admin
          return <OrderItemPriceInput {...props} />;
       }
@@ -70,7 +70,12 @@ const UnitPriceComponent = (props) => {
       }
    }
 
-   if (orderStatus === 'finished' || orderStatus === 'canceled') {
+   if (
+      orderStatus === 'waitDelivery' ||
+      orderStatus === 'onConfirmation' ||
+      orderStatus === 'finished' ||
+      orderStatus === 'canceled'
+   ) {
       return <UnitPriceTag price={value} unit={unit} />;
    }
 
@@ -135,6 +140,33 @@ function OrderItemData({ order, fetchOrders }) {
 
    const orderStatusesWithoutActionButtons = ['finished', 'canceled'];
 
+   const getActionButtons = () => {
+      const CancelButton = (
+         <CancelOrderModalButton OnCloseModal={fetchOrders} orderId={order.id} />
+      );
+
+      const AcceptButton = (
+         <AcceptOrderModalButton
+            user={auth}
+            OnCloseModal={fetchOrders}
+            orderId={order.id}
+            currentStatus={order.orderStatus.status}
+         />
+      );
+
+      const buttons = {
+         seller: {
+            onConfirmation: [AcceptButton, CancelButton]
+         },
+         admin: {
+            onEvaluation: [AcceptButton, CancelButton],
+            waitDelivery: [AcceptButton, CancelButton]
+         }
+      };
+
+      return buttons[auth.type][order.orderStatus.status];
+   };
+
    return (
       <div>
          <Divider orientation="left">Заказ</Divider>
@@ -147,11 +179,11 @@ function OrderItemData({ order, fetchOrders }) {
                {timestampToNormalDate(order.createdAt)}
             </Descriptions.Item>
 
-            <Descriptions.Item key={`Статус`} label="Статус">
+            {/* <Descriptions.Item key={`Статус`} label="Статус">
                <Tag color={statuses[order.orderStatus.status]?.color}>
                   {statuses[order.orderStatus.status]?.label}
                </Tag>
-            </Descriptions.Item>
+            </Descriptions.Item> */}
 
             <Descriptions.Item key={`Адрес`} label="Адрес">
                <Space direction="vertical">
@@ -187,7 +219,7 @@ function OrderItemData({ order, fetchOrders }) {
 
          <VerticalSpace />
 
-         {order.orderStatus.status === 'onEvaluation' && (
+         {order.orderStatus.status === 'onEvaluation' && isAdmin && (
             <>
                <Alert
                   message="Не забудьте указать оценочную стоимость для товаров"
@@ -205,15 +237,7 @@ function OrderItemData({ order, fetchOrders }) {
             />
          ) : (
             <Space size="small" align="end" direction="horizontal">
-               <AcceptOrderModalButton
-                  OnCloseModal={fetchOrders}
-                  orderId={order.id}
-                  currentStatus={order.orderStatus.status}
-               />
-               <CancelOrderModalButton
-                  OnCloseModal={fetchOrders}
-                  orderId={order.id}
-               />
+               {getActionButtons()}
             </Space>
          )}
 

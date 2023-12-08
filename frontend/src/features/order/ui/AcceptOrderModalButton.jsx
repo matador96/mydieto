@@ -11,11 +11,10 @@ const nextStatuses = {
    waitDelivery: 'finished'
 };
 
-const AcceptOrderModalButton = ({
-   orderId,
-   closeModal = () => {},
-   currentStatus
-}) => {
+const AcceptOrderModalButton = ({ orderId, OnCloseModal, currentStatus, user }) => {
+   const isSeller = user.type === 'seller';
+   const isAdmin = user.type === 'admin';
+
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
    const [text, setText] = useState(null);
@@ -44,19 +43,33 @@ const AcceptOrderModalButton = ({
    };
    const handleCancel = () => {
       setIsModalOpen(false);
-      closeModal();
+      OnCloseModal();
+   };
+
+   const getText = () => {
+      if (isAdmin && currentStatus === 'onEvaluation') {
+         return 'Отправить предложение продавцу';
+      }
+
+      if (isAdmin && currentStatus === 'waitDelivery') {
+         return 'Заказ выполнен';
+      }
+
+      if (isSeller && currentStatus === 'onConfirmation') {
+         return 'Отлично вызываем курьера';
+      }
    };
 
    return (
       <>
          <Button type="primary" onClick={showModal}>
-            Принять заказ
+            {getText()}
          </Button>
          <Modal
             open={isModalOpen}
             onOk={null}
             onCancel={handleCancel}
-            title={`Принять заказ`}
+            title={`Подтвердите свое действие`}
             footer={null}
             width={600}
             destroyOnClose={true}>
@@ -70,7 +83,7 @@ const AcceptOrderModalButton = ({
             <VerticalSpace />
             <Space size="small">
                <Button type="primary" onClick={sendUpdate} loading={isLoading}>
-                  Отправить предложение продавцу
+                  {getText()}
                </Button>
                <Button onClick={handleCancel}>Отмена</Button>
             </Space>
