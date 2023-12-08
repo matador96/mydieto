@@ -51,7 +51,8 @@ const CatalogCardsByParentId = ({ id }) => {
                            key={`ke${item.id}`}
                            catalogId={item.id}
                         />
-                     ]}>
+                     ]}
+                  >
                      {item.name}
                   </Card>
                </Col>

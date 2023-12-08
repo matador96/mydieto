@@ -62,7 +62,8 @@ const LoginForm = () => {
             position: 'relative'
          }}
          onFinish={onFinish}
-         onFinishFailed={onFinishFailed}>
+         onFinishFailed={onFinishFailed}
+      >
          <Form.Item
             label="Email"
             name="email"
@@ -71,7 +72,8 @@ const LoginForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input />
          </Form.Item>
 
@@ -83,7 +85,8 @@ const LoginForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input.Password />
          </Form.Item>
 
@@ -92,12 +95,14 @@ const LoginForm = () => {
             wrapperCol={{
                offset: 8,
                span: 16
-            }}>
+            }}
+         >
             <Space direction="vertical">
                <Button
                   type="link"
                   onClick={handleForgotPassword}
-                  style={{ padding: '0 3px' }}>
+                  style={{ padding: '0 3px' }}
+               >
                   <span style={{ textDecoration: 'underline' }}>Забыли пароль?</span>
                </Button>
 

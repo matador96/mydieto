@@ -74,7 +74,7 @@ const OrderList = (props) => {
 
    const getItems = (panelStyle) => {
       const collapseList = data.map((e) => {
-         console.log(e)
+         console.log(e);
          return {
             key: e.id,
             label: (
@@ -114,13 +114,15 @@ const OrderList = (props) => {
                expandIcon={({ isActive }) => (
                   <CaretRightOutlined rotate={isActive ? 90 : 0} />
                )}
-               style={{ background: 'transparent' }}>
+               style={{ background: 'transparent' }}
+            >
                {collapseItems.map((item) => (
                   <Panel
                      key={item.key}
                      header={item.label}
                      extra={item.extra}
-                     style={item.style}>
+                     style={item.style}
+                  >
                      {item.children}
                   </Panel>
                ))}

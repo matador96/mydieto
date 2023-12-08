@@ -50,7 +50,8 @@ const CancelOrderModalButton = ({ orderId, OnCloseModal }) => {
             title={`Отклонить заказ`}
             footer={null}
             width={600}
-            destroyOnClose={true}>
+            destroyOnClose={true}
+         >
             <TextArea
                placeholder="Укажите причину отказа"
                style={{ width: '100%' }}
@@ -64,7 +65,8 @@ const CancelOrderModalButton = ({ orderId, OnCloseModal }) => {
                   type="primary"
                   danger
                   onClick={sendUpdate}
-                  loading={isLoading}>
+                  loading={isLoading}
+               >
                   Отклонить заказ
                </Button>
                <Button onClick={handleCancel}>Отмена</Button>

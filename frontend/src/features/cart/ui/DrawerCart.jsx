@@ -112,7 +112,8 @@ const CartList = ({ handleNameChange }) => {
                         />{' '}
                         шт.
                      </>
-                  ]}>
+                  ]}
+               >
                   <List.Item.Meta
                      key={`${item.id}-`}
                      title={item.name}
@@ -120,7 +121,8 @@ const CartList = ({ handleNameChange }) => {
                         <span
                            className="green-span-url"
                            type="link"
-                           onClick={() => deleteByIdCart(item.id)}>
+                           onClick={() => deleteByIdCart(item.id)}
+                        >
                            Убрать из корзины
                         </span>
                      }
@@ -205,7 +207,8 @@ const DrawerCart = (props) => {
                      Очистить корзину
                   </Button>
                </Space>
-            }>
+            }
+         >
             <Divider orientation="left">Позиции заказа</Divider>
             <CartList handleNameChange={handleNameChange} />
 

@@ -16,7 +16,8 @@ const columns = [
             <span
                className="green-span-url"
                style={{ padding: '5px 0' }}
-               onClick={() => {}}>
+               onClick={() => {}}
+            >
                {`Заказ №${_}`}
             </span>
          </Space>
