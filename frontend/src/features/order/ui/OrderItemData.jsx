@@ -1,23 +1,95 @@
 import React from 'react';
-import { Descriptions, Table, Divider, Tag, Space } from 'antd';
+import { Descriptions, Table, Divider, Tag, Space, Alert } from 'antd';
 import timestampToNormalDate from '@shared/utils/tsToTime';
 import { unitSettings } from '@shared/const/units';
+import { VerticalSpace } from '@shared/ui';
 import { Typography } from 'antd';
 import statuses from '@shared/const/statuses';
+import OrderItemPriceInput from './OrderItemPriceInput';
+
+import { useSelector } from 'react-redux';
+import { getUserAuthData } from '@entitles/User';
+import { Timeline } from 'antd';
 // import OrderProcessingComponent from './OrderProcessingComponent';
+import CancelOrderModalButton from './CancelOrderModalButton';
+import AcceptOrderModalButton from './AcceptOrderModalButton';
 
 import OrderGradeSuccess from './OrderGradeSuccess';
 
 const { Text } = Typography;
 
-function OrderItemData({ order }) {
-   const orderItems = order.orderItems.map((item) => ({ ...item, ...item.catalog }));
+const LastStatusBlock = ({ status, comment }) => {
+   return (
+      <Alert
+         description={
+            <div>
+               <div>
+                  <Text type="secondary">
+                     {status === 'canceled' ? 'Причина: ' : 'Комментарий: '}
+                     {comment || 'Не указано'}
+                  </Text>
+               </div>
+            </div>
+         }
+         type={status === 'canceled' ? 'error' : 'success'}
+         showIcon
+      />
+   );
+};
+
+const UnitPriceTag = ({ price, unit }) => {
+   return price ? (
+      <Tag bordered={false} color="processing">{`${price} руб/${
+         unitSettings.find((e) => e.value === unit).shortLabel
+      }`}</Tag>
+   ) : (
+      <Tag bordered={false}>Не оценено</Tag>
+   );
+};
+
+const UnitPriceComponent = (props) => {
+   const { value, orderItemId, unit, orderStatus } = props;
+
+   const auth = useSelector(getUserAuthData);
+
+   const isSeller = auth.type === 'seller';
+   const isAdmin = auth.type === 'admin';
+
+   if (isAdmin) {
+      if (orderStatus === 'onEvaluation') {
+         // onEvaluation Admin
+         return <OrderItemPriceInput {...props} />;
+      }
+   }
+
+   if (isSeller) {
+      if (orderStatus === 'onEvaluation') {
+         // onEvaluation Seller
+         return <Tag bordered={false}>Ожидает оценки</Tag>;
+      }
+   }
+
+   if (orderStatus === 'finished' || orderStatus === 'canceled') {
+      return <UnitPriceTag price={value} unit={unit} />;
+   }
+
+   return null;
+};
+
+function OrderItemData({ order, fetchOrders }) {
+   const orderItems = order.orderItems;
+
+   const auth = useSelector(getUserAuthData);
+
+   const isSeller = auth.type === 'seller';
+   const isAdmin = auth.type === 'admin';
 
    const columns = [
       {
          title: 'Наименование',
          dataIndex: 'name',
-         key: 'name'
+         key: 'name',
+         render: (_, record) => record.catalog.name
       },
       {
          title: 'Объем',
@@ -25,11 +97,28 @@ function OrderItemData({ order }) {
          key: 'quantity',
          render: (_, record) => (
             <>
-               {_} {unitSettings.find((e) => e.value === record.unit).shortLabel}
+               {_}{' '}
+               {unitSettings.find((e) => e.value === record.catalog.unit).shortLabel}
             </>
+         )
+      },
+      {
+         title: 'Оценочная стоимость за единицу',
+         dataIndex: 'unitPrice',
+         width: 300,
+         key: 'unitPrice',
+         render: (_, record) => (
+            <UnitPriceComponent
+               orderStatus={order.orderStatus.status}
+               value={_}
+               orderItemId={record.id}
+               unit={record.catalog.unit}
+            />
          )
       }
    ];
+
+   const orderStatusesWithoutActionButtons = ['finished', 'canceled'];
 
    return (
       <div>
@@ -79,7 +168,57 @@ function OrderItemData({ order }) {
             pagination={false}
          />
 
-         <OrderGradeSuccess currentStatus={order.orderStatus.status} />
+         {/* <OrderGradeSuccess currentStatus={order.orderStatus.status} /> */}
+
+         <VerticalSpace />
+
+         {order.orderStatus.status === 'onEvaluation' && (
+            <>
+               <Alert
+                  message="Не забудьте указать оценочную стоимость для товаров"
+                  type="info"
+                  showIcon
+               />
+               <VerticalSpace />
+            </>
+         )}
+
+         {orderStatusesWithoutActionButtons.includes(order.orderStatus.status) ? (
+            <LastStatusBlock
+               status={order.orderStatus.status}
+               comment={order.orderStatus.comment}
+            />
+         ) : (
+            <Space size="small" align="end" direction="horizontal">
+               <AcceptOrderModalButton
+                  OnCloseModal={fetchOrders}
+                  orderId={order.id}
+               />
+               <CancelOrderModalButton
+                  OnCloseModal={fetchOrders}
+                  orderId={order.id}
+               />
+            </Space>
+         )}
+
+         {isAdmin && (
+            <>
+               <VerticalSpace />
+               <Divider orientation="left">История изменения статусов</Divider>{' '}
+               <VerticalSpace />
+               <Timeline
+                  style={{ maxWidth: '500px' }}
+                  mode="left"
+                  items={order.orderStatuses
+                     .map((e) => ({
+                        label: `${statuses[e.status]?.label}`,
+                        color: statuses[e.status]?.color,
+                        children: `Комментарий: ${e?.comment || 'Без комментария'}`
+                     }))
+                     .reverse()}
+               />
+            </>
+         )}
       </div>
    );
 }

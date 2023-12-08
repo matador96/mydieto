@@ -22,7 +22,7 @@ const statuses = {
    finished: {
       label: 'Выполненные',
       value: 'finished',
-      color: '#6495ED'
+      color: 'green'
    }
 };
 

@@ -7,23 +7,23 @@ import { VerticalSpace } from '@shared/ui';
 import OrderItemData from './OrderItemData';
 import { GetOrders } from '@features/order/model/services/GetOrders';
 import timestampToNormalDate from '@shared/utils/tsToTime';
-import statuses from '@shared/const/statuses';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import { Typography } from 'antd';
 const { Text } = Typography;
 
-const text = `
-  В разработке
-`;
-
 const statusTextsForAdmin = {
-   onEvaluation: 'Ожидает вашей оценки'
+   onEvaluation: 'Ожидает вашей оценки',
+   onConfirmation: 'На согласовании у продавца',
+   waitDelivery: 'Ожидаем курьера',
+   finished: 'Завершен',
+   canceled: 'Отменено'
 };
 
 const { Panel } = Collapse;
-const OrderList = () => {
+const OrderList = (props) => {
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
+   const { status } = props;
    const [pagination, setPagination] = useState({ ...initialPaginationSettings() });
 
    const { token } = theme.useToken();
@@ -33,22 +33,28 @@ const OrderList = () => {
       borderRadius: token.borderRadiusLG,
       border: 'none'
    };
-
    useEffect(() => {
       fetchData();
-   }, []);
+   }, [status]);
 
    const fetchData = (
       current = pagination.current,
       pageSize = pagination.pageSize
    ) => {
       setIsLoading(true);
-      GetOrders({
+
+      const fetchSettings = {
          page: current,
          limit: pageSize,
          sort: 'id',
          order: 'desc'
-      }).then((res) => {
+      };
+
+      if (status) {
+         fetchSettings.status = status;
+      }
+
+      GetOrders(fetchSettings).then((res) => {
          setIsLoading(false);
          setPagination((prev) => ({
             ...prev,
@@ -88,7 +94,13 @@ const OrderList = () => {
                   {statusTextsForAdmin[e.orderStatus.status]}
                </Text>
             ),
-            children: <OrderItemData order={e} showSellerBlock={true} />,
+            children: (
+               <OrderItemData
+                  fetchOrders={fetchData}
+                  order={e}
+                  showSellerBlock={true}
+               />
+            ),
             style: panelStyle
          };
       });
@@ -104,15 +116,13 @@ const OrderList = () => {
             expandIcon={({ isActive }) => (
                <CaretRightOutlined rotate={isActive ? 90 : 0} />
             )}
-            style={{ background: 'transparent' }}
-         >
+            style={{ background: 'transparent' }}>
             {collapseItems.map((item) => (
                <Panel
                   key={item.key}
                   header={item.label}
                   extra={item.extra}
-                  style={item.style}
-               >
+                  style={item.style}>
                   {item.children}
                </Panel>
             ))}
@@ -131,50 +141,46 @@ const OrderList = () => {
    );
 };
 
-const onChange = (key) => {
-   console.log(key);
-};
-
 const items = [
    {
-      key: '1',
+      key: null,
       label: 'Все заказы',
-      children: <OrderList />
+      children: <OrderList status={null} />
    },
    {
-      key: '2',
+      key: 'onEvaluation',
       label: 'Ожидают моей оценки',
-      children: text
+      children: <OrderList status={'onEvaluation'} />
    },
    {
-      key: '3',
+      key: 'onConfirmation',
       label: 'Ожидают согласия продавца',
-      children: text
+      children: <OrderList status={'onConfirmation'} />
    },
    {
-      key: '4',
+      key: 'waitDelivery',
       label: 'Ожидают курьера',
-      children: text
+      children: <OrderList status={'waitDelivery'} />
    },
    {
-      key: '5',
+      key: 'finished',
       label: 'Выполненные',
-      children: text
+      children: <OrderList status={'finished'} />
    },
    {
-      key: '6',
+      key: 'canceled',
       label: 'Отмененные',
-      children: text
+      children: <OrderList status={'canceled'} />
    }
 ];
 
 const OrderTabsAdmin = () => (
    <>
       <Tabs
+         className="order-tabs"
          defaultActiveKey="1"
          items={items}
-         type="card"
-         onChange={onChange}
+         // type="card"
          style={{ minHeight: '80vh' }}
       />
    </>

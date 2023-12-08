@@ -10,7 +10,6 @@ import timestampToNormalDate from '@shared/utils/tsToTime';
 import { Empty } from 'antd';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import { Typography } from 'antd';
-import statuses from '@shared/const/statuses';
 const { Text } = Typography;
 
 const statusTextsForSeller = {
@@ -90,7 +89,13 @@ const OrderList = (props) => {
                   {statusTextsForSeller[e.orderStatus.status]}
                </Text>
             ),
-            children: <OrderItemData order={e} showSellerBlock={false} />,
+            children: (
+               <OrderItemData
+                  fetchOrders={fetchData}
+                  order={e}
+                  showSellerBlock={false}
+               />
+            ),
             style: panelStyle
          };
       });

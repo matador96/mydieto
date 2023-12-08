@@ -46,7 +46,11 @@ const OrderGradeSuccess = ({ currentStatus }) => {
                      предоставил продавец.
                   </p>
 
-                  <Input placeholder="Оценочная стоимость заказа" />
+                  <TextArea
+                     placeholder="Введите причину отказа"
+                     style={{ width: '100%' }}
+                     rows={2}
+                  />
                   <Button type="primary" style={{ marginTop: '15px' }}>
                      Отправить предложение продавцу
                   </Button>
