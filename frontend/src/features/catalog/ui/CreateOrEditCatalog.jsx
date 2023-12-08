@@ -38,11 +38,13 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
 
          for (let key in updatedFields) {
             if (key === 'image') {
-               formData.append(
-                  key,
-                  updatedFields[key][0].originFileObj,
-                  updatedFields[key][0].name
-               );
+               if (values[key]?.[0]) {
+                  formData.append(
+                     key,
+                     updatedFields[key][0].originFileObj,
+                     updatedFields[key][0].name
+                  );
+               }
             } else {
                if (updatedFields[key]) {
                   formData.append(key, updatedFields[key]);
@@ -65,11 +67,13 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
 
       for (let key in values) {
          if (key === 'image') {
-            formDataCreate.append(
-               key,
-               values[key][0].originFileObj,
-               values[key][0].name
-            );
+            if (values[key]?.[0]) {
+               formDataCreate.append(
+                  key,
+                  values[key][0].originFileObj,
+                  values[key][0].name
+               );
+            }
          } else if (values[key]) {
             formDataCreate.append(key, values[key]);
          }
