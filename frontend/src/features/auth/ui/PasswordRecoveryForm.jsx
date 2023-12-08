@@ -1,17 +1,48 @@
-import { Modal, Form, Input } from 'antd';
+import React, { useState } from 'react';
+import { Modal, Form, Input, Button, message } from 'antd';
+import { ResetSellerPassword } from './../model/services/ResetSellerPassword';
 
 function PasswordRecoveryForm({ visible, onCancel }) {
-   const [form] = Form.useForm();
+   const [isLoading, setIsLoading] = useState(false);
+
+   const onFinish = (values) => {
+      setIsLoading(true);
+
+      ResetSellerPassword(values.email)
+         .then(() => {
+            message.info(`Новый пароль отправлен на почту `);
+         })
+         .catch((e) => {
+            message.error(e.message);
+         })
+         .finally(() => {
+            setIsLoading(false);
+            onCancel();
+         });
+   };
+
+   const onFinishFailed = () => {
+      setIsLoading(false);
+   };
 
    return (
       <>
-         <Modal
-            okText={'Сбросить пароль'}
-            open={visible}
-            title="Восстановление пароля"
-            onCancel={onCancel}
-         >
-            <Form form={form}>
+         <Modal footer={null} open={visible} title="Восстановление пароля">
+            <Form
+               name="basic"
+               labelCol={{
+                  span: 8
+               }}
+               wrapperCol={{
+                  span: 16
+               }}
+               style={{
+                  maxWidth: 460,
+                  minWidth: 320,
+                  position: 'relative'
+               }}
+               onFinish={onFinish}
+               onFinishFailed={onFinishFailed}>
                <Form.Item
                   label="Email"
                   name="email"
@@ -24,9 +55,17 @@ function PasswordRecoveryForm({ visible, onCancel }) {
                         required: true,
                         message: 'Введите ваш email'
                      }
-                  ]}
-               >
+                  ]}>
                   <Input />
+               </Form.Item>
+               <Form.Item
+                  wrapperCol={{
+                     offset: 8,
+                     span: 16
+                  }}>
+                  <Button type="primary" htmlType="submit" loading={isLoading}>
+                     Сбросить пароль
+                  </Button>
                </Form.Item>
             </Form>
          </Modal>
