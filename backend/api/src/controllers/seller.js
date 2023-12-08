@@ -208,7 +208,7 @@ module.exports.register = async (req, res, transaction) => {
 
   const createdUser = await UserService.createUser(userData, { transaction });
   sellerData.userId = createdUser.id;
-  const createdSeller = await SellerService.create(sellerData, { transaction })
+  const createdSeller = await SellerService.create(sellerData, { transaction });
 
   if (email) {
     await Mailer.notifyAboutChangingCredentials(email, {
@@ -237,6 +237,20 @@ module.exports.reset = async (req) => {
     });
   }
 
+  const user = await UserService.getByEmail(email);
+  if (!user) {
+    throw new ApplicationError("Пользователя с таким email не существует", {
+      path: "controller",
+    });
+  }
+
+  const seller = user.seller;
+  if (!seller?.id) {
+    throw new ApplicationError("Продавца с таким email не существует", {
+      path: "controller",
+    });
+  }
+
   const password = generateRandomWord();
   const updatedUser = await UserService.updateUser(
     {
@@ -246,8 +260,8 @@ module.exports.reset = async (req) => {
   );
 
   await Mailer.notifyAboutChangingCredentials(email, {
-    firstName: updatedUser.firstName,
-    lastName: updatedUser.lastName,
+    firstName: seller.firstName,
+    lastName: seller.lastName,
     email: email,
     password: password,
   });

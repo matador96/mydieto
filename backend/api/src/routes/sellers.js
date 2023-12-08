@@ -13,7 +13,7 @@ module.exports = [
   },
   {
     type: "get",
-    url: "/api/v1/seller/reset",
+    url: "/api/v1/seller/reset/:email",
     middlewares: [],
     withTransaction: true,
     method: SellerController.reset,
