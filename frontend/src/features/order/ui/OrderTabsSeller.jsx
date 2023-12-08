@@ -74,6 +74,7 @@ const OrderList = (props) => {
 
    const getItems = (panelStyle) => {
       const collapseList = data.map((e) => {
+         console.log(e)
          return {
             key: e.id,
             label: (

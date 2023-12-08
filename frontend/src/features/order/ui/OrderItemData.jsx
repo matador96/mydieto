@@ -218,7 +218,7 @@ function OrderItemData({ order, fetchOrders }) {
          {/* <OrderGradeSuccess currentStatus={order.orderStatus.status} /> */}
 
          <VerticalSpace />
-
+{console.log(order)}
          {order.orderStatus.status === 'onEvaluation' && isAdmin && (
             <>
                <Alert

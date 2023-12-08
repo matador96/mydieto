@@ -83,10 +83,10 @@ const AddressList = ({ selectedAddressId, setSelectedAddressId }) => {
    );
 };
 
-const CartList = () => {
+const CartList = ({ handleNameChange }) => {
    const cartData = useSelector(getCartItems);
+   const [orderItems, setOrderItems] = useState([]);
    const dispatch = useDispatch();
-
    const deleteByIdCart = (id) => {
       dispatch(cartActions.deleteFromCart(id));
       message.success('Убрано из корзины');
@@ -104,16 +104,15 @@ const CartList = () => {
                      <>
                         <InputNumber
                            min={1}
-                           max={100}
-                           default={1}
+                           max={item.quantity}
                            size="small"
                            style={{ width: '80px' }}
-                           value={item.quantity}
+                           defaultValue={item.quantity}
+                           onChange={(e) => handleNameChange(e)}
                         />{' '}
                         шт.
                      </>
-                  ]}
-               >
+                  ]}>
                   <List.Item.Meta
                      key={`${item.id}-`}
                      title={item.name}
@@ -121,8 +120,7 @@ const CartList = () => {
                         <span
                            className="green-span-url"
                            type="link"
-                           onClick={() => deleteByIdCart(item.id)}
-                        >
+                           onClick={() => deleteByIdCart(item.id)}>
                            Убрать из корзины
                         </span>
                      }
@@ -137,9 +135,10 @@ const CartList = () => {
 const DrawerCart = (props) => {
    const [open, setOpen] = useState(false);
    const [selectedAddressId, setSelectedAddressId] = useState(null);
+   const [inputName, setInputName] = useState(0);
    const cartData = useSelector(getCartItems);
    const dispatch = useDispatch();
-
+   console.log(inputName, 'INPUTnAME');
    const showDrawer = () => {
       setOpen(true);
    };
@@ -153,7 +152,6 @@ const DrawerCart = (props) => {
    };
 
    const createOrder = () => {
-      console.log(cartData);
       const orderItems = cartData.map((e) => ({
          catalogId: e.id,
          quantity: e.quantity
@@ -169,11 +167,14 @@ const DrawerCart = (props) => {
          return;
       }
 
+      orderItems.forEach((item) => {
+         item.quantity = inputName;
+      });
       const orderData = {
          addressId: selectedAddressId,
          orderItems
       };
-
+      console.log(orderData);
       CreateMyOrder(orderData)
          .then(() => {
             message.success('Заказ создан');
@@ -182,6 +183,10 @@ const DrawerCart = (props) => {
             dispatch(cartActions.cleanCart());
          })
          .catch((e) => message.error(e.message));
+   };
+
+   const handleNameChange = (value) => {
+      setInputName(value);
    };
 
    return (
@@ -200,10 +205,9 @@ const DrawerCart = (props) => {
                      Очистить корзину
                   </Button>
                </Space>
-            }
-         >
+            }>
             <Divider orientation="left">Позиции заказа</Divider>
-            <CartList />
+            <CartList handleNameChange={handleNameChange} />
 
             <Divider orientation="left">Адрес вывоза</Divider>
             <AddressList
