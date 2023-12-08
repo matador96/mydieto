@@ -97,11 +97,7 @@ module.exports.update = async (req, res, transaction) => {
     orderData.statusId = orderStatus.id;
   }
 
-  const data = await OrderService.update(
-    orderData,
-    { id, sellerId: userData?.seller?.id },
-    { transaction },
-  );
+  const data = await OrderService.update(orderData, { id }, { transaction });
 
   return {
     data,

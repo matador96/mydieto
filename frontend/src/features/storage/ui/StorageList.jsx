@@ -39,7 +39,7 @@ const StorageListQuantityWithSave = (props) => {
       isLoading,
       setQuantity
    } = props;
-   const [inputQuantity, setInputQuantity] = useState('');
+   const [inputQuantity, setInputQuantity] = useState(1);
    const dispatch = useDispatch();
    useEffect(() => {
       setQuantity(inputQuantity);
@@ -71,6 +71,7 @@ const StorageListQuantityWithSave = (props) => {
          <Space>
             <Input
                min={1}
+               defaultValue={1}
                max={props.storage.quantity}
                style={{ width: '80px' }}
                type="number"
@@ -83,8 +84,7 @@ const StorageListQuantityWithSave = (props) => {
                   loading={isLoading}
                   disabled={quantity === 0}
                   onClick={addToCart}
-                  icon={<ShoppingCartOutlined />}
-               >
+                  icon={<ShoppingCartOutlined />}>
                   В корзину
                </Button>
             </Tooltip>
@@ -104,7 +104,7 @@ const StorageList = () => {
 
    const save = (itemId) => {
       setIsLoading(true);
-      UpdateStorage({ quantity: quantityMap[itemId] }, [`${itemId}-g`]).then(() => {
+      UpdateStorage({ quantity: quantityMap[itemId] }, itemId).then(() => {
          setIsLoading(false);
          fetchData();
          message.success('Сохранено');
@@ -190,8 +190,7 @@ const StorageList = () => {
                                  storage={item}
                                  callBack={fetchData}
                               />
-                           ]}
-                        >
+                           ]}>
                            {item.catalog.imgUrl ? (
                               <img
                                  alt={item.catalog.name}
@@ -205,39 +204,40 @@ const StorageList = () => {
                               key={`${item.id}-`}
                               title={item.catalog.name}
                               description={
-                                 <div>
-                                    <Tooltip placement="top" title={'Сохранить'}>
-                                       <Button
-                                          type="primary"
-                                          loading={isLoading}
-                                          onClick={() => save(item.id)}
-                                          icon={<SaveOutlined />}
+                                 <>
+                                    <div>
+                                       <InputNumber
+                                          style={{ marginRight: '10px' }}
+                                          min={1}
+                                          max={100}
+                                          defaultValue={1}
+                                          value={item.quantity}
+                                          onChange={(v) =>
+                                             setQuantityMap((prev) => ({
+                                                ...prev,
+                                                [item.id]: v
+                                             }))
+                                          }
                                        />
-                                    </Tooltip>
-                                    <InputNumber
-                                       style={{ marginLeft: '10px' }}
-                                       min={1}
-                                       max={100}
-                                       defaultValue={1}
-                                       value={item.quantity}
-                                       onChange={(v) =>
-                                          setQuantityMap((prev) => ({
-                                             ...prev,
-                                             [item.id]: v
-                                          }))
-                                       }
-                                    />
-                                 </div>
+                                       <Tooltip placement="top" title={'Сохранить'}>
+                                          <Button
+                                             type="primary"
+                                             loading={isLoading}
+                                             onClick={() => save(item.id)}
+                                             icon={<SaveOutlined />}
+                                          />
+                                       </Tooltip>
+                                    </div>
+                                    <span
+                                       className="green-span-url"
+                                       type="link"
+                                       onClick={() => showConfirmDelete(item.id)}>
+                                       Удалить из склада
+                                    </span>
+                                 </>
                               }
                            />
                         </List.Item>
-                        <span
-                           className="green-span-url"
-                           type="link"
-                           onClick={() => showConfirmDelete(item.id)}
-                        >
-                           Удалить из склада
-                        </span>
                      </div>
                   )}
                />

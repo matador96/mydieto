@@ -3,6 +3,7 @@ import { Descriptions, Table, Divider, Tag, Space, Alert } from 'antd';
 import timestampToNormalDate from '@shared/utils/tsToTime';
 import { unitSettings } from '@shared/const/units';
 import { VerticalSpace } from '@shared/ui';
+import defaulPhotoCard from '@shared/assets/images/platy-meta.jpeg';
 import { Typography } from 'antd';
 import statuses from '@shared/const/statuses';
 import OrderItemPriceInput from './OrderItemPriceInput';
@@ -85,6 +86,20 @@ function OrderItemData({ order, fetchOrders }) {
    const isAdmin = auth.type === 'admin';
 
    const columns = [
+      {
+         title: '',
+         dataIndex: 'img',
+         key: 'img',
+         width: '100px',
+         render: (_, record) => (
+            <div
+               className="orders-table-img"
+               style={{
+                  backgroundImage: `url(${record.catalog.imgUrl || defaulPhotoCard})`
+               }}
+            />
+         )
+      },
       {
          title: 'Наименование',
          dataIndex: 'name',
