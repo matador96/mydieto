@@ -60,8 +60,9 @@ module.exports.getUsersWithParams = async (queryParams) => {
   return { data: data.rows, count: data.count };
 };
 
-module.exports.createUser = async (obj) => {
+module.exports.createUser = async (obj, settings = {}) => {
   const user = await Users.create(obj, {
+    ...settings,
     raw: true,
   }).then((data) => data.get({ plain: true }));
 
