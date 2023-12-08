@@ -39,7 +39,6 @@ const StorageListQuantityWithSave = (props) => {
       isLoading,
       setQuantity
    } = props;
-   console.log(props.storage.quantity);
    const [inputQuantity, setInputQuantity] = useState('');
    const dispatch = useDispatch();
    useEffect(() => {
@@ -71,7 +70,8 @@ const StorageListQuantityWithSave = (props) => {
       <Space direction="vertical">
          <Space>
             <Input
-               disabled={quantity.length <= 0}
+               min={1}
+               max={props.storage.quantity}
                style={{ width: '80px' }}
                type="number"
                value={inputQuantity}
@@ -178,7 +178,6 @@ const StorageList = () => {
                         <List.Item
                            actions={[
                               <StorageListQuantityWithSave
-                                 // quantity={item.quantity}
                                  setQuantity={(v) =>
                                     setQuantityMap((prev) => ({
                                        ...prev,
@@ -206,38 +205,39 @@ const StorageList = () => {
                               key={`${item.id}-`}
                               title={item.catalog.name}
                               description={
-                                 <span
-                                    className="green-span-url"
-                                    type="link"
-                                    onClick={() => showConfirmDelete(item.id)}
-                                 >
-                                    Удалить из склада
-                                 </span>
+                                 <div>
+                                    <Tooltip placement="top" title={'Сохранить'}>
+                                       <Button
+                                          type="primary"
+                                          loading={isLoading}
+                                          onClick={() => save(item.id)}
+                                          icon={<SaveOutlined />}
+                                       />
+                                    </Tooltip>
+                                    <InputNumber
+                                       style={{ marginLeft: '10px' }}
+                                       min={1}
+                                       max={100}
+                                       defaultValue={1}
+                                       value={item.quantity}
+                                       onChange={(v) =>
+                                          setQuantityMap((prev) => ({
+                                             ...prev,
+                                             [item.id]: v
+                                          }))
+                                       }
+                                    />
+                                 </div>
                               }
                            />
                         </List.Item>
-
-                        <Tooltip placement="top" title={'Сохранить'}>
-                           <Button
-                              type="primary"
-                              loading={isLoading}
-                              onClick={() => save(item.id)}
-                              icon={<SaveOutlined />}
-                           />
-                        </Tooltip>
-                        <InputNumber
-                           style={{ marginLeft: '10px' }}
-                           min={1}
-                           max={100}
-                           defaultValue={1}
-                           value={item.quantity}
-                           onChange={(v) =>
-                              setQuantityMap((prev) => ({
-                                 ...prev,
-                                 [item.id]: v
-                              }))
-                           }
-                        />
+                        <span
+                           className="green-span-url"
+                           type="link"
+                           onClick={() => showConfirmDelete(item.id)}
+                        >
+                           Удалить из склада
+                        </span>
                      </div>
                   )}
                />

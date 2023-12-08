@@ -5,16 +5,19 @@ import { useDispatch } from 'react-redux';
 import { userActions, getUserAuthData } from '@entitles/User';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { message } from 'antd';
+import { message, Typography } from 'antd';
+import PasswordRecoveryForm from './PasswordRecoveryForm';
 
 const LoginForm = () => {
    const [isLoading, setIsLoading] = useState(false);
+   const [fargotPassword, setFargotPassword] = useState(false);
+   const [modalVisible, setModalVisible] = useState(false);
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const auth = useSelector(getUserAuthData);
    const isUserAuthorized = !!auth?.id;
    const userType = auth?.type;
-
+   const { Text } = Typography;
    useEffect(() => {
       if (isUserAuthorized) {
          navigate(`/${userType}/dashboard`);
@@ -29,7 +32,9 @@ const LoginForm = () => {
             message.info(`Добро пожаловать ${res.email}!`);
             navigate(`/${res.type}/dashboard`);
          })
-         .catch((e) => message.error(e.message))
+         .catch((e) => {
+            message.error(e.message), setFargotPassword(true);
+         })
          .finally(() => {
             setIsLoading(false);
          });
@@ -37,6 +42,14 @@ const LoginForm = () => {
 
    const onFinishFailed = () => {
       setIsLoading(false);
+   };
+
+   const handleForgotPassword = () => {
+      setModalVisible(true);
+   };
+
+   const handleCancel = () => {
+      setModalVisible(false);
    };
 
    return (
@@ -50,7 +63,8 @@ const LoginForm = () => {
          }}
          style={{
             maxWidth: 460,
-            minWidth: 320
+            minWidth: 320,
+            position: 'relative'
          }}
          onFinish={onFinish}
          onFinishFailed={onFinishFailed}
@@ -80,13 +94,29 @@ const LoginForm = () => {
          >
             <Input.Password />
          </Form.Item>
-
          <Form.Item
             wrapperCol={{
                offset: 8,
                span: 16
             }}
          >
+            {fargotPassword && (
+               <div
+                  style={{
+                     position: 'absolute',
+                     bottom: 32,
+                     cursor: 'pointer'
+                  }}
+               >
+                  {fargotPassword && (
+                     <Text onClick={handleForgotPassword} underline>
+                        Забыли пароль?
+                     </Text>
+                  )}
+               </div>
+            )}
+            <PasswordRecoveryForm visible={modalVisible} onCancel={handleCancel} />
+
             <Button type="primary" htmlType="submit" loading={isLoading}>
                Войти
             </Button>
