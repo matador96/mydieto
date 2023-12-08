@@ -6,6 +6,20 @@ const { validationChecker } = require("../middleware/validationChecker");
 module.exports = [
   {
     type: "post",
+    url: "/api/v1/seller/register",
+    middlewares: [],
+    withTransaction: true,
+    method: SellerController.register,
+  },
+  {
+    type: "get",
+    url: "/api/v1/seller/reset/:email",
+    middlewares: [],
+    withTransaction: true,
+    method: SellerController.reset,
+  },
+  {
+    type: "post",
     url: "/api/v1/seller/login",
     middlewares: [],
     method: SellerController.login,

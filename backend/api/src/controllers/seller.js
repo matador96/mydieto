@@ -2,16 +2,22 @@ const { body, param, query } = require("express-validator");
 const Validations = require("../const/validatorSettings");
 const { allStatuses } = require("../config/statusSettings");
 const { ApplicationError } = require("./../classes/Errors");
-const AddressesService = require("../services/addresses");
-const Encrypt = require("../core/encrypt");
-const jwt = require("jsonwebtoken");
-const OrderService = require("../services/orders");
-const jwtOptions = require("../core/auth/jwtConfig");
-const StorageService = require("../services/storage");
 
+const jwt = require("jsonwebtoken");
+const jwtOptions = require("../core/auth/jwtConfig");
+const Encrypt = require("../core/encrypt");
+const Mailer = require("../core/mailer");
+
+const {
+  generateRandomWord,
+} = require("../helpers/generate");
+
+const AddressesService = require("../services/addresses");
+const OrderService = require("../services/orders");
+const StorageService = require("../services/storage");
 const SellerService = require("../services/sellers");
 const UserService = require("../services/users");
-const OrderStatusesService = require("../services/ordersStatuses");
+
 
 module.exports.getStorage = async (req) => {
   const currentSessionUserId = req?.user?.profile?.id;
@@ -176,6 +182,93 @@ module.exports.getById = async (req) => {
 module.exports.getWithParams = async (req) => {
   const result = await SellerService.getWithParams(req.query);
   return { data: result.data, count: result.count };
+};
+
+module.exports.register = async (req, res, transaction) => {
+  const { email, password, ...sellerData } = req.body;
+
+  if (!email && !password) {
+    throw new ApplicationError("Email и пароль не задан", {
+      path: "controller",
+    });
+  }
+
+  const user = await UserService.getByEmail(email);
+
+  if (user) {
+    throw new ApplicationError("Пользователь с таким email уже зарегистрирован", {
+      path: "controller",
+    });
+  }
+
+  const userData = {
+    email: email,
+    password: await Encrypt.cryptPassword(password),
+  };
+
+  const createdUser = await UserService.createUser(userData, { transaction });
+  sellerData.userId = createdUser.id;
+  const createdSeller = await SellerService.create(sellerData, { transaction });
+
+  if (email) {
+    await Mailer.notifyAboutChangingCredentials(email, {
+      firstName: sellerData.firstName,
+      lastName: sellerData.lastName,
+      email: email,
+      password: password,
+    });
+  }
+
+  const payload = { ...createdUser };
+  const token = jwt.sign(payload, jwtOptions.secretOrKey);
+
+  return {
+    jwt: token,
+    data: { user: createdUser, type: "seller" },
+  };
+};
+
+module.exports.reset = async (req) => {
+  const { email } = req.params;
+
+  if (!email) {
+    throw new ApplicationError("Email не задан", {
+      path: "controller",
+    });
+  }
+
+  const user = await UserService.getByEmail(email);
+  if (!user) {
+    throw new ApplicationError("Пользователя с таким email не существует", {
+      path: "controller",
+    });
+  }
+
+  const seller = user.seller;
+  if (!seller?.id) {
+    throw new ApplicationError("Продавца с таким email не существует", {
+      path: "controller",
+    });
+  }
+
+  const password = generateRandomWord();
+  const updatedUser = await UserService.updateUser(
+    {
+      password: await Encrypt.cryptPassword(password),
+    },
+    { email },
+  );
+
+  await Mailer.notifyAboutChangingCredentials(email, {
+    firstName: seller.firstName,
+    lastName: seller.lastName,
+    email: email,
+    password: password,
+  });
+
+  return {
+    data: { password },
+  };
 };
 
 module.exports.login = async (req) => {
