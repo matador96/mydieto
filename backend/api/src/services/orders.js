@@ -16,7 +16,10 @@ module.exports.getById = async (id) => {
         include: Catalogs,
       },
       OrderItems,
-      "status",
+      {
+        model: OrderStatuses,
+        as: "orderStatus",
+      },
       Sellers,
     ],
     raw: false,
