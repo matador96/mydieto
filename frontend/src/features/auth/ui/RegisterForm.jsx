@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input } from '@shared/ui';
+
+import { RegisterSeller } from '@features/auth/model/services/RegisterSeller';
+
 import { AuthByLoginAndPassword } from '@features/auth/model/services/AuthByLoginAndPassword';
 import { useDispatch } from 'react-redux';
 import { userActions, getUserAuthData } from '@entitles/User';
@@ -25,11 +28,18 @@ const RegisterForm = () => {
 
    const onFinish = (values) => {
       setIsLoading(true);
-      AuthByLoginAndPassword(values)
-         .then((res) => {
-            dispatch(userActions.loginUser(res));
-            message.info(`Добро пожаловать ${res.login}!`);
-            navigate(`/${res.type}/dashboard`);
+
+      RegisterSeller(values)
+         .then(() => {
+            AuthByLoginAndPassword({
+               email: values.email,
+               password: values.password
+            }).then((res) => {
+               dispatch(userActions.loginUser(res));
+               message.info(`Добро пожаловать ${res.email}!`);
+               navigate(`/${res.type}/dashboard`);
+               setIsLoading(false);
+            });
          })
          .catch((e) => message.error(e.message))
          .finally(() => {
@@ -55,18 +65,16 @@ const RegisterForm = () => {
             minWidth: 320
          }}
          onFinish={onFinish}
-         onFinishFailed={onFinishFailed}
-      >
+         onFinishFailed={onFinishFailed}>
          <Form.Item
             label="Имя"
-            name="firstname"
+            name="firstName"
             rules={[
                {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input />
          </Form.Item>
 
@@ -78,8 +86,7 @@ const RegisterForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input />
          </Form.Item>
 
@@ -91,8 +98,7 @@ const RegisterForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input
                type="number"
                addonBefore={prefixSelector}
@@ -110,8 +116,7 @@ const RegisterForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input />
          </Form.Item>
 
@@ -123,30 +128,15 @@ const RegisterForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input type="password" />
-         </Form.Item>
-
-         <Form.Item
-            label="Повторите пароль"
-            name="password2"
-            rules={[
-               {
-                  required: true,
-                  message: 'Поле не может быть пустым'
-               }
-            ]}
-         >
-            <Input.Password />
          </Form.Item>
 
          <Form.Item
             wrapperCol={{
                offset: 8,
                span: 16
-            }}
-         >
+            }}>
             <Button type="primary" htmlType="submit" loading={isLoading}>
                Зарегистрироваться
             </Button>

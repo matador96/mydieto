@@ -8,16 +8,13 @@ const jwtOptions = require("../core/auth/jwtConfig");
 const Encrypt = require("../core/encrypt");
 const Mailer = require("../core/mailer");
 
-const {
-  generateRandomWord,
-} = require("../helpers/generate");
+const { generateRandomWord } = require("../helpers/generate");
 
 const AddressesService = require("../services/addresses");
 const OrderService = require("../services/orders");
 const StorageService = require("../services/storage");
 const SellerService = require("../services/sellers");
 const UserService = require("../services/users");
-
 
 module.exports.getStorage = async (req) => {
   const currentSessionUserId = req?.user?.profile?.id;
@@ -208,7 +205,7 @@ module.exports.register = async (req, res, transaction) => {
 
   const createdUser = await UserService.createUser(userData, { transaction });
   sellerData.userId = createdUser.id;
-  const createdSeller = await SellerService.create(sellerData, { transaction });
+  await SellerService.create(sellerData, { transaction });
 
   if (email) {
     await Mailer.notifyAboutChangingCredentials(email, {
@@ -219,11 +216,11 @@ module.exports.register = async (req, res, transaction) => {
     });
   }
 
-  const payload = { ...createdUser };
-  const token = jwt.sign(payload, jwtOptions.secretOrKey);
+  // const payload = { ...createdUser };
+  // const token = jwt.sign(payload, jwtOptions.secretOrKey);
 
   return {
-    jwt: token,
+    // jwt: token,
     data: { user: createdUser, type: "seller" },
   };
 };
