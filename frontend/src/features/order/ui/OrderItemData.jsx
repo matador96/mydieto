@@ -193,6 +193,7 @@ function OrderItemData({ order, fetchOrders }) {
                <AcceptOrderModalButton
                   OnCloseModal={fetchOrders}
                   orderId={order.id}
+                  currentStatus={order.orderStatus.status}
                />
                <CancelOrderModalButton
                   OnCloseModal={fetchOrders}

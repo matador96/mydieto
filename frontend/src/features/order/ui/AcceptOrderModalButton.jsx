@@ -5,7 +5,17 @@ import { useState } from 'react';
 
 const { TextArea } = Input;
 
-const AcceptOrderModalButton = ({ orderId, closeModal = () => {} }) => {
+const nextStatuses = {
+   onEvaluation: 'onConfirmation',
+   onConfirmation: 'waitDelivery',
+   waitDelivery: 'finished'
+};
+
+const AcceptOrderModalButton = ({
+   orderId,
+   closeModal = () => {},
+   currentStatus
+}) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
    const [text, setText] = useState(null);
@@ -18,7 +28,7 @@ const AcceptOrderModalButton = ({ orderId, closeModal = () => {} }) => {
       setIsLoading(true);
 
       const sendObj = {
-         status: 'canceled'
+         status: nextStatuses[currentStatus]
       };
 
       if (text) {
