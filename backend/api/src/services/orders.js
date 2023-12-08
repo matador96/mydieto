@@ -60,6 +60,7 @@ module.exports.getWithParams = async (queryParams) => {
     ],
     order: [[OrderStatuses, "createdAt", "DESC"]],
     raw: false,
+    distinct: true,
     nest: true,
   });
 

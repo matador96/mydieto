@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Input } from '@shared/ui';
+import { Col } from 'antd';
 import SelectAddress from '@widgets/FormItems/SelectAddress';
 
 const { TextArea } = Input;
