@@ -64,7 +64,13 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
       const formDataCreate = new FormData();
 
       for (let key in values) {
-         if (values[key]) {
+         if (key === 'image') {
+            formDataCreate.append(
+               key,
+               values[key][0].originFileObj,
+               values[key][0].name
+            );
+         } else if (values[key]) {
             formDataCreate.append(key, values[key]);
          }
       }
