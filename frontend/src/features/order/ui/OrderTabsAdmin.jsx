@@ -9,15 +9,9 @@ import { GetOrders } from '@features/order/model/services/GetOrders';
 import timestampToNormalDate from '@shared/utils/tsToTime';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import { Typography } from 'antd';
-const { Text } = Typography;
+import { statuseTextOfUsersOrders } from '@shared/const/statuses';
 
-const statusTextsForAdmin = {
-   onEvaluation: 'Ожидает вашей оценки',
-   onConfirmation: 'На согласовании у продавца',
-   waitDelivery: 'Ожидаем курьера',
-   finished: 'Завершен',
-   canceled: 'Отменено'
-};
+const { Text } = Typography;
 
 const { Panel } = Collapse;
 const OrderList = (props) => {
@@ -91,7 +85,7 @@ const OrderList = (props) => {
             ),
             extra: (
                <Text type="secondary">
-                  {statusTextsForAdmin[e.orderStatus.status]}
+                  {statuseTextOfUsersOrders.admin[e.orderStatus.status]}
                </Text>
             ),
             children: (

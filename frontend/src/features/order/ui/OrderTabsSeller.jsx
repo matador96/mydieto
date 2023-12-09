@@ -10,15 +10,10 @@ import timestampToNormalDate from '@shared/utils/tsToTime';
 import { Empty } from 'antd';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import { Typography } from 'antd';
-const { Text } = Typography;
 
-const statusTextsForSeller = {
-   onEvaluation: 'Ожидает оценки от покупателя',
-   onConfirmation: 'Согласуйте предложенную цену',
-   waitDelivery: 'Ожидаем курьера',
-   finished: 'Завершен',
-   canceled: 'Отменено'
-};
+import { statuseTextOfUsersOrders } from '@shared/const/statuses';
+
+const { Text } = Typography;
 
 const { Panel } = Collapse;
 
@@ -86,7 +81,7 @@ const OrderList = (props) => {
             ),
             extra: (
                <Text type="secondary">
-                  {statusTextsForSeller[e.orderStatus.status]}
+                  {statuseTextOfUsersOrders.seller[e.orderStatus.status]}
                </Text>
             ),
             children: (

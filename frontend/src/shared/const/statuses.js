@@ -31,6 +31,23 @@ const statusesOfCategories = {
    archive: { label: 'Скрыт', value: 'archive', color: 'grey' }
 };
 
+const statuseTextOfUsersOrders = {
+   seller: {
+      onEvaluation: 'Ожидает оценки от покупателя',
+      onConfirmation: 'Согласуйте предложенную цену',
+      waitDelivery: 'Ожидаем курьера',
+      finished: 'Завершен',
+      canceled: 'Отменено'
+   },
+   admin: {
+      onEvaluation: 'Ожидает вашей оценки',
+      onConfirmation: 'На согласовании у продавца',
+      waitDelivery: 'Ожидаем курьера',
+      finished: 'Завершен',
+      canceled: 'Отменено'
+   }
+};
+
 export default statuses;
 
-export { statusesOfCategories };
+export { statusesOfCategories, statuseTextOfUsersOrders };

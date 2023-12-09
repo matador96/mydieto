@@ -1,5 +1,5 @@
 import React from 'react';
-import { Descriptions, Table, Divider, Tag, Space, Alert } from 'antd';
+import { Descriptions, Table, Divider, Tag, Space, Alert, Steps } from 'antd';
 import timestampToNormalDate from '@shared/utils/tsToTime';
 import { unitSettings } from '@shared/const/units';
 import { VerticalSpace } from '@shared/ui';
@@ -7,6 +7,7 @@ import defaulPhotoCard from '@shared/assets/images/platy-meta.jpeg';
 import { Typography } from 'antd';
 import statuses from '@shared/const/statuses';
 import OrderItemPriceInput from './OrderItemPriceInput';
+import { statuseTextOfUsersOrders } from '@shared/const/statuses';
 
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@entitles/User';
@@ -167,10 +168,26 @@ function OrderItemData({ order, fetchOrders }) {
       return buttons[auth.type][order.orderStatus.status];
    };
 
+   const getStatusOfStep = (curStat) => {
+      if (curStat === 'finished') {
+         return 'finish';
+      }
+
+      if (curStat === 'canceled') {
+         return 'error';
+      }
+
+      return 'process';
+   };
+
+   const getTitleOfStatus = (curStat) => {
+      let type = isSeller ? 'seller' : 'admin';
+
+      return statuseTextOfUsersOrders?.[type][curStat] || curStat;
+   };
    return (
       <div>
          <Divider orientation="left">Заказ</Divider>
-
          <Descriptions>
             <Descriptions.Item key={`Номер`} label="Номер">
                {order.id}
@@ -193,9 +210,7 @@ function OrderItemData({ order, fetchOrders }) {
                </Space>
             </Descriptions.Item>
          </Descriptions>
-
          <Divider orientation="left">Продавец</Divider>
-
          <Descriptions>
             <Descriptions.Item key={`ФИО`} label="ФИО">
                {order.seller.firstName} {order.seller.lastName}
@@ -205,9 +220,7 @@ function OrderItemData({ order, fetchOrders }) {
                {order.seller.mobile}
             </Descriptions.Item>
          </Descriptions>
-
          <Divider orientation="left">Товары</Divider>
-
          {order.orderStatus.status === 'onConfirmation' && isSeller && (
             <>
                <Alert
@@ -218,18 +231,14 @@ function OrderItemData({ order, fetchOrders }) {
                <VerticalSpace />
             </>
          )}
-
          <Table
             columns={columns}
             dataSource={orderItems}
             bordered={false}
             pagination={false}
          />
-
          {/* <OrderGradeSuccess currentStatus={order.orderStatus.status} /> */}
-
          <VerticalSpace />
-
          {order.orderStatus.status === 'onEvaluation' && isAdmin && (
             <>
                <Alert
@@ -240,7 +249,6 @@ function OrderItemData({ order, fetchOrders }) {
                <VerticalSpace />
             </>
          )}
-
          {orderStatusesWithoutActionButtons.includes(order.orderStatus.status) ? (
             <LastStatusBlock
                status={order.orderStatus.status}
@@ -251,13 +259,23 @@ function OrderItemData({ order, fetchOrders }) {
                {getActionButtons()}
             </Space>
          )}
-
-         {isAdmin && (
-            <>
-               <VerticalSpace />
-               <Divider orientation="left">История изменения статусов</Divider>{' '}
-               <VerticalSpace />
-               <Timeline
+         <VerticalSpace />
+         <Divider orientation="left">История изменения статусов</Divider>{' '}
+         <VerticalSpace />
+         <Steps
+            direction="vertical"
+            current={order.orderStatuses.length}
+            status="process"
+            items={order.orderStatuses
+               .map((e) => ({
+                  title: getTitleOfStatus(e.status),
+                  color: statuses[e.status]?.color,
+                  status: getStatusOfStep(e.status),
+                  description: `Комментарий: ${e?.comment || 'Без комментария'}`
+               }))
+               .reverse()}
+         />
+         {/* <Timeline
                   style={{ maxWidth: '500px' }}
                   mode="left"
                   items={order.orderStatuses
@@ -267,9 +285,8 @@ function OrderItemData({ order, fetchOrders }) {
                         children: `Комментарий: ${e?.comment || 'Без комментария'}`
                      }))
                      .reverse()}
-               />
-            </>
-         )}
+               /> */}
+         {/* )} */}
       </div>
    );
 }

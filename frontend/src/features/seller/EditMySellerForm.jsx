@@ -52,18 +52,16 @@ const EditMySellerForm = (props) => {
          form={form}
          hideRequiredMark
          onFinish={onFinish}
-         onFinishFailed={onFinishFailed}
-      >
+         onFinishFailed={onFinishFailed}>
          <Form.Item
             label="Имя"
-            name="firstname"
+            name="firstName"
             rules={[
                {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input disabled={true} />
          </Form.Item>
 
@@ -75,8 +73,7 @@ const EditMySellerForm = (props) => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input disabled={true} />
          </Form.Item>
 
@@ -88,8 +85,7 @@ const EditMySellerForm = (props) => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input
                type="number"
                addonBefore={prefixSelector}
