@@ -110,13 +110,15 @@ const OrderList = (props) => {
             expandIcon={({ isActive }) => (
                <CaretRightOutlined rotate={isActive ? 90 : 0} />
             )}
-            style={{ background: 'transparent' }}>
+            style={{ background: 'transparent' }}
+         >
             {collapseItems.map((item) => (
                <Panel
                   key={item.key}
                   header={item.label}
                   extra={item.extra}
-                  style={item.style}>
+                  style={item.style}
+               >
                   {item.children}
                </Panel>
             ))}

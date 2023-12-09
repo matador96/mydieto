@@ -11,12 +11,9 @@ import { statuseTextOfUsersOrders } from '@shared/const/statuses';
 
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@entitles/User';
-import { Timeline } from 'antd';
 // import OrderProcessingComponent from './OrderProcessingComponent';
 import CancelOrderModalButton from './CancelOrderModalButton';
 import AcceptOrderModalButton from './AcceptOrderModalButton';
-
-import OrderGradeSuccess from './OrderGradeSuccess';
 
 const { Text } = Typography;
 
