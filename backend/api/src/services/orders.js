@@ -39,11 +39,12 @@ module.exports.getWithParams = async (queryParams) => {
     ...generateDatabaseSetting(queryParams, "order"),
     include: [
       Addresses,
+      Sellers,
       {
         model: OrderItems,
         include: Catalogs,
+        separate: true,
       },
-      OrderItems,
       {
         model: OrderStatuses,
         as: "orderStatus",
@@ -55,12 +56,13 @@ module.exports.getWithParams = async (queryParams) => {
             }
           : {}),
       },
-      OrderStatuses,
-      Sellers,
+      {
+        model: OrderStatuses,
+        order: [["id", "DESC"]],
+        separate: true,
+      },
     ],
-    order: [[OrderStatuses, "createdAt", "DESC"]],
     raw: false,
-    distinct: true,
     nest: true,
   });
 
