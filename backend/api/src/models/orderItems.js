@@ -5,7 +5,7 @@ const { statusesOfOrderItems } = require("../config/statusSettings");
 const Catalogs = require("./catalogs");
 const Orders = require("./orders");
 const StorageService = require("../services/storage");
-const { DatabaseError } = require("../classes/Errors");
+const { DatabaseError, ApplicationError } = require("../classes/Errors");
 
 const OrderItems = sequelize.define(
   "orderItems",
@@ -65,8 +65,9 @@ const OrderItems = sequelize.define(
             { transaction: options.transaction },
           );
         } catch (e) {
-          const error = new DatabaseError(e.message, e);
-          throw error;
+          throw new ApplicationError("На складе не хватает товаров", {
+            path: "services",
+          });
         }
       },
     },
