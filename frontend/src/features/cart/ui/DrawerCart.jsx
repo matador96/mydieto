@@ -83,9 +83,9 @@ const AddressList = ({ selectedAddressId, setSelectedAddressId }) => {
    );
 };
 
-const CartList = ({ handleNameChange }) => {
+const CartList = ({ handleInpuCartChange }) => {
    const cartData = useSelector(getCartItems);
-   const [orderItems, setOrderItems] = useState([]);
+
    const dispatch = useDispatch();
    const deleteByIdCart = (id) => {
       dispatch(cartActions.deleteFromCart(id));
@@ -108,7 +108,7 @@ const CartList = ({ handleNameChange }) => {
                            size="small"
                            style={{ width: '80px' }}
                            defaultValue={item.quantity}
-                           onChange={(e) => handleNameChange(e)}
+                           onChange={(e) => handleInpuCartChange(e)}
                         />{' '}
                         шт.
                      </>
@@ -137,10 +137,10 @@ const CartList = ({ handleNameChange }) => {
 const DrawerCart = (props) => {
    const [open, setOpen] = useState(false);
    const [selectedAddressId, setSelectedAddressId] = useState(null);
-   const [inputName, setInputName] = useState(0);
+   const [inputCart, setInputCart] = useState(0);
    const cartData = useSelector(getCartItems);
    const dispatch = useDispatch();
-   console.log(inputName, 'INPUTnAME');
+
    const showDrawer = () => {
       setOpen(true);
    };
@@ -170,13 +170,13 @@ const DrawerCart = (props) => {
       }
 
       orderItems.forEach((item) => {
-         item.quantity = inputName;
+         item.quantity = inputCart;
       });
       const orderData = {
          addressId: selectedAddressId,
          orderItems
       };
-      console.log(orderData);
+
       CreateMyOrder(orderData)
          .then(() => {
             message.success('Заказ создан');
@@ -187,8 +187,8 @@ const DrawerCart = (props) => {
          .catch((e) => message.error(e.message));
    };
 
-   const handleNameChange = (value) => {
-      setInputName(value);
+   const handleInpuCartChange = (value) => {
+      setInputCart(value);
    };
 
    return (
@@ -210,7 +210,7 @@ const DrawerCart = (props) => {
             }
          >
             <Divider orientation="left">Позиции заказа</Divider>
-            <CartList handleNameChange={handleNameChange} />
+            <CartList handleInpuCartChange={handleInpuCartChange} />
 
             <Divider orientation="left">Адрес вывоза</Divider>
             <AddressList
