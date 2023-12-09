@@ -24,6 +24,8 @@ import {
 import { GetStorageMyWithParams } from '../model/GetStorageMyWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
+
+import { unitSettings } from '@shared/const/units';
 import { GetCatalogsListByParentId } from '@features/catalog/model/services/GetCatalogsListByParentId';
 
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
@@ -34,11 +36,9 @@ import { useDispatch } from 'react-redux';
 const { confirm } = Modal;
 
 const StorageListQuantityWithSave = (props) => {
-   const {
-      storage: { quantity },
-      isLoading,
-      setQuantity
-   } = props;
+   const { storage, isLoading, setQuantity } = props;
+   const { quantity } = storage;
+
    const [inputQuantity, setInputQuantity] = useState(1);
    const dispatch = useDispatch();
    useEffect(() => {
@@ -57,7 +57,8 @@ const StorageListQuantityWithSave = (props) => {
             cartActions.addToCart({
                id: props.storage.catalog.id,
                name: props.storage.catalog.name,
-               quantity: quantityValue
+               quantity: quantityValue,
+               unit: storage.catalog.unit
             })
          );
          message.success('Добавлено в корзину');
@@ -73,8 +74,12 @@ const StorageListQuantityWithSave = (props) => {
                min={1}
                defaultValue={1}
                max={props.storage.quantity}
-               style={{ width: '80px' }}
+               style={{ width: '120px' }}
                type="number"
+               addonAfter={
+                  unitSettings.find((e) => e.value === props.storage.catalog.unit)
+                     .shortLabel
+               }
                value={inputQuantity}
                onChange={(e) => setInputQuantity(e.target.value)}
             />
@@ -207,10 +212,18 @@ const StorageList = () => {
                                  <>
                                     <div>
                                        <InputNumber
-                                          style={{ marginRight: '10px' }}
+                                          style={{
+                                             marginRight: '10px',
+                                             width: '120px'
+                                          }}
                                           min={1}
                                           max={100}
                                           defaultValue={1}
+                                          addonAfter={
+                                             unitSettings.find(
+                                                (e) => e.value === item.catalog.unit
+                                             ).shortLabel
+                                          }
                                           value={item.quantity}
                                           onChange={(v) =>
                                              setQuantityMap((prev) => ({

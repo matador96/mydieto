@@ -15,6 +15,7 @@ import { VerticalSpace } from '@shared/ui';
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
+import { unitSettings } from '@shared/const/units';
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
 import { GetMyAddressList } from '@features/seller/model/GetMyAddressList';
@@ -104,16 +105,17 @@ const CartList = () => {
                      <>
                         <InputNumber
                            min={1}
-                           max={100}
                            default={1}
                            size="small"
-                           style={{ width: '80px' }}
+                           style={{ width: '120px' }}
                            value={item.quantity}
+                           addonAfter={
+                              unitSettings.find((e) => e.value === item.unit)
+                                 .shortLabel
+                           }
                         />{' '}
-                        шт.
                      </>
-                  ]}
-               >
+                  ]}>
                   <List.Item.Meta
                      key={`${item.id}-`}
                      title={item.name}
@@ -121,8 +123,7 @@ const CartList = () => {
                         <span
                            className="green-span-url"
                            type="link"
-                           onClick={() => deleteByIdCart(item.id)}
-                        >
+                           onClick={() => deleteByIdCart(item.id)}>
                            Убрать из корзины
                         </span>
                      }
@@ -153,7 +154,6 @@ const DrawerCart = (props) => {
    };
 
    const createOrder = () => {
-      console.log(cartData);
       const orderItems = cartData.map((e) => ({
          catalogId: e.id,
          quantity: e.quantity
@@ -200,8 +200,7 @@ const DrawerCart = (props) => {
                      Очистить корзину
                   </Button>
                </Space>
-            }
-         >
+            }>
             <Divider orientation="left">Позиции заказа</Divider>
             <CartList />
 

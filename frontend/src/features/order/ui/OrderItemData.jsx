@@ -40,10 +40,11 @@ const LastStatusBlock = ({ status, comment }) => {
 };
 
 const UnitPriceTag = ({ price, unit }) => {
+   // ${
+   //    unitSettings.find((e) => e.value === unit).shortLabel
+   // }
    return price ? (
-      <Tag bordered={false} color="processing">{`${price} руб/${
-         unitSettings.find((e) => e.value === unit).shortLabel
-      }`}</Tag>
+      <Tag bordered={false} color="processing">{`${price} руб/кг`}</Tag>
    ) : (
       <Tag bordered={false}>Не оценено</Tag>
    );

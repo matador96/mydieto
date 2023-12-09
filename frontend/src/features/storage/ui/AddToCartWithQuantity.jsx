@@ -5,8 +5,9 @@ import { Button } from '@shared/ui';
 
 import { AddToStorage } from '@features/storage/model/AddToStorage';
 import { message } from 'antd';
+import { unitSettings } from '@shared/const/units';
 
-const AddToCartWithQuantity = ({ catalogId }) => {
+const AddToCartWithQuantity = ({ catalogId, unit }) => {
    const [isLoading, setIsLoading] = useState(false);
    const [quantity, setQuantity] = useState(1);
 
@@ -19,11 +20,11 @@ const AddToCartWithQuantity = ({ catalogId }) => {
    };
 
    return (
-      <Space>
+      <Space style={{ padding: '0 5px' }}>
          <InputNumber
             min={1}
-            max={100}
             default={1}
+            addonAfter={unitSettings.find((e) => e.value === unit).shortLabel}
             value={quantity}
             disabled={isLoading}
             onChange={(v) => setQuantity(v)}
@@ -33,8 +34,7 @@ const AddToCartWithQuantity = ({ catalogId }) => {
             type="primary"
             icon={<InboxOutlined />}
             loading={isLoading}
-            onClick={addToStorage}
-         >
+            onClick={addToStorage}>
             В склад
          </Button>
       </Space>

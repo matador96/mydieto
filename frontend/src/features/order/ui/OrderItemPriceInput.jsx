@@ -20,7 +20,8 @@ const OrderItemPriceInput = ({ value, orderItemId, unit }) => {
          .catch((e) => message.error(e.message));
    };
 
-   const unitText = `руб/${unitSettings.find((e) => e.value === unit).shortLabel}`;
+   const unitText = `руб/кг`;
+   // ${unitSettings.find((e) => e.value === unit).shortLabel}
    const debouncedChange = _.debounce(save, 500);
 
    return (

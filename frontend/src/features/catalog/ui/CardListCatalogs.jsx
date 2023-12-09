@@ -50,6 +50,7 @@ const CatalogCardsByParentId = ({ id }) => {
                         <AddToCartWithQuantity
                            key={`ke${item.id}`}
                            catalogId={item.id}
+                           unit={item.unit}
                         />
                      ]}>
                      {item.name}
