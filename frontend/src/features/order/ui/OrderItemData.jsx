@@ -208,6 +208,17 @@ function OrderItemData({ order, fetchOrders }) {
 
          <Divider orientation="left">Товары</Divider>
 
+         {order.orderStatus.status === 'onConfirmation' && isSeller && (
+            <>
+               <Alert
+                  message="Внимание, цена указывается за килограмм неповрежденного товара."
+                  type="info"
+                  showIcon
+               />
+               <VerticalSpace />
+            </>
+         )}
+
          <Table
             columns={columns}
             dataSource={orderItems}

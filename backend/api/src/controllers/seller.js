@@ -190,10 +190,18 @@ module.exports.register = async (req, res, transaction) => {
     });
   }
 
-  const user = await UserService.getByEmail(email);
+  let user = await UserService.getByEmail(email);
 
   if (user) {
     throw new ApplicationError("Пользователь с таким email уже зарегистрирован", {
+      path: "controller",
+    });
+  }
+
+  let seller = await SellerService.getByField({ mobile: req.body.mobile });
+
+  if (seller) {
+    throw new ApplicationError("Пользователя с телефоном уже зарегистрирован", {
       path: "controller",
     });
   }

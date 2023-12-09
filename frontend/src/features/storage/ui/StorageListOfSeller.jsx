@@ -7,7 +7,7 @@ import { GetStorageWithParams } from '../model/GetStorageWithParams';
 
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 
-const StorageListOfSeller = () => {
+const StorageListOfSeller = ({ sellerId }) => {
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
 
@@ -20,6 +20,7 @@ const StorageListOfSeller = () => {
       GetStorageWithParams({
          page: 1,
          limit: 1000,
+         sellerId,
          sort: 'id',
          order: 'asc'
       }).then((res) => {
