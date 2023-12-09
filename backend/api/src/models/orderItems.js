@@ -4,7 +4,10 @@ const { DataTypes } = require("sequelize");
 const { statusesOfOrderItems } = require("../config/statusSettings");
 const Catalogs = require("./catalogs");
 const Orders = require("./orders");
+
+const CatalogService = require("../services/catalogs");
 const StorageService = require("../services/storage");
+
 const { DatabaseError, ApplicationError } = require("../classes/Errors");
 
 const OrderItems = sequelize.define(
@@ -48,16 +51,16 @@ const OrderItems = sequelize.define(
   {
     hooks: {
       beforeCreate: async (orderItem, options) => {
+        const { parentRecord } = options;
+        const sellerId = parentRecord.sellerId;
+        const catalogId = orderItem.catalogId;
+
+        const storageItem = await StorageService.getByFields({
+          sellerId,
+          catalogId,
+        });
+
         try {
-          const { parentRecord } = options;
-          const sellerId = parentRecord.sellerId;
-          const catalogId = orderItem.catalogId;
-
-          const storageItem = await StorageService.getByFields({
-            sellerId,
-            catalogId,
-          });
-
           storageItem.quantity -= orderItem.quantity;
           await StorageService.update(
             storageItem,
@@ -65,7 +68,13 @@ const OrderItems = sequelize.define(
             { transaction: options.transaction },
           );
         } catch (e) {
-          throw new ApplicationError("На складе не хватает товаров", {
+          const catalog = await CatalogService.getById(orderItem.catalogId, {
+            transaction: options.transaction,
+          });
+          const message = `На складе не хватает ${Math.abs(
+            storageItem.quantity,
+          )} товаров ${catalog.name}`;
+          throw new ApplicationError(message, {
             path: "services",
           });
         }

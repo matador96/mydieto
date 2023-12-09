@@ -2,8 +2,9 @@ const Catalogs = require("../models/catalogs");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
 
-module.exports.getById = async (id) => {
+module.exports.getById = async (id, settings = {}) => {
   const catalog = await Catalogs.findByPk(id, {
+    ...settings,
     raw: false,
     nest: true,
   });
