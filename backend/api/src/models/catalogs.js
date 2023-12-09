@@ -53,4 +53,10 @@ const Catalogs = sequelize.define(
   },
 );
 
+Catalogs.belongsTo(Catalogs, {
+  foreignKey: "parentId",
+  as: "parentCatalog",
+  }
+);
+
 module.exports = Catalogs;
