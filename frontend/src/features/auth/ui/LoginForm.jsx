@@ -30,6 +30,7 @@ const LoginForm = () => {
             message.info(`Добро пожаловать ${res.email}!`);
             navigate(`/${res.type}/dashboard`);
          })
+         .catch(() => message.error('Неправильные данные'))
          .finally(() => {
             setIsLoading(false);
          });

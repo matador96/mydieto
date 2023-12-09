@@ -14,6 +14,15 @@ export const getMyOrders = (params) =>
 export const getMyStorage = (params) =>
    get(generateQueryParams(`/seller/storage`, params));
 
+export const registerSeller = (fields) =>
+   post(
+      '/seller/register',
+      {
+         ...fields
+      },
+      true
+   );
+
 export const resetSellerPassword = (email) => get(`/seller/reset/${email}`);
 
 export const getSellers = (params) => get(generateQueryParams(`/sellers`, params));

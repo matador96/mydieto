@@ -1,10 +1,11 @@
 import React from 'react';
 import { InputNumber, message } from 'antd';
 import { unitSettings } from '@shared/const/units';
+import _ from 'lodash';
 import { UpdateOrderItem } from './../model/services/UpdateOrderItem';
 
 const OrderItemPriceInput = ({ value, orderItemId, unit }) => {
-   const onChange = (value) => {
+   const save = (value) => {
       const isInteger = /^[0-9]+$/;
 
       if (!isInteger.test(value)) {
@@ -20,13 +21,14 @@ const OrderItemPriceInput = ({ value, orderItemId, unit }) => {
    };
 
    const unitText = `руб/${unitSettings.find((e) => e.value === unit).shortLabel}`;
+   const debouncedChange = _.debounce(save, 500);
 
    return (
       <InputNumber
          min={1}
          step="1"
          defaultValue={value}
-         onChange={onChange}
+         onChange={(value) => debouncedChange(value)}
          addonAfter={unitText}
       />
    );
