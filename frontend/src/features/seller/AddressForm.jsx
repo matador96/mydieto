@@ -34,18 +34,21 @@ const AddressForm = (props) => {
          onFinish={onFinish}
          onFinishFailed={onFinishFailed}
          hideRequiredMark
-         layout="vertical">
+         layout="vertical"
+      >
          <Form.Item
             label="Адрес"
             name={'address'}
-            rules={[{ required: true, message: 'Укажите адрес' }]}>
+            rules={[{ required: true, message: 'Укажите адрес' }]}
+         >
             <SelectAddress />
          </Form.Item>
 
          <Form.Item
             name="name"
             label="Название адреса"
-            rules={[{ required: true, message: 'Укажите адрес' }]}>
+            rules={[{ required: true, message: 'Укажите адрес' }]}
+         >
             <Input placeholder="Пометка к адресу" />
          </Form.Item>
 

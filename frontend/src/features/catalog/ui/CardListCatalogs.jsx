@@ -52,7 +52,8 @@ const CatalogCardsByParentId = ({ id }) => {
                            catalogId={item.id}
                            unit={item.unit}
                         />
-                     ]}>
+                     ]}
+                  >
                      {item.name}
                   </Card>
                </Col>

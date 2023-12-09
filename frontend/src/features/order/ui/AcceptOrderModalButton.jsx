@@ -72,7 +72,8 @@ const AcceptOrderModalButton = ({ orderId, OnCloseModal, currentStatus, user }) 
             title={`Подтвердите свое действие`}
             footer={null}
             width={600}
-            destroyOnClose={true}>
+            destroyOnClose={true}
+         >
             <TextArea
                placeholder="Оставьте комментарий если нужно"
                style={{ width: '100%' }}

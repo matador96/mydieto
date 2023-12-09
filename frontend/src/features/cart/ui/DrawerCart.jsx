@@ -84,10 +84,10 @@ const AddressList = ({ selectedAddressId, setSelectedAddressId }) => {
    );
 };
 
-const CartList = () => {
+const CartList = ({ handleInpuCartChange }) => {
    const cartData = useSelector(getCartItems);
-   const dispatch = useDispatch();
 
+   const dispatch = useDispatch();
    const deleteByIdCart = (id) => {
       dispatch(cartActions.deleteFromCart(id));
       message.success('Убрано из корзины');
@@ -138,6 +138,7 @@ const CartList = () => {
 const DrawerCart = (props) => {
    const [open, setOpen] = useState(false);
    const [selectedAddressId, setSelectedAddressId] = useState(null);
+   const [inputCart, setInputCart] = useState(0);
    const cartData = useSelector(getCartItems);
    const dispatch = useDispatch();
 
@@ -169,6 +170,9 @@ const DrawerCart = (props) => {
          return;
       }
 
+      orderItems.forEach((item) => {
+         item.quantity = inputCart;
+      });
       const orderData = {
          addressId: selectedAddressId,
          orderItems
@@ -182,6 +186,10 @@ const DrawerCart = (props) => {
             dispatch(cartActions.cleanCart());
          })
          .catch((e) => message.error(e.message));
+   };
+
+   const handleInpuCartChange = (value) => {
+      setInputCart(value);
    };
 
    return (
@@ -202,7 +210,7 @@ const DrawerCart = (props) => {
                </Space>
             }>
             <Divider orientation="left">Позиции заказа</Divider>
-            <CartList />
+            <CartList handleInpuCartChange={handleInpuCartChange} />
 
             <Divider orientation="left">Адрес вывоза</Divider>
             <AddressList
