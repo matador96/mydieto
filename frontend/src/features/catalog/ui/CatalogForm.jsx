@@ -49,7 +49,6 @@ const CatalogForm = (props) => {
    }, [form, initialValues]);
 
    const onFinish = (values) => {
-      console.log(values);
       onSuccess(values, setIsLoading).then(() => {
          if (isEditForm) {
             return;
@@ -83,8 +82,7 @@ const CatalogForm = (props) => {
          <div
             style={{
                marginTop: 8
-            }}
-         >
+            }}>
             {initialValues?.img ? `Заменить картинку` : `Загрузить картинку`}
          </div>
       </div>
@@ -103,8 +101,7 @@ const CatalogForm = (props) => {
          onFinishFailed={onFinishFailed}
          onValuesChange={() => setIsDisabledButton(false)}
          hideRequiredMark
-         layout="vertical"
-      >
+         layout="vertical">
          <Row gutter={16}>
             <Col span={24}>
                <Form.Item
@@ -115,8 +112,7 @@ const CatalogForm = (props) => {
                         required: true,
                         message: 'Введите название'
                      }
-                  ]}
-               >
+                  ]}>
                   <Input />
                </Form.Item>
             </Col>
@@ -159,8 +155,7 @@ const CatalogForm = (props) => {
                         required: true,
                         message: 'Укажите приоритет'
                      }
-                  ]}
-               >
+                  ]}>
                   <Input
                      style={{
                         width: '100%'
@@ -179,8 +174,7 @@ const CatalogForm = (props) => {
                         message: 'Выберите статус'
                      }
                   ]}
-                  defaultValue={statusesOfCategories.active}
-               >
+                  defaultValue={statusesOfCategories.active}>
                   <Select
                      style={{
                         width: '100%'
@@ -205,8 +199,7 @@ const CatalogForm = (props) => {
                         required: true,
                         message: 'Пропустили поле'
                      }
-                  ]}
-               >
+                  ]}>
                   <Select
                      defaultValue="kg"
                      style={{
@@ -224,8 +217,7 @@ const CatalogForm = (props) => {
                   label="Картинка"
                   name="image"
                   valuePropName="image"
-                  getValueFromEvent={normFile}
-               >
+                  getValueFromEvent={normFile}>
                   <Upload
                      accept="image/png, image/jpeg"
                      listType="picture-card"
@@ -234,8 +226,7 @@ const CatalogForm = (props) => {
                      beforeUpload={fetchImage}
                      onPreview={null}
                      onRemove={null}
-                     maxCount={1}
-                  >
+                     maxCount={1}>
                      {fileList.length >= 1 ? null : <span>{uploadButton}</span>}
                   </Upload>
                </Form.Item>
@@ -247,8 +238,7 @@ const CatalogForm = (props) => {
                type="primary"
                htmlType="submit"
                loading={isLoading}
-               disabled={isDisabledButton}
-            >
+               disabled={isDisabledButton}>
                {isEditForm ? 'Сохранить' : 'Создать'}
             </Button>
          </Form.Item>

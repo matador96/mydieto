@@ -95,8 +95,7 @@ const SellerLayout = (props) => {
       <Layout
          style={{
             minHeight: '100vh'
-         }}
-      >
+         }}>
          <Layout>
             {' '}
             <Header style={{ padding: '0' }} className="erp-header-seller">
@@ -117,11 +116,10 @@ const SellerLayout = (props) => {
                      <div style={{ display: 'flex', alignItems: 'center' }}>
                         <div
                            className="header-button"
-                           onClick={() => navigate(`/seller/storage`)}
-                        >
+                           onClick={() => navigate(`/seller/storage`)}>
                            <InboxOutlined />
 
-                           <span className="header-button_label">Моя склад</span>
+                           <span className="header-button_label">Мой склад</span>
                         </div>
 
                         <DrawerCart
@@ -131,8 +129,7 @@ const SellerLayout = (props) => {
                                     showZero
                                     count={cartCount}
                                     size="small"
-                                    status="success"
-                                 >
+                                    status="success">
                                     <ShoppingCartOutlined />
                                  </Badge>
                                  <span className="header-button_label">Корзина</span>
@@ -148,22 +145,19 @@ const SellerLayout = (props) => {
             <Content
                style={{
                   margin: '0 16px'
-               }}
-            >
+               }}>
                <div
                   style={{
                      padding: '0 24px',
                      minHeight: 360
-                  }}
-               >
+                  }}>
                   <Container> {props.children} </Container>
                </div>
             </Content>
             <Footer
                style={{
                   textAlign: 'center'
-               }}
-            >
+               }}>
                © 2022 – {new Date().getFullYear()} Ecorium. Все права защищены.
             </Footer>
          </Layout>
