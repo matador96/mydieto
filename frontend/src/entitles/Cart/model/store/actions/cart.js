@@ -40,10 +40,17 @@ const cleanCart = () => ({
    type: CLEAN_CART
 });
 
-const updateCart = (id, quantity) => ({
-   type: UPDATE_CART,
-   payload: quantity
-});
+const updateCart = (id, quantity) => (dispatch, getState) => {
+   const currentCart = getState().cart.items;
+   const newList = { ...currentCart };
+
+   newList[id] = { ...newList[id], quantity };
+
+   dispatch({
+      type: UPDATE_CART,
+      payload: { ...newList }
+   });
+};
 
 const updateAddress = (addressId) => ({
    type: UPDATE_ADDRESS_OF_CART,

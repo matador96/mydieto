@@ -84,13 +84,17 @@ const AddressList = ({ selectedAddressId, setSelectedAddressId }) => {
    );
 };
 
-const CartList = ({ handleInpuCartChange }) => {
+const CartList = () => {
    const cartData = useSelector(getCartItems);
 
    const dispatch = useDispatch();
    const deleteByIdCart = (id) => {
       dispatch(cartActions.deleteFromCart(id));
       message.success('Убрано из корзины');
+   };
+
+   const onChange = (id, value) => {
+      dispatch(cartActions.updateCart(id, value));
    };
 
    return (
@@ -106,13 +110,14 @@ const CartList = ({ handleInpuCartChange }) => {
                         <InputNumber
                            min={1}
                            default={1}
+                           onChange={(value) => onChange(item.id, value)}
                            size="small"
                            style={{ width: '120px' }}
                            value={item.quantity}
-                           addonAfter={
-                              unitSettings.find((e) => e.value === item.unit)
-                                 .shortLabel
-                           }
+                           // addonAfter={
+                           //    unitSettings.find((e) => e.value === item.unit)
+                           //       .shortLabel
+                           // }
                         />{' '}
                      </>
                   ]}>
@@ -138,7 +143,6 @@ const CartList = ({ handleInpuCartChange }) => {
 const DrawerCart = (props) => {
    const [open, setOpen] = useState(false);
    const [selectedAddressId, setSelectedAddressId] = useState(null);
-   const [inputCart, setInputCart] = useState(0);
    const cartData = useSelector(getCartItems);
    const dispatch = useDispatch();
 
@@ -170,9 +174,6 @@ const DrawerCart = (props) => {
          return;
       }
 
-      orderItems.forEach((item) => {
-         item.quantity = inputCart;
-      });
       const orderData = {
          addressId: selectedAddressId,
          orderItems
@@ -186,10 +187,6 @@ const DrawerCart = (props) => {
             dispatch(cartActions.cleanCart());
          })
          .catch((e) => message.error(e.message));
-   };
-
-   const handleInpuCartChange = (value) => {
-      setInputCart(value);
    };
 
    return (
@@ -210,7 +207,7 @@ const DrawerCart = (props) => {
                </Space>
             }>
             <Divider orientation="left">Позиции заказа</Divider>
-            <CartList handleInpuCartChange={handleInpuCartChange} />
+            <CartList />
 
             <Divider orientation="left">Адрес вывоза</Divider>
             <AddressList

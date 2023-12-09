@@ -34,7 +34,7 @@ const cartReducer = (prevState = initialState, action) => {
       case UPDATE_CART:
          return {
             ...prevState,
-            ...initialState
+            items: action.payload
          };
 
       case UPDATE_ADDRESS_OF_CART:
