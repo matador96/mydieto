@@ -25,6 +25,9 @@ import {
    setLocalStorageByKey
 } from '@shared/lib/localStorage';
 import { getCartCount } from '@entitles/Cart';
+import { GetStorageMyWithParams } from '../../../features/storage/model/GetStorageMyWithParams';
+import { getStorages } from '../../../shared/api/all/storage';
+import StorageCounter from '../../../features/storage/ui/DrawerStorage';
 
 const { Footer, Sider, Content, Header } = Layout;
 
@@ -51,7 +54,6 @@ const allMenuItems = [
 const SellerLayout = (props) => {
    const navigate = useNavigate();
    const location = useLocation();
-
    const cartCount = useSelector(getCartCount);
    const [collapsed, setCollapsed] = useState(false);
    const permissions = useSelector(getUserPermissions);
@@ -114,13 +116,7 @@ const SellerLayout = (props) => {
                         defaultSelectedKeys={selectedRoute}
                      />{' '}
                      <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <div
-                           className="header-button"
-                           onClick={() => navigate(`/seller/storage`)}>
-                           <InboxOutlined />
-
-                           <span className="header-button_label">Мой склад</span>
-                        </div>
+                        <StorageCounter />
 
                         <DrawerCart
                            button={

@@ -33,6 +33,8 @@ import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
 
+import StorageCounter from './DrawerStorage';
+
 const { confirm } = Modal;
 
 const StorageListQuantityWithSave = (props) => {
