@@ -65,7 +65,8 @@ const RegisterForm = () => {
             minWidth: 320
          }}
          onFinish={onFinish}
-         onFinishFailed={onFinishFailed}>
+         onFinishFailed={onFinishFailed}
+      >
          <Form.Item
             label="Имя"
             name="firstName"
@@ -74,7 +75,8 @@ const RegisterForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input />
          </Form.Item>
 
@@ -86,7 +88,8 @@ const RegisterForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input />
          </Form.Item>
 
@@ -98,7 +101,8 @@ const RegisterForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input
                type="number"
                addonBefore={prefixSelector}
@@ -116,7 +120,8 @@ const RegisterForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input />
          </Form.Item>
 
@@ -128,7 +133,8 @@ const RegisterForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}>
+            ]}
+         >
             <Input type="password" />
          </Form.Item>
 
@@ -136,7 +142,8 @@ const RegisterForm = () => {
             wrapperCol={{
                offset: 8,
                span: 16
-            }}>
+            }}
+         >
             <Button type="primary" htmlType="submit" loading={isLoading}>
                Зарегистрироваться
             </Button>

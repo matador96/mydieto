@@ -31,7 +31,8 @@ function PasswordRecoveryForm({ visible, onCancel }) {
             footer={null}
             open={visible}
             title="Восстановление пароля"
-            onCancel={onCancel}>
+            onCancel={onCancel}
+         >
             <Form
                name="basic"
                labelCol={{
