@@ -234,11 +234,13 @@ const StorageList = () => {
                                        />
                                        <Tooltip placement="top" title={'Сохранить'}>
                                           <Button
+                                             style={{ marginLeft: '10px' }}
                                              type="primary"
                                              loading={isLoading}
                                              onClick={() => save(item.id)}
-                                             icon={<SaveOutlined />}
-                                          />
+                                             icon={<SaveOutlined />}>
+                                             Сохранить
+                                          </Button>
                                        </Tooltip>
                                     </div>
                                     <span
