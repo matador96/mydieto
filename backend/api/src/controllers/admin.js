@@ -44,40 +44,6 @@ module.exports.getWithParams = async (req) => {
   return { data: result.data, count: result.count };
 };
 
-module.exports.login = async (req) => {
-  const { email, password } = req.body;
-
-  if (!email && !password) {
-    throw new ApplicationError("Email и пароль не задан", {
-      path: "controller",
-    });
-  }
-
-  const user = await UserService.getByEmail(email);
-
-  if (!user) {
-    throw new ApplicationError("Данные не верны", {
-      path: "controller",
-    });
-  }
-
-  const comparePass = await Encrypt.comparePassword(password, user.password);
-
-  if (!comparePass) {
-    throw new ApplicationError("Пароль неверный", {
-      path: "controller",
-    });
-  }
-
-  const payload = { ...user };
-  const token = jwt.sign(payload, jwtOptions.secretOrKey);
-
-  return {
-    jwt: token,
-    data: { user: user, type: "admin" },
-  };
-};
-
 module.exports.logout = async () => {
   return { message: "Успешный выход" };
 };
