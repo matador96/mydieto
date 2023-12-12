@@ -24,7 +24,7 @@ module.exports.create = async (req, res, transaction) => {
   const { status, statusComment } = orderData;
 
   const currentSessionUserId = req?.user?.profile?.id;
-  const userData = await UserService.getUserById(currentSessionUserId);
+  const userData = await UserService.getUserById(currentSessionUserId); // избавиться от этого надо, теперь в req.user.profile все хранится
 
   if (orderItems) {
     orderItems = orderItems.map((e) => {
@@ -71,7 +71,7 @@ module.exports.update = async (req, res, transaction) => {
   const { status, statusComment } = orderData;
 
   const currentSessionUserId = req?.user?.profile?.id;
-  const userData = await UserService.getUserById(currentSessionUserId);
+  const userData = await UserService.getUserById(currentSessionUserId); // избавиться от этого надо, теперь в req.user.profile все хранится
 
   if (userData?.seller?.id) {
     const prevData = await OrderService.getById(id);

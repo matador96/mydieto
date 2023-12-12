@@ -88,7 +88,7 @@ module.exports.get = async (req) => {
       path: "controller",
     });
   }
-  const userData = await UserService.getUserById(currentSessionUserId);
+  const userData = await UserService.getUserById(currentSessionUserId); // избавиться от этого надо, теперь в req.user.profile все хранится
 
   if (!userData) {
     throw new ApplicationError("Пользователь не активен", {
