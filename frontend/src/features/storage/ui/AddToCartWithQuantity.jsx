@@ -34,7 +34,8 @@ const AddToCartWithQuantity = ({ catalogId, unit }) => {
             type="primary"
             icon={<InboxOutlined />}
             loading={isLoading}
-            onClick={addToStorage}>
+            onClick={addToStorage}
+         >
             В склад
          </Button>
       </Space>

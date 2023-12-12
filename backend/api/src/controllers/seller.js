@@ -16,6 +16,28 @@ const StorageService = require("../services/storage");
 const SellerService = require("../services/sellers");
 const UserService = require("../services/users");
 
+module.exports.getStorageCount = async (req) => {
+  const currentSessionUserId = req?.user?.profile?.id;
+  const userData = await UserService.getUserById(currentSessionUserId);
+
+  if (!userData?.seller?.id) {
+    throw new ApplicationError("Вы делаете запрос не из продавца", {
+      path: "controller",
+    });
+  }
+
+  const sellerId = userData?.seller?.id;
+
+  if (!sellerId) {
+    throw new ApplicationError("Нет айди продавца", {
+      path: "controller",
+    });
+  }
+
+  const result = await StorageService.getCount({ sellerId });
+  return { data: result };
+};
+
 module.exports.getStorage = async (req) => {
   const currentSessionUserId = req?.user?.profile?.id;
   const userData = await UserService.getUserById(currentSessionUserId);

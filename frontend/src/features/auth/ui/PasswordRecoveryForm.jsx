@@ -46,8 +46,7 @@ function PasswordRecoveryForm({ visible, onCancel }) {
                   position: 'relative'
                }}
                onFinish={onFinish}
-               onFinishFailed={onFinishFailed}
-            >
+               onFinishFailed={onFinishFailed}>
                <Form.Item
                   label="Email"
                   name="email"
@@ -60,16 +59,14 @@ function PasswordRecoveryForm({ visible, onCancel }) {
                         required: true,
                         message: 'Введите ваш email'
                      }
-                  ]}
-               >
+                  ]}>
                   <Input />
                </Form.Item>
                <Form.Item
                   wrapperCol={{
                      offset: 8,
                      span: 16
-                  }}
-               >
+                  }}>
                   <Button type="primary" htmlType="submit" loading={isLoading}>
                      Сбросить пароль
                   </Button>

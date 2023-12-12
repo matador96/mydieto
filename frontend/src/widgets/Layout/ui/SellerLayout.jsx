@@ -25,9 +25,10 @@ import {
    setLocalStorageByKey
 } from '@shared/lib/localStorage';
 import { getCartCount } from '@entitles/Cart';
+import StorageCounter from '@features/storage/ui/StorageCounter';
 import Head from '../Head';
 
-const { Footer, Sider, Content, Header } = Layout;
+const { Footer, Content, Header } = Layout;
 
 function getItem(label, key, icon, children, disabled) {
    return {
@@ -52,7 +53,6 @@ const allMenuItems = [
 const SellerLayout = (props) => {
    const navigate = useNavigate();
    const location = useLocation();
-
    const cartCount = useSelector(getCartCount);
    const [collapsed, setCollapsed] = useState(false);
    const permissions = useSelector(getUserPermissions);
@@ -116,13 +116,7 @@ const SellerLayout = (props) => {
                         defaultSelectedKeys={selectedRoute}
                      />{' '}
                      <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <div
-                           className="header-button"
-                           onClick={() => navigate(`/seller/storage`)}>
-                           <InboxOutlined />
-
-                           <span className="header-button_label">Мой склад</span>
-                        </div>
+                        <StorageCounter />
 
                         <DrawerCart
                            button={
