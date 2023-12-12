@@ -26,6 +26,7 @@ import {
 } from '@shared/lib/localStorage';
 import { getCartCount } from '@entitles/Cart';
 import StorageCounter from '@features/storage/ui/StorageCounter';
+import Head from '../Head';
 
 const { Footer, Content, Header } = Layout;
 
@@ -98,6 +99,7 @@ const SellerLayout = (props) => {
          }}>
          <Layout>
             {' '}
+            <Head />
             <Header style={{ padding: '0' }} className="erp-header-seller">
                <Container>
                   <div className="erp-header-seller-items">
