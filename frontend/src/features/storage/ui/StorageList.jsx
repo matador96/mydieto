@@ -1,12 +1,10 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { useState, useEffect } from 'react';
 import {
-   Descriptions,
    Button,
    List,
    Space,
    Tooltip,
-   Avatar,
    message,
    Modal,
    InputNumber,
@@ -14,13 +12,7 @@ import {
    Input
 } from 'antd';
 
-import {
-   EditOutlined,
-   DeleteOutlined,
-   SaveOutlined,
-   ExclamationCircleFilled,
-   ShoppingCartOutlined
-} from '@ant-design/icons';
+import { ExclamationCircleFilled, ShoppingCartOutlined } from '@ant-design/icons';
 import { GetStorageMyWithParams } from '../model/GetStorageMyWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
@@ -32,8 +24,6 @@ import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
-
-import StorageCounter from './DrawerStorage';
 
 const { confirm } = Modal;
 
@@ -91,8 +81,7 @@ const StorageListQuantityWithSave = (props) => {
                   loading={isLoading}
                   disabled={quantity === 0}
                   onClick={addToCart}
-                  icon={<ShoppingCartOutlined />}
-               >
+                  icon={<ShoppingCartOutlined />}>
                   В корзину
                </Button>
             </Tooltip>
@@ -198,8 +187,7 @@ const StorageList = () => {
                                  storage={item}
                                  callBack={fetchData}
                               />
-                           ]}
-                        >
+                           ]}>
                            <div
                               className="storage-background-image"
                               style={{
@@ -210,7 +198,7 @@ const StorageList = () => {
                            />
 
                            <List.Item.Meta
-                              style={{ marginLeft: '10px' }}
+                              style={{ marginLeft: '15px' }}
                               key={`${item.id}-`}
                               title={item.catalog.name}
                               description={
@@ -236,23 +224,23 @@ const StorageList = () => {
                                              }))
                                           }
                                        />
-                                       <Tooltip placement="top" title={'Сохранить'}>
-                                          <Button
-                                             style={{ marginLeft: '10px' }}
-                                             type="primary"
-                                             loading={isLoading}
-                                             onClick={() => save(item.id)}
-                                             icon={<SaveOutlined />}
-                                          >
-                                             Сохранить
-                                          </Button>
-                                       </Tooltip>
+
+                                       <span
+                                          className="green-span-url"
+                                          type="link"
+                                          style={{
+                                             marginLeft: '10px',
+                                             textDecoration: 'none'
+                                          }}
+                                          onClick={() => save(item.id)}>
+                                          Сохранить
+                                       </span>
                                     </div>
                                     <span
-                                       className="green-span-url"
+                                       className="red-span-url"
                                        type="link"
-                                       onClick={() => showConfirmDelete(item.id)}
-                                    >
+                                       style={{ fontSize: '12px' }}
+                                       onClick={() => showConfirmDelete(item.id)}>
                                        Удалить из склада
                                     </span>
                                  </>
