@@ -206,7 +206,7 @@ const StorageList = () => {
                            />
 
                            <List.Item.Meta
-                              style={{ marginLeft: '10px' }}
+                              style={{ marginLeft: '15px' }}
                               key={`${item.id}-`}
                               title={item.catalog.name}
                               description={
@@ -244,6 +244,7 @@ const StorageList = () => {
                                     <span
                                        className="green-span-url"
                                        type="link"
+                                       style={{ fontSize: '12px' }}
                                        onClick={() => showConfirmDelete(item.id)}>
                                        Удалить из склада
                                     </span>
