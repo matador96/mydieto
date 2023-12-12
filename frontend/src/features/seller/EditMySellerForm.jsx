@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input } from '@shared/ui';
-import { Col, Row, message } from 'antd';
-import SelectAddress from '@widgets/FormItems/SelectAddress';
+import { message } from 'antd';
 import { GetMySellerProfile } from './model/GetMySellerProfile';
-
-const { TextArea } = Input;
+import { UpdateMySellerProfile } from './model/UpdateMySellerProfile';
+import _ from 'lodash';
 
 const prefixSelector = <Form.Item noStyle>+7</Form.Item>;
 
-const EditMySellerForm = (props) => {
+const EditMySellerForm = () => {
    const [isLoading, setIsLoading] = useState(false);
-   const [isEditing, setIsEditing] = useState(false);
-   const { onSuccess, isEditForm } = props;
+   const [isEdited, setIsEdited] = useState(false);
+
+   const [initialValues, setInitialValues] = useState({});
    const [form] = Form.useForm();
 
    useEffect(() => {
@@ -20,16 +20,33 @@ const EditMySellerForm = (props) => {
 
    const fetchData = () => {
       GetMySellerProfile().then((res) => {
-         form.setFieldsValue(res);
+         // form.setFieldsValue(res);
+         console.log(res);
+         setInitialValues(res);
       });
    };
 
    const onFinish = (values) => {
-      onSuccess(values, setIsLoading).then(() => {
-         if (isEditForm) {
-            return;
-         }
-      });
+      const differenceValuesKeys = _.reduce(
+         values,
+         function (result, value, key) {
+            return _.isEqual(value, initialValues[key])
+               ? result
+               : result.concat(key);
+         },
+         []
+      );
+
+      const objValue = {};
+      differenceValuesKeys.map((e) => (objValue[e] = values[e]));
+
+      UpdateMySellerProfile(objValue)
+         .then(() => {
+            setIsEdited(false);
+            message.success('Изменения профиля сохранились');
+         })
+         .catch((e) => message.error(e))
+         .finally(() => setIsEdited(false));
    };
 
    const onFinishFailed = (errorInfo) => {
@@ -37,9 +54,9 @@ const EditMySellerForm = (props) => {
       console.log('Failed:', errorInfo);
    };
 
-   const handleEdit = () => {
-      setIsEditing(true);
-   };
+   if (Object?.values(initialValues)?.length === 0) {
+      return <></>;
+   }
 
    return (
       <Form
@@ -54,11 +71,12 @@ const EditMySellerForm = (props) => {
             maxWidth: 460,
             minWidth: 320
          }}
+         initialValues={initialValues}
          form={form}
          hideRequiredMark
+         onFieldsChange={() => setIsEdited(true)}
          onFinish={onFinish}
-         onFinishFailed={onFinishFailed}
-      >
+         onFinishFailed={onFinishFailed}>
          <Form.Item
             label="Имя"
             name="firstName"
@@ -67,9 +85,8 @@ const EditMySellerForm = (props) => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
-            <Input type="string" disabled={!isEditing} />
+            ]}>
+            <Input />
          </Form.Item>
 
          <Form.Item
@@ -80,9 +97,8 @@ const EditMySellerForm = (props) => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
-            <Input disabled={!isEditing} />
+            ]}>
+            <Input />
          </Form.Item>
 
          <Form.Item
@@ -97,10 +113,8 @@ const EditMySellerForm = (props) => {
                   pattern: /^[0-9]{10}$/,
                   message: 'Неверный формат номера телефона'
                }
-            ]}
-         >
+            ]}>
             <Input
-               disabled={!isEditing}
                type="number"
                addonBefore={prefixSelector}
                style={{
@@ -117,10 +131,9 @@ const EditMySellerForm = (props) => {
                {
                   message: 'Нельзя менять почту'
                }
-            ]}
-         >
+            ]}>
             <Input
-               type="Email"
+               type="email"
                style={{
                   width: '100%'
                }}
@@ -132,17 +145,14 @@ const EditMySellerForm = (props) => {
             wrapperCol={{
                offset: 8,
                span: 16
-            }}
-         >
-            {isEditing ? (
-               <Button type="primary" htmlType="submit">
-                  Сохранить
-               </Button>
-            ) : (
-               <Button type="primary" onClick={handleEdit}>
-                  Редактировать
-               </Button>
-            )}
+            }}>
+            <Button
+               type="primary"
+               htmlType="submit"
+               loading={isLoading}
+               disabled={!isEdited}>
+               Сохранить
+            </Button>
          </Form.Item>
       </Form>
    );

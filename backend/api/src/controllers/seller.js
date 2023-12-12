@@ -149,6 +149,8 @@ module.exports.getOrdersWithParams = async (req) => {
 module.exports.getFromSession = async (req) => {
   const currentSessionUserId = req?.user?.profile?.id;
 
+  console.log(req?.user?.profile);
+
   if (!currentSessionUserId) {
     throw new ApplicationError("Пользователя нет в сессии", {
       path: "controller",
@@ -165,7 +167,11 @@ module.exports.getFromSession = async (req) => {
   }
 
   return {
-    data: { ...sellerData, type: "seller" },
+    data: {
+      ...sellerData,
+      email: req?.user?.profile?.email || "не указан",
+      type: "seller",
+    },
   };
 };
 
@@ -402,6 +408,32 @@ module.exports.delete = async (req, res, transaction) => {
   await SellerService.deleteSeller({ id }, { transaction });
 
   return {};
+};
+
+module.exports.updateSellerProfile = async (req, res, transaction) => {
+  const currentSessionUserId = req?.user?.profile?.id;
+
+  const userData = await UserService.getUserById(currentSessionUserId);
+
+  if (!userData?.seller?.id) {
+    throw new ApplicationError("Вы делаете запрос не из продавца", {
+      path: "controller",
+    });
+  }
+
+  const sellerId = userData?.seller?.id;
+
+  const sellerData = await SellerService.update(
+    {
+      ...req.body,
+    },
+    { userId: currentSessionUserId },
+    { transaction },
+  );
+
+  return {
+    data: sellerData,
+  };
 };
 
 module.exports.update = async (req, res, transaction) => {

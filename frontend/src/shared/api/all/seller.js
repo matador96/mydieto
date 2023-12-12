@@ -63,6 +63,15 @@ export const updateMyAddress = (fields, id) =>
       true
    );
 
+export const updateMySellerProfile = (fields) =>
+   put(
+      `/seller`,
+      {
+         ...fields
+      },
+      true
+   );
+
 export const getMySellerProfile = () => get(`/seller/profile`);
 
 // export const createAddress = (fields) =>

@@ -25,7 +25,13 @@ const StorageCounter = () => {
 
    return (
       <div className="header-button" onClick={() => navigate(`/seller/storage`)}>
-         <Badge showZero count={count} size="small" status="success">
+         <Badge
+            showZero
+            count={count}
+            size="small"
+            style={{
+               backgroundColor: '#52c41a'
+            }}>
             <InboxOutlined />
          </Badge>
          <span className="header-button_label">Мой склад</span>

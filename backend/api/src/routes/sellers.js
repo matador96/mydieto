@@ -108,4 +108,11 @@ module.exports = [
     withTransaction: true,
     method: SellerController.update,
   },
+  {
+    type: "put",
+    url: "/api/v1/seller",
+    middlewares: [authenticate, validationChecker],
+    withTransaction: true,
+    method: SellerController.updateSellerProfile,
+  },
 ];
