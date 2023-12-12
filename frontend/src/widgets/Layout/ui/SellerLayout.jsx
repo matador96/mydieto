@@ -25,11 +25,9 @@ import {
    setLocalStorageByKey
 } from '@shared/lib/localStorage';
 import { getCartCount } from '@entitles/Cart';
-import { GetStorageMyWithParams } from '../../../features/storage/model/GetStorageMyWithParams';
-import { getStorages } from '../../../shared/api/all/storage';
-import StorageCounter from '../../../features/storage/ui/DrawerStorage';
+import StorageCounter from '@features/storage/ui/StorageCounter';
 
-const { Footer, Sider, Content, Header } = Layout;
+const { Footer, Content, Header } = Layout;
 
 function getItem(label, key, icon, children, disabled) {
    return {
@@ -97,8 +95,7 @@ const SellerLayout = (props) => {
       <Layout
          style={{
             minHeight: '100vh'
-         }}
-      >
+         }}>
          <Layout>
             {' '}
             <Header style={{ padding: '0' }} className="erp-header-seller">
@@ -126,8 +123,7 @@ const SellerLayout = (props) => {
                                     showZero
                                     count={cartCount}
                                     size="small"
-                                    status="success"
-                                 >
+                                    status="success">
                                     <ShoppingCartOutlined />
                                  </Badge>
                                  <span className="header-button_label">Корзина</span>
@@ -143,22 +139,19 @@ const SellerLayout = (props) => {
             <Content
                style={{
                   margin: '0 16px'
-               }}
-            >
+               }}>
                <div
                   style={{
                      padding: '0 24px',
                      minHeight: 360
-                  }}
-               >
+                  }}>
                   <Container> {props.children} </Container>
                </div>
             </Content>
             <Footer
                style={{
                   textAlign: 'center'
-               }}
-            >
+               }}>
                © 2022 – {new Date().getFullYear()} Ecorium. Все права защищены.
             </Footer>
          </Layout>
