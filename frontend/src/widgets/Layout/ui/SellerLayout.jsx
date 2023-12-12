@@ -65,11 +65,6 @@ const SellerLayout = (props) => {
       });
    }, []);
 
-   const onCollapse = (value) => {
-      setCollapsed(value);
-      setLocalStorageByKey(SIDEBAR_LOCALSTORAGE_KEY, value);
-   };
-
    const onClick = (e) => {
       const routeName = e?.key;
       if (!routeName || !RoutePath[routeName]) return;

@@ -1,12 +1,10 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { useState, useEffect } from 'react';
 import {
-   Descriptions,
    Button,
    List,
    Space,
    Tooltip,
-   Avatar,
    message,
    Modal,
    InputNumber,
@@ -14,13 +12,7 @@ import {
    Input
 } from 'antd';
 
-import {
-   EditOutlined,
-   DeleteOutlined,
-   SaveOutlined,
-   ExclamationCircleFilled,
-   ShoppingCartOutlined
-} from '@ant-design/icons';
+import { ExclamationCircleFilled, ShoppingCartOutlined } from '@ant-design/icons';
 import { GetStorageMyWithParams } from '../model/GetStorageMyWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
