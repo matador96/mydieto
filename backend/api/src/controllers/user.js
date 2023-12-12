@@ -65,7 +65,8 @@ module.exports.login = async (req) => {
     });
   }
 
-  const payload = { ...user };
+  const payload = { id: user.id };
+
   const token = jwt.sign(payload, jwtOptions.secretOrKey);
 
   const userInfo = userInfoTemplate(user);
