@@ -232,17 +232,20 @@ const StorageList = () => {
                                              }))
                                           }
                                        />
-                                       <Tooltip placement="top" title={'Сохранить'}>
-                                          <Button
-                                             type="primary"
-                                             loading={isLoading}
-                                             onClick={() => save(item.id)}
-                                             icon={<SaveOutlined />}
-                                          />
-                                       </Tooltip>
+
+                                       <span
+                                          className="green-span-url"
+                                          type="link"
+                                          style={{
+                                             marginLeft: '10px',
+                                             textDecoration: 'none'
+                                          }}
+                                          onClick={() => save(item.id)}>
+                                          Сохранить
+                                       </span>
                                     </div>
                                     <span
-                                       className="green-span-url"
+                                       className="red-span-url"
                                        type="link"
                                        style={{ fontSize: '12px' }}
                                        onClick={() => showConfirmDelete(item.id)}>

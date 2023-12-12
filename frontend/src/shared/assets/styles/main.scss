@@ -10,6 +10,15 @@
    }
 }
 
+.red-span-url {
+   text-decoration: underline;
+   color: red;
+
+   &:hover {
+      cursor: pointer;
+   }
+}
+
 .list-my-storage {
    .ant-list-item {
       img {
