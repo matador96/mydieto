@@ -25,6 +25,7 @@ import {
    setLocalStorageByKey
 } from '@shared/lib/localStorage';
 import { getCartCount } from '@entitles/Cart';
+import Head from '../Head';
 
 const { Footer, Sider, Content, Header } = Layout;
 
@@ -98,6 +99,7 @@ const SellerLayout = (props) => {
          }}>
          <Layout>
             {' '}
+            <Head />
             <Header style={{ padding: '0' }} className="erp-header-seller">
                <Container>
                   <div className="erp-header-seller-items">
