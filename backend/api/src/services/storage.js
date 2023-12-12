@@ -3,6 +3,16 @@ const Catalog = require("../models/catalogs");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
 
+module.exports.getCount = async (whereParams) => {
+  const count = await Storage.count({
+    where: whereParams,
+  });
+
+  if (!count) return 0;
+
+  return count;
+};
+
 module.exports.getById = async (id) => {
   const storage = await Storage.findByPk(id, {
     raw: false,

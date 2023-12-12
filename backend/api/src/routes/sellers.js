@@ -38,6 +38,12 @@ module.exports = [
   },
   {
     type: "get",
+    url: "/api/v1/seller/storage/count",
+    middlewares: [authenticate, validationChecker],
+    method: SellerController.getStorageCount,
+  },
+  {
+    type: "get",
     url: "/api/v1/seller/profile",
     middlewares: [authenticate, validationChecker],
     method: SellerController.getFromSession,

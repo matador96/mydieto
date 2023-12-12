@@ -11,6 +11,8 @@ export const getMyAddresses = (params) =>
 export const getMyOrders = (params) =>
    get(generateQueryParams(`/seller/orders`, params));
 
+export const getMyStorageCount = () => get(`/seller/storage/count`);
+
 export const getMyStorage = (params) =>
    get(generateQueryParams(`/seller/storage`, params));
 

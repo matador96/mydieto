@@ -1,27 +1,30 @@
 import { useEffect, useState } from 'react';
-import { getStorages } from '../../../shared/api/all/storage';
 import { Badge } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { GetMyStorageCount } from '../model/GetMyStorageCount';
+
+const COUNTER_UPDATE_INTERVAL_MS = 2500;
+
 const StorageCounter = () => {
    const [count, setCount] = useState(0);
    const navigate = useNavigate();
-   const fetchData = async () => {
-      try {
-         const response = await getStorages({ limit: 1000 });
-         setCount(response.json.count);
-      } catch (error) {
-         console.error('Ощибка получения count:', error);
-      }
-   };
 
    useEffect(() => {
+      fetchData();
+
       const intervalId = setInterval(() => {
          fetchData();
-      }, 2500);
+      }, COUNTER_UPDATE_INTERVAL_MS);
 
       return () => clearInterval(intervalId);
    }, []);
+
+   const fetchData = () => {
+      GetMyStorageCount().then((res) => {
+         setCount(res?.data || 0);
+      });
+   };
 
    return (
       <div className="header-button" onClick={() => navigate(`/seller/storage`)}>

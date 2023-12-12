@@ -25,10 +25,10 @@ import {
    setLocalStorageByKey
 } from '@shared/lib/localStorage';
 import { getCartCount } from '@entitles/Cart';
-import StorageCounter from '../../../features/storage/ui/DrawerStorage';
+import StorageCounter from '@features/storage/ui/StorageCounter';
 import Head from '../Head';
 
-const { Footer, Sider, Content, Header } = Layout;
+const { Footer, Content, Header } = Layout;
 
 function getItem(label, key, icon, children, disabled) {
    return {
@@ -64,11 +64,6 @@ const SellerLayout = (props) => {
          }
       });
    }, []);
-
-   const onCollapse = (value) => {
-      setCollapsed(value);
-      setLocalStorageByKey(SIDEBAR_LOCALSTORAGE_KEY, value);
-   };
 
    const onClick = (e) => {
       const routeName = e?.key;
