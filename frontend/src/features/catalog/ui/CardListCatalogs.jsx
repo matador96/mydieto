@@ -82,11 +82,10 @@ const CardListCatalogs = () => {
       }).then((res) => {
          const tableData = res.data.filter((item) => item.id !== 0);
          setData(tableData);
-         setFilteredData(tableData); // Устанавливаем отфильтрованные данные
+         setFilteredData(tableData); 
       });
    };
-   console.log(data);
-   // Функция для фильтрации данных
+   
    const filterData = (search) => {
       const filtered = data.filter(
          (item) =>
@@ -96,12 +95,12 @@ const CardListCatalogs = () => {
       setFilteredData(filtered);
    };
 
-   // Функция debounce для задержки фильтрации
+   
    const debouncedSearch = debounce((searchValue) => {
       filterData(searchValue);
-   }, 300); // 300 мс задержка
+   }, 300); 
 
-   // Обработчик изменения ввода в поле поиска
+   
    const handleSearchChange = (e) => {
       const value = e.target.value;
       setSearchTCatalog(value);
