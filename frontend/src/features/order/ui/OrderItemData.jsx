@@ -1,5 +1,14 @@
 import React from 'react';
-import { Descriptions, Table, Divider, Tag, Space, Alert, Steps } from 'antd';
+import {
+   Descriptions,
+   Table,
+   Divider,
+   Tag,
+   Space,
+   Alert,
+   Steps,
+   InputNumber
+} from 'antd';
 import timestampToNormalDate from '@shared/utils/tsToTime';
 import { unitSettings } from '@shared/const/units';
 import { VerticalSpace } from '@shared/ui';
@@ -83,7 +92,7 @@ const UnitPriceComponent = (props) => {
 
 function OrderItemData({ order, fetchOrders }) {
    const orderItems = order.orderItems;
-
+   console.log(order.orderStatus.status);
    const auth = useSelector(getUserAuthData);
 
    const isSeller = auth.type === 'seller';
@@ -183,6 +192,11 @@ function OrderItemData({ order, fetchOrders }) {
 
       return statuseTextOfUsersOrders?.[type][curStat] || curStat;
    };
+   const price = order.orderItems.map((item) => item.unitPrice);
+   console.log(
+      price.reduce((accumulator, currentValue) => accumulator + currentValue)
+   );
+
    return (
       <div>
          <Divider orientation="left">Заказ</Divider>
@@ -247,16 +261,30 @@ function OrderItemData({ order, fetchOrders }) {
                <VerticalSpace />
             </>
          )}
-         {orderStatusesWithoutActionButtons.includes(order.orderStatus.status) ? (
-            <LastStatusBlock
-               status={order.orderStatus.status}
-               comment={order.orderStatus.comment}
-            />
-         ) : (
-            <Space size="small" align="end" direction="horizontal">
-               {getActionButtons()}
-            </Space>
-         )}
+         <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {order.orderStatus.status === 'waitDelivery' && (
+               <label style={{ marginBottom: '20px' }}>
+                  Цена сделки
+                  <InputNumber
+                     value={price.reduce(
+                        (accumulator, currentValue) => accumulator + currentValue
+                     )}
+                     size="small"
+                     addonAfter="руб"
+                  />
+               </label>
+            )}
+            {orderStatusesWithoutActionButtons.includes(order.orderStatus.status) ? (
+               <LastStatusBlock
+                  status={order.orderStatus.status}
+                  comment={order.orderStatus.comment}
+               />
+            ) : (
+               <Space size="small" align="end" direction="horizontal">
+                  {getActionButtons()}
+               </Space>
+            )}
+         </div>
          <VerticalSpace />
          <Divider orientation="left">История изменения статусов</Divider>{' '}
          <VerticalSpace />
