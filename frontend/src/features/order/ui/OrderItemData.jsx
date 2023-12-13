@@ -92,7 +92,6 @@ const UnitPriceComponent = (props) => {
 
 function OrderItemData({ order, fetchOrders }) {
    const orderItems = order.orderItems;
-   console.log(order.orderStatus.status);
    const auth = useSelector(getUserAuthData);
 
    const isSeller = auth.type === 'seller';
@@ -192,10 +191,6 @@ function OrderItemData({ order, fetchOrders }) {
 
       return statuseTextOfUsersOrders?.[type][curStat] || curStat;
    };
-   const price = order.orderItems.map((item) => item.unitPrice);
-   console.log(
-      price.reduce((accumulator, currentValue) => accumulator + currentValue)
-   );
 
    return (
       <div>
@@ -264,14 +259,8 @@ function OrderItemData({ order, fetchOrders }) {
          <div style={{ display: 'flex', flexDirection: 'column' }}>
             {order.orderStatus.status === 'waitDelivery' && (
                <label style={{ marginBottom: '20px' }}>
-                  Цена сделки
-                  <InputNumber
-                     value={price.reduce(
-                        (accumulator, currentValue) => accumulator + currentValue
-                     )}
-                     size="small"
-                     addonAfter="руб"
-                  />
+                  Цена сделки:
+                  <InputNumber size="small" addonAfter="руб" />
                </label>
             )}
             {orderStatusesWithoutActionButtons.includes(order.orderStatus.status) ? (
