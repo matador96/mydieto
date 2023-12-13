@@ -7,8 +7,8 @@ const assetFilename = '[name].[contenthash][ext][query]';
 
 const DEV_SERVER_BACKEND_API = 'localhost:3002';
 
-module.exports = (env, argv) => {
-   const isProduction = argv.mode === 'production';
+module.exports = (env) => {
+   const isProduction = !!env.production;
 
    return {
       entry: './src/index.js',

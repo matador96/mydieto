@@ -29,7 +29,7 @@
       "web-vitals": "^2.1.4"
    },
    "scripts": {
-      "build-prod": "webpack --mode production",
+      "build:prod": "webpack --mode production",
       "build": "webpack --mode development",
       "start": "webpack serve --mode development",
       "lint": "eslint src/**/*.js src/**/*.jsx",
