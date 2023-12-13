@@ -7,36 +7,14 @@ import AddToCartWithQuantity from '@features/storage/ui/AddToCartWithQuantity';
 import { debounce } from 'lodash';
 const { Search } = Input;
 
-const CatalogCardsByParentId = ({ id }) => {
-   const [isLoading, setIsLoading] = useState(false);
-   const [data, setData] = useState([]);
-
-   useEffect(() => {
-      fetchData();
-   }, []);
-
-   const fetchData = () => {
-      setIsLoading(true);
-      GetCatalogsListByParentId(id, {
-         page: 1,
-         limit: 1000,
-         sort: 'priority',
-         order: 'asc'
-      }).then((res) => {
-         setIsLoading(false);
-         const tableData = res.data.filter((item) => item.id !== 0);
-         setData(tableData);
-      });
-   };
-
+const CatalogCardsByParentId = ({ items }) => {
    return (
       <>
          <Row gutter={24}>
-            {data.map((item) => (
+            {items.map((item) => (
                <Col className="custom-col" span={6} key={`${item.id}-${item.name}`}>
                   <Card
                      className="custom-card"
-                     loading={isLoading}
                      cover={
                         <div
                            className="card-background-image"
@@ -65,45 +43,68 @@ const CatalogCardsByParentId = ({ id }) => {
 };
 
 const CardListCatalogs = () => {
+   const [initialData, setInitialData] = useState([]);
    const [data, setData] = useState([]);
-   const [filteredData, setFilteredData] = useState([]);
-   const [searchCatalog, setSearchTCatalog] = useState('');
+   const [searchStr, setSearchStr] = useState('');
 
    useEffect(() => {
-      fetchData();
+      fetchMainCatalog();
    }, []);
 
-   const fetchData = () => {
+   const fetchMainCatalog = () => {
       GetCatalogsListByParentId(0, {
          page: 1,
          limit: 1000,
          sort: 'priority',
          order: 'asc'
-      }).then((res) => {
-         const tableData = res.data.filter((item) => item.id !== 0);
-         setData(tableData);
-         setFilteredData(tableData); 
+      }).then(async (res) => {
+         const mainData = res?.data || [];
+         const promises = [];
+         const dataArr = [];
+
+         mainData.forEach((e) =>
+            promises.push(
+               GetCatalogsListByParentId(e.id, {
+                  page: 1,
+                  limit: 1000,
+                  sort: 'priority',
+                  order: 'asc'
+               }).then((res) => dataArr.push({ ...e, items: res?.data || [] }))
+            )
+         );
+
+         await Promise.all(promises).then(() => {
+            setData(dataArr);
+            setInitialData(dataArr);
+         });
       });
    };
-   
+
    const filterData = (search) => {
-      const filtered = data.filter(
-         (item) =>
-            item.name.toLowerCase().includes(search.toLowerCase()) &&
-            item.id === 0
-      );
-      setFilteredData(filtered);
+      if (!search) {
+         return setData(initialData);
+      }
+
+      const filtered = initialData.map((e) => {
+         return {
+            ...e,
+            items: e.items.filter((item) =>
+               item.name.toLowerCase().includes(search.toLowerCase())
+            )
+         };
+      });
+
+      setData(filtered);
    };
 
-   
    const debouncedSearch = debounce((searchValue) => {
       filterData(searchValue);
-   }, 300); 
+   }, 300);
 
-   
    const handleSearchChange = (e) => {
       const value = e.target.value;
-      setSearchTCatalog(value);
+
+      setSearchStr(value);
       debouncedSearch(value);
    };
 
@@ -112,14 +113,21 @@ const CardListCatalogs = () => {
          <Space>
             <Search
                placeholder="Поиск по каталогу"
-               value={searchCatalog}
+               value={searchStr}
                onChange={handleSearchChange}
             />
          </Space>
-         {filteredData.map((item) => (
+         {data.map((item) => (
             <React.Fragment key={`${item.id}-${item.name}`}>
-               <Divider orientation="center">{item.name}</Divider>
-               <CatalogCardsByParentId id={item.id} />
+               {item?.items.length ? (
+                  <>
+                     <Divider orientation="center">{item.name}</Divider>
+                     <CatalogCardsByParentId
+                        id={item.id}
+                        items={item?.items || []}
+                     />
+                  </>
+               ) : null}
             </React.Fragment>
          ))}
       </>
