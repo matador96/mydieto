@@ -110,10 +110,12 @@ const CardListCatalogs = () => {
 
    return (
       <>
-         <Space>
-            <Search
+         <Space style={{ display: 'flex', justifyContent: 'center' }}>
+            <Input
                placeholder="Поиск по каталогу"
                value={searchStr}
+               style={{ width: '400px' }}
+               size="large"
                onChange={handleSearchChange}
             />
          </Space>
