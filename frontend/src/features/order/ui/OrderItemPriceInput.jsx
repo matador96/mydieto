@@ -1,17 +1,16 @@
 import React from 'react';
 import { InputNumber, message } from 'antd';
-import { unitSettings } from '@shared/const/units';
 import _ from 'lodash';
 import { UpdateOrderItem } from './../model/services/UpdateOrderItem';
 
 const OrderItemPriceInput = ({ value, orderItemId, unit }) => {
    const save = (value) => {
-      const isInteger = /^[0-9]+$/;
+      // const isInteger = /^[0-9]+$/;
 
-      if (!isInteger.test(value)) {
-         message.warning('Ошибка сохранения, введите целое число');
-         return;
-      }
+      // if (!isInteger.test(value)) {
+      //    message.warning('Ошибка сохранения, введите целое число');
+      //    return;
+      // }
 
       UpdateOrderItem(orderItemId, { unitPrice: value })
          .then(() => {
@@ -26,11 +25,13 @@ const OrderItemPriceInput = ({ value, orderItemId, unit }) => {
 
    return (
       <InputNumber
-         min={1}
-         step="1"
+         min={0}
          defaultValue={value}
+         step="0.01"
          onChange={(value) => debouncedChange(value)}
          addonAfter={unitText}
+         stringMode
+         decimalSeparator="."
       />
    );
 };

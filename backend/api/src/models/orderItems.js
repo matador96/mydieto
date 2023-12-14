@@ -41,7 +41,7 @@ const OrderItems = sequelize.define(
     },
     unitPrice: {
       field: "unitPrice",
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
     status: {
       field: "status",
