@@ -42,7 +42,12 @@ module.exports.getWithParams = async (queryParams) => {
       Sellers,
       {
         model: OrderItems,
-        include: Catalogs,
+        include: [
+          {
+            model: Catalogs,
+            include: [{ model: Catalogs, as: "parentCatalog" }],
+          },
+        ],
         separate: true,
       },
       {

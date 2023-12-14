@@ -122,7 +122,12 @@ function OrderItemData({ order, fetchOrders }) {
          title: 'Наименование',
          dataIndex: 'name',
          key: 'name',
-         render: (_, record) => record.catalog.name
+         render: (_, record) => (
+            <Space direction="vertical">
+               <Text>{record.catalog.name}</Text>
+               <Text type="secondary">{record.catalog.parentCatalog.name}</Text>
+            </Space>
+         )
       },
       {
          title: 'Объем',
