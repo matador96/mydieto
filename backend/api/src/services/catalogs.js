@@ -5,6 +5,7 @@ const { ApplicationError } = require("./../classes/Errors");
 module.exports.getById = async (id, settings = {}) => {
   const catalog = await Catalogs.findByPk(id, {
     ...settings,
+    include: [{ model: Catalogs, as: "parentCatalog" }],
     raw: false,
     nest: true,
   });
@@ -27,6 +28,7 @@ module.exports.getByField = async (field) => {
 module.exports.getWithParamsByParentId = async (queryParams) => {
   const data = await Catalogs.findAndCountAll({
     ...generateDatabaseSetting({ ...queryParams }, "catalog"),
+    include: [{ model: Catalogs, as: "parentCatalog" }],
     raw: false,
     nest: true,
   });
@@ -37,6 +39,7 @@ module.exports.getWithParamsByParentId = async (queryParams) => {
 module.exports.getWithParams = async (queryParams) => {
   const data = await Catalogs.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "catalog"),
+    include: [{ model: Catalogs, as: "parentCatalog" }],
     raw: false,
     nest: true,
   });
