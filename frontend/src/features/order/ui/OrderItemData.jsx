@@ -1,5 +1,14 @@
-import React from 'react';
-import { Descriptions, Table, Divider, Tag, Space, Alert, Steps } from 'antd';
+import React, { useState } from 'react';
+import {
+   Descriptions,
+   Table,
+   Divider,
+   Tag,
+   Space,
+   Alert,
+   Steps,
+   InputNumber
+} from 'antd';
 import timestampToNormalDate from '@shared/utils/tsToTime';
 import { unitSettings } from '@shared/const/units';
 import { VerticalSpace } from '@shared/ui';
@@ -17,7 +26,7 @@ import AcceptOrderModalButton from './AcceptOrderModalButton';
 
 const { Text } = Typography;
 
-const LastStatusBlock = ({ status, comment }) => {
+const LastStatusBlock = ({ status, comment, price }) => {
    return (
       <Alert
          description={
@@ -26,7 +35,12 @@ const LastStatusBlock = ({ status, comment }) => {
                   <Text type="secondary">
                      {status === 'canceled' ? 'Причина: ' : 'Комментарий: '}
                      {comment || 'Не указано'}
-                  </Text>
+                  </Text>{' '}
+               </div>{' '}
+               <div>
+                  {status === 'finished' ? (
+                     <Text>Цена сделки: {price} руб</Text>
+                  ) : null}
                </div>
             </div>
          }
@@ -83,8 +97,8 @@ const UnitPriceComponent = (props) => {
 
 function OrderItemData({ order, fetchOrders }) {
    const orderItems = order.orderItems;
-
    const auth = useSelector(getUserAuthData);
+   const [priceOfOrder, setPriceOfOrder] = useState(0);
 
    const isSeller = auth.type === 'seller';
    const isAdmin = auth.type === 'admin';
@@ -150,6 +164,7 @@ function OrderItemData({ order, fetchOrders }) {
             OnCloseModal={fetchOrders}
             orderId={order.id}
             currentStatus={order.orderStatus.status}
+            price={priceOfOrder}
          />
       );
 
@@ -183,6 +198,7 @@ function OrderItemData({ order, fetchOrders }) {
 
       return statuseTextOfUsersOrders?.[type][curStat] || curStat;
    };
+
    return (
       <div>
          <Divider orientation="left">Заказ</Divider>
@@ -247,16 +263,34 @@ function OrderItemData({ order, fetchOrders }) {
                <VerticalSpace />
             </>
          )}
-         {orderStatusesWithoutActionButtons.includes(order.orderStatus.status) ? (
-            <LastStatusBlock
-               status={order.orderStatus.status}
-               comment={order.orderStatus.comment}
-            />
-         ) : (
-            <Space size="small" align="end" direction="horizontal">
-               {getActionButtons()}
-            </Space>
-         )}
+         <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {order.orderStatus.status === 'waitDelivery' && isAdmin && (
+               <>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                     <label style={{ marginRight: '10px' }}> Цена сделки: </label>
+                     <InputNumber
+                        addonAfter="руб"
+                        defaultValue={0}
+                        value={priceOfOrder}
+                        onChange={(v) => setPriceOfOrder(v)}
+                     />
+                  </div>
+                  <VerticalSpace />
+               </>
+            )}
+
+            {orderStatusesWithoutActionButtons.includes(order.orderStatus.status) ? (
+               <LastStatusBlock
+                  status={order.orderStatus.status}
+                  comment={order.orderStatus.comment}
+                  price={order.price}
+               />
+            ) : (
+               <Space size="small" align="end" direction="horizontal">
+                  {getActionButtons()}
+               </Space>
+            )}
+         </div>
          <VerticalSpace />
          <Divider orientation="left">История изменения статусов</Divider>{' '}
          <VerticalSpace />
