@@ -52,8 +52,14 @@ module.exports.delete = async (req, res, transaction) => {
     catalogId,
   });
 
-  storageItem.quantity += orderItem.quantity;
-  await StorageService.update(storageItem, { id: storageItem.id }, { transaction });
+  if (storageItem) {
+    storageItem.quantity += orderItem.quantity;
+    await StorageService.update(
+      storageItem,
+      { id: storageItem.id },
+      { transaction },
+    );
+  }
 
   await OrderItemService.delete({ id }, { transaction });
 
