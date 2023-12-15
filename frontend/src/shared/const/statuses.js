@@ -15,7 +15,7 @@ const statuses = {
       color: 'grey'
    },
    waitDelivery: {
-      label: 'Ожидают курьера',
+      label: 'Сделка',
       value: 'waitDelivery',
       color: '#000000'
    },
@@ -35,14 +35,14 @@ const statuseTextOfUsersOrders = {
    seller: {
       onEvaluation: 'Ожидает оценки от покупателя',
       onConfirmation: 'Согласуйте предложенную цену',
-      waitDelivery: 'Ожидаем курьера',
+      waitDelivery: 'Сделка, ожидаем курьера',
       finished: 'Завершен',
       canceled: 'Отменено'
    },
    admin: {
       onEvaluation: 'Ожидает вашей оценки',
       onConfirmation: 'На согласовании у продавца',
-      waitDelivery: 'Ожидаем курьера',
+      waitDelivery: 'Сделка, едет курьер',
       finished: 'Завершен',
       canceled: 'Отменено'
    }

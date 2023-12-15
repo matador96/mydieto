@@ -7,6 +7,7 @@ import {
    Space,
    Alert,
    Steps,
+   Button,
    InputNumber
 } from 'antd';
 import timestampToNormalDate from '@shared/utils/tsToTime';
@@ -16,6 +17,7 @@ import defaulPhotoCard from '@shared/assets/images/platy-meta.jpeg';
 import { Typography } from 'antd';
 import statuses from '@shared/const/statuses';
 import OrderItemPriceInput from './OrderItemPriceInput';
+import OrderItemCapacityInput from './OrderItemCapacityInput';
 import { statuseTextOfUsersOrders } from '@shared/const/statuses';
 
 import { useSelector } from 'react-redux';
@@ -23,6 +25,8 @@ import { getUserAuthData } from '@entitles/User';
 // import OrderProcessingComponent from './OrderProcessingComponent';
 import CancelOrderModalButton from './CancelOrderModalButton';
 import AcceptOrderModalButton from './AcceptOrderModalButton';
+import OrderItemDeleteModalButton from './OrderItemDeleteModalButton';
+import OrderItemAddModalButton from './OrderItemAddModalButton';
 
 const { Text } = Typography;
 
@@ -95,6 +99,26 @@ const UnitPriceComponent = (props) => {
    return null;
 };
 
+const UnitQuantityComponent = (props) => {
+   const { value, orderItemId, unit, orderStatus } = props;
+
+   const auth = useSelector(getUserAuthData);
+
+   const isAdmin = auth.type === 'admin';
+
+   if (isAdmin) {
+      if (orderStatus === 'waitDelivery') {
+         return <OrderItemCapacityInput {...props} />;
+      }
+   }
+
+   return (
+      <>
+         {value} {unitSettings.find((e) => e.value === unit).shortLabel}
+      </>
+   );
+};
+
 function OrderItemData({ order, fetchOrders }) {
    const orderItems = order.orderItems;
    const auth = useSelector(getUserAuthData);
@@ -111,7 +135,7 @@ function OrderItemData({ order, fetchOrders }) {
          width: '100px',
          render: (_, record) => (
             <div
-               className="orders-table-img"
+               className="storage-background-image"
                style={{
                   backgroundImage: `url(${record.catalog.imgUrl || defaulPhotoCard})`
                }}
@@ -126,6 +150,13 @@ function OrderItemData({ order, fetchOrders }) {
             <Space direction="vertical">
                <Text>{record.catalog.name}</Text>
                <Text type="secondary">{record.catalog.parentCatalog.name}</Text>
+
+               <OrderItemDeleteModalButton
+                  orderItemId={record.id}
+                  onDelete={fetchOrders}
+                  userType={auth.type}
+                  orderStatus={order.orderStatus.status}
+               />
             </Space>
          )
       },
@@ -134,10 +165,12 @@ function OrderItemData({ order, fetchOrders }) {
          dataIndex: 'quantity',
          key: 'quantity',
          render: (_, record) => (
-            <>
-               {_}{' '}
-               {unitSettings.find((e) => e.value === record.catalog.unit).shortLabel}
-            </>
+            <UnitQuantityComponent
+               orderStatus={order.orderStatus.status}
+               value={_}
+               orderItemId={record.id}
+               unit={record.catalog.unit}
+            />
          )
       },
       {
@@ -250,11 +283,18 @@ function OrderItemData({ order, fetchOrders }) {
                <VerticalSpace />
             </>
          )}
+         {isAdmin && order.orderStatus.status === 'waitDelivery' ? (
+            <>
+               <OrderItemAddModalButton order={order} onAdd={fetchOrders} />
+               <VerticalSpace />
+            </>
+         ) : null}
          <Table
             columns={columns}
             dataSource={orderItems}
             bordered={false}
             pagination={false}
+            rowKey={(record) => `record-${record.id}${record.createdAt}`}
          />
          {/* <OrderGradeSuccess currentStatus={order.orderStatus.status} /> */}
          <VerticalSpace />

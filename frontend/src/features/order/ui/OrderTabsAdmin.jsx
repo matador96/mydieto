@@ -153,7 +153,7 @@ const items = [
    },
    {
       key: 'waitDelivery',
-      label: 'Ожидают курьера',
+      label: 'Сделка, едет курьер',
       children: <OrderList status={'waitDelivery'} />
    },
    {

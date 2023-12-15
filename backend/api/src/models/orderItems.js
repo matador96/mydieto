@@ -52,7 +52,12 @@ const OrderItems = sequelize.define(
     hooks: {
       beforeCreate: async (orderItem, options) => {
         const { parentRecord } = options;
-        const sellerId = parentRecord.sellerId;
+        const sellerId = parentRecord?.sellerId;
+
+        if (!sellerId) {
+          return;
+        }
+
         const catalogId = orderItem.catalogId;
 
         const storageItem = await StorageService.getByFields({
