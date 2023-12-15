@@ -54,3 +54,7 @@ module.exports.update = async (obj, whereObj, settings = {}) => {
 
   return updatedOrderItem;
 };
+
+module.exports.delete = async (whereObj, settings = {}) => {
+  return await OrderItems.destroy({ where: whereObj, ...settings });
+};
