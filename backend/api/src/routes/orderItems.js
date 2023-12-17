@@ -36,4 +36,11 @@ module.exports = [
     withTransaction: true,
     method: OrderItemController.update,
   },
+  {
+    type: "delete",
+    url: "/api/v1/orderItem/:id",
+    middlewares: [authenticate, validationChecker],
+    withTransaction: true,
+    method: OrderItemController.delete,
+  },
 ];

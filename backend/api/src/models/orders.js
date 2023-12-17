@@ -30,6 +30,10 @@ const Orders = sequelize.define(
         key: "id",
       },
     },
+    price: {
+      field: "price",
+      type: DataTypes.INTEGER,
+    },
     statusId: {
       field: "statusId",
       type: DataTypes.INTEGER,

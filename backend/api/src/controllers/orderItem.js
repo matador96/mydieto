@@ -2,7 +2,9 @@ const { body, param, query } = require("express-validator");
 const Validations = require("../const/validatorSettings");
 const { statusesOfOrderItems } = require("../config/statusSettings");
 
+const OrderService = require("../services/orders");
 const OrderItemService = require("../services/orderItems");
+const StorageService = require("../services/storage");
 
 module.exports.getById = async (req) => {
   const { id } = req.params;
@@ -34,6 +36,34 @@ module.exports.update = async (req, res, transaction) => {
   return {
     data,
   };
+};
+
+module.exports.delete = async (req, res, transaction) => {
+  const { id } = req.params;
+
+  const orderItem = await OrderItemService.getById(id);
+  const order = await OrderService.getById(orderItem.orderId);
+
+  const sellerId = order.sellerId;
+  const catalogId = orderItem.catalogId;
+
+  const storageItem = await StorageService.getByFields({
+    sellerId,
+    catalogId,
+  });
+
+  if (storageItem) {
+    storageItem.quantity += orderItem.quantity;
+    await StorageService.update(
+      storageItem,
+      { id: storageItem.id },
+      { transaction },
+    );
+  }
+
+  await OrderItemService.delete({ id }, { transaction });
+
+  return {};
 };
 
 const validationOrderItemFilterFields = [];

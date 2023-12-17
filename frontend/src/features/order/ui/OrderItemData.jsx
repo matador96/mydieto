@@ -1,5 +1,15 @@
-import React from 'react';
-import { Descriptions, Table, Divider, Tag, Space, Alert, Steps } from 'antd';
+import React, { useState } from 'react';
+import {
+   Descriptions,
+   Table,
+   Divider,
+   Tag,
+   Space,
+   Alert,
+   Steps,
+   Button,
+   InputNumber
+} from 'antd';
 import timestampToNormalDate from '@shared/utils/tsToTime';
 import { unitSettings } from '@shared/const/units';
 import { VerticalSpace } from '@shared/ui';
@@ -7,6 +17,7 @@ import defaulPhotoCard from '@shared/assets/images/platy-meta.jpeg';
 import { Typography } from 'antd';
 import statuses from '@shared/const/statuses';
 import OrderItemPriceInput from './OrderItemPriceInput';
+import OrderItemCapacityInput from './OrderItemCapacityInput';
 import { statuseTextOfUsersOrders } from '@shared/const/statuses';
 
 import { useSelector } from 'react-redux';
@@ -14,10 +25,12 @@ import { getUserAuthData } from '@entitles/User';
 // import OrderProcessingComponent from './OrderProcessingComponent';
 import CancelOrderModalButton from './CancelOrderModalButton';
 import AcceptOrderModalButton from './AcceptOrderModalButton';
+import OrderItemDeleteModalButton from './OrderItemDeleteModalButton';
+import OrderItemAddModalButton from './OrderItemAddModalButton';
 
 const { Text } = Typography;
 
-const LastStatusBlock = ({ status, comment }) => {
+const LastStatusBlock = ({ status, comment, price }) => {
    return (
       <Alert
          description={
@@ -26,7 +39,12 @@ const LastStatusBlock = ({ status, comment }) => {
                   <Text type="secondary">
                      {status === 'canceled' ? 'Причина: ' : 'Комментарий: '}
                      {comment || 'Не указано'}
-                  </Text>
+                  </Text>{' '}
+               </div>{' '}
+               <div>
+                  {status === 'finished' ? (
+                     <Text>Цена сделки: {price} руб</Text>
+                  ) : null}
                </div>
             </div>
          }
@@ -81,10 +99,30 @@ const UnitPriceComponent = (props) => {
    return null;
 };
 
-function OrderItemData({ order, fetchOrders }) {
-   const orderItems = order.orderItems;
+const UnitQuantityComponent = (props) => {
+   const { value, orderItemId, unit, orderStatus } = props;
 
    const auth = useSelector(getUserAuthData);
+
+   const isAdmin = auth.type === 'admin';
+
+   if (isAdmin) {
+      if (orderStatus === 'waitDelivery') {
+         return <OrderItemCapacityInput {...props} />;
+      }
+   }
+
+   return (
+      <>
+         {value} {unitSettings.find((e) => e.value === unit).shortLabel}
+      </>
+   );
+};
+
+function OrderItemData({ order, fetchOrders }) {
+   const orderItems = order.orderItems;
+   const auth = useSelector(getUserAuthData);
+   const [priceOfOrder, setPriceOfOrder] = useState(0);
 
    const isSeller = auth.type === 'seller';
    const isAdmin = auth.type === 'admin';
@@ -97,7 +135,7 @@ function OrderItemData({ order, fetchOrders }) {
          width: '100px',
          render: (_, record) => (
             <div
-               className="orders-table-img"
+               className="storage-background-image"
                style={{
                   backgroundImage: `url(${record.catalog.imgUrl || defaulPhotoCard})`
                }}
@@ -108,17 +146,31 @@ function OrderItemData({ order, fetchOrders }) {
          title: 'Наименование',
          dataIndex: 'name',
          key: 'name',
-         render: (_, record) => record.catalog.name
+         render: (_, record) => (
+            <Space direction="vertical">
+               <Text>{record.catalog.name}</Text>
+               <Text type="secondary">{record.catalog.parentCatalog.name}</Text>
+
+               <OrderItemDeleteModalButton
+                  orderItemId={record.id}
+                  onDelete={fetchOrders}
+                  userType={auth.type}
+                  orderStatus={order.orderStatus.status}
+               />
+            </Space>
+         )
       },
       {
          title: 'Объем',
          dataIndex: 'quantity',
          key: 'quantity',
          render: (_, record) => (
-            <>
-               {_}{' '}
-               {unitSettings.find((e) => e.value === record.catalog.unit).shortLabel}
-            </>
+            <UnitQuantityComponent
+               orderStatus={order.orderStatus.status}
+               value={_}
+               orderItemId={record.id}
+               unit={record.catalog.unit}
+            />
          )
       },
       {
@@ -150,6 +202,7 @@ function OrderItemData({ order, fetchOrders }) {
             OnCloseModal={fetchOrders}
             orderId={order.id}
             currentStatus={order.orderStatus.status}
+            price={priceOfOrder}
          />
       );
 
@@ -183,6 +236,7 @@ function OrderItemData({ order, fetchOrders }) {
 
       return statuseTextOfUsersOrders?.[type][curStat] || curStat;
    };
+
    return (
       <div>
          <Divider orientation="left">Заказ</Divider>
@@ -229,11 +283,18 @@ function OrderItemData({ order, fetchOrders }) {
                <VerticalSpace />
             </>
          )}
+         {isAdmin && order.orderStatus.status === 'waitDelivery' ? (
+            <>
+               <OrderItemAddModalButton order={order} onAdd={fetchOrders} />
+               <VerticalSpace />
+            </>
+         ) : null}
          <Table
             columns={columns}
             dataSource={orderItems}
             bordered={false}
             pagination={false}
+            rowKey={(record) => `record-${record.id}${record.createdAt}`}
          />
          {/* <OrderGradeSuccess currentStatus={order.orderStatus.status} /> */}
          <VerticalSpace />
@@ -247,16 +308,34 @@ function OrderItemData({ order, fetchOrders }) {
                <VerticalSpace />
             </>
          )}
-         {orderStatusesWithoutActionButtons.includes(order.orderStatus.status) ? (
-            <LastStatusBlock
-               status={order.orderStatus.status}
-               comment={order.orderStatus.comment}
-            />
-         ) : (
-            <Space size="small" align="end" direction="horizontal">
-               {getActionButtons()}
-            </Space>
-         )}
+         <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {order.orderStatus.status === 'waitDelivery' && isAdmin && (
+               <>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                     <label style={{ marginRight: '10px' }}> Цена сделки: </label>
+                     <InputNumber
+                        addonAfter="руб"
+                        defaultValue={0}
+                        value={priceOfOrder}
+                        onChange={(v) => setPriceOfOrder(v)}
+                     />
+                  </div>
+                  <VerticalSpace />
+               </>
+            )}
+
+            {orderStatusesWithoutActionButtons.includes(order.orderStatus.status) ? (
+               <LastStatusBlock
+                  status={order.orderStatus.status}
+                  comment={order.orderStatus.comment}
+                  price={order.price}
+               />
+            ) : (
+               <Space size="small" align="end" direction="horizontal">
+                  {getActionButtons()}
+               </Space>
+            )}
+         </div>
          <VerticalSpace />
          <Divider orientation="left">История изменения статусов</Divider>{' '}
          <VerticalSpace />
