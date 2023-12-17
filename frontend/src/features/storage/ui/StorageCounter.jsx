@@ -3,7 +3,7 @@ import { Badge } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { GetMyStorageCount } from '../model/GetMyStorageCount';
-
+import storageIcon from '@shared/assets/images/storage.svg';
 const COUNTER_UPDATE_INTERVAL_MS = 2500;
 
 const StorageCounter = () => {
@@ -27,7 +27,7 @@ const StorageCounter = () => {
    };
 
    return (
-      <div className="header-button" onClick={() => navigate(`/seller/storage`)}>
+      <div className="menu-items" onClick={() => navigate(`/seller/storage`)}>
          <Badge
             showZero
             count={count}
@@ -35,9 +35,9 @@ const StorageCounter = () => {
             style={{
                backgroundColor: '#52c41a'
             }}>
-            <InboxOutlined />
+            <img style={{ width: '24px', height: '24px' }} src={storageIcon} />
          </Badge>
-         <span className="header-button_label">Мой склад</span>
+         <span className="menu-profile-info_login">Cклад</span>
       </div>
    );
 };

@@ -52,8 +52,7 @@ const CatalogCardsByParentId = ({ id }) => {
                            catalogId={item.id}
                            unit={item.unit}
                         />
-                     ]}
-                  >
+                     ]}>
                      {item.name}
                   </Card>
                </Col>
@@ -83,14 +82,14 @@ const CardListCatalogs = () => {
    };
 
    return (
-      <>
+      <div>
          {data.map((item) => (
             <React.Fragment key={`${item.id}-${item.name}`}>
                <Divider orientation="center">{item.name}</Divider>
                <CatalogCardsByParentId id={item.id} />
             </React.Fragment>
          ))}
-      </>
+      </div>
    );
 };
 

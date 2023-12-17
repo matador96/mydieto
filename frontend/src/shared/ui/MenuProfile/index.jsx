@@ -5,7 +5,7 @@ import { userRolesColors, userRolesLabels } from '@shared/const/userRoles';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@entitles/User';
-
+import profileIcon from '../../assets/images/profile.svg';
 const userType = {
    seller: 'Продавец',
    admin: 'Администратор'
@@ -17,32 +17,10 @@ const MenuProfile = ({ isCollapsed }) => {
 
    return (
       <div
-         className="menu-profile"
-         onClick={() => navigate(`/${userData.type}/profile`)}
-      >
-         {[userData].map((user) => (
-            <React.Fragment key={`user-${user}`}>
-               <Avatar
-                  className="menu-profile_avatar"
-                  shape="square"
-                  style={{ backgroundColor: 'transparent' }}
-                  icon={<UserOutlined />}
-                  size="large"
-               />
-
-               <div className="menu-profile-info">
-                  <span className="menu-profile-info_login">
-                     {userData?.firstName
-                        ? `${userData?.firstName} ${userData?.lastName}`
-                        : user.email}
-                  </span>
-
-                  <Tag className="menu-profile-info_role">
-                     {userType[userData.type]}
-                  </Tag>
-               </div>
-            </React.Fragment>
-         ))}
+         className="menu-items"
+         onClick={() => navigate(`/${userData.type}/profile`)}>
+         <img style={{ width: '24px', height: '24px' }} src={profileIcon} />
+         <span className="menu-profile-info_login">Профиль</span>
       </div>
    );
 };
