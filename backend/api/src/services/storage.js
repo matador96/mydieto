@@ -32,10 +32,10 @@ module.exports.getByFields = async (fields) => {
     where: { ...fields },
   });
 
-  if (!storage)
-    throw new ApplicationError("Вещь со склада не найдена", {
-      path: "controllers",
-    });
+  // if (!storage)
+  //   throw new ApplicationError("Вещь со склада не найдена", {
+  //     path: "controllers",
+  //   });
 
   return storage;
 };
