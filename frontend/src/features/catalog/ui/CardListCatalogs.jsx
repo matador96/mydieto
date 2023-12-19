@@ -110,7 +110,6 @@ const CardListCatalogs = () => {
 
    return (
       <div>
-         >
          <Space style={{ display: 'flex', justifyContent: 'center' }}>
             <Input
                placeholder="Поиск по каталогу"

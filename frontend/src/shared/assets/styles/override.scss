@@ -216,3 +216,29 @@ body {
       //    0px 2px 15px 0px rgba(73, 75, 74, 0.15);
    }
 }
+
+/* Стилизация самого чекбокса */
+.ant-checkbox-checked .ant-checkbox-inner {
+   background-color: #28a745; /* Зеленый цвет фона для выбранного состояния */
+   border-color: #28a745; /* Зеленый цвет границы для выбранного состояния */
+}
+.ant-checkbox-checked .ant-checkbox-inner:hover {
+   background-color: #28a745; /* Зеленый цвет фона для выбранного состояния */
+   border-color: #28a745; /* Зеленый цвет границы для выбранного состояния */
+}
+/* Стилизация границы чекбокса в невыбранном состоянии */
+.ant-checkbox .ant-checkbox-inner {
+   border-color: #d9d9d9; /* Цвет границы по умолчанию, можете изменить на свой */
+}
+
+/* Стилизация чекбокса при наведении и фокусе */
+.ant-checkbox-wrapper:hover .ant-checkbox-inner,
+.ant-checkbox:hover .ant-checkbox-inner,
+.ant-checkbox-input:focus + .ant-checkbox-inner {
+   border-color: #28a745; /* Зеленый цвет границы при наведении и фокусе */
+}
+
+/* Стилизация галочки внутри чекбокса */
+.ant-checkbox-checked::after {
+   border-color: #fff; /* Цвет галочки */
+}

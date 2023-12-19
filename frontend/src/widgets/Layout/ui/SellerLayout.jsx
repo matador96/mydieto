@@ -105,9 +105,7 @@ const SellerLayout = (props) => {
          <Layout>
             {' '}
             <Head />
-            <Header
-               style={{ padding: '0', height: '120px' }}
-               className="erp-header-seller">
+            <Header className="erp-header-seller">
                {/* <Container  }}> */}
                <div className="erp-header-seller-items">
                   {' '}
@@ -119,7 +117,7 @@ const SellerLayout = (props) => {
                         className="catalog-button-container"
                         onClick={() => navigate('/')}>
                         <div className="button-catalog">
-                           <img src={buttonCatalogIcon} alt="ascasc" />
+                           <img className='button-catalog-icon' src={buttonCatalogIcon} alt="ascasc" />
                            <p>Каталог</p>
                         </div>
                      </Button>
@@ -146,27 +144,16 @@ const SellerLayout = (props) => {
 
                      <DrawerCart
                         button={
-                           <div
-                              style={{
-                                 display: 'flex',
-                                 flexDirection: 'column',
-                                 justifyContent: 'space-between',
-                                 alignItems: 'center',
-                                 height: '52px'
-                              }}>
-                              <Badge
-                                 showZero
-                                 className="menu-items"
-                                 count={cartCount}
-                                 status="success">
+                           <div className="menu-items">
+                              <Badge showZero count={cartCount} status="success">
                                  <img
                                     style={{ width: '24px', height: '24px' }}
                                     src={cartIcon}
                                  />
+                              </Badge>
                                  <span className="menu-profile-info_login">
                                     Корзина
                                  </span>
-                              </Badge>
                            </div>
                         }
                      />
