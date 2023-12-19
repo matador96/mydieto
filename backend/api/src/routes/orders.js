@@ -29,4 +29,18 @@ module.exports = [
     withTransaction: true,
     method: OrderController.update,
   },
+  {
+    type: "get",
+    url: "/api/v1/order/:id/send/code",
+    middlewares: [authenticate, validationChecker],
+    withTransaction: true,
+    method: OrderController.sendCode,
+  },
+  {
+    type: "get",
+    url: "/api/v1/order/:id/check/code/:code",
+    middlewares: [authenticate, validationChecker],
+    withTransaction: true,
+    method: OrderController.checkCode,
+  },
 ];

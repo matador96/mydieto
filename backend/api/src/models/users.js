@@ -30,8 +30,14 @@ const Users = sequelize.define(
 Users.hasOne(Sellers, {
   foreignKey: "userId",
 });
+Sellers.belongsTo(Users, {
+  foreignKey: "userId",
+});
 
 Users.hasOne(Admins, {
+  foreignKey: "userId",
+});
+Admins.belongsTo(Users, {
   foreignKey: "userId",
 });
 
