@@ -209,7 +209,6 @@ const StorageList = () => {
                                              width: '120px'
                                           }}
                                           min={1}
-                                          max={100}
                                           defaultValue={1}
                                           addonAfter={
                                              unitSettings.find(
