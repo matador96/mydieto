@@ -27,6 +27,7 @@ import CancelOrderModalButton from './CancelOrderModalButton';
 import AcceptOrderModalButton from './AcceptOrderModalButton';
 import OrderItemDeleteModalButton from './OrderItemDeleteModalButton';
 import OrderItemAddModalButton from './OrderItemAddModalButton';
+import WaitCodeWithChildren from './WaitCodeWithChildren';
 
 const { Text } = Typography;
 
@@ -206,13 +207,17 @@ function OrderItemData({ order, fetchOrders }) {
          />
       );
 
+      const CustomAcceptButton = (
+         <WaitCodeWithChildren id={order.id}>{AcceptButton}</WaitCodeWithChildren>
+      );
+
       const buttons = {
          seller: {
             onConfirmation: [AcceptButton, CancelButton]
          },
          admin: {
             onEvaluation: [AcceptButton, CancelButton],
-            waitDelivery: [AcceptButton, CancelButton]
+            waitDelivery: [CustomAcceptButton, CancelButton]
          }
       };
 
