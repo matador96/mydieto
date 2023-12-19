@@ -28,10 +28,16 @@ module.exports.getById = async (id) => {
 };
 
 module.exports.getByFields = async (fields) => {
-  const data = await Storage.findOne({
+  const storage = await Storage.findOne({
     where: { ...fields },
   });
-  return data;
+
+  if (!storage)
+    throw new ApplicationError("Вещь со склада не найдена", {
+      path: "controllers",
+    });
+
+  return storage;
 };
 
 module.exports.getWithParams = async (queryParams) => {

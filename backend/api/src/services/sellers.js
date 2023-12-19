@@ -1,8 +1,9 @@
+const Addresses = require("../models/addresses");
+const Users = require("../models/users");
 const Sellers = require("../models/sellers");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
 const sequelize = require("../core/db");
-const Addresses = require("../models/addresses");
 
 module.exports.getCount = async () => {
   const data = await Sellers.count();
@@ -26,6 +27,7 @@ module.exports.deleteSeller = async (whereObj, settings = {}) => {
 
 module.exports.getById = async (id) => {
   const seller = await Sellers.findByPk(id, {
+    include: [Users],
     raw: false,
     nest: true,
   });

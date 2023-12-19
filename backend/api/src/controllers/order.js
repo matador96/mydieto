@@ -4,8 +4,11 @@ const { statusesOfOrders } = require("../config/statusSettings");
 
 const OrderService = require("../services/orders");
 const UserService = require("../services/users");
+const SellerService = require("../services/sellers");
 const { ApplicationError } = require("../classes/Errors");
 const OrderStatusesService = require("../services/ordersStatuses");
+const Encrypt = require("../core/encrypt");
+const Mailer = require("../core/mailer");
 
 module.exports.getById = async (req) => {
   const { id } = req.params;
@@ -101,6 +104,48 @@ module.exports.update = async (req, res, transaction) => {
 
   return {
     data,
+  };
+};
+
+module.exports.sendCode = async (req) => {
+  const { id } = req.params;
+  const order = await OrderService.getById(id);
+  const seller = await SellerService.getById(order.sellerId);
+  const { user } = seller;
+  const { email } = user;
+
+  const code =
+    (order.id % 100).toString().padStart(2, "0") +
+    (seller.id % 100).toString().padStart(2, "0");
+
+  if (email) {
+    await Mailer.sendConfirmation(email, {
+      code,
+    });
+  }
+  return {
+    data: { code },
+  };
+};
+
+module.exports.checkCode = async (req) => {
+  const { id, code } = req.params;
+
+  const order = await OrderService.getById(id);
+  const seller = await SellerService.getById(order.sellerId);
+
+  const checkCode =
+    (order.id % 100).toString().padStart(2, "0") +
+    (seller.id % 100).toString().padStart(2, "0");
+
+  if (code !== checkCode) {
+    throw new ApplicationError("Код неверный", {
+      path: "controller",
+    });
+  }
+
+  return {
+    data: { code },
   };
 };
 
