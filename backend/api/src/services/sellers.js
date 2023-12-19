@@ -65,9 +65,16 @@ module.exports.getByField = async (field) => {
 };
 
 module.exports.getWithParams = async (queryParams) => {
+  console.log(queryParams);
   const data = await Sellers.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "seller"),
-    include: [Addresses],
+    include: [
+      {
+        model: Addresses,
+        separate: true,
+      },
+    ],
+
     raw: false,
     nest: true,
   });

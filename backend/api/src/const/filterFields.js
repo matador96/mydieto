@@ -53,7 +53,7 @@ module.exports = {
     },
     seller: {
       id: "$eq",
-      mobile: "$like",
+      mobile: "$eq",
       firstName: "$like",
       lastName: "$like",
       status: "$eq",

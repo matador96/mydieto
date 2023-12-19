@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input } from '@shared/ui';
 import { message } from 'antd';
+import { GetSellersList } from '@features/storage/model/GetSellersList';
+
 import { GetMySellerProfile } from './model/GetMySellerProfile';
 import { UpdateMySellerProfile } from './model/UpdateMySellerProfile';
 import _ from 'lodash';
@@ -58,6 +60,25 @@ const EditMySellerForm = () => {
       return <></>;
    }
 
+   const checkNumberIsExist = async (val) => {
+      const res = await GetSellersList({
+         page: 1,
+         limit: 10,
+         order: 'desc',
+         mobile: val
+      });
+
+      if (val === initialValues.mobile) {
+         return false;
+      }
+
+      if (res?.count > 0) {
+         return true;
+      }
+
+      return false;
+   };
+
    return (
       <Form
          name="basic"
@@ -112,6 +133,17 @@ const EditMySellerForm = () => {
                {
                   pattern: /^[0-9]{10}$/,
                   message: 'Неверный формат номера телефона'
+               },
+               {
+                  validator: async (_, val) => {
+                     const isExist = await checkNumberIsExist(val);
+
+                     if (isExist) {
+                        return Promise.reject('Такой номер уже есть в базе');
+                     }
+
+                     return Promise.resolve();
+                  }
                }
             ]}>
             <Input
