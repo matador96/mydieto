@@ -218,30 +218,25 @@
 
    &-items {
       display: flex;
-      width: 1280px;
+      max-width: 90vw;
+      width: 90%;
       justify-content: space-between;
       align-items: center;
       height: 56px;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: 1fr;
-      grid-column-gap: 7px;
-      grid-row-gap: 0px;
+      grid-column-gap: 14px;
 
       .search-container {
          height: 56px;
-         max-width: 950px;
-         width: 950px;
+         max-width: 82%;
+         grid-column-gap: 24px;
+         width: 82%;
          padding: 4px 4px 4px 0;
          border-radius: 4px 4px 0 0;
          border-radius: 10px;
-         display: grid;
-         grid-template-columns: 0.8fr 1fr 2.5fr;
-         grid-template-rows: 1fr;
-         grid-column-gap: 24px;
-         grid-row-gap: 0px;
+
          display: flex;
          align-items: center;
+         justify-content: space-between;
 
          .header-logo {
             font-size: 48px;
@@ -302,16 +297,21 @@
          .search-container-input {
             display: flex;
             height: 57px;
-            max-width: 643px;
-            width: 643px;
+            max-width: 83%;
+            width: 83%;
             align-items: center;
             border: 1px solid #9ea5ad;
             border-radius: 10px;
             justify-content: space-between;
 
+            @media (min-width: 1920px) {
+               max-width: 80%;
+               width: 1123px;
+            }
+
             .custom-search-input {
-               max-width: 543px;
-               width: 543px;
+               // max-width: 543;
+               width: 84%;
                border: none !important;
                box-shadow: none !important;
                border-color: transparent;
@@ -375,10 +375,24 @@
 }
 
 .container {
-   max-width: 990px;
+   max-width: 90vw;
    margin: auto;
-   padding: 0 20px;
+   padding: 0 10px;
    width: 100%;
+
+   .general-page {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      // div {
+      //    width: 85%;
+
+      //    @media (max-width: 1440px) {
+      //       width: 80%;
+      //    }
+      // }
+   }
 }
 
 body {
@@ -499,28 +513,84 @@ body {
    }
 }
 
-.custom-col {
-   margin-bottom: 20px;
-
-   .custom-card {
-      font-size: 14px;
-      height: 100%;
+.custom-row {
+   .custom-col {
+      margin-bottom: 24px;
+      width: 230px;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      font-weight: 500;
 
-      .card-background-image {
-         height: 150px;
-         width: 100%;
-         background-size: cover;
-         background-repeat: no-repeat;
-         background-position: center;
-         border-radius: 8px 8px 0 0;
+      justify-content: space-between;
+
+      @media (max-width: 767px) {
+         flex: 0 0 100%;
+         max-width: 100%;
+      }
+
+      @media (min-width: 768px) and (max-width: 991px) {
+         flex: 0 0 50%;
+         max-width: 50%;
+      }
+      @media (min-width: 992px) and (max-width: 1439px) {
+         flex: 0 0 33.3333%;
+         max-width: 33.3333%;
+      }
+
+      @media (min-width: 1440px) and (max-width: 1919px) {
+         flex: 0 0 25%;
+         max-width: 25%;
+      }
+
+      @media (min-width: 1920px) {
+         flex: 0 0 20%;
+         max-width: 20%;
+      }
+
+      .ant-card {
+      
+      }
+      .custom-card {
+         font-size: 14px;
+         height: 302px;
+         width: 230px;
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
+         font-weight: 500;
+         .ant-card-cover {
+            display: flex;
+            justify-content: center;
+            width: 210px;
+            height: 146px;
+            margin-top: 10px;
+         }
+
+         .image-name-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 146px;
+            justify-content: space-between;
+
+            .card-background-image {
+               height: 100px;
+               width: 140px;
+               background-size: cover;
+               background-repeat: no-repeat;
+               background-position: center;
+               // border-radius: 8px 8px 0 0;
+            }
+         }
+         .image-name-container-name {
+            width: 210px;
+            height: 36px;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 18px;
+            color: rgba(36, 41, 46, 1);
+         }
       }
    }
 }
-
 .storage-background-image {
    width: 90px;
    height: 80px;
@@ -584,9 +654,76 @@ body {
    border: 1px solid black;
    box-shadow: 0px 5px 30px 0px rgba(103, 110, 118, 0.08);
    box-shadow: 0px 2px 15px 0px rgba(73, 75, 74, 0.15);
-   display: flex;
-   flex-direction: column;
-   align-items: center;
+   display: grid;
+   grid-template-columns: 1fr;
+   grid-template-rows: 1.2fr repeat(7, 1fr);
+   grid-column-gap: 0px;
+   grid-row-gap: 20px;
+   justify-content: center;
+}
+
+.categories-filter-container {
+   background: #fff;
+   border-radius: 16px;
+   margin-top: 20px;
+   width: 230px;
+   box-sizing: border-box;
+
+   height: 440px;
+   box-shadow: 0px 5px 30px 0px rgba(103, 110, 118, 0.08);
+
+   box-shadow: 0px 2px 15px 0px rgba(73, 75, 74, 0.15);
+   .title {
+      background: rgba(246, 247, 249, 1);
+      height: 48px;
+      font-size: 18px;
+
+      border-radius: 16px 16px 0 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+   }
+   .ant-checkbox-group {
+      height: 392px;
+      width: 198px;
+      overflow-y: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+         display: none;
+      }
+      .ant-checkbox-group-item {
+         display: flex;
+         align-items: center;
+         margin-left: 10px;
+         margin-bottom: 5px;
+      }
+      &:last-of-type {
+         margin-bottom: 0;
+      }
+      .ant-checkbox + span {
+         margin-left: 8px;
+         width: 198px;
+         font-size: 16px;
+         font-weight: 400;
+         line-height: 24px;
+         letter-spacing: 0em;
+         text-align: left;
+         &:hover {
+            color: #2f9461;
+         }
+      }
+      .ant-checkbox-checked .ant-checkbox-inner {
+         background-color: #2f9461;
+         border-color: #2f9461;
+      }
+      .ant-checkbox-checked::after {
+         border-color: #fff;
+      }
+   }
 }
 
 // .order-tabs {

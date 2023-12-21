@@ -34,7 +34,7 @@ import buttonCatalogIcon from '@shared/assets/images/Stroke.svg';
 import cartIcon from '@shared/assets/images/cart.svg';
 import searchIcon from '@shared/assets/images/search.svg';
 import clearSearchInput from '@shared/assets/images/clearSearchInput.svg';
-import { OrderIconComponent } from '../../../shared/ui/Order';
+import { OrderIconComponent } from '@shared/ui/Order';
 const { Footer, Content, Header } = Layout;
 
 function getItem(label, key, icon, children, disabled) {
@@ -117,7 +117,11 @@ const SellerLayout = (props) => {
                         className="catalog-button-container"
                         onClick={() => navigate('/')}>
                         <div className="button-catalog">
-                           <img className='button-catalog-icon' src={buttonCatalogIcon} alt="ascasc" />
+                           <img
+                              className="button-catalog-icon"
+                              src={buttonCatalogIcon}
+                              alt="ascasc"
+                           />
                            <p>Каталог</p>
                         </div>
                      </Button>
@@ -151,9 +155,9 @@ const SellerLayout = (props) => {
                                     src={cartIcon}
                                  />
                               </Badge>
-                                 <span className="menu-profile-info_login">
-                                    Корзина
-                                 </span>
+                              <span className="menu-profile-info_login">
+                                 Корзина
+                              </span>
                            </div>
                         }
                      />
@@ -177,7 +181,11 @@ const SellerLayout = (props) => {
             </Content>
             <Footer
                style={{
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  backgroundColor: 'rgba(47, 148, 97, 1)',
+                  color: 'white',
+                  fontWeight: '400px',
+                  fontSize: '16px'
                }}>
                © 2022 – {new Date().getFullYear()} Ecorium. Все права защищены.
             </Footer>

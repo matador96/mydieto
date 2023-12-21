@@ -2,28 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Divider, Space, Input } from 'antd';
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
-
+import CategoriesList from '@shared/ui/FilterCategory';
 import AddToCartWithQuantity from '@features/storage/ui/AddToCartWithQuantity';
 import { debounce } from 'lodash';
 const { Search } = Input;
 
 const CatalogCardsByParentId = ({ items }) => {
    return (
-      <>
+      <div className="custom-row">
          <Row gutter={24}>
             {items.map((item) => (
                <Col className="custom-col" span={6} key={`${item.id}-${item.name}`}>
                   <Card
                      className="custom-card"
                      cover={
-                        <div
-                           className="card-background-image"
-                           style={{
-                              backgroundImage: `url(${
-                                 item.imgUrl || defaulPhotoCard
-                              })`
-                           }}
-                        />
+                        <div className="image-name-container">
+                           <img
+                              className="card-background-image"
+                              style={{
+                                 backgroundImage: `url(${
+                                    item.imgUrl || defaulPhotoCard
+                                 })`
+                              }}
+                           />
+                           <div className="image-name-container-name">
+                              {item.name}
+                           </div>
+                        </div>
                      }
                      hoverable
                      actions={[
@@ -32,13 +37,11 @@ const CatalogCardsByParentId = ({ items }) => {
                            catalogId={item.id}
                            unit={item.unit}
                         />
-                     ]}>
-                     {item.name}
-                  </Card>
+                     ]}></Card>
                </Col>
             ))}
          </Row>
-      </>
+      </div>
    );
 };
 
@@ -109,7 +112,8 @@ const CardListCatalogs = () => {
    };
 
    return (
-      <div>
+      <div
+         style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
          <Space style={{ display: 'flex', justifyContent: 'center' }}>
             <Input
                placeholder="Поиск по каталогу"
@@ -119,19 +123,24 @@ const CardListCatalogs = () => {
                onChange={handleSearchChange}
             />
          </Space>
-         {data.map((item) => (
-            <React.Fragment key={`${item.id}-${item.name}`}>
-               {item?.items.length ? (
-                  <>
-                     <Divider orientation="center">{item.name}</Divider>
-                     <CatalogCardsByParentId
-                        id={item.id}
-                        items={item?.items || []}
-                     />
-                  </>
-               ) : null}
-            </React.Fragment>
-         ))}
+         <div className="general-page">
+            <CategoriesList />
+            <div style={{ width: '79%' }}>
+               {data.map((item) => (
+                  <React.Fragment key={`${item.id}-${item.name}`}>
+                     {item?.items.length ? (
+                        <>
+                           <h2>{item.name}</h2>
+                           <CatalogCardsByParentId
+                              id={item.id}
+                              items={item?.items || []}
+                           />
+                        </>
+                     ) : null}
+                  </React.Fragment>
+               ))}
+            </div>
+         </div>
       </div>
    );
 };
