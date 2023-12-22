@@ -35,7 +35,7 @@ const StorageCounter = () => {
             style={{
                backgroundColor: '#52c41a'
             }}>
-            <img style={{ width: '24px', height: '24px' }} src={storageIcon} />
+            <img className="menu-items-icon" src={storageIcon} />
          </Badge>
          <span className="menu-profile-info_login">Cклад</span>
       </div>

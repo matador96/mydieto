@@ -19,7 +19,7 @@ const MenuProfile = ({ isCollapsed }) => {
       <div
          className="menu-items"
          onClick={() => navigate(`/${userData.type}/profile`)}>
-         <img style={{ width: '24px', height: '24px' }} src={profileIcon} />
+         <img className="menu-items-icon" src={profileIcon} />
          <span className="menu-profile-info_login">Профиль</span>
       </div>
    );

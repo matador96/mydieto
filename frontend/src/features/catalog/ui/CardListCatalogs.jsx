@@ -5,15 +5,16 @@ import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByPa
 import CategoriesList from '@shared/ui/FilterCategory';
 import AddToCartWithQuantity from '@features/storage/ui/AddToCartWithQuantity';
 import { debounce } from 'lodash';
-const { Search } = Input;
 
 const CatalogCardsByParentId = ({ items }) => {
    return (
       <div className="custom-row">
          <Row gutter={24}>
             {items.map((item) => (
-               <Col className="custom-col" span={6} key={`${item.id}-${item.name}`}>
+               <div className="custom-col" key={`${item.id}-${item.name}`}>
+                  {/* <Col className="custom-col" span={6} key={`${item.id}-${item.name}`}> */}
                   <Card
+                     style={{ height: '278px' }}
                      className="custom-card"
                      cover={
                         <div className="image-name-container">
@@ -25,9 +26,7 @@ const CatalogCardsByParentId = ({ items }) => {
                                  })`
                               }}
                            />
-                           <div className="image-name-container-name">
-                              {item.name}
-                           </div>
+                           <h3 className="image-name-container-name">{item.name}</h3>
                         </div>
                      }
                      hoverable
@@ -38,7 +37,8 @@ const CatalogCardsByParentId = ({ items }) => {
                            unit={item.unit}
                         />
                      ]}></Card>
-               </Col>
+                  {/* </Col> */}
+               </div>
             ))}
          </Row>
       </div>
@@ -114,7 +114,7 @@ const CardListCatalogs = () => {
    return (
       <div
          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-         <Space style={{ display: 'flex', justifyContent: 'center' }}>
+         {/* <Space style={{ display: 'flex', justifyContent: 'center' }}>
             <Input
                placeholder="Поиск по каталогу"
                value={searchStr}
@@ -122,10 +122,10 @@ const CardListCatalogs = () => {
                size="large"
                onChange={handleSearchChange}
             />
-         </Space>
+         </Space> */}
          <div className="general-page">
-            <CategoriesList />
-            <div style={{ width: '79%' }}>
+            <CategoriesList data={data} setData={setData} />
+            <div style={{ width: '80%', flexGrow: '1' }}>
                {data.map((item) => (
                   <React.Fragment key={`${item.id}-${item.name}`}>
                      {item?.items.length ? (

@@ -150,10 +150,7 @@ const SellerLayout = (props) => {
                         button={
                            <div className="menu-items">
                               <Badge showZero count={cartCount} status="success">
-                                 <img
-                                    style={{ width: '24px', height: '24px' }}
-                                    src={cartIcon}
-                                 />
+                                 <img className="menu-items-icon" src={cartIcon} />
                               </Badge>
                               <span className="menu-profile-info_login">
                                  Корзина
@@ -174,7 +171,8 @@ const SellerLayout = (props) => {
                <div
                   style={{
                      padding: '0 24px',
-                     minHeight: 360
+                     minHeight: 360,
+                     marginTop: '50px'
                   }}>
                   <Container> {props.children} </Container>
                </div>

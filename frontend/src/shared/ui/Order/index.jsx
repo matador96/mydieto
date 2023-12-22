@@ -8,7 +8,7 @@ const OrderIconComponent = () => {
 
    return (
       <div className="menu-items" onClick={() => navigate(`/seller/orders`)}>
-         <img style={{ width: '24px', height: '24px' }} src={orderIcon} />
+         <img className='menu-items-icon'  src={orderIcon} />
          <span className="menu-profile-info_login">Заказы</span>
       </div>
    );

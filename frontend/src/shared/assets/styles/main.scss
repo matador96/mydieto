@@ -206,7 +206,8 @@
    display: flex;
    align-items: center;
    justify-content: center;
-   background: #ffffff;
+   background-color: rgba(255, 255, 255, 1);
+
    border-bottom: 1px rgb(199 199 199 / 88%) solid;
    padding-right: 0;
    box-shadow: 0px 5px 30px 0px rgba(103, 110, 118, 0.08);
@@ -219,12 +220,15 @@
    &-items {
       display: flex;
       max-width: 90vw;
-      width: 90%;
-      justify-content: space-between;
+      width: 83%;
+      justify-content: center;
       align-items: center;
       height: 56px;
-      grid-column-gap: 14px;
+      grid-column-gap: 15px;
 
+      @media (min-width: 1440px) and (max-width: 1919px) {
+         width: 88%;
+      }
       .search-container {
          height: 56px;
          max-width: 82%;
@@ -238,6 +242,9 @@
          align-items: center;
          justify-content: space-between;
 
+         @media (min-width: 1920px) {
+            width: 75%;
+         }
          .header-logo {
             font-size: 48px;
             font-weight: 600;
@@ -247,10 +254,12 @@
             width: 86px;
             height: 100%;
             border: rgba(79, 79, 79, 1);
+            color: rgba(79, 79, 79, 1);
          }
 
          .catalog-button-container {
             border: none !important;
+            min-width: 160px;
             width: 160px;
             height: 56px;
             padding: 16px, 24px, 16px, 24px;
@@ -377,21 +386,24 @@
 .container {
    max-width: 90vw;
    margin: auto;
-   padding: 0 10px;
-   width: 100%;
+   padding: 0px 7px;
+   width: 83%;
+
+   @media (min-width: 1440px) and (max-width: 1919px) {
+      padding: 0px 16px;
+      width: 95%;
+   }
 
    .general-page {
       width: 100%;
       display: flex;
       justify-content: space-between;
+      gap: 40px;
 
-      // div {
-      //    width: 85%;
-
-      //    @media (max-width: 1440px) {
-      //       width: 80%;
-      //    }
-      // }
+      @media (min-width: 1440px) and (max-width: 1919px) {
+         gap: 40px;
+         margin-left: 5px;
+      }
    }
 }
 
@@ -473,8 +485,8 @@ body {
       }
 
       &_login {
-         font-size: 14px;
-         color: #474a53;
+         font-size: 16px;
+         color: rgba(73, 75, 74, 1);
          text-overflow: ellipsis;
          overflow: hidden;
          font-weight: 500;
@@ -514,47 +526,76 @@ body {
 }
 
 .custom-row {
-   .custom-col {
-      margin-bottom: 24px;
-      width: 230px;
-      display: flex;
+   width: 85%;
 
-      justify-content: space-between;
+   .ant-row {
+      // width: 100%; // Занимает всю ширину .custom-row
+      // margin-left: 0;
+      // margin-right: 0;
+      // justify-content: flex-start;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+
+      margin-bottom: 24px;
+      width: 100%;
+      // display: flex;
+
+      // justify-content: space-between;
 
       @media (max-width: 767px) {
-         flex: 0 0 100%;
-         max-width: 100%;
+         display: grid;
+         grid-template-columns: repeat(2, 1fr);
+         grid-template-rows: 1fr;
+         grid-column-gap: 30px;
       }
 
       @media (min-width: 768px) and (max-width: 991px) {
-         flex: 0 0 50%;
-         max-width: 50%;
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         grid-template-rows: 1fr;
+         grid-column-gap: 30px;
       }
       @media (min-width: 992px) and (max-width: 1439px) {
-         flex: 0 0 33.3333%;
-         max-width: 33.3333%;
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         grid-template-rows: 1fr;
+         grid-column-gap: 30px;
       }
 
       @media (min-width: 1440px) and (max-width: 1919px) {
-         flex: 0 0 25%;
-         max-width: 25%;
+         display: grid;
+         grid-template-columns: repeat(4, 1fr);
+         grid-template-rows: 1fr;
+         grid-column-gap: 30px;
+         // width: 75%;
       }
 
       @media (min-width: 1920px) {
-         flex: 0 0 20%;
-         max-width: 20%;
+         display: grid;
+         grid-template-columns: repeat(4, 1fr);
+         grid-template-rows: 1fr;
+         grid-column-gap: 30px;
+         width: 80%;
+      }
+      .custom-col {
+         width: 230px;
+         margin-bottom: 30px;
       }
 
       .ant-card {
-      }
-      .custom-card {
          font-size: 14px;
          height: 302px;
          width: 230px;
          display: flex;
+
          flex-direction: column;
          justify-content: space-between;
          font-weight: 500;
+
+         .ant-card-body {
+            padding: 0;
+         }
+
          .ant-card-cover {
             display: flex;
             justify-content: center;
@@ -576,7 +617,7 @@ body {
                background-size: cover;
                background-repeat: no-repeat;
                background-position: center;
-               // border-radius: 8px 8px 0 0;
+               border-radius: 0;
             }
          }
          .image-name-container-name {
@@ -609,6 +650,17 @@ body {
    align-items: center;
    color: #494b4a;
    cursor: pointer;
+
+   &:hover {
+      //Граница svg при ховере
+      .menu-items-icon {
+         filter: brightness(0) saturate(100%) invert(35%) sepia(65%) saturate(1357%)
+            hue-rotate(91deg) brightness(90%) contrast(88%);
+      }
+      .menu-profile-info_login {
+         color: rgba(47, 148, 97, 1);
+      }
+   }
 }
 
 .header-container {
@@ -627,12 +679,17 @@ body {
    justify-content: space-between;
    align-items: center;
 
+   .menu-items-icon {
+      width: 24px;
+      height: 24px;
+   }
+
    @media (max-width: 770px) {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: 1fr;
+      display: flex;
+      justify-content: space-around;
+      height: 100px;
+      align-items: center;
       grid-column-gap: 10px;
-      grid-row-gap: 1px;
       grid-row-gap: 1px;
       width: 100vw;
       position: fixed;
@@ -640,7 +697,7 @@ body {
       left: 0;
       width: 100%;
       z-index: 1000;
-      // height: 60px;
+
       box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
       background-color: white;
    }
@@ -662,65 +719,63 @@ body {
 }
 
 .categories-filter-container {
-   background: #fff;
-   border-radius: 16px;
+   box-shadow: 0px 5px 30px 0px rgba(103, 110, 118, 0.08);
    margin-top: 20px;
+   box-shadow: 0px 2px 15px 0px rgba(73, 75, 74, 0.15);
+   background: #fff;
+   min-width: 230px;
    width: 230px;
+   height: 440px;
+   border-radius: 16px;
+
    box-sizing: border-box;
 
-   height: 440px;
-   box-shadow: 0px 5px 30px 0px rgba(103, 110, 118, 0.08);
-
-   box-shadow: 0px 2px 15px 0px rgba(73, 75, 74, 0.15);
    .title {
       background: rgba(246, 247, 249, 1);
       height: 48px;
       font-size: 18px;
+      color: rgba(36, 41, 46, 1);
 
       border-radius: 16px 16px 0 0;
-      width: 100%;
+      width: 230px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 600;
    }
-   .ant-checkbox-group {
-      height: 392px;
-      width: 198px;
-      overflow-y: auto;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
 
-      &::-webkit-scrollbar {
-         display: none;
-      }
-      .ant-checkbox-group-item {
-         display: flex;
-         align-items: center;
-         margin-left: 10px;
-         margin-bottom: 5px;
-      }
-      &:last-of-type {
-         margin-bottom: 0;
-      }
-      .ant-checkbox + span {
-         margin-left: 8px;
-         width: 198px;
-         font-size: 16px;
-         font-weight: 400;
-         line-height: 24px;
-         letter-spacing: 0em;
-         text-align: left;
-         &:hover {
-            color: #2f9461;
+   overflow-y: auto;
+   -ms-overflow-style: none;
+   scrollbar-width: none;
+
+   &::-webkit-scrollbar {
+      display: none;
+   }
+   .categories-container {
+      padding: 16px;
+      .category-item {
+         margin-bottom: 16px;
+
+         .ant-checkbox-wrapper {
+            .ant-checkbox + span {
+               margin-left: 8px;
+               font-size: 16px;
+               font-weight: 400;
+               line-height: 24px;
+               color: rgba(36, 41, 46, 1);
+               &:hover {
+                  color: #2f9461;
+               }
+            }
          }
-      }
-      .ant-checkbox-checked .ant-checkbox-inner {
-         background-color: #2f9461;
-         border-color: #2f9461;
-      }
-      .ant-checkbox-checked::after {
-         border-color: #fff;
+
+         .ant-checkbox-checked .ant-checkbox-inner {
+            background-color: #2f9461;
+            border-color: #2f9461;
+         }
+         .ant-checkbox-checked::after {
+            border-color: #fff;
+         }
       }
    }
 }
