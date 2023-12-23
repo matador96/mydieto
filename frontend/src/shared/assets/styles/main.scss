@@ -255,6 +255,7 @@
             height: 100%;
             border: rgba(79, 79, 79, 1);
             color: rgba(79, 79, 79, 1);
+            font-family: Inter;
          }
 
          .catalog-button-container {
@@ -485,7 +486,7 @@ body {
       }
 
       &_login {
-         font-size: 16px;
+         font-size: 14px;
          color: rgba(73, 75, 74, 1);
          text-overflow: ellipsis;
          overflow: hidden;
@@ -495,6 +496,7 @@ body {
          vertical-align: middle;
          max-width: 100px;
          line-height: 20px;
+         font-family: Inter;
       }
    }
 }
@@ -583,11 +585,13 @@ body {
       }
 
       .ant-card {
+         box-shadow: 0px 5px 30px 0px rgba(103, 110, 118, 0.08);
+         box-shadow: 0px 2px 15px 0px rgba(73, 75, 74, 0.15);
          font-size: 14px;
          height: 302px;
          width: 230px;
          display: flex;
-
+         border-radius: 16px;
          flex-direction: column;
          justify-content: space-between;
          font-weight: 500;
@@ -627,6 +631,7 @@ body {
             font-weight: 400;
             line-height: 18px;
             color: rgba(36, 41, 46, 1);
+            font-family: Inter;
          }
       }
    }
@@ -650,7 +655,7 @@ body {
    align-items: center;
    color: #494b4a;
    cursor: pointer;
-
+   font-family: Inter;
    &:hover {
       //Граница svg при ховере
       .menu-items-icon {
@@ -755,13 +760,17 @@ body {
       padding: 16px;
       .category-item {
          margin-bottom: 16px;
-
+         font-family: Inter;
          .ant-checkbox-wrapper {
             .ant-checkbox + span {
                margin-left: 8px;
+               font-family: Inter;
                font-size: 16px;
                font-weight: 400;
                line-height: 24px;
+               letter-spacing: 0em;
+               text-align: left;
+
                color: rgba(36, 41, 46, 1);
                &:hover {
                   color: #2f9461;

@@ -18,7 +18,7 @@ const CatalogCardsByParentId = ({ items }) => {
                      className="custom-card"
                      cover={
                         <div className="image-name-container">
-                           <img
+                           <div
                               className="card-background-image"
                               style={{
                                  backgroundImage: `url(${
