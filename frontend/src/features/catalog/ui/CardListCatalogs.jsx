@@ -14,7 +14,6 @@ const CatalogCardsByParentId = ({ items }) => {
                <div className="custom-col" key={`${item.id}-${item.name}`}>
                   {/* <Col className="custom-col" span={6} key={`${item.id}-${item.name}`}> */}
                   <Card
-                     style={{ height: '278px' }}
                      className="custom-card"
                      cover={
                         <div className="image-name-container">

@@ -102,67 +102,71 @@ const SellerLayout = (props) => {
          style={{
             minHeight: '100vh'
          }}>
-         <Layout>
+         <Layout style={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}>
             {' '}
             <Head />
             <Header className="erp-header-seller">
-               {/* <Container  }}> */}
-               <div className="erp-header-seller-items">
-                  {' '}
-                  <div className="search-container">
-                     <p className="header-logo" onClick={() => navigate('/')}>
-                        РЭЛ
-                     </p>
-                     <Button
-                        className="catalog-button-container"
-                        onClick={() => navigate('/')}>
-                        <div className="button-catalog">
-                           <img
-                              className="button-catalog-icon"
-                              src={buttonCatalogIcon}
-                              alt="ascasc"
+               <Container>
+                  <div className="erp-header-seller-items">
+                     {' '}
+                     <div className="search-container">
+                        <p className="header-logo" onClick={() => navigate('/')}>
+                           РЭЛ
+                        </p>
+                        <Button
+                           className="catalog-button-container"
+                           onClick={() => navigate('/')}>
+                           <div className="button-catalog">
+                              <img
+                                 className="button-catalog-icon"
+                                 src={buttonCatalogIcon}
+                                 alt="ascasc"
+                              />
+                              <p>Каталог</p>
+                           </div>
+                        </Button>
+                        <div className="search-container-input">
+                           <Input
+                              className="custom-search-input"
+                              placeholder="Введите запрос"
                            />
-                           <p>Каталог</p>
-                        </div>
-                     </Button>
-                     <div className="search-container-input">
-                        <Input
-                           className="custom-search-input"
-                           placeholder="Введите запрос"
-                        />
-                        <div className="clear-search-button-container">
-                           <img
-                              className="clear-icon-input"
-                              src={clearSearchInput}
-                           />
-                           <Button
-                              icon={<MyIcon />}
-                              size="large"
-                              className="search-button-input"
-                           />
+                           <div className="clear-search-button-container">
+                              <img
+                                 className="clear-icon-input"
+                                 src={clearSearchInput}
+                              />
+                              <Button
+                                 icon={<MyIcon />}
+                                 size="large"
+                                 className="search-button-input"
+                              />
+                           </div>
                         </div>
                      </div>
-                  </div>
-                  <div className="menu-container">
-                     <StorageCounter />
+                     <div className="menu-container">
+                        <StorageCounter />
 
-                     <DrawerCart
-                        button={
-                           <div className="menu-items">
-                              <Badge showZero count={cartCount} status="success">
-                                 <img className="menu-items-icon" src={cartIcon} />
-                              </Badge>
-                              <span className="menu-profile-info_login">
-                                 Корзина
-                              </span>
-                           </div>
-                        }
-                     />
+                        <DrawerCart
+                           button={
+                              <div className="menu-items">
+                                 <Badge showZero count={cartCount} status="success">
+                                    <img
+                                       className="menu-items-icon"
+                                       src={cartIcon}
+                                    />
+                                 </Badge>
+                                 <span className="menu-profile-info_login">
+                                    Корзина
+                                 </span>
+                              </div>
+                           }
+                        />
 
-                     <OrderIconComponent />
-                     <MenuProfile isCollapsed={collapsed} />
+                        <OrderIconComponent />
+                        <MenuProfile isCollapsed={collapsed} />
+                     </div>
                   </div>
-               </div>
+               </Container>
             </Header>{' '}
             <Content
                style={{
