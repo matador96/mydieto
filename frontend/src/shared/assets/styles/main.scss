@@ -228,9 +228,6 @@
       height: 56px;
       grid-column-gap: 15px;
 
-      // @media (min-width: 1440px) and (max-width: 1919px) {
-      //    width: 88%;
-      // }
       .search-container {
          height: 56px;
          max-width: 82%;
@@ -283,7 +280,6 @@
                gap: 10px;
                box-sizing: border-box;
                display: flex;
-               // justify-content: space-around;
                align-items: center;
 
                .button-catalog-iconimg {
@@ -292,7 +288,6 @@
                   height: 18px;
                   position: relative;
                   left: 2.19px;
-                  // top: 4.69px;
                }
 
                p {
@@ -490,19 +485,7 @@ body {
       }
 
       &_login {
-         // font-size: 14px;
-         // color: rgba(73, 75, 74, 1);
-         // text-overflow: ellipsis;
-         // overflow: hidden;
-         // font-weight: 500;
-         // white-space: nowrap;
-         // display: inline-block;
-         // vertical-align: middle;
-         // max-width: 100px;
-         // line-height: 20px;
-         // font-family: Inter;
          color: #494b4a;
-
          font-family: Inter;
          font-size: 14px;
          font-style: normal;
@@ -542,18 +525,10 @@ body {
    width: 85%;
 
    .ant-row {
-      // width: 100%; // Занимает всю ширину .custom-row
-      // margin-left: 0;
-      // margin-right: 0;
-      // justify-content: flex-start;
       margin-left: 0 !important;
       margin-right: 0 !important;
-
       margin-bottom: 24px;
       width: 100%;
-      // display: flex;
-
-      // justify-content: space-between;
 
       @media (max-width: 767px) {
          display: grid;
@@ -580,7 +555,6 @@ body {
          grid-template-columns: repeat(4, 1fr);
          grid-template-rows: 1fr;
          grid-column-gap: 30px;
-         // width: 75%;
       }
 
       @media (min-width: 1920px) {
@@ -826,7 +800,7 @@ body {
 .add-storage-button:hover,
 .add-storage-button:focus,
 .add-storage-button:active {
-   background: none !important; /* Убираем фон при наведении, фокусе и активации */
+   background: none !important;
 }
 // .order-tabs {
 //    .ant-tabs-tab {
