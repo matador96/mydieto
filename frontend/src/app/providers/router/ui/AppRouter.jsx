@@ -7,6 +7,8 @@ import { PageLoader } from '@widgets/PageLoader';
 import { routeList, AppLayout } from '@shared/config/routes';
 import { RequireAuth } from './RequireAuth';
 
+const PATH_APP = process.env.REACT_APP_ROOT_PATH || '';
+
 const AppRouter = () => {
    const auth = useSelector(getUserAuthData);
 
@@ -43,7 +45,7 @@ const AppRouter = () => {
                }
                exact={!!route.exact}
                key={route.path}
-               path={route.path}
+               path={`${PATH_APP}${route.path}`}
             />
          );
       },

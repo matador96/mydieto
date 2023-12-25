@@ -9,6 +9,7 @@ const DEV_SERVER_BACKEND_API = 'localhost:3002';
 
 module.exports = (env) => {
    const isProduction = !!env.production;
+   const rootPath = env?.root_path || '';
 
    return {
       entry: './src/index.js',
@@ -56,6 +57,7 @@ module.exports = (env) => {
             useShortDoctype: true
          }),
          new webpack.DefinePlugin({
+            'process.env.REACT_APP_ROOT_PATH': JSON.stringify(rootPath),
             'process.env.REACT_APP_MODE': JSON.stringify(
                isProduction ? 'production' : 'development'
             )
