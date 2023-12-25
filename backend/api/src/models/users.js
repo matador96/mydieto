@@ -1,7 +1,8 @@
 const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
-const Sellers = require("./sellers");
 const Admins = require("./admins");
+const Managers = require("./managers");
+const Sellers = require("./sellers");
 
 const Users = sequelize.define(
   "users",
@@ -27,17 +28,24 @@ const Users = sequelize.define(
   },
 );
 
-Users.hasOne(Sellers, {
-  foreignKey: "userId",
-});
-Sellers.belongsTo(Users, {
-  foreignKey: "userId",
-});
-
 Users.hasOne(Admins, {
   foreignKey: "userId",
 });
 Admins.belongsTo(Users, {
+  foreignKey: "userId",
+});
+
+Users.hasOne(Managers, {
+  foreignKey: "userId",
+});
+Managers.belongsTo(Users, {
+  foreignKey: "userId",
+});
+
+Users.hasOne(Sellers, {
+  foreignKey: "userId",
+});
+Sellers.belongsTo(Users, {
   foreignKey: "userId",
 });
 

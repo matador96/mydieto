@@ -19,6 +19,7 @@ const allRoutes = [
   ...require("./addresses"),
   ...require("./catalogs"),
   ...require("./liveness"),
+  ...require("./managers"),
   ...require("./orders"),
   ...require("./orderItems"),
   ...require("./sellers"),

@@ -1,19 +1,19 @@
+const addressFieldsCanBeFilter = ["id", "sellerId", "status"];
 const adminFieldsCanBeFilter = ["id"];
 const catalogFieldsCanBeFilter = ["id", "name", "parentId"];
-const storageFieldsCanBeFilter = ["id", "catalogId", "sellerId"];
-
-const sellerFieldsCanBeFilter = ["id", "mobile", "firstName", "lastName", "status"];
-
-const userFieldsCanBeFilter = ["id", "email"];
-const addressFieldsCanBeFilter = ["id", "sellerId", "status"];
+const managerFieldsCanBeFilter = ["id"];
 const orderFieldsCanBeFilter = ["id", "sellerId", "statusId"];
 const orderItemFieldsCanBeFilter = ["id", "catalogId", "status"];
 const orderStatusFieldsCanBeFilter = ["id", "orderId", "status"];
+const sellerFieldsCanBeFilter = ["id", "mobile", "firstName", "lastName", "status"];
+const storageFieldsCanBeFilter = ["id", "catalogId", "sellerId"];
+const userFieldsCanBeFilter = ["id", "email"];
 
 module.exports = {
   admin: adminFieldsCanBeFilter,
   address: addressFieldsCanBeFilter,
   catalog: catalogFieldsCanBeFilter,
+  manager: managerFieldsCanBeFilter,
   order: orderFieldsCanBeFilter,
   orderItem: orderItemFieldsCanBeFilter,
   orderStatus: orderStatusFieldsCanBeFilter,
@@ -35,6 +35,9 @@ module.exports = {
       sellerId: "$eq",
       name: "$like",
       parentId: "$eq",
+    },
+    manager: {
+      id: "$eq",
     },
     order: {
       id: "$eq",
