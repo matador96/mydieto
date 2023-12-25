@@ -53,10 +53,7 @@ const AppRouter = () => {
 
    return (
       <Suspense fallback={<PageLoader />}>
-         <Routes>
-            {Object.values(routeList).map(renderWithWrapper)}
-            <Route path="*" element={<Navigate to="/lk" />} />
-         </Routes>
+         <Routes>{Object.values(routeList).map(renderWithWrapper)}</Routes>
       </Suspense>
    );
 };
