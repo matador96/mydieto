@@ -29,10 +29,8 @@
       "web-vitals": "^2.1.4"
    },
    "scripts": {
-      "build:lk": "webpack --mode production --env root_path=lk",
-      "build:prod": "webpack --mode production",
-      "build": "webpack --mode production --env root_path=/lk",
-      "build:dev:cache": "webpack --mode development",
+      "build:prod": "webpack --mode production --env root_path=/lk",
+      "build": "webpack --mode development --env root_path=/lk",
       "start": "webpack serve --mode development",
       "lint": "eslint src/**/*.js src/**/*.jsx",
       "format": "prettier --write ."
