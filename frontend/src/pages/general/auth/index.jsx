@@ -5,6 +5,8 @@ import { Content, Title, Button } from '@shared/ui';
 import { userActions } from '@entitles/User';
 import { useNavigate } from 'react-router-dom';
 import { Card, Row, Col } from 'antd';
+
+import { RoutePath } from '@shared/config/routes';
 import { Logout } from '@features/auth/model/services/AuthByLoginAndPassword';
 
 import { useDispatch } from 'react-redux';
@@ -22,9 +24,8 @@ const AuthPage = ({ isLoginForm = true }) => {
                      Нет логина и пароля? Тогда давайте
                      <Button
                         type="link"
-                        onClick={() => navigate('/register')}
-                        style={{ padding: '0 3px' }}
-                     >
+                        onClick={() => navigate(RoutePath.register)}
+                        style={{ padding: '0 3px' }}>
                         <span style={{ textDecoration: 'underline' }}>
                            зарегистрируемся!
                         </span>
@@ -36,9 +37,8 @@ const AuthPage = ({ isLoginForm = true }) => {
                      Уже зарегистрированы? Давайте
                      <Button
                         type="link"
-                        onClick={() => navigate('/login')}
-                        style={{ padding: '0 3px' }}
-                     >
+                        onClick={() => navigate(RoutePath.login)}
+                        style={{ padding: '0 3px' }}>
                         <span style={{ textDecoration: 'underline' }}>
                            авторизуемся!
                         </span>
@@ -49,8 +49,7 @@ const AuthPage = ({ isLoginForm = true }) => {
 
             <Card
                style={{ marginTop: '25px' }}
-               title="Экориум - ваш личный онлайн каталог электронного лома"
-            >
+               title="Экориум - ваш личный онлайн каталог электронного лома">
                Вы сможете:
                <ul>
                   <li>
@@ -80,7 +79,7 @@ const LogoutPage = () => {
       Logout().then(() => {
          dispatch(userActions.logoutUser());
 
-         navigate('/login');
+         navigate(RoutePath.login);
       });
    }, []);
 

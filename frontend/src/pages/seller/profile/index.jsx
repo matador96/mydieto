@@ -8,6 +8,8 @@ import UserForm from '@features/user/UserForm';
 import ManageSellerAddressesList from '@features/seller/ManageSellerAddressesList';
 import EditMySellerForm from '@features/seller/EditMySellerForm';
 
+import { RoutePath } from '@shared/config/routes';
+
 const { confirm } = Modal;
 
 const ProfilePage = () => {
@@ -19,7 +21,7 @@ const ProfilePage = () => {
          icon: <ExclamationCircleFilled />,
          maskClosable: true,
          onOk() {
-            navigate('/logout');
+            navigate(RoutePath.logout);
          },
          okText: 'Выйти',
          cancelText: 'Отмена'

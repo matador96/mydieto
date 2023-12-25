@@ -8,6 +8,7 @@ import { Button } from '@shared/ui';
 import { useNavigate } from 'react-router-dom';
 import { Logout } from '@features/auth/model/services/AuthByLoginAndPassword';
 import { Modal, Alert } from 'antd';
+import { RoutePath } from '@shared/config/routes';
 
 const AuthProvider = (props) => {
    const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const AuthProvider = (props) => {
       Logout().then(() => {
          dispatch(userActions.logoutUser());
          setIsBlocked(false);
-         navigate('/login');
+         navigate(RoutePath.login);
       });
    };
 

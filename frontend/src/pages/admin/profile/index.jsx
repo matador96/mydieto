@@ -22,6 +22,8 @@ import { useNavigate } from 'react-router-dom';
 import UserForm from '@features/user/UserForm';
 import statuses from '@shared/const/statuses';
 import CanDo from '@shared/lib/CanDo';
+
+import { RoutePath } from '@shared/config/routes';
 import { userRolesColors, userRolesLabels } from '@shared/const/userRoles';
 
 const { confirm } = Modal;
@@ -49,8 +51,7 @@ const SellerForm = () => {
             minWidth: 320
          }}
          onFinish={onFinish}
-         onFinishFailed={onFinishFailed}
-      >
+         onFinishFailed={onFinishFailed}>
          <Form.Item
             label="Имя"
             name="firstname"
@@ -59,8 +60,7 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input />
          </Form.Item>
 
@@ -72,8 +72,7 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input />
          </Form.Item>
 
@@ -85,8 +84,7 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input
                type="number"
                addonBefore={prefixSelector}
@@ -104,8 +102,7 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input />
          </Form.Item>
 
@@ -117,8 +114,7 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input type="password" />
          </Form.Item>
 
@@ -130,8 +126,7 @@ const SellerForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
+            ]}>
             <Input.Password />
          </Form.Item>
 
@@ -139,8 +134,7 @@ const SellerForm = () => {
             wrapperCol={{
                offset: 8,
                span: 16
-            }}
-         >
+            }}>
             <Button type="primary" htmlType="submit" loading={isLoading}>
                Сохранить
             </Button>
@@ -159,7 +153,7 @@ const ProfilePage = ({ isadmin }) => {
          icon: <ExclamationCircleFilled />,
          maskClosable: true,
          onOk() {
-            navigate('/logout');
+            navigate(RoutePath.LOGOUT);
          },
          okText: 'Выйти',
          cancelText: 'Отмена'

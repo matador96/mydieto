@@ -31,7 +31,7 @@
    "scripts": {
       "build:lk": "webpack --mode production --env root_path=lk",
       "build:prod": "webpack --mode production",
-      "build": "webpack --mode production --env root_path=/lk",
+      "build": "webpack serve --mode production --env root_path=/lk",
       "build:dev:cache": "webpack --mode development",
       "start": "webpack serve --mode development",
       "lint": "eslint src/**/*.js src/**/*.jsx",

@@ -4,10 +4,9 @@ import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@entitles/User';
 import { AdminLayout, CenteredLayout, SellerLayout } from '@widgets/Layout';
 import { PageLoader } from '@widgets/PageLoader';
+import { Navigate } from 'react-router-dom';
 import { routeList, AppLayout } from '@shared/config/routes';
 import { RequireAuth } from './RequireAuth';
-
-const PATH_APP = process.env.REACT_APP_ROOT_PATH || '';
 
 const AppRouter = () => {
    const auth = useSelector(getUserAuthData);
@@ -45,7 +44,7 @@ const AppRouter = () => {
                }
                exact={!!route.exact}
                key={route.path}
-               path={`${PATH_APP}${route.path}`}
+               path={route.path}
             />
          );
       },
@@ -54,7 +53,10 @@ const AppRouter = () => {
 
    return (
       <Suspense fallback={<PageLoader />}>
-         <Routes>{Object.values(routeList).map(renderWithWrapper)}</Routes>
+         <Routes>
+            {Object.values(routeList).map(renderWithWrapper)}
+            <Route path="*" element={<Navigate to="/lk" />} />
+         </Routes>
       </Suspense>
    );
 };
