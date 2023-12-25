@@ -43,6 +43,10 @@ const Catalogs = sequelize.define(
       field: "priority",
       type: DataTypes.INTEGER,
     },
+    about: {
+      field: "about",
+      type: DataTypes.TEXT,
+    },
     status: {
       field: "status",
       type: DataTypes.ENUM(statusesOfCatalogs),
@@ -56,7 +60,6 @@ const Catalogs = sequelize.define(
 Catalogs.belongsTo(Catalogs, {
   foreignKey: "parentId",
   as: "parentCatalog",
-  }
-);
+});
 
 module.exports = Catalogs;
