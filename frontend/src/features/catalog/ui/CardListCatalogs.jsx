@@ -136,7 +136,7 @@ const CardListCatalogs = () => {
                                  alignItems: 'center',
                                  alignSelf: 'stretch'
                               }}>
-                              <h2>{item.name}</h2>
+                              <h2 className='categories-name'>{item.name}</h2>
                               <Badge
                                  className="item-quantity-badge"
                                  count={item.items.length}>

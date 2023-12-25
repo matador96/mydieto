@@ -251,12 +251,12 @@
             font-weight: 600;
             line-height: 43px;
             cursor: pointer;
-            letter-spacing: 0em;
             width: 95px;
             height: 100%;
-            border: rgba(79, 79, 79, 1);
-            color: rgba(79, 79, 79, 1);
+            color: #24292e;
             font-family: Inter;
+            display: flex;
+            align-items: center;
          }
 
          .catalog-button-container {
@@ -390,16 +390,20 @@
    padding: 0px 7px;
    width: 1300px;
 
-   // @media (min-width: 1440px) and (max-width: 1919px) {
-   //    padding: 0px 16px;
-   //    width: 95%;
-   // }
-
    .general-page {
       width: 100%;
       display: flex;
       justify-content: space-between;
       gap: 40px;
+
+      .categories-name {
+         color: #24292e;
+         font-family: Inter;
+         font-size: 24px;
+         font-style: normal;
+         font-weight: 400;
+         line-height: 32px;
+      }
 
       @media (min-width: 1440px) and (max-width: 1919px) {
          gap: 40px;
@@ -558,15 +562,15 @@ body {
          grid-column-gap: 30px;
       }
 
-      @media (min-width: 768px) and (max-width: 991px) {
+      @media (min-width: 768px) and (max-width: 1299px) {
          display: grid;
          grid-template-columns: repeat(3, 1fr);
          grid-template-rows: 1fr;
          grid-column-gap: 30px;
       }
-      @media (min-width: 992px) and (max-width: 1439px) {
+      @media (min-width: 1300px) and (max-width: 1439px) {
          display: grid;
-         grid-template-columns: repeat(3, 1fr);
+         grid-template-columns: repeat(4, 1fr);
          grid-template-rows: 1fr;
          grid-column-gap: 30px;
       }
@@ -637,11 +641,13 @@ body {
          .image-name-container-name {
             width: 210px;
             height: 36px;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 18px;
-            color: rgba(36, 41, 46, 1);
+            color: #24292e;
+            text-overflow: ellipsis;
             font-family: Inter;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 130%;
          }
       }
    }
@@ -720,7 +726,7 @@ body {
 
 .categories-list-container {
    width: 230px;
-   height: 440px;
+   height: auto;
    border-radius: 16px;
    border: 1px solid black;
    box-shadow: 0px 5px 30px 0px rgba(103, 110, 118, 0.08);
@@ -738,14 +744,11 @@ body {
    margin-top: 20px;
    box-shadow: 0px 2px 15px 0px rgba(73, 75, 74, 0.15);
    background: #fff;
-   min-width: 230px;
+   max-width: 230px;
    width: 230px;
-   height: 440px;
+   height: fit-content;
    border-radius: 16px;
-   position: sticky;
-   top: 145px;
    box-sizing: border-box;
-   overflow: hidden;
    .title {
       background: rgba(246, 247, 249, 1);
       height: 48px;
@@ -761,14 +764,15 @@ body {
    }
 
    .categories-container {
-      position: sticky;
-      top: 100px;
       padding: 16px;
-      overflow: hidden;
+      height: auto;
+      .ant-checkbox-group {
+         display: flex;
+         flex-direction: column;
+      }
       .category-item {
          margin-bottom: 16px;
          font-family: Inter;
-         overflow: hidden;
          .ant-checkbox-wrapper {
             .ant-checkbox + span {
                margin-left: 8px;
