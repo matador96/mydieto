@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Divider, Space, Input } from 'antd';
+import { Card, Row, Col, Divider, Space, Input, Badge } from 'antd';
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 import CategoriesList from '@shared/ui/FilterCategory';
@@ -129,7 +129,20 @@ const CardListCatalogs = () => {
                   <React.Fragment key={`${item.id}-${item.name}`}>
                      {item?.items.length ? (
                         <>
-                           <h2>{item.name}</h2>
+                           <div
+                              style={{
+                                 gap: '16px',
+                                 display: 'flex',
+                                 alignItems: 'center',
+                                 alignSelf: 'stretch'
+                              }}>
+                              <h2>{item.name}</h2>
+                              <Badge
+                                 className="item-quantity-badge"
+                                 count={item.items.length}>
+                                 <a href="#" className="head-example" />
+                              </Badge>
+                           </div>
                            <CatalogCardsByParentId
                               id={item.id}
                               items={item?.items || []}

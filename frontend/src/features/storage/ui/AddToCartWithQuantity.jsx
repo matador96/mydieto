@@ -45,7 +45,13 @@ const AddToCartWithQuantity = ({ catalogId, unit }) => {
             />
 
             <Input
-               style={{ width: '100px', textAlign: 'center' }}
+               style={{
+                  width: '100px',
+                  textAlign: 'center',
+                  borderRadius: '10px',
+                  border: '1px solid #CED2D6',
+                  fontFamily: 'Inter'
+               }}
                min={1}
                default={1}
                // addonAfter={unitSettings.find((e) => e.value === unit).shortLabel}
@@ -64,17 +70,7 @@ const AddToCartWithQuantity = ({ catalogId, unit }) => {
             />
          </div>
          <Button
-            style={{
-               backgroundColor: 'rgba(47, 148, 97, 1)',
-               borderRadius: '10px',
-               width: '210px',
-               height: '40px',
-               boxShadow: '0px 1px 1px 0px rgba(0, 0, 0, 0.12)',
-
-               boxShadow: '0px 0px 0px 1px rgba(103, 110, 118, 0.16)',
-
-               boxShadow: '0px 2px 5px 0px rgba(103, 110, 118, 0.08)'
-            }}
+            className="add-storage-button"
             type="primary"
             loading={isLoading}
             onClick={addToStorage}>

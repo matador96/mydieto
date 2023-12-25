@@ -183,11 +183,14 @@ const SellerLayout = (props) => {
             </Content>
             <Footer
                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 1)',
+                  color: '#797B7A',
                   textAlign: 'center',
-                  backgroundColor: 'rgba(47, 148, 97, 1)',
-                  color: 'white',
-                  fontWeight: '400px',
-                  fontSize: '16px'
+                  fontFamily: 'Inter',
+                  fontSize: '16px',
+                  fontStyle: 'normal',
+                  fontWeight: '400',
+                  lineHeight: '24px'
                }}>
                © 2022 – {new Date().getFullYear()} Ecorium. Все права защищены.
             </Footer>
