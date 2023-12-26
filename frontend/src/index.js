@@ -33,8 +33,10 @@ dayjs.tz.setDefault('Etc/UCT');
 
 loadAndSavePaginationPageSize();
 
+const PATH_APP = process.env.REACT_APP_ROOT_PATH || '/';
+
 root.render(
-   <BrowserRouter>
+   <BrowserRouter basename={PATH_APP}>
       <ConfigProvider locale={ruRU}>
          <App />
       </ConfigProvider>

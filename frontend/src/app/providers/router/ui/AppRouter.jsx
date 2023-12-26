@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@entitles/User';
 import { AdminLayout, CenteredLayout, SellerLayout } from '@widgets/Layout';
 import { PageLoader } from '@widgets/PageLoader';
+import { Navigate } from 'react-router-dom';
 import { routeList, AppLayout } from '@shared/config/routes';
 import { RequireAuth } from './RequireAuth';
 

@@ -13,8 +13,10 @@ stages:
   - chmod 600 ~/.ssh/id_rsa
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config
 
-build_front_image:
+build_front_image_dev:
   stage: build
+  except:
+    - main
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
@@ -28,6 +30,27 @@ build_front_image:
       --context "${CI_PROJECT_DIR}/frontend"
       --dockerfile "${CI_PROJECT_DIR}/frontend/Dockerfile"
       --destination "registry.gitlab.com/ecorium1/rdm/frontend/${CI_COMMIT_REF_SLUG}"
+      --build-arg BUILD_CMD=build
+
+build_front_image_prod:
+  stage: build
+  only:
+    - prod
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  before_script:
+    - *docker_login
+  cache: {}
+  script:
+    - echo $CI_COMMIT_TAG > version
+    - >-
+      /kaniko/executor
+      --context "${CI_PROJECT_DIR}/frontend"
+      --dockerfile "${CI_PROJECT_DIR}/frontend/Dockerfile"
+      --destination "registry.gitlab.com/ecorium1/rdm/frontend/${CI_COMMIT_REF_SLUG}"
+      --build-arg BUILD_CMD=build:prod
+
 
 deploy_front_dev:
   stage: deploy

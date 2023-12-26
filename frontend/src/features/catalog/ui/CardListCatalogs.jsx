@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Divider, Space, Input } from 'antd';
+import { useSelector } from 'react-redux';
+import { Card, Row, Col, Divider, Space, Input, Badge } from 'antd';
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
-
+import CategoriesList from '@shared/ui/FilterCategory';
 import AddToCartWithQuantity from '@features/storage/ui/AddToCartWithQuantity';
+import { extraActions, getSearchCatalog } from '@entitles/Extra';
+import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
-const { Search } = Input;
 
 const CatalogCardsByParentId = ({ items }) => {
    return (
-      <>
-         <Row gutter={24}>
-            {items.map((item) => (
-               <Col className="custom-col" span={6} key={`${item.id}-${item.name}`}>
-                  <Card
-                     className="custom-card"
-                     cover={
+      <Row gutter={24} className="custom-row">
+         {items.map((item) => (
+            <div className="custom-col" key={`${item.id}-${item.name}`}>
+               {/* <Col className="custom-col" span={6} key={`${item.id}-${item.name}`}> */}
+               <Card
+                  className="custom-card"
+                  cover={
+                     <div className="image-name-container">
                         <div
                            className="card-background-image"
                            style={{
@@ -24,21 +27,21 @@ const CatalogCardsByParentId = ({ items }) => {
                               })`
                            }}
                         />
-                     }
-                     hoverable
-                     actions={[
-                        <AddToCartWithQuantity
-                           key={`ke${item.id}`}
-                           catalogId={item.id}
-                           unit={item.unit}
-                        />
-                     ]}>
-                     {item.name}
-                  </Card>
-               </Col>
-            ))}
-         </Row>
-      </>
+                        <h3 className="image-name-container-name">{item.name}</h3>
+                     </div>
+                  }
+                  hoverable
+                  actions={[
+                     <AddToCartWithQuantity
+                        key={`ke${item.id}`}
+                        catalogId={item.id}
+                        unit={item.unit}
+                     />
+                  ]}></Card>
+               {/* </Col> */}
+            </div>
+         ))}
+      </Row>
    );
 };
 
@@ -46,10 +49,16 @@ const CardListCatalogs = () => {
    const [initialData, setInitialData] = useState([]);
    const [data, setData] = useState([]);
    const [searchStr, setSearchStr] = useState('');
+   const dispatch = useDispatch();
+   const searchText = useSelector(getSearchCatalog);
 
    useEffect(() => {
       fetchMainCatalog();
    }, []);
+
+   useEffect(() => {
+      filterData(searchText);
+   }, [searchText]);
 
    const fetchMainCatalog = () => {
       GetCatalogsListByParentId(0, {
@@ -109,30 +118,31 @@ const CardListCatalogs = () => {
    };
 
    return (
-      <>
-         <Space style={{ display: 'flex', justifyContent: 'center' }}>
-            <Input
-               placeholder="Поиск по каталогу"
-               value={searchStr}
-               style={{ width: '400px' }}
-               size="large"
-               onChange={handleSearchChange}
-            />
-         </Space>
-         {data.map((item) => (
-            <React.Fragment key={`${item.id}-${item.name}`}>
-               {item?.items.length ? (
-                  <>
-                     <Divider orientation="center">{item.name}</Divider>
-                     <CatalogCardsByParentId
-                        id={item.id}
-                        items={item?.items || []}
-                     />
-                  </>
-               ) : null}
-            </React.Fragment>
-         ))}
-      </>
+      <div className="general-page">
+         {/* <CategoriesList data={data} setData={setData} /> */}
+         <div style={{ width: '100%' }}>
+            {data.map((item) => (
+               <React.Fragment key={`${item.id}-${item.name}`}>
+                  {item?.items.length ? (
+                     <>
+                        <h2 className="categories-name">
+                           {item.name}
+                           <Badge
+                              className="item-quantity-badge"
+                              count={item?.items?.length || 0}
+                           />
+                        </h2>
+
+                        <CatalogCardsByParentId
+                           id={item.id}
+                           items={item?.items || []}
+                        />
+                     </>
+                  ) : null}
+               </React.Fragment>
+            ))}
+         </div>
+      </div>
    );
 };
 
