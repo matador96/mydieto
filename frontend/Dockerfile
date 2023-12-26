@@ -1,4 +1,5 @@
 FROM node:14.17.3-alpine3.14 as build-stage
+ARG BUILD_CMD=build
 RUN apk add git
 WORKDIR /app
 COPY package.json .
@@ -7,7 +8,7 @@ COPY . .
 
 ARG BUILD_SPEC=INTERNATIONAL
 ENV NODE_ENV=production
-RUN npm run build
+RUN npm run ${BUILD_CMD}
 
 # этап production (production-stage)
 FROM nginx:stable-alpine as production-stage
