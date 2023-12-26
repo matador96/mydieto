@@ -6,10 +6,12 @@ import {
    AlignLeftOutlined,
    UnorderedListOutlined,
    InboxOutlined,
+   CloseCircleOutlined,
    ShoppingOutlined,
-   ShoppingCartOutlined
+   ShoppingCartOutlined,
+   SearchOutlined
 } from '@ant-design/icons';
-import { Menu, Layout, Badge } from 'antd';
+import { Menu, Layout, Badge, Input, Button, Image } from 'antd';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { RoutePath, routeList } from '@shared/config/routes';
@@ -28,6 +30,12 @@ import { getCartCount } from '@entitles/Cart';
 import StorageCounter from '@features/storage/ui/StorageCounter';
 import Head from '../Head';
 
+import buttonCatalogIcon from '@shared/assets/images/Stroke.svg';
+import cartIcon from '@shared/assets/images/cart.svg';
+import searchIcon from '@shared/assets/images/search.svg';
+import clearSearchInput from '@shared/assets/images/clearSearchInput.svg';
+import { OrderIconComponent } from '@shared/ui/Order';
+import SearchBox from '@widgets/Input/SearchBox';
 const { Footer, Content, Header } = Layout;
 
 function getItem(label, key, icon, children, disabled) {
@@ -46,11 +54,12 @@ const allMenuItems = [
    // getItem('Журнал действий', 'logs', <AlignLeftOutlined />),
 
    getItem('Каталог плат и деталей', 'seller-catalogs', <UnorderedListOutlined />),
-   getItem('Мои заказы', 'seller-orders', <ShoppingOutlined />)
+   getItem('аказы', 'seller-orders', <ShoppingOutlined />)
    // getItem('Мои заказы', 'seller-leads', <UsergroupAddOutlined />)
 ];
 
 const SellerLayout = (props) => {
+   const [value, setValue] = useState('');
    const navigate = useNavigate();
    const location = useLocation();
    const cartCount = useSelector(getCartCount);
@@ -87,47 +96,55 @@ const SellerLayout = (props) => {
          : true
    );
 
+   const MyIcon = () => <img src={searchIcon} />;
+
    return (
       <Layout
          style={{
             minHeight: '100vh'
          }}>
-         <Layout>
+         <Layout style={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}>
             {' '}
             <Head />
-            <Header style={{ padding: '0' }} className="erp-header-seller">
+            <Header className="erp-header-seller">
                <Container>
                   <div className="erp-header-seller-items">
-                     {' '}
-                     <div className="header-logo" onClick={() => navigate('/')}>
-                        РЭЛ
+                     <div className="search-container">
+                        <p className="header-logo" onClick={() => navigate('/')}>
+                           РЭЛ
+                        </p>
+                        <Button
+                           className="catalog-button-container button-catalog"
+                           onClick={() => navigate('/')}>
+                           <img
+                              className="button-catalog-icon"
+                              src={buttonCatalogIcon}
+                              alt="ascasc"
+                           />
+                           <p>Каталог</p>
+                        </Button>
+                        <SearchBox />
                      </div>
-                     <Menu
-                        onClick={onClick}
-                        mode="horizontal"
-                        items={actualItems}
-                        className="menu"
-                        selectedKeys={selectedRoute}
-                        defaultSelectedKeys={selectedRoute}
-                     />{' '}
-                     <div style={{ display: 'flex', alignItems: 'center' }}>
+                     <div className="menu-container">
                         <StorageCounter />
 
                         <DrawerCart
                            button={
-                              <div className="header-button">
-                                 <Badge
-                                    showZero
-                                    count={cartCount}
-                                    size="small"
-                                    status="success">
-                                    <ShoppingCartOutlined />
+                              <div className="menu-items">
+                                 <Badge showZero count={cartCount} status="success">
+                                    <img
+                                       className="menu-items-icon"
+                                       src={cartIcon}
+                                    />
                                  </Badge>
-                                 <span className="header-button_label">Корзина</span>
+                                 <span className="menu-profile-info_login">
+                                    Корзина
+                                 </span>
                               </div>
                            }
                         />
 
+                        <OrderIconComponent />
                         <MenuProfile isCollapsed={collapsed} />
                      </div>
                   </div>
@@ -140,14 +157,22 @@ const SellerLayout = (props) => {
                <div
                   style={{
                      padding: '0 24px',
-                     minHeight: 360
+                     minHeight: 360,
+                     marginTop: '50px'
                   }}>
                   <Container> {props.children} </Container>
                </div>
             </Content>
             <Footer
                style={{
-                  textAlign: 'center'
+                  backgroundColor: 'rgba(255, 255, 255, 1)',
+                  color: '#797B7A',
+                  textAlign: 'center',
+                  fontFamily: 'Inter',
+                  fontSize: '16px',
+                  fontStyle: 'normal',
+                  fontWeight: '400',
+                  lineHeight: '24px'
                }}>
                © 2022 – {new Date().getFullYear()} Ecorium. Все права защищены.
             </Footer>

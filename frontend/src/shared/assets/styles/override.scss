@@ -1,4 +1,4 @@
-$base-color: #474a53;
+$base-color: #24292e;
 $successColor: #2f9461;
 
 body {
@@ -133,13 +133,13 @@ body {
       &.ant-btn-dangerous {
          &:not(:disabled):hover,
          &:not(:disabled):focus {
-            background-color: #a13232d4 !important;
+            background-color: none !important;
          }
       }
 
       &:not(:disabled):hover,
       &:not(:disabled):focus {
-         background-color: #474a53d4 !important;
+         background-color: #6ad09d !important;
       }
    }
 
@@ -206,6 +206,9 @@ body {
    }
 
    .ant-card {
+      // display: flex;
+      // align-items: center;
+      // height: 100%;
       box-shadow:
          0px 1px 1px 0px rgba(0, 0, 0, 0.12),
          0px 0px 0px 1px rgba(103, 110, 118, 0.16),
@@ -214,5 +217,28 @@ body {
       // box-shadow:
       //    0px 5px 30px 0px rgba(103, 110, 118, 0.08),
       //    0px 2px 15px 0px rgba(73, 75, 74, 0.15);
+
+      &-actions {
+         border: none !important;
+      }
    }
+}
+.ant-checkbox-wrapper .ant-checkbox-inner {
+   border: 2px solid rgba(47, 148, 97, 1);
+}
+
+.ant-checkbox-wrapper:hover .ant-checkbox-inner {
+   border: 2px solid rgba(47, 148, 97, 1) !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+   background-color: rgba(47, 148, 97, 1) !important;
+   border: 2px solid rgba(47, 148, 97, 1) !important;
+}
+
+.ant-layout-footer {
+   height: 100px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
