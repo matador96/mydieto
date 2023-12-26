@@ -13,6 +13,10 @@ module.exports.getById = async (req) => {
 };
 
 module.exports.getWithParams = async (req) => {
+  const { parentId } = req.query;
+  if (!Array.isArray(parentId)) {
+    req.query.parentId = [parentId];
+  }
   const result = await CatalogService.getWithParams(req.query);
   return { data: result.data, count: result.count };
 };
