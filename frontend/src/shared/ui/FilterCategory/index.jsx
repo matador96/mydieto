@@ -3,7 +3,7 @@ import { Checkbox } from 'antd';
 const CategoriesList = ({ data }) => {
    return (
       <div className="categories-filter-container">
-         <div className="title">Фильтры категорий</div>
+         <div className="title">Фильтры</div>
          <div className="categories-container">
             <Checkbox.Group value={data}>
                {data.map((category) => (

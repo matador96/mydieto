@@ -1,0 +1,1 @@
+export const SET_CATALOG_SEARCH = 'SET_CATALOG_SEARCH';

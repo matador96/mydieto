@@ -1,4 +1,4 @@
-$base-color: #474a53;
+$base-color: #24292e;
 $successColor: #2f9461;
 
 body {
@@ -133,13 +133,13 @@ body {
       &.ant-btn-dangerous {
          &:not(:disabled):hover,
          &:not(:disabled):focus {
-            background-color: #a13232d4 !important;
+            background-color: none !important;
          }
       }
 
       &:not(:disabled):hover,
       &:not(:disabled):focus {
-         background-color: #474a53d4 !important;
+         background-color: #6ad09d !important;
       }
    }
 
@@ -234,4 +234,11 @@ body {
 .ant-checkbox-checked .ant-checkbox-inner {
    background-color: rgba(47, 148, 97, 1) !important;
    border: 2px solid rgba(47, 148, 97, 1) !important;
+}
+
+.ant-layout-footer {
+   height: 100px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }

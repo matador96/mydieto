@@ -35,6 +35,7 @@ import cartIcon from '@shared/assets/images/cart.svg';
 import searchIcon from '@shared/assets/images/search.svg';
 import clearSearchInput from '@shared/assets/images/clearSearchInput.svg';
 import { OrderIconComponent } from '@shared/ui/Order';
+import SearchBox from '@widgets/Input/SearchBox';
 const { Footer, Content, Header } = Layout;
 
 function getItem(label, key, icon, children, disabled) {
@@ -108,40 +109,21 @@ const SellerLayout = (props) => {
             <Header className="erp-header-seller">
                <Container>
                   <div className="erp-header-seller-items">
-                     {' '}
                      <div className="search-container">
                         <p className="header-logo" onClick={() => navigate('/')}>
                            РЭЛ
                         </p>
                         <Button
-                           className="catalog-button-container"
+                           className="catalog-button-container button-catalog"
                            onClick={() => navigate('/')}>
-                           <div className="button-catalog">
-                              <img
-                                 className="button-catalog-icon"
-                                 src={buttonCatalogIcon}
-                                 alt="ascasc"
-                              />
-                              <p>Каталог</p>
-                           </div>
-                        </Button>
-                        <div className="search-container-input">
-                           <Input
-                              className="custom-search-input"
-                              placeholder="Введите запрос"
+                           <img
+                              className="button-catalog-icon"
+                              src={buttonCatalogIcon}
+                              alt="ascasc"
                            />
-                           <div className="clear-search-button-container">
-                              <img
-                                 className="clear-icon-input"
-                                 src={clearSearchInput}
-                              />
-                              <Button
-                                 icon={<MyIcon />}
-                                 size="large"
-                                 className="search-button-input"
-                              />
-                           </div>
-                        </div>
+                           <p>Каталог</p>
+                        </Button>
+                        <SearchBox />
                      </div>
                      <div className="menu-container">
                         <StorageCounter />
