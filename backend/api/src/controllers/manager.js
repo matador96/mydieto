@@ -1,10 +1,10 @@
 const { body, param, query } = require("express-validator");
 const Validations = require("../const/validatorSettings");
-const { allStatuses } = require("../config/statusSettings");
+const { statusesOfManagers } = require("../config/statusSettings");
 const { ApplicationError } = require("./../classes/Errors");
 const Encrypt = require("../core/encrypt");
 
-const AdminService = require("../services/admins");
+const ManagerService = require("../services/managers");
 const UserService = require("../services/users");
 
 module.exports.getFromSession = async (req) => {
@@ -15,35 +15,31 @@ module.exports.getFromSession = async (req) => {
       path: "controller",
     });
   }
-  const adminData = await AdminService.getByField({
+  const sellerData = await ManagerService.getByFields({
     userId: currentSessionUserId,
   });
 
-  if (!adminData) {
+  if (!sellerData) {
     throw new ApplicationError("Пользователь не активен", {
       path: "controller",
     });
   }
 
   return {
-    data: { ...adminData, type: "admin" },
+    data: { ...sellerData, type: "seller" },
   };
 };
 
 module.exports.getById = async (req) => {
   const { id } = req.params;
-  const admin = await AdminService.getById(id);
+  const manager = await ManagerService.getById(id);
 
-  return { data: admin };
+  return { data: manager };
 };
 
 module.exports.getWithParams = async (req) => {
-  const result = await AdminService.getWithParams(req.query);
+  const result = await ManagerService.getWithParams(req.query);
   return { data: result.data, count: result.count };
-};
-
-module.exports.logout = async () => {
-  return { message: "Успешный выход" };
 };
 
 module.exports.create = async (req, res, transaction) => {
@@ -53,11 +49,11 @@ module.exports.create = async (req, res, transaction) => {
   };
   const user = await UserService.createUser(userData, { transaction });
 
-  const adminData = {
+  const managerData = {
     ...req.body,
     userId: user.id,
   };
-  const data = await AdminService.create(adminData, { transaction });
+  const data = await ManagerService.create(managerData, { transaction });
 
   return {
     data,
@@ -67,7 +63,7 @@ module.exports.create = async (req, res, transaction) => {
 module.exports.update = async (req, res, transaction) => {
   const { id } = req.params;
 
-  const adminData = await AdminService.update(
+  const managerData = await ManagerService.update(
     {
       ...req.body,
     },
@@ -76,12 +72,12 @@ module.exports.update = async (req, res, transaction) => {
   );
 
   return {
-    data: adminData,
+    data: managerData,
   };
 };
 
-// const validationSellerFilterFields = [query("mobile").isString().optional()];
-//
+//const validationManagerFilterFields = [query("mobile").isString().optional()];
+
 // module.exports.validate = (method) => {
 //   switch (method) {
 //     case "getSellerById": {

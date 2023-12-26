@@ -507,6 +507,21 @@ body {
    }
 }
 
+.ql-container {
+   min-height: 10rem;
+   height: 100%;
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+}
+
+.ql-editor {
+   height: 100%;
+   flex: 1;
+   overflow-y: auto;
+   width: 100%;
+}
+
 .custom-row {
    width: 100%;
    // max-width: 1010px;
@@ -546,7 +561,11 @@ body {
       font-weight: 500;
 
       .ant-card-body {
-         padding: 0;
+         text-align: left;
+         padding: 0 10px;
+         display: flex;
+         justify-content: flex-start;
+         width: 100%;
       }
 
       .ant-card-cover {

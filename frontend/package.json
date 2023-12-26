@@ -22,6 +22,7 @@
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
       "react-helmet": "^6.1.0",
+      "react-quill": "^2.0.0",
       "react-redux": "^8.0.5",
       "react-router-dom": "^6.11.2",
       "redux": "^4.2.1",
@@ -31,7 +32,7 @@
    "scripts": {
       "build:prod": "webpack --mode production --env root_path=/lk",
       "build": "webpack --mode development --env root_path=/lk",
-      "start": "webpack serve --mode development",
+      "start": "webpack serve --mode development --env root_path=/",
       "lint": "eslint src/**/*.js src/**/*.jsx",
       "format": "prettier --write ."
    },

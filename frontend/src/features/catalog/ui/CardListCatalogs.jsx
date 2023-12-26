@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Card, Row, Col, Divider, Space, Input, Badge } from 'antd';
+import {
+   Card,
+   Row,
+   Col,
+   Divider,
+   Space,
+   Input,
+   Badge,
+   Modal,
+   Typography
+} from 'antd';
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 import CategoriesList from '@shared/ui/FilterCategory';
@@ -8,6 +18,19 @@ import AddToCartWithQuantity from '@features/storage/ui/AddToCartWithQuantity';
 import { extraActions, getSearchCatalog } from '@entitles/Extra';
 import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
+
+const { Text, Link } = Typography;
+
+const info = (content) => {
+   Modal.info({
+      title: 'Подробнее',
+      width: 1200,
+      closeIcon: true,
+      content: <div dangerouslySetInnerHTML={{ __html: content }} />,
+      onOk() {},
+      okText: 'Закрыть'
+   });
+};
 
 const CatalogCardsByParentId = ({ items }) => {
    return (
@@ -37,7 +60,13 @@ const CatalogCardsByParentId = ({ items }) => {
                         catalogId={item.id}
                         unit={item.unit}
                      />
-                  ]}></Card>
+                  ]}>
+                  {item.about ? (
+                     <Link href="#" onClick={() => info(item.about)}>
+                        Подробнее
+                     </Link>
+                  ) : null}
+               </Card>
                {/* </Col> */}
             </div>
          ))}
