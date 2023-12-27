@@ -3,7 +3,7 @@ import { InputNumber, message } from 'antd';
 import _ from 'lodash';
 import { UpdateOrderItem } from './../model/services/UpdateOrderItem';
 
-const OrderItemCapacityInput = ({ value, orderItemId }) => {
+const OrderItemCapacityInput = ({ value, orderItemId, fetchOrders }) => {
    const save = (value) => {
       // const isInteger = /^[0-9]+$/;
 
@@ -15,6 +15,7 @@ const OrderItemCapacityInput = ({ value, orderItemId }) => {
       UpdateOrderItem(orderItemId, { capacity: value })
          .then(() => {
             message.success('Вес изменен');
+            fetchOrders();
          })
          .catch((e) => message.error(e.message));
    };

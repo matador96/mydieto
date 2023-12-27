@@ -199,6 +199,7 @@ function OrderItemData({ order, fetchOrders }) {
                value={_}
                orderItemId={record.id}
                unit={record.catalog.unit}
+               fetchOrders={fetchOrders}
             />
          )
       },
