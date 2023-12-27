@@ -9,10 +9,18 @@ import {
    Modal,
    InputNumber,
    Divider,
-   Input
+   Input,
+   Checkbox,
+   Badge
 } from 'antd';
 
-import { ExclamationCircleFilled, ShoppingCartOutlined } from '@ant-design/icons';
+import {
+   ExclamationCircleFilled,
+   ShoppingCartOutlined,
+   MinusOutlined,
+   PlusOutlined,
+   CloseOutlined
+} from '@ant-design/icons';
 import { GetStorageMyWithParams } from '../model/GetStorageMyWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
@@ -24,6 +32,7 @@ import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
+import SelectAndDelete from './SelectAndDelete';
 
 const { confirm } = Modal;
 
@@ -61,30 +70,38 @@ const StorageListQuantityWithSave = (props) => {
 
    return (
       <Space direction="vertical">
-         <Space>
-            <Input
-               min={1}
-               defaultValue={1}
-               max={props.storage.quantity}
-               style={{ width: '120px' }}
-               type="number"
-               addonAfter={
-                  unitSettings.find((e) => e.value === props.storage.catalog.unit)
-                     .shortLabel
-               }
-               value={inputQuantity}
-               onChange={(e) => setInputQuantity(e.target.value)}
-            />
-            <Tooltip placement="top" title={'Добавить в корзину'}>
-               <Button
-                  type="primary"
-                  loading={isLoading}
-                  disabled={quantity === 0}
-                  onClick={addToCart}
-                  icon={<ShoppingCartOutlined />}>
-                  В корзину
-               </Button>
-            </Tooltip>
+         <Space className="storage-space-container">
+            <div className="inner-container">
+               <MinusOutlined
+                  onClick={() => setInputQuantity((prev) => prev - 1)}
+                  className="minus-outlined"
+               />
+               <Input
+                  min={1}
+                  defaultValue={1}
+                  max={props.storage.quantity}
+                  className="storage-item-input"
+                  // type="number"
+                  // addonAfter={
+                  //    unitSettings.find((e) => e.value === props.storage.catalog.unit)
+                  //       .shortLabel
+                  // }
+                  value={inputQuantity}
+                  onChange={(e) => setInputQuantity(e.target.value)}
+               />
+               <PlusOutlined
+                  onClick={() => setInputQuantity((prev) => prev + 1)}
+                  className="plus-outlined"
+               />
+            </div>
+            <Button
+               className="storage-cart-button"
+               type="primary"
+               loading={isLoading}
+               disabled={quantity === 0}
+               onClick={addToCart}>
+               В корзину
+            </Button>
          </Space>
       </Space>
    );
@@ -162,17 +179,25 @@ const StorageList = () => {
 
    return (
       <div>
-         {data.map((item) => (
-            <React.Fragment key={`storage-catalog-${item.id}`}>
-               <Divider orientation="left">{item.catalog.name}</Divider>
+         <SelectAndDelete />
+         {data.map((storageItem) => (
+            <React.Fragment key={`storage-catalog-${storageItem.id}`}>
+               <h2>
+                  {storageItem.catalog.name}{' '}
+                  <Badge
+                     className="item-quantity-badge"
+                     count={storageItem.items.length}
+                  />
+               </h2>
                <List
                   itemLayout="horizontal"
-                  dataSource={item.items}
+                  dataSource={storageItem.items}
                   loading={isLoading}
                   className="list-my-storage"
                   renderItem={(item) => (
                      <div>
                         <List.Item
+                           style={{ height: '91px', padding: '0 12px 0 19px' }}
                            actions={[
                               <StorageListQuantityWithSave
                                  setQuantity={(v) =>
@@ -188,61 +213,46 @@ const StorageList = () => {
                                  callBack={fetchData}
                               />
                            ]}>
+                           <Checkbox />
+
                            <div
                               className="storage-background-image"
                               style={{
                                  backgroundImage: `url('${
                                     item.catalog.imgUrl || defaulPhotoCard
-                                 }')`
+                                 }')`,
+                                 marginLeft: '20px'
                               }}
                            />
 
                            <List.Item.Meta
-                              style={{ marginLeft: '15px' }}
+                              style={{ marginLeft: '20px' }}
                               key={`${item.id}-`}
-                              title={item.catalog.name}
                               description={
-                                 <>
-                                    <div>
-                                       <InputNumber
-                                          style={{
-                                             width: '120px'
-                                          }}
-                                          min={1}
-                                          defaultValue={1}
-                                          addonAfter={
-                                             unitSettings.find(
-                                                (e) => e.value === item.catalog.unit
-                                             ).shortLabel
-                                          }
-                                          value={item.quantity}
-                                          onChange={(v) =>
-                                             setQuantityMap((prev) => ({
-                                                ...prev,
-                                                [item.id]: v
-                                             }))
-                                          }
-                                       />
+                                 <div>
+                                    <h3 className="storage-item-title">
+                                       {' '}
+                                       {item.catalog.name}
+                                    </h3>
+                                    <Input
+                                       className="storage-item-input"
+                                       min={1}
+                                       max={100}
+                                       defaultValue={1}
+                                       addonBefore={'на складе'}
+                                       //    unitSettings.find(
+                                       //       (e) => e.value === item.catalog.unit
+                                       //    ).shortLabel
 
-                                       <span
-                                          className="green-span-url"
-                                          type="link"
-                                          style={{
-                                             marginLeft: '10px',
-                                             textDecoration: 'none'
-                                          }}
-                                          onClick={() => save(item.id)}>
-                                          Сохранить
-                                       </span>
-                                    </div>
-                                    <span
-                                       className="red-span-url"
-                                       type="link"
-                                       style={{ fontSize: '12px' }}
-                                       onClick={() => showConfirmDelete(item.id)}>
-                                       Удалить из склада
-                                    </span>
-                                 </>
+                                       value={item.quantity}
+                                       onChange={(v) =>
+                                          setQuantityMap((prev) => ({
+                                             ...prev,
+                                             [item.id]: v
+                                          }))
+                                       }
+                                    />
+                                 </div>
                               }
                            />
                         </List.Item>
