@@ -1,10 +1,9 @@
 import React from 'react';
 import { InputNumber, message } from 'antd';
 import _ from 'lodash';
-import { unitSettings } from '@shared/const/units';
 import { UpdateOrderItem } from './../model/services/UpdateOrderItem';
 
-const OrderItemQuantityInput = ({ value, orderItemId, unit }) => {
+const OrderItemCapacityInput = ({ value, orderItemId }) => {
    const save = (value) => {
       // const isInteger = /^[0-9]+$/;
 
@@ -13,14 +12,14 @@ const OrderItemQuantityInput = ({ value, orderItemId, unit }) => {
       //    return;
       // }
 
-      UpdateOrderItem(orderItemId, { quantity: value })
+      UpdateOrderItem(orderItemId, { capacity: value })
          .then(() => {
-            message.success('Объем изменен');
+            message.success('Вес изменен');
          })
          .catch((e) => message.error(e.message));
    };
 
-   const unitText = `${unitSettings.find((e) => e.value === unit).shortLabel}`;
+   const unitText = `кг`;
    const debouncedChange = _.debounce(save, 500);
 
    return (
@@ -35,4 +34,4 @@ const OrderItemQuantityInput = ({ value, orderItemId, unit }) => {
    );
 };
 
-export default OrderItemQuantityInput;
+export default OrderItemCapacityInput;

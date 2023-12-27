@@ -39,6 +39,10 @@ const OrderItems = sequelize.define(
       field: "quantity",
       type: DataTypes.INTEGER,
     },
+    capacity: {
+      field: "capacity",
+      type: DataTypes.INTEGER,
+    },
     unitPrice: {
       field: "unitPrice",
       type: DataTypes.STRING,

@@ -17,7 +17,9 @@ import defaulPhotoCard from '@shared/assets/images/platy-meta.jpeg';
 import { Typography } from 'antd';
 import statuses from '@shared/const/statuses';
 import OrderItemPriceInput from './OrderItemPriceInput';
+import OrderItemQuantityInput from './OrderItemQuantityInput';
 import OrderItemCapacityInput from './OrderItemCapacityInput';
+
 import { statuseTextOfUsersOrders } from '@shared/const/statuses';
 
 import { useSelector } from 'react-redux';
@@ -109,6 +111,26 @@ const UnitQuantityComponent = (props) => {
 
    if (isAdmin) {
       if (orderStatus === 'waitDelivery') {
+         return <OrderItemQuantityInput {...props} />;
+      }
+   }
+
+   return (
+      <>
+         {value} {unitSettings.find((e) => e.value === unit).shortLabel}
+      </>
+   );
+};
+
+const OrderItemCapacityComponent = (props) => {
+   const { value, unit, orderStatus } = props;
+
+   const auth = useSelector(getUserAuthData);
+
+   const isAdmin = auth.type === 'admin';
+
+   if (isAdmin) {
+      if (orderStatus === 'waitDelivery') {
          return <OrderItemCapacityInput {...props} />;
       }
    }
@@ -118,6 +140,16 @@ const UnitQuantityComponent = (props) => {
          {value} {unitSettings.find((e) => e.value === unit).shortLabel}
       </>
    );
+};
+
+const AutoPriceGenerate = ({ data }) => {
+   if (data.capacity === 0 || data.unitPrice === 0) {
+      return 0;
+   }
+
+   const price = data.capacity * data.unitPrice;
+
+   return <>{price} руб.</>;
 };
 
 function OrderItemData({ order, fetchOrders }) {
@@ -175,7 +207,7 @@ function OrderItemData({ order, fetchOrders }) {
          )
       },
       {
-         title: 'Оценочная стоимость за единицу',
+         title: 'Оценочная стоимость',
          dataIndex: 'unitPrice',
          width: 300,
          key: 'unitPrice',
@@ -185,8 +217,29 @@ function OrderItemData({ order, fetchOrders }) {
                value={_}
                orderItemId={record.id}
                unit={record.catalog.unit}
+               fetchOrders={fetchOrders}
             />
          )
+      },
+      {
+         title: 'Вес',
+         dataIndex: 'capacity',
+         key: 'capacity',
+         render: (_, record) => (
+            <OrderItemCapacityComponent
+               orderStatus={order.orderStatus.status}
+               value={_}
+               orderItemId={record.id}
+               unit={record.catalog.unit}
+               fetchOrders={fetchOrders}
+            />
+         )
+      },
+      {
+         title: 'Сумма',
+         dataIndex: 'poschitat',
+         key: 'poschitat',
+         render: (_, record) => <AutoPriceGenerate data={record} />
       }
    ];
 
