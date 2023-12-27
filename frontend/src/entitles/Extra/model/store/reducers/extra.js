@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
-import { SET_CATALOG_SEARCH } from '../types';
+import { SET_CATALOG_SEARCH, SET_CATALOG_FILTER } from '../types';
 
 const initialState = {
-   searchCatalog: ''
+   searchCatalog: '',
+   filterCatalog: []
 };
 
 const extraReducer = (prevState = initialState, action) => {
@@ -12,6 +13,12 @@ const extraReducer = (prevState = initialState, action) => {
             ...prevState,
             searchCatalog: action.payload
          };
+      case SET_CATALOG_FILTER:
+         return {
+            ...prevState,
+            filterCatalog: action.payload
+         };
+
       default:
          return prevState;
    }
