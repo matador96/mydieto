@@ -153,7 +153,7 @@ const ProfilePage = ({ isadmin }) => {
          icon: <ExclamationCircleFilled />,
          maskClosable: true,
          onOk() {
-            navigate(RoutePath.LOGOUT);
+            navigate(RoutePath.logout);
          },
          okText: 'Выйти',
          cancelText: 'Отмена'

@@ -1,0 +1,2 @@
+ALTER TABLE "catalogs"
+    ADD COLUMN "about" TEXT DEFAULT '' NOT NULL;

@@ -1,6 +1,7 @@
-const Users = require("../models/users");
-const Sellers = require("../models/sellers");
 const Admins = require("../models/admins");
+const Managers = require("../models/managers");
+const Sellers = require("../models/sellers");
+const Users = require("../models/users");
 const { generateDatabaseSetting } = require("../helpers/db");
 
 const { ApplicationError } = require("./../classes/Errors");
@@ -25,7 +26,7 @@ module.exports.getActiveCount = async () => {
 
 module.exports.getUserById = async (id) => {
   const user = await Users.findByPk(id, {
-    include: [Sellers, Admins],
+    include: [Admins, Managers, Sellers],
     attributes: public_fields,
     raw: true,
     nest: true,
@@ -42,7 +43,7 @@ module.exports.getUserById = async (id) => {
 
 module.exports.getByEmail = async (email) => {
   const data = await Users.findOne({
-    include: [Sellers, Admins],
+    include: [Admins, Managers, Sellers],
     where: { email: email },
     raw: true,
     nest: true,

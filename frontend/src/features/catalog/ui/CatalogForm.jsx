@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input, Select } from '@shared/ui';
-import { Col, Row, Upload } from 'antd';
+import { Col, Row, Upload, Typography } from 'antd';
 import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
 import { statusesOfCategories } from '@shared/const/statuses';
 import { unitSettings } from '@shared/const/units';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
+const { Text } = Typography;
 
 const normFile = (e) => {
    if (Array.isArray(e)) {
@@ -12,6 +15,30 @@ const normFile = (e) => {
    }
    return e?.fileList;
 };
+
+const modules = {
+   toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+      ['link', 'image'],
+      ['clean']
+   ]
+};
+
+const formats = [
+   'header',
+   'bold',
+   'italic',
+   'underline',
+   'strike',
+   'blockquote',
+   'list',
+   'bullet',
+   'indent',
+   'link',
+   'image'
+];
 
 const CatalogForm = (props) => {
    const [isLoading, setIsLoading] = useState(false);
@@ -82,18 +109,21 @@ const CatalogForm = (props) => {
          <div
             style={{
                marginTop: 8
-            }}
-         >
+            }}>
             {initialValues?.img ? `Заменить картинку` : `Загрузить картинку`}
          </div>
       </div>
    );
 
+   const clearAbout = () => {
+      form.setFieldsValue({ about: '' });
+   };
+
    return (
       <Form
          name="basic"
          style={{
-            maxWidth: 720,
+            maxWidth: 920,
             minWidth: 320
          }}
          form={form}
@@ -102,8 +132,7 @@ const CatalogForm = (props) => {
          onFinishFailed={onFinishFailed}
          onValuesChange={() => setIsDisabledButton(false)}
          hideRequiredMark
-         layout="vertical"
-      >
+         layout="vertical">
          <Row gutter={16}>
             <Col span={24}>
                <Form.Item
@@ -114,8 +143,7 @@ const CatalogForm = (props) => {
                         required: true,
                         message: 'Введите название'
                      }
-                  ]}
-               >
+                  ]}>
                   <Input />
                </Form.Item>
             </Col>
@@ -149,26 +177,7 @@ const CatalogForm = (props) => {
          )}
 
          <Row gutter={24}>
-            <Col span={8}>
-               <Form.Item
-                  name="priority"
-                  label="Приоритет"
-                  rules={[
-                     {
-                        required: true,
-                        message: 'Укажите приоритет'
-                     }
-                  ]}
-               >
-                  <Input
-                     style={{
-                        width: '100%'
-                     }}
-                     type="number"
-                  />
-               </Form.Item>
-            </Col>
-            <Col span={8}>
+            <Col span={6}>
                <Form.Item
                   name="status"
                   label="Статус"
@@ -178,8 +187,7 @@ const CatalogForm = (props) => {
                         message: 'Выберите статус'
                      }
                   ]}
-                  defaultValue={statusesOfCategories.active}
-               >
+                  defaultValue={statusesOfCategories.active}>
                   <Select
                      style={{
                         width: '100%'
@@ -195,7 +203,7 @@ const CatalogForm = (props) => {
                   />
                </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col span={6}>
                <Form.Item
                   name="unit"
                   label="Единица измерения"
@@ -204,8 +212,7 @@ const CatalogForm = (props) => {
                         required: true,
                         message: 'Пропустили поле'
                      }
-                  ]}
-               >
+                  ]}>
                   <Select
                      defaultValue="kg"
                      style={{
@@ -215,16 +222,30 @@ const CatalogForm = (props) => {
                   />
                </Form.Item>
             </Col>
-         </Row>
-
-         <Row gutter={16}>
-            <Col span={8}>
+            <Col span={4}>
                <Form.Item
-                  label="Картинка"
+                  name="priority"
+                  label="Приоритет"
+                  rules={[
+                     {
+                        required: true,
+                        message: 'Укажите приоритет'
+                     }
+                  ]}>
+                  <Input
+                     style={{
+                        width: '100%'
+                     }}
+                     type="number"
+                  />
+               </Form.Item>
+            </Col>
+            <Col span={6}>
+               <Form.Item
+                  label="Картинка каталога"
                   name="image"
                   valuePropName="image"
-                  getValueFromEvent={normFile}
-               >
+                  getValueFromEvent={normFile}>
                   <Upload
                      accept="image/png, image/jpeg"
                      listType="picture-card"
@@ -233,10 +254,31 @@ const CatalogForm = (props) => {
                      beforeUpload={fetchImage}
                      onPreview={null}
                      onRemove={null}
-                     maxCount={1}
-                  >
+                     maxCount={1}>
                      {fileList.length >= 1 ? null : <span>{uploadButton}</span>}
                   </Upload>
+               </Form.Item>
+            </Col>
+         </Row>
+
+         <Row gutter={24}>
+            <Col span={24}>
+               <Form.Item
+                  name="about"
+                  label={
+                     <>
+                        Статьи
+                        <Text type="secondary" style={{ marginLeft: '10px' }}>
+                           Очистите если хотите выключить статью
+                           <Button
+                              onClick={clearAbout}
+                              style={{ marginLeft: '10px' }}>
+                              Очистить
+                           </Button>
+                        </Text>
+                     </>
+                  }>
+                  <ReactQuill theme="snow" modules={modules} formats={formats} />
                </Form.Item>
             </Col>
          </Row>
@@ -246,8 +288,7 @@ const CatalogForm = (props) => {
                type="primary"
                htmlType="submit"
                loading={isLoading}
-               disabled={isDisabledButton}
-            >
+               disabled={isDisabledButton}>
                {isEditForm ? 'Сохранить' : 'Создать'}
             </Button>
          </Form.Item>
