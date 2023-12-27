@@ -2,12 +2,19 @@ import React from 'react';
 import { Checkbox } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 
-const SelectAndDelete = () => {
+const SelectAndDelete = ({ chooseAllCheckbox, setChooseAllCheckbox }) => {
    return (
       <div className="select-and-delete-container">
          <div className="select-all-container">
-            <Checkbox />
-            <p className="select-all-text">Выбрать все</p>
+            <Checkbox
+               checked={chooseAllCheckbox}
+               onClick={() => setChooseAllCheckbox((prev) => !prev)}
+            />
+            <p
+               onClick={() => setChooseAllCheckbox((prev) => !prev)}
+               className="select-all-text">
+               Выбрать все
+            </p>
          </div>
          <div className="delete-selected-container">
             <CloseOutlined className="delete-icon" />

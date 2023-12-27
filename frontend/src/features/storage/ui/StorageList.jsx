@@ -33,6 +33,7 @@ import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
 import SelectAndDelete from './SelectAndDelete';
+import { Title } from '@shared/ui';
 
 const { confirm } = Modal;
 
@@ -109,6 +110,7 @@ const StorageListQuantityWithSave = (props) => {
 
 const StorageList = () => {
    const [isLoading, setIsLoading] = useState(false);
+   const [chooseAllCheckbox, setChooseAllCheckbox] = useState(false);
    const [data, setData] = useState([]);
    const [quantityMap, setQuantityMap] = useState({});
 
@@ -177,18 +179,35 @@ const StorageList = () => {
       });
    };
 
+   const storageItemTitle = data.map((item) => item.items.length);
+   const storageItemTitleCount = storageItemTitle.reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      0
+   );
+
    return (
       <div>
-         <SelectAndDelete />
+         <Title className="storage-title">
+            Склад{' '}
+            <Badge
+               offset={[-4, -27]}
+               className="storage-items-quantity-badge"
+               count={storageItemTitleCount}></Badge>
+         </Title>
+
+         <SelectAndDelete
+            setChooseAllCheckbox={setChooseAllCheckbox}
+            chooseAllCheckbox={chooseAllCheckbox}
+         />
          {data.map((storageItem) => (
             <React.Fragment key={`storage-catalog-${storageItem.id}`}>
-               <h2>
+               <h3 className="storage-item-title">
                   {storageItem.catalog.name}{' '}
                   <Badge
                      className="item-quantity-badge"
                      count={storageItem.items.length}
                   />
-               </h2>
+               </h3>
                <List
                   itemLayout="horizontal"
                   dataSource={storageItem.items}
@@ -213,7 +232,10 @@ const StorageList = () => {
                                  callBack={fetchData}
                               />
                            ]}>
-                           <Checkbox />
+                           <Checkbox
+                              checked={chooseAllCheckbox}
+                              style={{ cursor: 'pointer' }}
+                           />
 
                            <div
                               className="storage-background-image"
@@ -230,7 +252,7 @@ const StorageList = () => {
                               key={`${item.id}-`}
                               description={
                                  <div>
-                                    <h3 className="storage-item-title">
+                                    <h3 className="storage-item-name">
                                        {' '}
                                        {item.catalog.name}
                                     </h3>
