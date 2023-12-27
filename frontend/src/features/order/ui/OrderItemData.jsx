@@ -143,7 +143,7 @@ const AutoPriceGenerate = ({ data }) => {
       return 0;
    }
 
-   const price = parseInt(data.capacity * data.unitPrice);
+   const price = Math.ceil(data.capacity * data.unitPrice);
 
    return <>{price} руб.</>;
 };
