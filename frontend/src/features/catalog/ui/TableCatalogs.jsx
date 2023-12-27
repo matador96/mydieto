@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Space, Table, Tag, Tooltip, Avatar } from 'antd';
 import { Button, VerticalSpace } from '@shared/ui';
-import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
+import { GetCatalogsList } from '../model/services/GetCatalogsList';
 import { EditOutlined } from '@ant-design/icons';
 import ModalCatalogForm from './ModalCatalogForm';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
@@ -78,7 +78,13 @@ const NestedTableCategories = ({ id, selectedCategory, setSelectedCategory }) =>
    }, [selectedCategory]);
 
    const fetchData = () => {
-      GetCatalogsListByParentId(id, 1, 1000).then((res) => {
+      GetCatalogsList({
+         parentId: id,
+         page: 1,
+         limit: 1000,
+         sort: 'priority',
+         order: 'asc'
+      }).then((res) => {
          setData(res.data);
       });
    };
@@ -130,8 +136,9 @@ const TableCatalogs = () => {
       pageSize = pagination.pageSize
    ) => {
       setIsLoading(true);
-      GetCatalogsListByParentId(0, {
+      GetCatalogsList({
          page: current,
+         parentId: 0,
          limit: pageSize,
          sort: 'priority',
          order: 'asc'

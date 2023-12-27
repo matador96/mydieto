@@ -12,8 +12,8 @@ export const getCatalogs = (params) => get(generateQueryParams(`/catalogs`, para
 
 export const getCatalogById = (id) => get(`/catalog/${id}`);
 
-export const getCatalogsByParentId = (parentId, params) =>
-   get(generateQueryParams(`/catalogs/parent/${parentId}`, params));
+// export const getCatalogsByParentId = (parentId, params) =>
+//    get(generateQueryParams(`/catalogs/parent/${parentId}`, params));
 
 export const createCatalog = async (fields) => {
    const url = `/catalog`;

@@ -21,16 +21,16 @@ module.exports.getWithParams = async (req) => {
   return { data: result.data, count: result.count };
 };
 
-module.exports.getCatalogsWithParamsByParentId = async (req) => {
-  const { parentId } = req.params;
+// module.exports.getCatalogsWithParamsByParentId = async (req) => {
+//   const { parentId } = req.params;
 
-  const result = await CatalogService.getWithParamsByParentId({
-    ...req.query,
-    parentId,
-  });
+//   const result = await CatalogService.getWithParamsByParentId({
+//     ...req.query,
+//     parentId,
+//   });
 
-  return { data: result.data, count: result.count };
-};
+//   return { data: result.data, count: result.count };
+// };
 
 module.exports.create = async (req, res, transaction) => {
   const catalogData = {
