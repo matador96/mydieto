@@ -1,41 +1,28 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { useState, useEffect } from 'react';
-import {
-   Button,
-   List,
-   Space,
-   Tooltip,
-   message,
-   Modal,
-   InputNumber,
-   Divider,
-   Input
-} from 'antd';
+import { Button, List, Space, message, Input, Checkbox, Badge } from 'antd';
 
-import { ExclamationCircleFilled, ShoppingCartOutlined } from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { GetStorageMyWithParams } from '../model/GetStorageMyWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
 
-import { unitSettings } from '@shared/const/units';
 import { GetCatalogsList } from '@features/catalog/model/services/GetCatalogsList';
 
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
-
-const { confirm } = Modal;
+import SelectAndDelete from './SelectAndDelete';
+import { Title } from '@shared/ui';
+import _ from 'lodash';
 
 const StorageListQuantityWithSave = (props) => {
-   const { storage, isLoading, setQuantity } = props;
+   const { storage, isLoading } = props;
    const { quantity } = storage;
 
    const [inputQuantity, setInputQuantity] = useState(1);
    const dispatch = useDispatch();
-   useEffect(() => {
-      setQuantity(inputQuantity);
-   }, [inputQuantity]);
 
    const addToCart = () => {
       const quantityValue = parseInt(inputQuantity, 10);
@@ -61,30 +48,38 @@ const StorageListQuantityWithSave = (props) => {
 
    return (
       <Space direction="vertical">
-         <Space>
-            <Input
-               min={1}
-               defaultValue={1}
-               max={props.storage.quantity}
-               style={{ width: '120px' }}
-               type="number"
-               addonAfter={
-                  unitSettings.find((e) => e.value === props.storage.catalog.unit)
-                     .shortLabel
-               }
-               value={inputQuantity}
-               onChange={(e) => setInputQuantity(e.target.value)}
-            />
-            <Tooltip placement="top" title={'Добавить в корзину'}>
-               <Button
-                  type="primary"
-                  loading={isLoading}
-                  disabled={quantity === 0}
-                  onClick={addToCart}
-                  icon={<ShoppingCartOutlined />}>
-                  В корзину
-               </Button>
-            </Tooltip>
+         <Space className="storage-space-container">
+            <div className="inner-container">
+               <MinusOutlined
+                  onClick={() => setInputQuantity((prev) => prev - 1)}
+                  className="minus-outlined"
+               />
+               <Input
+                  min={1}
+                  defaultValue={1}
+                  max={props.storage.quantity}
+                  className="storage-item-input"
+                  // type="number"
+                  // addonAfter={
+                  //    unitSettings.find((e) => e.value === props.storage.catalog.unit)
+                  //       .shortLabel
+                  // }
+                  value={inputQuantity}
+                  onChange={(e) => setInputQuantity(e.target.value)}
+               />
+               <PlusOutlined
+                  onClick={() => setInputQuantity((prev) => prev + 1)}
+                  className="plus-outlined"
+               />
+            </div>
+            <Button
+               className="storage-cart-button"
+               type="primary"
+               loading={isLoading}
+               disabled={quantity === 0}
+               onClick={addToCart}>
+               В корзину
+            </Button>
          </Space>
       </Space>
    );
@@ -92,16 +87,17 @@ const StorageListQuantityWithSave = (props) => {
 
 const StorageList = () => {
    const [isLoading, setIsLoading] = useState(false);
+   const [choosedAll, setChoosedAll] = useState(false);
+   const [checkboxList, setCheckboxList] = useState([]);
    const [data, setData] = useState([]);
-   const [quantityMap, setQuantityMap] = useState({});
 
    useEffect(() => {
       fetchData();
    }, []);
 
-   const save = (itemId) => {
+   const save = (itemId, value) => {
       setIsLoading(true);
-      UpdateStorage({ quantity: quantityMap[itemId] }, itemId).then(() => {
+      UpdateStorage({ quantity: value }, itemId).then(() => {
          setIsLoading(false);
          fetchData();
          message.success('Сохранено');
@@ -145,43 +141,115 @@ const StorageList = () => {
       });
    };
 
-   const showConfirmDelete = (id) => {
-      return confirm({
-         title: 'Вы точно удалить?',
-         icon: <ExclamationCircleFilled />,
-         maskClosable: true,
-         async onOk() {
-            DeleteStorageById(id).then(() => {
-               fetchData();
-               message.success('Удалено из склада');
-            });
-         },
-         okText: 'Удалить',
-         cancelText: 'Отмена'
-      });
+   // const showConfirmDelete = (id) => {
+   //    return confirm({
+   //       title: 'Вы точно удалить?',
+   //       icon: <ExclamationCircleFilled />,
+   //       maskClosable: true,
+   //       async onOk() {
+   //          DeleteStorageById(id).then(() => {
+   //             fetchData();
+   //             message.success('Удалено из склада');
+   //          });
+   //       },
+   //       okText: 'Удалить',
+   //       cancelText: 'Отмена'
+   //    });
+   // };
+
+   const storageItemTitle = data.map((item) => item.items.length);
+   const storageItemTitleCount = storageItemTitle.reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      0
+   );
+
+   const addAll = () => {
+      const allStorageIds = [];
+      data.map((e) => e.items.map((v) => allStorageIds.push(v.id)));
+
+      const isChoosedAll =
+         allStorageIds.length === checkboxList.length && checkboxList.length !== 0;
+
+      if (isChoosedAll) {
+         setChoosedAll(false);
+         setCheckboxList([]);
+         return;
+      }
+
+      setChoosedAll(true);
+      setCheckboxList(allStorageIds);
    };
+
+   const onClickCheckbox = (val) => {
+      const allStorageIds = [];
+      data.map((e) => e.items.map((v) => allStorageIds.push(v.id)));
+
+      const isChoosedAll =
+         allStorageIds.length === checkboxList.length && checkboxList.length !== 0;
+
+      if (checkboxList.includes(val)) {
+         setCheckboxList(checkboxList.filter((e) => e !== val));
+
+         if (isChoosedAll) {
+            setChoosedAll(false);
+         }
+         return;
+      }
+
+      setCheckboxList((prev) => [...prev, val]);
+   };
+
+   const onClickDeleteChoosed = async () => {
+      const promises = [];
+
+      promises.push(checkboxList.map(async (e) => await DeleteStorageById(e)));
+
+      await Promise.all(promises);
+      fetchData();
+
+      message.success('Удалено из склада');
+
+      setChoosedAll(false);
+      setCheckboxList([]);
+   };
+
+   const debouncedChange = _.debounce(save, 500);
 
    return (
       <div>
-         {data.map((item) => (
-            <React.Fragment key={`storage-catalog-${item.id}`}>
-               <Divider orientation="left">{item.catalog.name}</Divider>
+         <Title className="storage-title">
+            Склад{' '}
+            <Badge
+               offset={[-4, -27]}
+               className="storage-items-quantity-badge"
+               count={storageItemTitleCount}></Badge>
+         </Title>
+
+         <SelectAndDelete
+            isChoosedAll={choosedAll}
+            addAll={addAll}
+            onClickDeleteChoosed={onClickDeleteChoosed}
+         />
+         {data.map((storageItem) => (
+            <React.Fragment key={`storage-catalog-${storageItem.id}`}>
+               <h3 className="storage-item-title">
+                  {storageItem.catalog.name}{' '}
+                  <Badge
+                     className="item-quantity-badge"
+                     count={storageItem.items.length}
+                  />
+               </h3>
                <List
                   itemLayout="horizontal"
-                  dataSource={item.items}
+                  dataSource={storageItem.items}
                   loading={isLoading}
                   className="list-my-storage"
                   renderItem={(item) => (
                      <div>
                         <List.Item
+                           style={{ height: '91px', padding: '0 12px 0 19px' }}
                            actions={[
                               <StorageListQuantityWithSave
-                                 setQuantity={(v) =>
-                                    setQuantityMap((prev) => ({
-                                       ...prev,
-                                       [item.id]: v
-                                    }))
-                                 }
                                  isLoading={isLoading}
                                  setIsLoading={setIsLoading}
                                  key={`${item.id}-g`}
@@ -189,61 +257,42 @@ const StorageList = () => {
                                  callBack={fetchData}
                               />
                            ]}>
+                           <Checkbox
+                              checked={checkboxList.includes(item.id)}
+                              onChange={() => onClickCheckbox(item.id)}
+                              style={{ cursor: 'pointer' }}
+                           />
+
                            <div
                               className="storage-background-image"
                               style={{
                                  backgroundImage: `url('${
                                     item.catalog.imgUrl || defaulPhotoCard
-                                 }')`
+                                 }')`,
+                                 marginLeft: '20px'
                               }}
                            />
 
                            <List.Item.Meta
-                              style={{ marginLeft: '15px' }}
+                              style={{ marginLeft: '20px' }}
                               key={`${item.id}-`}
-                              title={item.catalog.name}
                               description={
-                                 <>
-                                    <div>
-                                       <InputNumber
-                                          style={{
-                                             width: '120px'
-                                          }}
-                                          min={1}
-                                          defaultValue={1}
-                                          addonAfter={
-                                             unitSettings.find(
-                                                (e) => e.value === item.catalog.unit
-                                             ).shortLabel
-                                          }
-                                          value={item.quantity}
-                                          onChange={(v) =>
-                                             setQuantityMap((prev) => ({
-                                                ...prev,
-                                                [item.id]: v
-                                             }))
-                                          }
-                                       />
-
-                                       <span
-                                          className="green-span-url"
-                                          type="link"
-                                          style={{
-                                             marginLeft: '10px',
-                                             textDecoration: 'none'
-                                          }}
-                                          onClick={() => save(item.id)}>
-                                          Сохранить
-                                       </span>
-                                    </div>
-                                    <span
-                                       className="red-span-url"
-                                       type="link"
-                                       style={{ fontSize: '12px' }}
-                                       onClick={() => showConfirmDelete(item.id)}>
-                                       Удалить из склада
-                                    </span>
-                                 </>
+                                 <div>
+                                    <h3 className="storage-item-name">
+                                       {' '}
+                                       {item.catalog.name}
+                                    </h3>
+                                    <Input
+                                       className="storage-item-input"
+                                       min={1}
+                                       max={100}
+                                       defaultValue={item.quantity}
+                                       addonBefore={'на складе'}
+                                       onChange={(e) =>
+                                          debouncedChange(item.id, e.target.value)
+                                       }
+                                    />
+                                 </div>
                               }
                            />
                         </List.Item>

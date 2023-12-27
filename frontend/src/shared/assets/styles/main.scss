@@ -21,6 +21,12 @@
 
 .list-my-storage {
    .ant-list-item {
+      margin-top: 30px;
+      box-shadow:
+         0px 5px 30px 0px rgba(103, 110, 118, 0.08),
+         0px 2px 15px 0px rgba(73, 75, 74, 0.15);
+      border-radius: 16px;
+
       img {
          width: 104px;
          margin-right: 15px;
@@ -600,13 +606,11 @@ body {
    }
 }
 .storage-background-image {
-   width: 90px;
-   height: 80px;
+   width: 91px;
+   height: 71px;
    background-size: cover;
    background-position: center;
    background-repeat: no-repeat;
-   border: 1px #474a5380 solid;
-   border-radius: 7px;
 }
 
 .menu-items {
@@ -782,6 +786,170 @@ body {
 .add-storage-button:focus,
 .add-storage-button:active {
    background: none !important;
+}
+
+.ant-list-item-meta-description div {
+   height: 64px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   .storage-item-name {
+      color: #24292e !important;
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 130%;
+      height: 18px;
+      margin: 0;
+   }
+}
+.storage-item-input {
+   width: 160px;
+   .ant-input {
+      height: 30px;
+      text-align: center;
+      border-radius: 10px;
+      border: 1px solid #ced2d6;
+      text-align: center;
+   }
+
+   .ant-input-group-addon {
+      background: #f5f5f5;
+      border-radius: 10px;
+      border: 1px solid #ced2d6;
+      color: #797b7a;
+      font-family: Inter;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px;
+      text-align: center;
+      padding: 0, 0, 0, 12px;
+   }
+}
+
+.storage-space-container {
+   width: 362px;
+   height: 40px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   .inner-container {
+      width: 180px;
+      height: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 5px;
+      .minus-outlined {
+         display: flex;
+         justify-content: end;
+         width: 24px;
+         height: 24px;
+         color: rgba(29, 27, 32, 1);
+      }
+      .plus-outlined {
+         display: flex;
+         justify-content: start;
+         width: 24px;
+         height: 24px;
+         color: rgba(29, 27, 32, 1);
+      }
+
+      .storage-item-input {
+         width: 100px;
+         height: 30px;
+         text-align: center;
+         border-radius: 10px;
+         border: 1px solid #ced2d6;
+         background: #fff;
+      }
+   }
+
+   .storage-cart-button {
+      width: 150px;
+      height: 40px;
+      background: #2f9461 !important;
+      color: rgba(255, 255, 255, 1);
+      border-radius: 10px !important;
+      border: 1px solid #ced2d6 !important;
+      text-transform: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      padding: 10px 18px;
+      line-height: 20px;
+   }
+}
+
+.select-and-delete-container {
+   width: 100%;
+   height: 24px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+
+   .select-all-container,
+   .delete-selected-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+   }
+
+   .select-all-container {
+      width: 113px;
+   }
+
+   .select-all-text,
+   .delete-text {
+      cursor: pointer;
+      color: #24292e;
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 130%;
+   }
+
+   .delete-selected-container {
+      width: 169px;
+      color: #cd3636;
+   }
+
+   .delete-icon {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      color: #cd3636;
+   }
+}
+.storage-title {
+   color: #24292e;
+   font-family: Inter;
+   font-size: 36px;
+   font-style: normal;
+   font-weight: 600;
+   line-height: 130%;
+   letter-spacing: -0.72px;
+   .storage-items-quantity-badge .ant-badge-count {
+      color: #9ea5ad;
+      font-family: Inter;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      background: none;
+   }
+}
+.storage-item-title {
+   color: #24292e !important;
+   font-family: Inter;
+   font-size: 24px;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 32px;
 }
 // .order-tabs {
 //    .ant-tabs-tab {
