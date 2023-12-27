@@ -143,7 +143,7 @@ const AutoPriceGenerate = ({ data }) => {
       return 0;
    }
 
-   const price = data.capacity * data.unitPrice;
+   const price = parseInt(data.capacity * data.unitPrice);
 
    return <>{price} руб.</>;
 };
@@ -235,6 +235,7 @@ function OrderItemData({ order, fetchOrders }) {
       {
          title: 'Сумма',
          dataIndex: 'poschitat',
+         width: 180,
          key: 'poschitat',
          render: (_, record) => <AutoPriceGenerate data={record} />
       }
