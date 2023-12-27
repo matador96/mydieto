@@ -15,6 +15,7 @@ import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 import { GetCatalogsList } from '../model/services/GetCatalogsList';
 import FilterCategory from '@shared/ui/FilterCategory';
 import AddToCartWithQuantity from '@features/storage/ui/AddToCartWithQuantity';
+import SpinnerInContainer from '@shared/ui/SpinnerInContainer';
 import { extraActions, getSearchCatalog, getFilterCatalog } from '@entitles/Extra';
 import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
@@ -77,6 +78,7 @@ const CatalogCardsByParentId = ({ items }) => {
 
 const CardListCatalogs = () => {
    const [initialData, setInitialData] = useState([]);
+   const [loading, setLoading] = useState(false);
    const [data, setData] = useState([]);
    const [searchStr, setSearchStr] = useState('');
    const dispatch = useDispatch();
@@ -92,6 +94,7 @@ const CardListCatalogs = () => {
    }, [searchText, catalogFilter]);
 
    const fetchMainCatalog = () => {
+      setLoading(true);
       GetCatalogsList({
          page: 1,
          parentId: 0,
@@ -118,6 +121,7 @@ const CardListCatalogs = () => {
          await Promise.all(promises).then(() => {
             setData(dataArr);
             setInitialData(dataArr);
+            setLoading(false);
          });
       });
    };
@@ -156,6 +160,10 @@ const CardListCatalogs = () => {
       setSearchStr(value);
       debouncedSearch(value);
    };
+
+   if (loading) {
+      return <SpinnerInContainer />;
+   }
 
    return (
       <div className="general-page">

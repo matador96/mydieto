@@ -10,7 +10,7 @@ import { UpdateStorage } from '../model/UpdateStorage';
 import { GetCatalogsList } from '@features/catalog/model/services/GetCatalogsList';
 
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
-
+import SpinnerInContainer from '@shared/ui/SpinnerInContainer';
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
 import SelectAndDelete from './SelectAndDelete';
@@ -87,11 +87,13 @@ const StorageListQuantityWithSave = (props) => {
 
 const StorageList = () => {
    const [isLoading, setIsLoading] = useState(false);
+   const [isMainLoading, setMainIsLoading] = useState(false);
    const [choosedAll, setChoosedAll] = useState(false);
    const [checkboxList, setCheckboxList] = useState([]);
    const [data, setData] = useState([]);
 
    useEffect(() => {
+      setMainIsLoading(true);
       fetchData();
    }, []);
 
@@ -105,7 +107,6 @@ const StorageList = () => {
    };
 
    const fetchData = () => {
-      setIsLoading(true);
       GetStorageMyWithParams({
          page: 1,
          limit: 1000,
@@ -135,7 +136,7 @@ const StorageList = () => {
                newModifiedList.push({ catalog: e, items });
             });
 
-            setIsLoading(false);
+            setMainIsLoading(false);
             setData(newModifiedList.filter((p) => p.items.length));
          });
       });
@@ -214,6 +215,10 @@ const StorageList = () => {
    };
 
    const debouncedChange = _.debounce(save, 500);
+
+   if (isMainLoading) {
+      return <SpinnerInContainer />;
+   }
 
    return (
       <div>

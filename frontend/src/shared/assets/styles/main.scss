@@ -613,6 +613,14 @@ body {
    background-repeat: no-repeat;
 }
 
+.spinner-container {
+   min-height: 40vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: auto;
+}
+
 .menu-items {
    height: 52px;
    width: 52px;
