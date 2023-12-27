@@ -247,7 +247,13 @@ const StorageList = () => {
                   renderItem={(item) => (
                      <div>
                         <List.Item
-                           style={{ height: '91px', padding: '0 12px 0 19px' }}
+                           style={{
+                              height: '91px',
+                              padding: '0 12px 0 19px',
+                              background: checkboxList.includes(item.id)
+                                 ? '#F6FEF9'
+                                 : '#fff'
+                           }}
                            actions={[
                               <StorageListQuantityWithSave
                                  isLoading={isLoading}
