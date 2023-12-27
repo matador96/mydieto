@@ -9,17 +9,25 @@ import {
    message,
    Descriptions,
    InputNumber,
-   Radio
+   Radio,
+   Input
 } from 'antd';
+
 import { VerticalSpace } from '@shared/ui';
 
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import {
+   DeleteOutlined,
+   EditOutlined,
+   MinusOutlined,
+   PlusOutlined
+} from '@ant-design/icons';
 
 import { unitSettings } from '@shared/const/units';
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
 import { GetMyAddressList } from '@features/seller/model/GetMyAddressList';
 import ModalButtonAddressCreate from '@features/seller/ModalButtonAddressCreate';
+import defaulPhotoCard from '@shared/assets/images/platy-meta.jpeg';
 
 import { useSelector } from 'react-redux';
 import { GetStorageWithParams } from '@features/storage/model/GetStorageWithParams';
@@ -105,9 +113,23 @@ const CartList = () => {
             className="list-my-storage"
             renderItem={(item) => (
                <List.Item
+                  style={{
+                     width: '100%',
+                     height: '80px',
+                     display: 'flex',
+                     padding: '10px 20px',
+                     alignItems: 'center',
+                     gap: '30px',
+                     alignSelf: 'stretch',
+                     borderRadius: '16px',
+                     background: '#FFF',
+                     boxShadow:
+                        '0px 5px 30px 0px rgba(103, 110, 118, 0.08), 0px 2px 15px 0px rgba(73, 75, 74, 0.15)'
+                  }}
                   actions={[
                      <>
-                        <InputNumber
+                        <MinusOutlined className="minus-outlined" />
+                        <Input
                            min={1}
                            default={1}
                            onChange={(value) => onChange(item.id, value)}
@@ -118,21 +140,53 @@ const CartList = () => {
                            //    unitSettings.find((e) => e.value === item.unit)
                            //       .shortLabel
                            // }
-                        />{' '}
+                        />
+                        <PlusOutlined className="plus-outlined" />
                      </>
-                  ]}
-               >
+                  ]}>
                   <List.Item.Meta
                      key={`${item.id}-`}
-                     title={item.name}
+                     className="cart-list-item"
+                     // title={item.name}
                      description={
-                        <span
-                           className="green-span-url"
-                           type="link"
-                           onClick={() => deleteByIdCart(item.id)}
-                        >
-                           Убрать из корзины
-                        </span>
+                        <>
+                           <div
+                              className="storage-background-image"
+                              style={{
+                                 backgroundImage: `url('${
+                                    item?.imgUrl || defaulPhotoCard
+                                 }')`,
+                                 width: '77px',
+                                 height: '60px'
+                              }}
+                           />
+                           <div
+                              style={{
+                                 display: 'flex',
+                                 flexDirection: 'column',
+                                 justifyContent: 'space-between',
+                                 width: '253px',
+                                 height: '60px'
+                              }}>
+                              <h3
+                                 style={{
+                                    margin: '0',
+                                    color: '#24292E',
+                                    fontSize: '12px',
+                                    fontStyle: 'normal',
+                                    fontWeight: '400',
+                                    lineHeight: '130%'
+                                 }}>
+                                 {item.name}
+                              </h3>
+                              <span
+                                 className="green-span-url"
+                                 type="link"
+                                 onClick={() => deleteByIdCart(item.id)}>
+                                 Удалить
+                              </span>
+                           </div>
+                        </>
                      }
                   />
                </List.Item>
@@ -195,10 +249,11 @@ const DrawerCart = (props) => {
       <div>
          <span onClick={showDrawer}>{props.button}</span>
          <Drawer
+            style={{ padding: '20px, 20px, 20px, 20px' }}
             title="Текущий заказ"
             placement="right"
             onClose={onClose}
-            width={600}
+            width={630}
             open={open}
             extra={
                <Space>
@@ -207,8 +262,7 @@ const DrawerCart = (props) => {
                      Очистить корзину
                   </Button>
                </Space>
-            }
-         >
+            }>
             <Divider orientation="left">Позиции заказа</Divider>
             <CartList />
 

@@ -19,9 +19,10 @@ const AddressList = ({ addressList }) => {
          itemLayout="vertical"
          dataSource={addressList}
          renderItem={(item) => (
-            <List.Item>
+            <List.Item className="address-item" style={{ border: 'none' }}>
                <List.Item.Meta
-                  key={`${item.id}-${item.address}`}
+                  className="address-list"
+                  key={`${item.id} -${item.address}`}
                   title={`Название: ${item.name}`}
                   description={
                      <Descriptions size="small">
@@ -29,7 +30,10 @@ const AddressList = ({ addressList }) => {
                            {item.address || 'Не найден'}
                         </Descriptions.Item>
 
-                        <Descriptions.Item label="Комментарий" span={3}>
+                        <Descriptions.Item
+                           style={{ marginBottom: '50px' }}
+                           label="Комментарий"
+                           span={3}>
                            {item.comment || 'Не указан'}
                         </Descriptions.Item>
                      </Descriptions>
@@ -132,15 +136,13 @@ const SellerList = () => {
             expandIcon={({ isActive }) => (
                <CaretRightOutlined rotate={isActive ? 90 : 0} />
             )}
-            style={{ background: 'transparent' }}
-         >
+            style={{ background: 'transparent' }}>
             {collapseItems.map((item) => (
                <Panel
                   key={item.key}
                   header={item.label}
                   extra={item.extra}
-                  style={item.style}
-               >
+                  style={item.style}>
                   {item.children}
                </Panel>
             ))}
