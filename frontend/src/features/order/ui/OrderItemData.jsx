@@ -123,7 +123,7 @@ const UnitQuantityComponent = (props) => {
 };
 
 const OrderItemCapacityComponent = (props) => {
-   const { value, unit, orderStatus } = props;
+   const { value, orderStatus } = props;
 
    const auth = useSelector(getUserAuthData);
 
@@ -135,11 +135,7 @@ const OrderItemCapacityComponent = (props) => {
       }
    }
 
-   return (
-      <>
-         {value} {unitSettings.find((e) => e.value === unit).shortLabel}
-      </>
-   );
+   return <>{value} кг</>;
 };
 
 const AutoPriceGenerate = ({ data }) => {
