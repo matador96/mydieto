@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input, Select } from '@shared/ui';
 import { Col, Row, Upload, Typography } from 'antd';
-import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
+import { GetCatalogsList } from '../model/services/GetCatalogsList';
 import { statusesOfCategories } from '@shared/const/statuses';
 import { unitSettings } from '@shared/const/units';
 import ReactQuill from 'react-quill';
@@ -53,15 +53,13 @@ const CatalogForm = (props) => {
 
    const fetchCategories = () => {
       setIsLoadingCategories(true);
-      GetCatalogsListByParentId(
-         0, // Main categories
-         {
-            page: 1,
-            limit: 1000,
-            sort: 'priority',
-            order: 'asc'
-         }
-      ).then((res) => {
+      GetCatalogsList({
+         parentId: 0,
+         page: 1,
+         limit: 1000,
+         sort: 'priority',
+         order: 'asc'
+      }).then((res) => {
          setCategories(res.data);
          setIsLoadingCategories(false);
       });

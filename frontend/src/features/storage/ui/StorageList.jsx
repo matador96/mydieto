@@ -18,7 +18,7 @@ import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
 
 import { unitSettings } from '@shared/const/units';
-import { GetCatalogsListByParentId } from '@features/catalog/model/services/GetCatalogsListByParentId';
+import { GetCatalogsList } from '@features/catalog/model/services/GetCatalogsList';
 
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 
@@ -118,8 +118,9 @@ const StorageList = () => {
       }).then((res) => {
          const storageData = res.data;
 
-         GetCatalogsListByParentId(0, {
+         GetCatalogsList({
             page: 1,
+            parentId: 0,
             limit: 1000,
             sort: 'priority',
             order: 'asc'

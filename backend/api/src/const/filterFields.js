@@ -34,7 +34,7 @@ module.exports = {
       id: "$eq",
       sellerId: "$eq",
       name: "$like",
-      parentId: "$eq",
+      parentId: "$in",
     },
     manager: {
       id: "$eq",
