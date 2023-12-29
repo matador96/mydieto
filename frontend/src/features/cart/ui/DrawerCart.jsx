@@ -10,7 +10,8 @@ import {
    Descriptions,
    InputNumber,
    Radio,
-   Input
+   Input,
+   Badge
 } from 'antd';
 
 import { VerticalSpace } from '@shared/ui';
@@ -19,7 +20,8 @@ import {
    DeleteOutlined,
    EditOutlined,
    MinusOutlined,
-   PlusOutlined
+   PlusOutlined,
+   CloseOutlined
 } from '@ant-design/icons';
 
 import { unitSettings } from '@shared/const/units';
@@ -27,39 +29,24 @@ import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
 import { GetMyAddressList } from '@features/seller/model/GetMyAddressList';
 import ModalButtonAddressCreate from '@features/seller/ModalButtonAddressCreate';
-import defaulPhotoCard from '@shared/assets/images/platy-meta.jpeg';
+import defaulPhotoCard from '@shared/assets/images/defaulImage.png';
 
 import { useSelector } from 'react-redux';
 import { GetStorageWithParams } from '@features/storage/model/GetStorageWithParams';
 
 import { CreateMyOrder } from '@features/order/model/services/CreateMyOrder';
 
-import { getCartItems } from '@entitles/Cart';
+import { getCartItems, getCartCount } from '@entitles/Cart';
 
-const AddressList = ({ selectedAddressId, setSelectedAddressId }) => {
-   const [isLoading, setIsLoading] = useState(false);
-
-   const [data, setData] = useState([]);
-
+const AddressList = ({
+   selectedAddressId,
+   setSelectedAddressId,
+   fetchData,
+   data
+}) => {
    useEffect(() => {
       fetchData();
    }, []);
-
-   const fetchData = () => {
-      setIsLoading(true);
-
-      GetMyAddressList({
-         page: 1,
-         status: 'active',
-         limit: 1000,
-         sort: 'id',
-         order: 'asc'
-      }).then((res) => {
-         setIsLoading(false);
-         const tableData = res.data.filter((item) => item.id !== 0);
-         setData(tableData);
-      });
-   };
 
    return (
       <div>
@@ -67,27 +54,26 @@ const AddressList = ({ selectedAddressId, setSelectedAddressId }) => {
             itemLayout="horizontal"
             dataSource={data}
             renderItem={(item) => (
-               <List.Item>
+               <List.Item className="custom-list-item">
                   <Radio
+                     className="cart-address-radio"
                      onClick={() => setSelectedAddressId(item.id)}
                      checked={selectedAddressId === item.id}
                      value={item.id}
+                     buttonColor={'#2f9461'}
                   />
                   <List.Item.Meta
                      key={`${item.id}-${item.address}`}
-                     title={item.name}
+                     title={<span className="item-title">{item.name}</span>}
                      description={
                         <>
-                           <div>{item.address}</div>
+                           <div className="item-description">{item.address}</div>
                         </>
                      }
                   />
                </List.Item>
             )}
          />
-         <VerticalSpace />
-         <ModalButtonAddressCreate closeModal={fetchData} />
-         <VerticalSpace />
       </div>
    );
 };
@@ -113,28 +99,18 @@ const CartList = () => {
             className="list-my-storage"
             renderItem={(item) => (
                <List.Item
-                  style={{
-                     width: '100%',
-                     height: '80px',
-                     display: 'flex',
-                     padding: '10px 20px',
-                     alignItems: 'center',
-                     gap: '30px',
-                     alignSelf: 'stretch',
-                     borderRadius: '16px',
-                     background: '#FFF',
-                     boxShadow:
-                        '0px 5px 30px 0px rgba(103, 110, 118, 0.08), 0px 2px 15px 0px rgba(73, 75, 74, 0.15)'
-                  }}
+                  className="seller-cart-list-item"
                   actions={[
-                     <>
+                     <div
+                        className="seller-cart-list-item-input-container"
+                        key={`${item.id}-`}>
                         <MinusOutlined className="minus-outlined" />
                         <Input
+                           className="seller-cart-list-item-input"
                            min={1}
                            default={1}
                            onChange={(value) => onChange(item.id, value)}
                            size="small"
-                           style={{ width: '120px' }}
                            value={item.quantity}
                            // addonAfter={
                            //    unitSettings.find((e) => e.value === item.unit)
@@ -142,12 +118,11 @@ const CartList = () => {
                            // }
                         />
                         <PlusOutlined className="plus-outlined" />
-                     </>
+                     </div>
                   ]}>
                   <List.Item.Meta
                      key={`${item.id}-`}
-                     className="cart-list-item"
-                     // title={item.name}
+                     className="seller-cart-list-item-meta"
                      description={
                         <>
                            <div
@@ -160,25 +135,8 @@ const CartList = () => {
                                  height: '60px'
                               }}
                            />
-                           <div
-                              style={{
-                                 display: 'flex',
-                                 flexDirection: 'column',
-                                 justifyContent: 'space-between',
-                                 width: '253px',
-                                 height: '60px'
-                              }}>
-                              <h3
-                                 style={{
-                                    margin: '0',
-                                    color: '#24292E',
-                                    fontSize: '12px',
-                                    fontStyle: 'normal',
-                                    fontWeight: '400',
-                                    lineHeight: '130%'
-                                 }}>
-                                 {item.name}
-                              </h3>
+                           <div className="item-description-container">
+                              <p>{item.name}</p>
                               <span
                                  className="green-span-url"
                                  type="link"
@@ -199,7 +157,11 @@ const CartList = () => {
 const DrawerCart = (props) => {
    const [open, setOpen] = useState(false);
    const [selectedAddressId, setSelectedAddressId] = useState(null);
+   const [isLoading, setIsLoading] = useState(false);
+   const [data, setData] = useState([]);
+
    const cartData = useSelector(getCartItems);
+   const cartCount = useSelector(getCartCount);
    const dispatch = useDispatch();
 
    const showDrawer = () => {
@@ -245,35 +207,64 @@ const DrawerCart = (props) => {
          .catch((e) => message.error(e.message));
    };
 
+   const fetchData = () => {
+      setIsLoading(true);
+
+      GetMyAddressList({
+         page: 1,
+         status: 'active',
+         limit: 1000,
+         sort: 'id',
+         order: 'asc'
+      }).then((res) => {
+         setIsLoading(false);
+         const tableData = res.data.filter((item) => item.id !== 0);
+         setData(tableData);
+      });
+   };
+
+
    return (
       <div>
          <span onClick={showDrawer}>{props.button}</span>
          <Drawer
-            style={{ padding: '20px, 20px, 20px, 20px' }}
-            title="Текущий заказ"
-            placement="right"
-            onClose={onClose}
-            width={630}
-            open={open}
-            extra={
-               <Space>
-                  <Button onClick={onClose}>Закрыть</Button>
-                  <Button type="primary" danger onClick={cleanCart}>
+            className="cart-drawer"
+            title={
+               <>
+                  <div className="cart-drawer-title-container">
+                     <h2 style={{}}>
+                        Корзина{' '}
+                        <Badge className="item-quantity-badge" count={cartCount} />
+                     </h2>
+                     <CloseOutlined onClick={() => onClose()} />
+                  </div>
+                  <span className="clear-cart-button" onClick={cleanCart}>
                      Очистить корзину
-                  </Button>
-               </Space>
-            }>
-            <Divider orientation="left">Позиции заказа</Divider>
+                  </span>
+               </>
+            }
+            onClose={onClose}
+            placement="right"
+            width={630}
+            open={open}>
             <CartList />
-
-            <Divider orientation="left">Адрес вывоза</Divider>
+            <div className="address-section">
+               <h3 style={{ padding: '0px' }}>Адрес вывоза</h3>
+               <ModalButtonAddressCreate closeModal={fetchData} />
+            </div>
             <AddressList
+               data={data}
+               fetchData={fetchData}
                selectedAddressId={selectedAddressId}
                setSelectedAddressId={setSelectedAddressId}
             />
 
-            <Button type="primary" onClick={createOrder} style={{ width: '100%' }}>
-               Отправить заказ
+            <Button
+               className="cart-send-order"
+               type="primary"
+               onClick={createOrder}
+               style={{ width: '100%' }}>
+               Оформить заказ
             </Button>
          </Drawer>
       </div>
