@@ -12,10 +12,11 @@ import {
    Typography
 } from 'antd';
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
-import { GetCatalogsListByParentId } from '../model/services/GetCatalogsListByParentId';
-import CategoriesList from '@shared/ui/FilterCategory';
+import { GetCatalogsList } from '../model/services/GetCatalogsList';
+import FilterCategory from '@shared/ui/FilterCategory';
 import AddToCartWithQuantity from '@features/storage/ui/AddToCartWithQuantity';
-import { extraActions, getSearchCatalog } from '@entitles/Extra';
+import SpinnerInContainer from '@shared/ui/SpinnerInContainer';
+import { extraActions, getSearchCatalog, getFilterCatalog } from '@entitles/Extra';
 import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
 
@@ -25,6 +26,7 @@ const info = (content) => {
    Modal.info({
       title: 'Подробнее',
       width: 1200,
+      maskClosable: true,
       closeIcon: true,
       content: <div dangerouslySetInnerHTML={{ __html: content }} />,
       onOk() {},
@@ -76,22 +78,26 @@ const CatalogCardsByParentId = ({ items }) => {
 
 const CardListCatalogs = () => {
    const [initialData, setInitialData] = useState([]);
+   const [loading, setLoading] = useState(false);
    const [data, setData] = useState([]);
    const [searchStr, setSearchStr] = useState('');
    const dispatch = useDispatch();
    const searchText = useSelector(getSearchCatalog);
+   const catalogFilter = useSelector(getFilterCatalog);
 
    useEffect(() => {
       fetchMainCatalog();
    }, []);
 
    useEffect(() => {
-      filterData(searchText);
-   }, [searchText]);
+      filterData(searchText, catalogFilter);
+   }, [searchText, catalogFilter]);
 
    const fetchMainCatalog = () => {
-      GetCatalogsListByParentId(0, {
+      setLoading(true);
+      GetCatalogsList({
          page: 1,
+         parentId: 0,
          limit: 1000,
          sort: 'priority',
          order: 'asc'
@@ -102,8 +108,9 @@ const CardListCatalogs = () => {
 
          mainData.forEach((e) =>
             promises.push(
-               GetCatalogsListByParentId(e.id, {
+               GetCatalogsList({
                   page: 1,
+                  parentId: e.id,
                   limit: 1000,
                   sort: 'priority',
                   order: 'asc'
@@ -114,21 +121,29 @@ const CardListCatalogs = () => {
          await Promise.all(promises).then(() => {
             setData(dataArr);
             setInitialData(dataArr);
+            setLoading(false);
          });
       });
    };
 
-   const filterData = (search) => {
-      if (!search) {
+   const filterData = (search, ctlgFilter) => {
+      if (!search && ctlgFilter.length === 0) {
          return setData(initialData);
       }
 
       const filtered = initialData.map((e) => {
          return {
             ...e,
-            items: e.items.filter((item) =>
-               item.name.toLowerCase().includes(search.toLowerCase())
-            )
+            items: e.items.filter((item) => {
+               if (search) {
+                  return item.name.toLowerCase().includes(search.toLowerCase());
+               }
+
+               if (ctlgFilter.length > 0) {
+                  console.log();
+                  return ctlgFilter.includes(item.parentId);
+               }
+            })
          };
       });
 
@@ -146,9 +161,13 @@ const CardListCatalogs = () => {
       debouncedSearch(value);
    };
 
+   if (loading) {
+      return <SpinnerInContainer />;
+   }
+
    return (
       <div className="general-page">
-         {/* <CategoriesList data={data} setData={setData} /> */}
+         <FilterCategory data={data} />
          <div style={{ width: '100%' }}>
             {data.map((item) => (
                <React.Fragment key={`${item.id}-${item.name}`}>

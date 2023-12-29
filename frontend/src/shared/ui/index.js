@@ -16,6 +16,7 @@ import DateWithAgo from './Custom/DateWithAgo';
 // import StatusProgress from './Custom/StatusProgress';
 // import StatusProgressSteps from './Custom/StatusProgressSteps';
 import { MenuProfile } from './MenuProfile';
+import SpinnerInContainer from './SpinnerInContainer';
 
 export {
    Button,
@@ -35,5 +36,6 @@ export {
    // StatusProgress,
    // StatusProgressSteps
    // StatusTag,
-   VerticalSpace
+   VerticalSpace,
+   SpinnerInContainer
 };

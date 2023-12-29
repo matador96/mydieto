@@ -1,9 +1,10 @@
 import React from 'react';
 import { InputNumber, message } from 'antd';
 import _ from 'lodash';
+import { unitSettings } from '@shared/const/units';
 import { UpdateOrderItem } from './../model/services/UpdateOrderItem';
 
-const OrderItemPriceInput = ({ value, orderItemId, unit, fetchOrders }) => {
+const OrderItemQuantityInput = ({ value, orderItemId, unit, fetchOrders }) => {
    const save = (value) => {
       // const isInteger = /^[0-9]+$/;
 
@@ -12,29 +13,27 @@ const OrderItemPriceInput = ({ value, orderItemId, unit, fetchOrders }) => {
       //    return;
       // }
 
-      UpdateOrderItem(orderItemId, { unitPrice: value })
+      UpdateOrderItem(orderItemId, { quantity: value })
          .then(() => {
-            message.success('Цена выставлена');
+            message.success('Объем изменен');
             fetchOrders();
          })
          .catch((e) => message.error(e.message));
    };
 
-   const unitText = `руб/кг`;
-   // ${unitSettings.find((e) => e.value === unit).shortLabel}
+   const unitText = `${unitSettings.find((e) => e.value === unit).shortLabel}`;
    const debouncedChange = _.debounce(save, 500);
 
    return (
       <InputNumber
+         style={{ width: '130px' }}
          min={0}
          defaultValue={value}
-         step="0.01"
+         step="1"
          onChange={(value) => debouncedChange(value)}
          addonAfter={unitText}
-         stringMode
-         decimalSeparator="."
       />
    );
 };
 
-export default OrderItemPriceInput;
+export default OrderItemQuantityInput;
