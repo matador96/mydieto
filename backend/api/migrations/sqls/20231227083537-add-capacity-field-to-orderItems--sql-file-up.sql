@@ -1,0 +1,2 @@
+ALTER TABLE "orderItems"
+    ADD COLUMN "capacity" INTEGER NOT NULL DEFAULT 0;

@@ -1,51 +1,28 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React, { useState, useEffect } from 'react';
-import {
-   Button,
-   List,
-   Space,
-   Tooltip,
-   message,
-   Modal,
-   InputNumber,
-   Divider,
-   Input,
-   Checkbox,
-   Badge
-} from 'antd';
+import { Button, List, Space, message, Input, Checkbox, Badge } from 'antd';
 
-import {
-   ExclamationCircleFilled,
-   ShoppingCartOutlined,
-   MinusOutlined,
-   PlusOutlined,
-   CloseOutlined
-} from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { GetStorageMyWithParams } from '../model/GetStorageMyWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
 
-import { unitSettings } from '@shared/const/units';
-import { GetCatalogsListByParentId } from '@features/catalog/model/services/GetCatalogsListByParentId';
+import { GetCatalogsList } from '@features/catalog/model/services/GetCatalogsList';
 
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
-
+import SpinnerInContainer from '@shared/ui/SpinnerInContainer';
 import { cartActions } from '@entitles/Cart';
 import { useDispatch } from 'react-redux';
 import SelectAndDelete from './SelectAndDelete';
 import { Title } from '@shared/ui';
-
-const { confirm } = Modal;
+import _ from 'lodash';
 
 const StorageListQuantityWithSave = (props) => {
-   const { storage, isLoading, setQuantity } = props;
+   const { storage, isLoading } = props;
    const { quantity } = storage;
 
    const [inputQuantity, setInputQuantity] = useState(1);
    const dispatch = useDispatch();
-   useEffect(() => {
-      setQuantity(inputQuantity);
-   }, [inputQuantity]);
 
    const addToCart = () => {
       const quantityValue = parseInt(inputQuantity, 10);
@@ -110,17 +87,19 @@ const StorageListQuantityWithSave = (props) => {
 
 const StorageList = () => {
    const [isLoading, setIsLoading] = useState(false);
-   const [chooseAllCheckbox, setChooseAllCheckbox] = useState(false);
+   const [isMainLoading, setMainIsLoading] = useState(false);
+   const [choosedAll, setChoosedAll] = useState(false);
+   const [checkboxList, setCheckboxList] = useState([]);
    const [data, setData] = useState([]);
-   const [quantityMap, setQuantityMap] = useState({});
 
    useEffect(() => {
+      setMainIsLoading(true);
       fetchData();
    }, []);
 
-   const save = (itemId) => {
+   const save = (itemId, value) => {
       setIsLoading(true);
-      UpdateStorage({ quantity: quantityMap[itemId] }, itemId).then(() => {
+      UpdateStorage({ quantity: value }, itemId).then(() => {
          setIsLoading(false);
          fetchData();
          message.success('Сохранено');
@@ -128,7 +107,6 @@ const StorageList = () => {
    };
 
    const fetchData = () => {
-      setIsLoading(true);
       GetStorageMyWithParams({
          page: 1,
          limit: 1000,
@@ -137,8 +115,9 @@ const StorageList = () => {
       }).then((res) => {
          const storageData = res.data;
 
-         GetCatalogsListByParentId(0, {
+         GetCatalogsList({
             page: 1,
+            parentId: 0,
             limit: 1000,
             sort: 'priority',
             order: 'asc'
@@ -157,33 +136,89 @@ const StorageList = () => {
                newModifiedList.push({ catalog: e, items });
             });
 
-            setIsLoading(false);
+            setMainIsLoading(false);
             setData(newModifiedList.filter((p) => p.items.length));
          });
       });
    };
 
-   const showConfirmDelete = (id) => {
-      return confirm({
-         title: 'Вы точно удалить?',
-         icon: <ExclamationCircleFilled />,
-         maskClosable: true,
-         async onOk() {
-            DeleteStorageById(id).then(() => {
-               fetchData();
-               message.success('Удалено из склада');
-            });
-         },
-         okText: 'Удалить',
-         cancelText: 'Отмена'
-      });
-   };
+   // const showConfirmDelete = (id) => {
+   //    return confirm({
+   //       title: 'Вы точно удалить?',
+   //       icon: <ExclamationCircleFilled />,
+   //       maskClosable: true,
+   //       async onOk() {
+   //          DeleteStorageById(id).then(() => {
+   //             fetchData();
+   //             message.success('Удалено из склада');
+   //          });
+   //       },
+   //       okText: 'Удалить',
+   //       cancelText: 'Отмена'
+   //    });
+   // };
 
    const storageItemTitle = data.map((item) => item.items.length);
    const storageItemTitleCount = storageItemTitle.reduce(
       (accumulator, currentValue) => accumulator + currentValue,
       0
    );
+
+   const addAll = () => {
+      const allStorageIds = [];
+      data.map((e) => e.items.map((v) => allStorageIds.push(v.id)));
+
+      const isChoosedAll =
+         allStorageIds.length === checkboxList.length && checkboxList.length !== 0;
+
+      if (isChoosedAll) {
+         setChoosedAll(false);
+         setCheckboxList([]);
+         return;
+      }
+
+      setChoosedAll(true);
+      setCheckboxList(allStorageIds);
+   };
+
+   const onClickCheckbox = (val) => {
+      const allStorageIds = [];
+      data.map((e) => e.items.map((v) => allStorageIds.push(v.id)));
+
+      const isChoosedAll =
+         allStorageIds.length === checkboxList.length && checkboxList.length !== 0;
+
+      if (checkboxList.includes(val)) {
+         setCheckboxList(checkboxList.filter((e) => e !== val));
+
+         if (isChoosedAll) {
+            setChoosedAll(false);
+         }
+         return;
+      }
+
+      setCheckboxList((prev) => [...prev, val]);
+   };
+
+   const onClickDeleteChoosed = async () => {
+      const promises = [];
+
+      promises.push(checkboxList.map(async (e) => await DeleteStorageById(e)));
+
+      await Promise.all(promises);
+      fetchData();
+
+      message.success('Удалено из склада');
+
+      setChoosedAll(false);
+      setCheckboxList([]);
+   };
+
+   const debouncedChange = _.debounce(save, 500);
+
+   if (isMainLoading) {
+      return <SpinnerInContainer />;
+   }
 
    return (
       <div>
@@ -196,8 +231,9 @@ const StorageList = () => {
          </Title>
 
          <SelectAndDelete
-            setChooseAllCheckbox={setChooseAllCheckbox}
-            chooseAllCheckbox={chooseAllCheckbox}
+            isChoosedAll={choosedAll}
+            addAll={addAll}
+            onClickDeleteChoosed={onClickDeleteChoosed}
          />
          {data.map((storageItem) => (
             <React.Fragment key={`storage-catalog-${storageItem.id}`}>
@@ -216,15 +252,15 @@ const StorageList = () => {
                   renderItem={(item) => (
                      <div>
                         <List.Item
-                           style={{ height: '91px', padding: '0 12px 0 19px' }}
+                           style={{
+                              height: '91px',
+                              padding: '0 12px 0 19px',
+                              background: checkboxList.includes(item.id)
+                                 ? '#F6FEF9'
+                                 : '#fff'
+                           }}
                            actions={[
                               <StorageListQuantityWithSave
-                                 setQuantity={(v) =>
-                                    setQuantityMap((prev) => ({
-                                       ...prev,
-                                       [item.id]: v
-                                    }))
-                                 }
                                  isLoading={isLoading}
                                  setIsLoading={setIsLoading}
                                  key={`${item.id}-g`}
@@ -233,7 +269,8 @@ const StorageList = () => {
                               />
                            ]}>
                            <Checkbox
-                              checked={chooseAllCheckbox}
+                              checked={checkboxList.includes(item.id)}
+                              onChange={() => onClickCheckbox(item.id)}
                               style={{ cursor: 'pointer' }}
                            />
 
@@ -260,18 +297,10 @@ const StorageList = () => {
                                        className="storage-item-input"
                                        min={1}
                                        max={100}
-                                       defaultValue={1}
+                                       defaultValue={item.quantity}
                                        addonBefore={'на складе'}
-                                       //    unitSettings.find(
-                                       //       (e) => e.value === item.catalog.unit
-                                       //    ).shortLabel
-
-                                       value={item.quantity}
-                                       onChange={(v) =>
-                                          setQuantityMap((prev) => ({
-                                             ...prev,
-                                             [item.id]: v
-                                          }))
+                                       onChange={(e) =>
+                                          debouncedChange(item.id, e.target.value)
                                        }
                                     />
                                  </div>

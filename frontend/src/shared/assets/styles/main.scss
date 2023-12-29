@@ -243,7 +243,6 @@
          grid-column-gap: 24px;
          width: 82%;
          padding: 4px 4px 4px 0;
-         border-radius: 4px 4px 0 0;
          border-radius: 10px;
 
          display: flex;
@@ -615,6 +614,15 @@ body {
    background-size: cover;
    background-position: center;
    background-repeat: no-repeat;
+
+}
+
+.spinner-container {
+   min-height: 40vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: auto;
 }
 
 .menu-items {

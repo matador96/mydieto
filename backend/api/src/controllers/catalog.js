@@ -13,20 +13,24 @@ module.exports.getById = async (req) => {
 };
 
 module.exports.getWithParams = async (req) => {
+  const { parentId } = req.query;
+  if (!Array.isArray(parentId)) {
+    req.query.parentId = [parentId];
+  }
   const result = await CatalogService.getWithParams(req.query);
   return { data: result.data, count: result.count };
 };
 
-module.exports.getCatalogsWithParamsByParentId = async (req) => {
-  const { parentId } = req.params;
+// module.exports.getCatalogsWithParamsByParentId = async (req) => {
+//   const { parentId } = req.params;
 
-  const result = await CatalogService.getWithParamsByParentId({
-    ...req.query,
-    parentId,
-  });
+//   const result = await CatalogService.getWithParamsByParentId({
+//     ...req.query,
+//     parentId,
+//   });
 
-  return { data: result.data, count: result.count };
-};
+//   return { data: result.data, count: result.count };
+// };
 
 module.exports.create = async (req, res, transaction) => {
   const catalogData = {
