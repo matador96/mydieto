@@ -223,7 +223,6 @@ const DrawerCart = (props) => {
       });
    };
 
-
    return (
       <div>
          <span onClick={showDrawer}>{props.button}</span>
@@ -234,7 +233,11 @@ const DrawerCart = (props) => {
                   <div className="cart-drawer-title-container">
                      <h2 style={{}}>
                         Корзина{' '}
-                        <Badge className="item-quantity-badge" count={cartCount} />
+                        <Badge
+                           style={{ marginBottom: '15px' }}
+                           className="item-quantity-badge"
+                           count={cartCount}
+                        />
                      </h2>
                      <CloseOutlined onClick={() => onClose()} />
                   </div>

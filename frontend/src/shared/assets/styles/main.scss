@@ -1055,7 +1055,10 @@ body {
       position: relative;
       background: #fff;
       z-index: 1000;
-
+      height: 69px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       .cart-drawer-title-container {
          height: 31px;
          display: flex;
