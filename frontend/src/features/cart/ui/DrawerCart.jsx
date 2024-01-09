@@ -88,6 +88,11 @@ const CartList = () => {
    };
 
    const onChange = (id, value) => {
+      if (value < 1) {
+         message.info('Число меньше 1, нельзя выставить, можно удалить позицию');
+         return;
+      }
+
       dispatch(cartActions.updateCart(id, value));
    };
 
@@ -104,7 +109,10 @@ const CartList = () => {
                      <div
                         className="seller-cart-list-item-input-container"
                         key={`${item.id}-`}>
-                        <MinusOutlined className="minus-outlined" />
+                        <MinusOutlined
+                           className="minus-outlined"
+                           onClick={() => onChange(item.id, item.quantity - 1)}
+                        />
                         <Input
                            className="seller-cart-list-item-input"
                            min={1}
@@ -117,7 +125,10 @@ const CartList = () => {
                            //       .shortLabel
                            // }
                         />
-                        <PlusOutlined className="plus-outlined" />
+                        <PlusOutlined
+                           className="plus-outlined"
+                           onClick={() => onChange(item.id, item.quantity + 1)}
+                        />
                      </div>
                   ]}>
                   <List.Item.Meta
