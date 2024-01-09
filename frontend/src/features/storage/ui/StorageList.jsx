@@ -37,7 +37,8 @@ const StorageListQuantityWithSave = (props) => {
                id: props.storage.catalog.id,
                name: props.storage.catalog.name,
                quantity: quantityValue,
-               unit: storage.catalog.unit
+               unit: storage.catalog.unit,
+               imgUrl: storage.catalog.imgUrl
             })
          );
          message.success('Добавлено в корзину');
