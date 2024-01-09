@@ -201,17 +201,33 @@ const StorageList = () => {
    };
 
    const onClickDeleteChoosed = async () => {
-      const promises = [];
+      setMainIsLoading(true);
 
-      promises.push(checkboxList.map(async (e) => await DeleteStorageById(e)));
+      function fetchWithDelay(e, delay) {
+         return new Promise((resolve, reject) => {
+            setTimeout(() => {
+               DeleteStorageById(e)
+                  .then(() => {
+                     return true;
+                  })
+                  .then((data) => resolve(data))
+                  .catch((error) => reject(error));
+            }, delay);
+         });
+      }
 
-      await Promise.all(promises);
-      fetchData();
+      const fetchPromises = checkboxList.map(async (e, index) =>
+         fetchWithDelay(e, index * 500)
+      );
 
-      message.success('Удалено из склада');
+      await Promise.all(fetchPromises).then(() => {
+         fetchData();
 
-      setChoosedAll(false);
-      setCheckboxList([]);
+         message.success('Удалено из склада');
+
+         setChoosedAll(false);
+         setCheckboxList([]);
+      });
    };
 
    const debouncedChange = _.debounce(save, 500);
@@ -223,7 +239,7 @@ const StorageList = () => {
    return (
       <div>
          <Title className="storage-title">
-            Склад{' '}
+            Склад
             <Badge
                offset={[-4, -27]}
                className="storage-items-quantity-badge"
@@ -296,7 +312,6 @@ const StorageList = () => {
                                     <Input
                                        className="storage-item-input"
                                        min={1}
-                                       max={100}
                                        defaultValue={item.quantity}
                                        addonBefore={'на складе'}
                                        onChange={(e) =>
