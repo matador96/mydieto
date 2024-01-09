@@ -96,7 +96,6 @@ const CartList = () => {
       dispatch(cartActions.updateCart(id, value));
    };
 
-   console.log(cartData);
    return (
       <div>
          <List
