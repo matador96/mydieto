@@ -242,3 +242,48 @@ body {
    align-items: center;
    justify-content: center;
 }
+
+.custom-input-container.ant-form-item-has-error .ant-form-item-label > label {
+   color: rgba(205, 54, 54, 1); /* Красный цвет для метки при ошибке */
+}
+.custom-input-container.ant-form-item-has-error {
+   border-color: rgba(205, 54, 54, 1);
+}
+
+.custom-input-container.ant-form-item-has-error
+   .ant-form-item-control-input
+   .ant-input-affix-wrapper,
+.custom-input-container.ant-form-item-has-error
+   .ant-form-item-control-input
+   .ant-input {
+   border-color: #ff4d4f; /* Красный цвет границы для Input при ошибке */
+}
+.custom-input-container .ant-form-item-explain-error {
+   margin: 8px 0 0 16px;
+   color: #cd3636 !important; /* Красный цвет текста */
+   font-family: Inter, sans-serif; /* Шрифт */
+   font-size: 12px; /* Размер шрифта */
+   font-style: normal; /* Стиль шрифта */
+   font-weight: 400; /* Толщина шрифта */
+   line-height: 16px; /* Высота строки */
+   width: 300px !important;
+}
+
+.custom-input-container .ant-form-item-help {
+   color: #cd3636; /* Красный цвет текста */
+   margin: 4px 0 0 16px;
+   width: 300px;
+}
+
+.custom-input-container.ant-form-item-has-error
+   .ant-form-item-control-input
+   .ant-input:focus,
+.custom-input-container.ant-form-item-has-error
+   .ant-form-item-control-input
+   .ant-input:hover,
+.custom-input-container.ant-form-item-has-error
+   .ant-form-item-control-input
+   .ant-input:active {
+   border-color: transparent !important; /* Задаем прозрачный цвет границы */
+   box-shadow: none !important; /* Убираем тень */
+}

@@ -614,7 +614,6 @@ body {
    background-size: cover;
    background-position: center;
    background-repeat: no-repeat;
-
 }
 
 .spinner-container {
@@ -1144,6 +1143,125 @@ body {
    font-size: 14px;
    font-style: normal;
    font-weight: 400;
+}
+
+.custom-input-container {
+   position: relative;
+   width: 300px;
+   height: 40px;
+   border: 1px solid #d9d9d9; /* Цвет и стиль бордера */
+   background-color: white;
+   border-radius: 10px;
+   margin-top: 34px;
+
+   .ant-form-item-label {
+      position: absolute;
+      padding: 0 5px 0 5px;
+      top: -14px; /* Положение над полем ввода */
+      left: 10px; /* Отступ справа */
+      background-color: white; /* Фон, совпадающий с фоном input */
+
+      .ant-form-item-required {
+         height: 16px;
+         color: #494b4a;
+         font-family: Inter;
+         font-size: 12px;
+         font-style: normal;
+         font-weight: 400;
+         line-height: 16px; /* 133.333% */
+      }
+   }
+   .ant-form-item-label > label {
+      height: 16px;
+      color: #494b4a;
+      font-family: Inter;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px;
+   }
+   .ant-form-item-label > label::after {
+      content: none;
+   }
+
+   .custom-input {
+      border: none; /* Убираем стандартный бордер у input */
+      background-color: transparent;
+      color: #676e76; /* Цвет текста */
+      font-family: Inter, sans-serif; /* Шрифт */
+      font-size: 16px; /* Размер шрифта */
+      font-style: normal; /* Стиль шрифта */
+      font-weight: 400; /* Толщина шрифта */
+      line-height: 24px; /* Высота строки */
+      letter-spacing: 0.5px; /* Межбуквенное расстояние */
+      width: 300px;
+      margin-top: 6px;
+      padding: 0 0 0 15px;
+      .custom-input .ant-input:focus {
+         border-color: transparent !important; /* Прозрачный цвет рамки */
+         box-shadow: none; /* Убираем тень, если она есть */
+      }
+
+      .custom-input .ant-input:hover {
+         border-color: transparent !important; /* Прозрачный цвет рамки */
+         box-shadow: none;
+      }
+      .custom-input .ant-input:active {
+         border-color: transparent !important; /* Прозрачный цвет рамки */
+         box-shadow: none;
+      }
+      /* Дополнительно: стилизация для отключенного состояния, если необходимо */
+      &:disabled {
+         /* Другие стили для отключенного состояния */
+      }
+   }
+
+   .profile-address-list {
+      // width: 501px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+
+      .profile-address {
+         height: 18px;
+      }
+
+      .ant-list-item-meta-content {
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
+         height: 46px;
+      }
+      .ant-list-item-meta .ant-list-item-meta-title {
+         max-width: 501px;
+         height: 18px;
+         color: #24292e;
+         font-family: Inter;
+         font-size: 14px;
+         font-style: normal;
+         font-weight: 600;
+         line-height: 130%; /* 18.2px */
+      }
+
+      .ant-list-item-meta-description {
+         max-width: 501px;
+         height: 18px;
+      }
+      .ant-descriptions-item-content {
+         color: #24292e;
+         font-family: Inter;
+         font-size: 14px;
+         font-style: normal;
+         font-weight: 400;
+         line-height: 130%; /* 18.2px */
+         align-self: stretch;
+      }
+   }
+
+   /* Отступ для Input внутри Form.Item, чтобы текст не перекрывался */
+   // .ant-form-item-control-input {
+   //    padding-right: 60px;
+   // }
 }
 
 // .order-tabs {

@@ -23,28 +23,36 @@ const ModalButtonAddressCreate = ({ closeModal = () => {} }) => {
 
    return (
       <>
-         <div style={{ width: '143px' }}>
-            <PlusOutlined
-               onClick={showModal}
-               style={{
-                  color: 'rgba(47, 148, 97, 1)',
-                  marginRight: '6px',
-                  cursor: 'pointer'
-               }}
-            />
-            <span
-               style={{
-                  color: 'rgba(47, 148, 97, 1)',
-                  fontFamily: 'Inter',
-                  fontSize: '14px',
-                  fontStyle: 'normal',
-                  fontWeight: '500',
-                  cursor: 'pointer'
-               }}
-               type="primary"
-               onClick={showModal}>
-               Добавить адрес
-            </span>
+         <div
+            style={{
+               display: 'flex',
+               justifyContent: 'space-between',
+               alignItems: 'center'
+            }}>
+           
+            <div style={{ width: '143px' }}>
+               <PlusOutlined
+                  onClick={showModal}
+                  style={{
+                     color: 'rgba(47, 148, 97, 1)',
+                     marginRight: '6px',
+                     cursor: 'pointer'
+                  }}
+               />
+               <span
+                  style={{
+                     color: 'rgba(47, 148, 97, 1)',
+                     fontFamily: 'Inter',
+                     fontSize: '14px',
+                     fontStyle: 'normal',
+                     fontWeight: '500',
+                     cursor: 'pointer'
+                  }}
+                  type="primary"
+                  onClick={showModal}>
+                  Добавить адрес
+               </span>
+            </div>
          </div>
          <Modal
             open={isModalOpen}
