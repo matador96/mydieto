@@ -98,7 +98,7 @@ const EditMySellerForm = () => {
    };
 
    return (
-      <div style={{ marginTop: '40px' }}>
+      <div style={{ marginTop: '40px', maxWidth: '300px' }}>
          <Form
             name="basic"
             labelCol={{
@@ -180,7 +180,16 @@ const EditMySellerForm = () => {
             <Form.Item
                className="custom-input-container"
                hasFeedback={false}
-               help="Вы не можете изменять почту"
+               help={
+                  <div
+                     style={{
+                        margin: '4px 0 0 16px',
+                        width: '300px',
+                        color: '#cd3636'
+                     }}>
+                     Вы не можете изменять почту
+                  </div>
+               }
                label="Почта"
                name="email"
                rules={[
@@ -198,27 +207,9 @@ const EditMySellerForm = () => {
                />
             </Form.Item>
 
-            <Form.Item
-               wrapperCol={{
-                  offset: 8,
-                  span: 16
-               }}></Form.Item>
-            <div
-               style={{
-                  width: '1300px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  height: '44px',
-                  alignItems: 'center'
-               }}>
+            <div className="save-and-exit-container">
                <Button
-                  style={{
-                     backgroundColor: 'rgba(47, 148, 97, 1)',
-                     color: 'white',
-                     width: '195px',
-                     height: '44px',
-                     borderRadius: '10px'
-                  }}
+                  className="profile-save-button"
                   type="primary"
                   htmlType="submit"
                   loading={isLoading}
@@ -226,12 +217,7 @@ const EditMySellerForm = () => {
                   Сохранить изменения
                </Button>
                <Button
-                  style={{
-                     width: '150px',
-                     height: '44px',
-                     background: '#CD3636',
-                     borderRadius: '10px'
-                  }}
+                  className="profile-save-button danger-button"
                   type="primary"
                   danger
                   onClick={showConfirm}>

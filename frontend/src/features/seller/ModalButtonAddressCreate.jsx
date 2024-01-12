@@ -29,7 +29,6 @@ const ModalButtonAddressCreate = ({ closeModal = () => {} }) => {
                justifyContent: 'space-between',
                alignItems: 'center'
             }}>
-           
             <div style={{ width: '143px' }}>
                <PlusOutlined
                   onClick={showModal}
@@ -39,17 +38,7 @@ const ModalButtonAddressCreate = ({ closeModal = () => {} }) => {
                      cursor: 'pointer'
                   }}
                />
-               <span
-                  style={{
-                     color: 'rgba(47, 148, 97, 1)',
-                     fontFamily: 'Inter',
-                     fontSize: '14px',
-                     fontStyle: 'normal',
-                     fontWeight: '500',
-                     cursor: 'pointer'
-                  }}
-                  type="primary"
-                  onClick={showModal}>
+               <span className="add-address" type="primary" onClick={showModal}>
                   Добавить адрес
                </span>
             </div>

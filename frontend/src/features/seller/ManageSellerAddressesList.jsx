@@ -81,26 +81,9 @@ const ManageSellerAddressesList = () => {
    };
 
    return (
-      <div>
-         <div
-            style={{
-               width: '100%',
-               display: 'flex',
-               justifyContent: 'space-between',
-               alignItems: 'center'
-            }}>
-            <p
-               style={{
-                  color: '#000',
-                  textAlign: 'center',
-                  fontFamily: 'Inter',
-                  fontSize: '16px',
-                  fontStyle: 'normal',
-                  fontWeight: '600',
-                  lineHeight: '24px'
-               }}>
-               Мои адреса
-            </p>
+      <div className="profile-address-container">
+         <div className="profile-added-address">
+            <p>Мои адреса</p>
             <ModalButtonAddressCreate closeModal={fetchData} />
             <ModalAddressForm
                selectedAddress={selectedAddress}
@@ -112,34 +95,12 @@ const ManageSellerAddressesList = () => {
             dataSource={data}
             renderItem={(item) => (
                <List.Item
-                  style={{
-                     border: 'none',
-                     height: '66px',
-                     width: '600px',
-                     display: 'flex',
-                     alignItems: 'center'
-                  }}
                   actions={[
-                     <Space
-                        style={{
-                           width: '69px',
-                           height: '35px',
-                           gap: '8px',
-                           display: 'flex',
-                           justifyContent: 'space-around',
-                           alignItems: 'end'
-                        }}
-                        direction="horizontal"
-                        key="dsfsdfdsf">
+                     <Space direction="horizontal" key="dsfsdfdsf">
                         <Tooltip
                            placement="right"
                            title={'Редактировать адрес'}
                            arrow={false}>
-                           {/* <Button
-                              type="primary"
-                              onClick={() => setSelectedAddress(item)}
-                              icon={addressDeleteIcon}
-                           /> */}
                            <img
                               style={{ cursor: 'pointer' }}
                               onClick={() => setSelectedAddress(item)}
@@ -151,12 +112,6 @@ const ManageSellerAddressesList = () => {
                            placement="right"
                            title={'Удалить адрес'}
                            arrow={false}>
-                           {/* <Button
-                              type="primary"
-                              danger
-                              onClick={() => showConfirmDelete(item.id)}
-                              icon={addressUpdateIcon}
-                           /> */}
                            <img
                               style={{ cursor: 'pointer' }}
                               onClick={() => showConfirmDelete(item.id)}
@@ -175,10 +130,6 @@ const ManageSellerAddressesList = () => {
                            <Descriptions.Item className="profile-address" span={3}>
                               {item.address || 'Не найден'}
                            </Descriptions.Item>
-
-                           {/* <Descriptions.Item label="Комментарий" span={3}>
-                              {item.comment || 'Не указан'}
-                           </Descriptions.Item> */}
                         </Descriptions>
                      }
                   />
