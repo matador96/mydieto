@@ -217,7 +217,7 @@ const EditMySellerForm = () => {
                </Button>
                <Button
                   className="profile-save-button danger-button"
-                  type="button"
+                  type="primary"
                   danger
                   onClick={(e) => {
                      e.stopPropagation();
