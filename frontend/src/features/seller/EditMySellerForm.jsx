@@ -32,6 +32,18 @@ const EditMySellerForm = () => {
          setInitialValues(res);
       });
    };
+   const showConfirm = () => {
+      return confirm({
+         title: 'Вы точно хотите выйти?',
+         icon: <ExclamationCircleFilled />,
+         maskClosable: true,
+         onOk() {
+            navigate(RoutePath.logout);
+         },
+         okText: 'Выйти',
+         cancelText: 'Отмена'
+      });
+   };
 
    const onFinish = (values) => {
       const differenceValuesKeys = _.reduce(
@@ -82,19 +94,6 @@ const EditMySellerForm = () => {
       }
 
       return false;
-   };
-
-   const showConfirm = () => {
-      return confirm({
-         title: 'Вы точно хотите выйти?',
-         icon: <ExclamationCircleFilled />,
-         maskClosable: true,
-         onOk() {
-            navigate(RoutePath.logout);
-         },
-         okText: 'Выйти',
-         cancelText: 'Отмена'
-      });
    };
 
    return (
@@ -218,9 +217,12 @@ const EditMySellerForm = () => {
                </Button>
                <Button
                   className="profile-save-button danger-button"
-                  type="primary"
+                  type="button"
                   danger
-                  onClick={showConfirm}>
+                  onClick={(e) => {
+                     e.stopPropagation();
+                     showConfirm();
+                  }}>
                   Выйти
                </Button>
             </div>

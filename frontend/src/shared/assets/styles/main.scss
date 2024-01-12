@@ -1310,6 +1310,7 @@ body {
       &.danger-button {
          width: 150px;
          background: #cd3636;
+         z-index: 1000;
       }
    }
 }
