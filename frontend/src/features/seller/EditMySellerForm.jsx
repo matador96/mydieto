@@ -182,9 +182,9 @@ const EditMySellerForm = () => {
                help={
                   <div
                      style={{
-                        margin: '4px 0 0 16px',
-                        width: '300px',
-                        color: '#cd3636'
+                        margin: '10px 0 0 16px',
+                        color: 'grey',
+                        fontSize: '11px'
                      }}>
                      Вы не можете изменять почту
                   </div>
