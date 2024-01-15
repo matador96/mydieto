@@ -22,18 +22,15 @@ import {
 } from 'antd';
 import ModalButtonAddressCreate from '@features/seller/ModalButtonAddressCreate';
 
-import {
-   EditOutlined,
-   DeleteOutlined,
-   ExclamationCircleFilled
-} from '@ant-design/icons';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import ModalAddressForm from './ModalAddressForm';
 import UserForm from '@features/user/UserForm';
 // import SellerAddressesForm from './SellerAddressesForm';
 import { GetMyAddressList } from './model/GetMyAddressList';
 import { UpdateMyAddress } from './model/UpdateMyAddress';
-
+import addressDeleteIcon from '../../shared/assets/images/profileAddressDeleteIcon.svg';
+import addressUpdateIcon from '../../shared/assets/images/profileAddressUpdateIcon.svg';
 const { confirm } = Modal;
 
 const ManageSellerAddressesList = () => {
@@ -84,57 +81,54 @@ const ManageSellerAddressesList = () => {
    };
 
    return (
-      <div>
-         <ModalButtonAddressCreate closeModal={fetchData} />
-         <ModalAddressForm
-            selectedAddress={selectedAddress}
-            closeModal={closeModal}
-         />
+      <div className="profile-address-container">
+         <div className="profile-added-address">
+            <p>Мои адреса</p>
+            <ModalButtonAddressCreate closeModal={fetchData} />
+            <ModalAddressForm
+               selectedAddress={selectedAddress}
+               closeModal={closeModal}
+            />
+         </div>
          <List
             itemLayout="horizontal"
             dataSource={data}
             renderItem={(item) => (
                <List.Item
                   actions={[
-                     <Space direction="vertical" key="dsfsdfdsf">
+                     <Space direction="horizontal" key="dsfsdfdsf">
                         <Tooltip
                            placement="right"
                            title={'Редактировать адрес'}
-                           arrow={false}
-                        >
-                           <Button
-                              type="primary"
+                           arrow={false}>
+                           <img
+                              style={{ cursor: 'pointer' }}
                               onClick={() => setSelectedAddress(item)}
-                              icon={<EditOutlined />}
+                              src={addressUpdateIcon}
                            />
                         </Tooltip>
 
                         <Tooltip
                            placement="right"
                            title={'Удалить адрес'}
-                           arrow={false}
-                        >
-                           <Button
-                              type="primary"
-                              danger
+                           arrow={false}>
+                           <img
+                              style={{ cursor: 'pointer' }}
                               onClick={() => showConfirmDelete(item.id)}
-                              icon={<DeleteOutlined />}
+                              src={addressDeleteIcon}
                            />
                         </Tooltip>
                      </Space>
-                  ]}
-               >
+                  ]}>
                   <List.Item.Meta
+                     className="profile-address-list"
+                     style={{}}
                      key={`${item.id}-${item.address}`}
                      title={item.name}
                      description={
-                        <Descriptions size="small">
-                           <Descriptions.Item label="Адрес" span={3}>
+                        <Descriptions style={{ height: '18px' }} size="small">
+                           <Descriptions.Item className="profile-address" span={3}>
                               {item.address || 'Не найден'}
-                           </Descriptions.Item>
-
-                           <Descriptions.Item label="Комментарий" span={3}>
-                              {item.comment || 'Не указан'}
                            </Descriptions.Item>
                         </Descriptions>
                      }

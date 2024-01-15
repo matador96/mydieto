@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input } from '@shared/ui';
-import { message } from 'antd';
+import { Modal, message } from 'antd';
 import { GetSellersList } from '@features/storage/model/GetSellersList';
 
 import { GetMySellerProfile } from './model/GetMySellerProfile';
 import { UpdateMySellerProfile } from './model/UpdateMySellerProfile';
 import _ from 'lodash';
+import { useNavigate } from 'react-router-dom';
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { RoutePath } from '@shared/config/routes';
+
+const { confirm } = Modal;
 
 const prefixSelector = <Form.Item noStyle>+7</Form.Item>;
 
 const EditMySellerForm = () => {
-   const [isLoading, setIsLoading] = useState(false);
-   const [isEdited, setIsEdited] = useState(false);
-
    const [initialValues, setInitialValues] = useState({});
+   const [isEdited, setIsEdited] = useState(false);
+   const [isLoading, setIsLoading] = useState(false);
    const [form] = Form.useForm();
+   const navigate = useNavigate();
 
    useEffect(() => {
       fetchData();
@@ -25,6 +30,18 @@ const EditMySellerForm = () => {
          // form.setFieldsValue(res);
          console.log(res);
          setInitialValues(res);
+      });
+   };
+   const showConfirm = () => {
+      return confirm({
+         title: 'Вы точно хотите выйти?',
+         icon: <ExclamationCircleFilled />,
+         maskClosable: true,
+         onOk() {
+            navigate(RoutePath.logout);
+         },
+         okText: 'Выйти',
+         cancelText: 'Отмена'
       });
    };
 
@@ -80,113 +97,137 @@ const EditMySellerForm = () => {
    };
 
    return (
-      <Form
-         name="basic"
-         labelCol={{
-            span: 8
-         }}
-         wrapperCol={{
-            span: 16
-         }}
-         style={{
-            maxWidth: 460,
-            minWidth: 320
-         }}
-         initialValues={initialValues}
-         form={form}
-         hideRequiredMark
-         onFieldsChange={() => setIsEdited(true)}
-         onFinish={onFinish}
-         onFinishFailed={onFinishFailed}>
-         <Form.Item
-            label="Имя"
-            name="firstName"
-            rules={[
-               {
-                  required: true,
-                  message: 'Поле не может быть пустым'
-               }
-            ]}>
-            <Input />
-         </Form.Item>
-
-         <Form.Item
-            label="Фамилия"
-            name="lastName"
-            rules={[
-               {
-                  required: true,
-                  message: 'Поле не может быть пустым'
-               }
-            ]}>
-            <Input />
-         </Form.Item>
-
-         <Form.Item
-            label="Телефон"
-            name="mobile"
-            rules={[
-               {
-                  required: true,
-                  message: 'Поле не может быть пустым'
-               },
-               {
-                  pattern: /^[0-9]{10}$/,
-                  message: 'Неверный формат номера телефона'
-               },
-               {
-                  validator: async (_, val) => {
-                     const isExist = await checkNumberIsExist(val);
-
-                     if (isExist) {
-                        return Promise.reject('Такой номер уже есть в базе');
-                     }
-
-                     return Promise.resolve();
-                  }
-               }
-            ]}>
-            <Input
-               type="number"
-               addonBefore={prefixSelector}
-               style={{
-                  width: '100%'
-               }}
-            />
-         </Form.Item>
-         <Form.Item
-            hasFeedback={false}
-            help="Вы не можете изменять почту"
-            label="Почта"
-            name="email"
-            rules={[
-               {
-                  message: 'Нельзя менять почту'
-               }
-            ]}>
-            <Input
-               type="email"
-               style={{
-                  width: '100%'
-               }}
-               disabled={true}
-            />
-         </Form.Item>
-
-         <Form.Item
+      <div style={{ marginTop: '40px', maxWidth: '300px' }}>
+         <Form
+            name="basic"
+            labelCol={{
+               span: 8
+            }}
             wrapperCol={{
-               offset: 8,
                span: 16
-            }}>
-            <Button
-               type="primary"
-               htmlType="submit"
-               loading={isLoading}
-               disabled={!isEdited}>
-               Сохранить
-            </Button>
-         </Form.Item>
-      </Form>
+            }}
+            style={{
+               maxWidth: 460,
+               minWidth: 320
+            }}
+            initialValues={initialValues}
+            form={form}
+            hideRequiredMark
+            onFieldsChange={() => setIsEdited(true)}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}>
+            <Form.Item
+               label="Имя"
+               name="firstName"
+               className="custom-input-container"
+               rules={[
+                  {
+                     required: true,
+                     message: 'Поле не может быть пустым'
+                  }
+               ]}>
+               <Input className="custom-input" />
+            </Form.Item>
+
+            <Form.Item
+               label="Фамилия"
+               className="custom-input-container"
+               name="lastName"
+               rules={[
+                  {
+                     required: true,
+                     message: 'Поле не может быть пустым'
+                  }
+               ]}>
+               <Input className="custom-input" />
+            </Form.Item>
+
+            <Form.Item
+               label="Телефон"
+               className="custom-input-container"
+               name="mobile"
+               rules={[
+                  {
+                     required: true,
+                     message: 'Поле не может быть пустым'
+                  },
+                  {
+                     pattern: /^[0-9]{11}$/,
+                     message: 'Неверный формат номера телефона'
+                  },
+                  {
+                     validator: async (_, val) => {
+                        const isExist = await checkNumberIsExist(val);
+
+                        if (isExist) {
+                           return Promise.reject('Такой номер уже есть в базе');
+                        }
+
+                        return Promise.resolve();
+                     }
+                  }
+               ]}>
+               <Input
+                  className="custom-input"
+                  // type="number"
+                  // addonBefore={prefixSelector}
+                  style={{
+                     width: '100%'
+                  }}
+               />
+            </Form.Item>
+            <Form.Item
+               className="custom-input-container"
+               hasFeedback={false}
+               help={
+                  <div
+                     style={{
+                        margin: '4px 0 0 16px',
+                        width: '300px',
+                        color: '#cd3636'
+                     }}>
+                     Вы не можете изменять почту
+                  </div>
+               }
+               label="Почта"
+               name="email"
+               rules={[
+                  {
+                     message: 'Нельзя менять почту'
+                  }
+               ]}>
+               <Input
+                  className="custom-input"
+                  type="email"
+                  style={{
+                     width: '100%'
+                  }}
+                  disabled={true}
+               />
+            </Form.Item>
+
+            <div className="save-and-exit-container">
+               <Button
+                  className="profile-save-button"
+                  type="primary"
+                  htmlType="submit"
+                  loading={isLoading}
+                  disabled={!isEdited}>
+                  Сохранить изменения
+               </Button>
+               <Button
+                  className="profile-save-button danger-button"
+                  type="primary"
+                  danger
+                  onClick={(e) => {
+                     e.stopPropagation();
+                     showConfirm();
+                  }}>
+                  Выйти
+               </Button>
+            </div>
+         </Form>
+      </div>
    );
 };
 
