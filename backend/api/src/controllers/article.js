@@ -1,9 +1,8 @@
-const { body, param, query } = require("express-validator");
+const { body, param } = require("express-validator");
 const Validations = require("../const/validatorSettings");
 const { allStatuses } = require("../config/statusSettings");
 
 const ArticleService = require("../services/articles");
-const ImageService = require("../services/images");
 
 module.exports.getById = async (req) => {
   const { id } = req.params;
@@ -38,18 +37,6 @@ module.exports.create = async (req, res, transaction) => {
   };
   let article = await ArticleService.create(articleData, { transaction });
 
-  if (req?.files?.image) {
-    const image = req?.files?.image;
-    if (image) {
-      const imageFromDisk = await ImageService.uploadImageToDisk(image, article);
-      article = await ArticleService.update(
-        { img: imageFromDisk.id },
-        { id: article.id },
-        { transaction },
-      );
-    }
-  }
-
   return {
     data: article,
   };
@@ -61,18 +48,6 @@ module.exports.update = async (req, res, transaction) => {
     ...req.body,
   };
 
-  const prevData = await ArticleService.getById(id, { transaction });
-
-  if (req?.files?.image) {
-    const image = req?.files?.image;
-    if (image) {
-      if (prevData.img) {
-        await ImageService.deleteImage(prevData.img);
-      }
-      const imageFromDisk = await ImageService.uploadImageToDisk(image, prevData);
-      articleData.img = imageFromDisk.id;
-    }
-  }
   const article = await ArticleService.update(articleData, { id }, { transaction });
 
   return {

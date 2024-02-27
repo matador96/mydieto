@@ -1,2 +1,0 @@
-ALTER TABLE "articles"
-    ADD COLUMN "about" TEXT DEFAULT '' NOT NULL;

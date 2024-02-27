@@ -15,7 +15,7 @@ export const AuthByLoginAndPassword = async (authData) => {
 
       return response.json.data;
    } catch (e) {
-      throw new Error(e);
+      throw new Error(e.message);
    }
 };
 

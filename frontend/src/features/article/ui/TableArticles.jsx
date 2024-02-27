@@ -6,102 +6,48 @@ import { EditOutlined } from '@ant-design/icons';
 import ModalArticleForm from './ModalArticleForm';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import ModalButtonArticleCreate from './ModalButtonArticleCreate';
-import CanDo from '@shared/lib/CanDo';
-import { unitSettings } from '@shared/const/units';
-import { statusesOfCategories } from '@shared/const/statuses';
+import { timestampToNormalDate } from '@shared/utils/tsToTime';
 
 const columns = [
    {
-      title: 'ID',
+      title: 'Идентификатор',
       dataIndex: 'id',
       key: 'id'
    },
    {
-      title: 'Картинка',
-      dataIndex: 'imgUrl',
-      key: 'imgUrl',
-      render: (_) => <Avatar src={_} shape="square" size={64} />
+      title: 'Заголовок',
+      dataIndex: 'title',
+      key: 'title'
    },
    {
-      title: 'Название каталога',
-      dataIndex: 'name',
-      key: 'name'
+      title: 'Создан пользователем',
+      dataIndex: 'userId',
+      key: 'userId'
    },
-   // {
-   //    title: 'Приоритет',
-   //    dataIndex: 'priority',
-   //    key: 'priority'
-   // },
    {
-      title: 'Единица изм.',
-      dataIndex: 'unit',
-      key: 'unit',
-      render: (_) => <>{unitSettings.find((e) => e.value === _)?.label}</>
+      title: 'Дата создания',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (_) => <>{timestampToNormalDate(_)}</>
+   },
+   {
+      title: 'Дата изменения',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      render: (_) => <>{timestampToNormalDate(_)}</>
    },
    {
       title: 'Статус',
       dataIndex: 'status',
       key: 'status',
-      render: (_) => (
-         <Tag color={statusesOfCategories[_]?.color}>
-            {statusesOfCategories[_]?.label}
-         </Tag>
-      )
+      render: (_) => <Tag>{_}</Tag>
    }
 ];
-
-const NestedTableCategories = ({ id, selectedCategory, setSelectedCategory }) => {
-   const [data, setData] = useState([]);
-
-   const nestedColumns = [
-      ...columns,
-
-      {
-         title: 'Действие',
-         key: 'action',
-         render: (_, record) => (
-            <Space size="small">
-               <Tooltip placement="top" title={'Редактировать'}>
-                  <Button onClick={() => setSelectedCategory(record)} type="primary">
-                     <EditOutlined />
-                  </Button>
-               </Tooltip>
-            </Space>
-         )
-      }
-   ];
-
-   useEffect(() => {
-      fetchData();
-
-      // TODO не срабатывает когда в моменте создаешь категорию при открытом нест
-   }, [selectedCategory]);
-
-   const fetchData = () => {
-      GetArticlesList({
-         page: 1,
-         limit: 1000,
-         order: 'asc'
-      }).then((res) => {
-         setData(res.data);
-      });
-   };
-
-   return (
-      <Table
-         rowKey="id"
-         columns={nestedColumns}
-         dataSource={data}
-         pagination={false}
-      />
-   );
-};
 
 const TableArticles = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
    const [selectedCategory, setSelectedCategory] = useState(null);
-   const [expandedRowKeys, setExpandedRowKeys] = useState([]);
    const [pagination, setPagination] = useState({ ...initialPaginationSettings() });
 
    const actions = [
@@ -136,8 +82,7 @@ const TableArticles = () => {
       setIsLoading(true);
       GetArticlesList({
          page: current,
-         limit: pageSize,
-         order: 'asc'
+         limit: pageSize
       }).then((res) => {
          setIsLoading(false);
          setPagination((prev) => ({
@@ -146,19 +91,13 @@ const TableArticles = () => {
             current,
             pageSize
          }));
-         const tableData = res.data.filter((item) => item.id !== 0);
-         setData(tableData);
+
+         setData(res.data);
       });
    };
 
    const onChangePagination = (current, pageSize) => {
       fetchData(current, pageSize);
-   };
-
-   const mainCategories = data.filter((item) => item.parentId === 0);
-
-   const onTableRowExpand = (expanded, { id }) => {
-      setExpandedRowKeys(expanded ? [id] : []);
    };
 
    return (
@@ -175,19 +114,7 @@ const TableArticles = () => {
          <Table
             rowKey="id"
             columns={[...columns, ...actions]}
-            dataSource={mainCategories}
-            expandedRowKeys={expandedRowKeys}
-            onExpand={onTableRowExpand}
-            expandable={{
-               expandedRowRender: (record) => (
-                  <NestedTableCategories
-                     id={record.id}
-                     setSelectedCategory={setSelectedCategory}
-                     selectedCategory={selectedCategory}
-                  />
-               ),
-               defaultExpandedRowKeys: ['0']
-            }}
+            dataSource={data}
             pagination={false}
          />
          <VerticalSpace />

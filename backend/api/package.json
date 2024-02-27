@@ -19,7 +19,7 @@
     "migrate-test": "db-migrate up --config config/database.json -e test_migrate",
     "start:prod": "db-migrate up --config config/database.json -e pg && node server.js"
   },
-  "author": "Ecorium",
+  "author": "Altun",
   "license": "ISC",
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.1",

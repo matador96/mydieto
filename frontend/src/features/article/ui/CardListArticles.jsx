@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import {
-   Card,
-   Row,
-   Col,
-   Divider,
-   Space,
-   Input,
-   Badge,
-   Modal,
-   Typography
-} from 'antd';
+import { Card, Row, Badge, Modal, Typography } from 'antd';
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 import { GetArticlesList } from '../model/services/GetArticlesList';
 import FilterCategory from '@shared/ui/FilterCategory';
-import AddToCartWithQuantity from '@features/storage/ui/AddToCartWithQuantity';
 import SpinnerInContainer from '@shared/ui/SpinnerInContainer';
-import { extraActions, getSearchArticle, getFilterArticle } from '@entitles/Extra';
 import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
 
-const { Text, Link } = Typography;
+const { Link } = Typography;
 
 const info = (content) => {
    Modal.info({
@@ -55,14 +43,7 @@ const ArticleCardsByParentId = ({ items }) => {
                         <h3 className="image-name-container-name">{item.name}</h3>
                      </div>
                   }
-                  hoverable
-                  actions={[
-                     <AddToCartWithQuantity
-                        key={`ke${item.id}`}
-                        articleId={item.id}
-                        unit={item.unit}
-                     />
-                  ]}>
+                  hoverable>
                   {item.about ? (
                      <Link href="#" onClick={() => info(item.about)}>
                         Подробнее
@@ -80,18 +61,10 @@ const CardListArticles = () => {
    const [initialData, setInitialData] = useState([]);
    const [loading, setLoading] = useState(false);
    const [data, setData] = useState([]);
-   const [searchStr, setSearchStr] = useState('');
-   const dispatch = useDispatch();
-   const searchText = useSelector(getSearchArticle);
-   const articleFilter = useSelector(getFilterArticle);
 
    useEffect(() => {
       fetchMainArticle();
    }, []);
-
-   useEffect(() => {
-      filterData(searchText, articleFilter);
-   }, [searchText, articleFilter]);
 
    const fetchMainArticle = () => {
       setLoading(true);
@@ -152,7 +125,6 @@ const CardListArticles = () => {
    const handleSearchChange = (e) => {
       const value = e.target.value;
 
-      setSearchStr(value);
       debouncedSearch(value);
    };
 

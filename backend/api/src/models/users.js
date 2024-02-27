@@ -1,8 +1,7 @@
 const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
-const Admins = require("./admins");
-const Managers = require("./managers");
-const Sellers = require("./sellers");
+const { statusesOfUsers } = require("../config/statusSettings");
+const Roles = require("../enums/roles");
 
 const Users = sequelize.define(
   "users",
@@ -22,31 +21,26 @@ const Users = sequelize.define(
       field: "password",
       type: DataTypes.STRING,
     },
+    firstName: {
+      field: "firstName",
+      type: DataTypes.STRING,
+    },
+    lastName: {
+      field: "lastName",
+      type: DataTypes.STRING,
+    },
+    role: {
+      field: "role",
+      type: DataTypes.ENUM([...Object.values(Roles)]),
+    },
+    status: {
+      field: "status",
+      type: DataTypes.ENUM(statusesOfUsers),
+    },
   },
   {
     timestamps: true,
   },
 );
-
-Users.hasOne(Admins, {
-  foreignKey: "userId",
-});
-Admins.belongsTo(Users, {
-  foreignKey: "userId",
-});
-
-Users.hasOne(Managers, {
-  foreignKey: "userId",
-});
-Managers.belongsTo(Users, {
-  foreignKey: "userId",
-});
-
-Users.hasOne(Sellers, {
-  foreignKey: "userId",
-});
-Sellers.belongsTo(Users, {
-  foreignKey: "userId",
-});
 
 module.exports = Users;

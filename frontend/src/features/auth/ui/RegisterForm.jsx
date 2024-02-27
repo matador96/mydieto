@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input } from '@shared/ui';
 
-import { RegisterSeller } from '@features/auth/model/services/RegisterSeller';
+import { Register } from '@features/auth/model/services/Register';
 
 import { AuthByLoginAndPassword } from '@features/auth/model/services/AuthByLoginAndPassword';
 import { useDispatch } from 'react-redux';
@@ -9,8 +9,6 @@ import { userActions, getUserAuthData } from '@entitles/User';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { message } from 'antd';
-
-const prefixSelector = <Form.Item noStyle>+7</Form.Item>;
 
 const RegisterForm = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +27,7 @@ const RegisterForm = () => {
    const onFinish = (values) => {
       setIsLoading(true);
 
-      RegisterSeller(values)
+      Register(values)
          .then(() => {
             AuthByLoginAndPassword({
                email: values.email,

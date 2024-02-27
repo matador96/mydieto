@@ -1,3 +1,0 @@
-ALTER TABLE "articles"
-ADD
-    COLUMN "unit" VARCHAR(10) NOT NULL DEFAULT 'kg';

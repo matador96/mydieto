@@ -3,21 +3,8 @@ import NotFoundPage from '@pages/general/notfound';
 import NotPermissionPage from '@pages/general/notpermission';
 
 import WelcomePage from '@pages/main';
-import ArticlesPage from '@pages/seller/articles';
-import OrdersPage from '@pages/seller/orders';
-
-import StoragePage from '@pages/seller/storage';
-import LeadsPage from '@pages/seller/leads';
-
 import ManageArticlesPage from '@pages/admin/articles';
-import ManageOrdersPage from '@pages/admin/orders';
-import SellerStoragesPage from '@pages/admin/sellers';
-
-import UsersPage from '@pages/admin/users';
-import LogsPage from '@pages/admin/logs';
-
-import SellerProfilePage from '@pages/seller/profile';
-import AdminProfilePage from '@pages/admin/profile';
+import ManageUsersPage from '@pages/admin/users';
 
 import { Navigate } from 'react-router-dom';
 
@@ -34,21 +21,13 @@ const AppRoutes = {
    ADMIN_PROFILE: 'admin-profile',
    ADMIN_USERS: 'admin-users',
    ADMIN_ARTICLES: 'admin-articles',
-   ADMIN_ORDERS: 'admin-orders',
-   ADMIN_DASHBOARD: 'admin-dashboard',
-   ADMIN_SELLER_STORAGES: 'admin-sellers-storage',
-   // Seller
-   SELLER_DASHBOARD: 'seller-dashboard',
-   SELLER_PROFILE: 'seller-profile',
-   ARTICLES: 'articles',
-   SELLER_ORDERS: 'seller-orders',
-   SELLER_LEADS: 'seller-leads',
-   SELLER_STORAGE: 'seller-storage'
+   ADMIN_CATEGORIES: 'admin-categories',
+   ADMIN_DASHBOARD: 'admin-dashboard'
 };
 
 export const AppLayout = {
    adminLayout: 'adminLayout',
-   sellerLayout: 'sellerLayout',
+   default: 'defaultLayout',
    centered: 'centered'
 };
 
@@ -62,24 +41,16 @@ export const RoutePath = {
    [AppRoutes.NOT_PERMISSION]: '/401',
    // ADMIN
    [AppRoutes.ADMIN_DASHBOARD]: '/admin/dashboard',
-   [AppRoutes.ADMIN_SELLER_STORAGES]: '/admin/storages',
-   [AppRoutes.ADMIN_PROFILE]: '/admin/profile',
-   // [AppRoutes.ADMIN_USERS]: '/admin/users',
+   [AppRoutes.ADMIN_USERS]: '/admin/users',
    [AppRoutes.ADMIN_ARTICLES]: '/admin/articles',
-   [AppRoutes.ADMIN_ORDERS]: '/admin/orders',
-   // Seller
-   [AppRoutes.SELLER_DASHBOARD]: '/seller/dashboard',
-   [AppRoutes.SELLER_PROFILE]: '/seller/profile',
-   [AppRoutes.ARTICLES]: '/articles',
-   [AppRoutes.SELLER_ORDERS]: '/seller/orders',
-   [AppRoutes.SELLER_STORAGE]: '/seller/storage'
-   // [AppRoutes.SELLER_LEADS]: '/seller/leads'
+   [AppRoutes.ADMIN_CATEGORIES]: '/admin/categories'
 };
 
 export const routeList = {
    [AppRoutes.MAIN]: {
       path: RoutePath[AppRoutes.MAIN],
-      element: <Navigate to={RoutePath[AppRoutes.ARTICLES]} /> // <>sss</> // <Navigate to={RoutePath[AppRoutes.LOGIN]} />
+      layout: AppLayout.defaultLayout,
+      element: <Navigate to={RoutePath[AppRoutes.ARTICLES]} /> //
    },
    [AppRoutes.ADMIN_DASHBOARD]: {
       path: RoutePath[AppRoutes.ADMIN_DASHBOARD],
@@ -87,73 +58,33 @@ export const routeList = {
       layout: AppLayout.adminLayout,
       authOnly: true
    },
-   [AppRoutes.SELLER_DASHBOARD]: {
-      path: RoutePath[AppRoutes.SELLER_DASHBOARD],
-      element: <Navigate to={RoutePath[AppRoutes.ARTICLES]} />,
-      layout: AppLayout.sellerLayout,
+
+   [AppRoutes.ADMIN_CATEGORIES]: {
+      path: RoutePath[AppRoutes.ADMIN_CATEGORIES],
+      element: <ManageArticlesPage />,
+      layout: AppLayout.adminLayout,
       authOnly: true
    },
-   [AppRoutes.ARTICLES]: {
-      path: RoutePath[AppRoutes.ARTICLES],
-      element: <ArticlesPage />,
+
+   [AppRoutes.ADMIN_USERS]: {
+      path: RoutePath[AppRoutes.ADMIN_USERS],
+      element: <ManageUsersPage />,
+      layout: AppLayout.adminLayout,
       authOnly: true
    },
-   [AppRoutes.SELLER_ORDERS]: {
-      path: RoutePath[AppRoutes.SELLER_ORDERS],
-      element: <OrdersPage />,
-      authOnly: true
-   },
-   [AppRoutes.SELLER_STORAGE]: {
-      path: RoutePath[AppRoutes.SELLER_STORAGE],
-      element: <StoragePage />,
-      layout: AppLayout.sellerLayout,
-      authOnly: true
-   },
-   // [AppRoutes.SELLER_LEADS]: {
-   //    path: RoutePath[AppRoutes.SELLER_LEADS],
-   //    element: <LeadsPage />,
-   //    layout: AppLayout.dashboard,
-   //    authOnly: true,
-   //    permission: 'can_view_categories'
-   // },
+
    [AppRoutes.ADMIN_ARTICLES]: {
       path: RoutePath[AppRoutes.ADMIN_ARTICLES],
       element: <ManageArticlesPage />,
       layout: AppLayout.adminLayout,
       authOnly: true
    },
-   [AppRoutes.ADMIN_ORDERS]: {
-      path: RoutePath[AppRoutes.ADMIN_ORDERS],
-      element: <ManageOrdersPage />,
-      layout: AppLayout.adminLayout,
-      authOnly: true
-   },
-   [AppRoutes.ADMIN_SELLER_STORAGES]: {
-      path: RoutePath[AppRoutes.ADMIN_SELLER_STORAGES],
-      element: <SellerStoragesPage />,
-      layout: AppLayout.adminLayout,
-      authOnly: true
-   },
 
-   // [AppRoutes.ADMIN_USERS]: {
-   //    path: RoutePath[AppRoutes.ADMIN_USERS],
-   //    element: <UsersPage />,
-   //    layout: AppLayout.adminLayout,
-   //    authOnly: true,
-   //    permission: 'can_view_users'
+   // [AppRoutes.PROFILE]: {
+   //    path: RoutePath[AppRoutes.PROFILE],
+   //    element: <ProfilePage />,
+   //    authOnly: true
    // },
-   [AppRoutes.ADMIN_PROFILE]: {
-      path: RoutePath[AppRoutes.ADMIN_PROFILE],
-      element: <AdminProfilePage />,
-      layout: AppLayout.adminLayout,
-      authOnly: true
-   },
-   [AppRoutes.SELLER_PROFILE]: {
-      path: RoutePath[AppRoutes.SELLER_PROFILE],
-      element: <SellerProfilePage />,
-      layout: AppLayout.sellerLayout,
-      authOnly: true
-   },
    [AppRoutes.LOGIN]: {
       path: RoutePath[AppRoutes.LOGIN],
       element: <AuthPage isLoginForm={true} />,

@@ -2,7 +2,7 @@ import { memo, Suspense, useCallback } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@entitles/User';
-import { AdminLayout, CenteredLayout, SellerLayout } from '@widgets/Layout';
+import { AdminLayout, CenteredLayout, DefaultLayout } from '@widgets/Layout';
 import { PageLoader } from '@widgets/PageLoader';
 import { Navigate } from 'react-router-dom';
 import { routeList, AppLayout } from '@shared/config/routes';
@@ -15,13 +15,9 @@ const AppRouter = () => {
       (route) => {
          let element = <>{route.element}</>;
 
-         // if (route.layout === AppLayout.default) {
-         //    element = <DefaultLayout>{route.element}</DefaultLayout>;
-         // }
+         element = <DefaultLayout>{route.element}</DefaultLayout>;
 
-         element = <SellerLayout>{route.element}</SellerLayout>;
-
-         if (auth?.type === 'admin') {
+         if (route.layout === AppLayout.adminLayout) {
             element = <AdminLayout>{route.element}</AdminLayout>;
          }
 

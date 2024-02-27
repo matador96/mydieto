@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import {
    DashboardOutlined,
-   UnorderedListOutlined,
-   HddOutlined,
-   ContainerOutlined
+   FileTextOutlined,
+   UsergroupAddOutlined,
+   TagOutlined
 } from '@ant-design/icons';
 import { Menu, Layout } from 'antd';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { RoutePath, routeList } from '@shared/config/routes';
 import { SIDEBAR_LOCALSTORAGE_KEY } from '@shared/const/localStorage';
-import { MenuProfile } from '@shared/ui/MenuProfile';
+import ProfileMenu from '@features/user/ui/ProfileMenu';
 import { useSelector } from 'react-redux';
 import { getUserPermissions } from '@entitles/User';
 import {
@@ -31,14 +31,9 @@ function getItem(label, key, icon, children, disabled) {
 }
 const allMenuItems = [
    getItem('Панель', 'admin-dashboard', <DashboardOutlined />),
-   // getItem('Пользователи', 'users', <UsergroupAddOutlined />),
-   // getItem('Продавцы', 'users', <UsergroupAddOutlined />),
-   // getItem('Заявки', 'users', <UsergroupAddOutlined />),
-   // getItem('Журнал действий', 'logs', <AlignLeftOutlined />),
-
-   getItem('Каталог', 'admin-articles', <UnorderedListOutlined />),
-   getItem('Заказы', 'admin-orders', <ContainerOutlined />),
-   getItem('Склады', 'admin-sellers-storage', <HddOutlined />)
+   getItem('Пользователи', 'admin-users', <UsergroupAddOutlined />),
+   getItem('Статьи', 'admin-articles', <FileTextOutlined />),
+   getItem('Категории', 'admin-categories', <TagOutlined />)
 ];
 
 const AdminLayout = (props) => {
@@ -96,7 +91,7 @@ const AdminLayout = (props) => {
             <div
                className={`left-side-logo ${collapsed ? 'collapsed' : ''}`}
                onClick={() => navigate('/')}>
-               РЭЛ
+               AI
             </div>
             <Menu
                onClick={onClick}
@@ -112,7 +107,7 @@ const AdminLayout = (props) => {
                <div />
 
                <div style={{ display: 'flex', width: '70px' }}>
-                  <MenuProfile isCollapsed={collapsed} />
+                  <ProfileMenu adminMode />
                </div>
             </Header>
             <Content
@@ -131,7 +126,7 @@ const AdminLayout = (props) => {
                style={{
                   textAlign: 'center'
                }}>
-               © 2022 – {new Date().getFullYear()} Ecorium. Все права защищены.
+               © 2022 – {new Date().getFullYear()} Altun. Все права защищены.
             </Footer>
          </Layout>
       </Layout>

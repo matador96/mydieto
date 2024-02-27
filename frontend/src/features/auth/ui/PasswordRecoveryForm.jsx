@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Form, Input, Button, message } from 'antd';
-import { ResetSellerPassword } from './../model/services/ResetSellerPassword';
+import { ResetPassword } from './../model/services/ResetPassword';
 
 function PasswordRecoveryForm({ visible, onCancel }) {
    const [isLoading, setIsLoading] = useState(false);
@@ -8,7 +8,7 @@ function PasswordRecoveryForm({ visible, onCancel }) {
    const onFinish = (values) => {
       setIsLoading(true);
 
-      ResetSellerPassword(values.email)
+      ResetPassword(values.email)
          .then(() => {
             message.info(`Новый пароль отправлен на почту `);
          })

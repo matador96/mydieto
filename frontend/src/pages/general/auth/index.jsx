@@ -5,6 +5,7 @@ import { Content, Title, Button } from '@shared/ui';
 import { userActions } from '@entitles/User';
 import { useNavigate } from 'react-router-dom';
 import { Card, Row, Col } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 import { RoutePath } from '@shared/config/routes';
 import { Logout } from '@features/auth/model/services/AuthByLoginAndPassword';
@@ -17,7 +18,16 @@ const AuthPage = ({ isLoginForm = true }) => {
    return (
       <Row className="auth-page" gutter={[16, 24]}>
          <Col className="auth-page_left" span={24}>
-            <Card title={isLoginForm ? 'Войти в аккаунт' : 'Регистрация'}>
+            <Card
+               title={
+                  <>
+                     <Button
+                        icon={<ArrowLeftOutlined />}
+                        onClick={() => navigate(-1)}
+                        style={{ marginRight: '10px' }}></Button>
+                     {isLoginForm ? 'Войти в аккаунт' : 'Регистрация'}
+                  </>
+               }>
                {isLoginForm ? (
                   <>
                      <LoginForm />

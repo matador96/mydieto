@@ -1,5 +1,6 @@
 const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
+const { statusesOfArticles } = require("../config/statusSettings");
 
 const Articles = sequelize.define(
   "articles",
@@ -24,6 +25,10 @@ const Articles = sequelize.define(
     },
     views: {
       type: DataTypes.INTEGER,
+    },
+    status: {
+      field: "status",
+      type: DataTypes.ENUM(statusesOfArticles),
     },
   },
   {

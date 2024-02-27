@@ -1,16 +1,9 @@
 import { Checkbox } from 'antd';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { extraActions, getFilterArticle } from '@entitles/Extra';
 
 const FilterCategory = ({ data }) => {
-   const dispatch = useDispatch();
-   const chexBoxValues = useSelector(getFilterArticle);
+   const chexBoxValues = [];
 
-   const onChange = (values) => {
-      dispatch(extraActions.setSearchArticle(''));
-      dispatch(extraActions.setFilterArticle(values));
-   };
+   const onChange = (values) => {};
 
    return (
       <div className="categories-filter-container">

@@ -3,11 +3,10 @@ import { LOGIN_USER, LOGOUT_USER } from '../types';
 
 const initialState = {
    id: null,
-   login: '',
-   roleId: '',
+   email: '',
+   role: '',
    firstName: '',
-   lastName: '',
-   post: ''
+   lastName: ''
 };
 
 const userReducer = (prevState = initialState, action) => {

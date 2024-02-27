@@ -29,7 +29,7 @@ build_front_image_dev:
       /kaniko/executor
       --context "${CI_PROJECT_DIR}/frontend"
       --dockerfile "${CI_PROJECT_DIR}/frontend/Dockerfile"
-      --destination "registry.gitlab.com/ecorium1/rdm/frontend/${CI_COMMIT_REF_SLUG}"
+      --destination "registry.gitlab.com//${CI_COMMIT_REF_SLUG}"
       --build-arg BUILD_CMD=build
 
 build_front_image_prod:
@@ -48,9 +48,8 @@ build_front_image_prod:
       /kaniko/executor
       --context "${CI_PROJECT_DIR}/frontend"
       --dockerfile "${CI_PROJECT_DIR}/frontend/Dockerfile"
-      --destination "registry.gitlab.com/ecorium1/rdm/frontend/${CI_COMMIT_REF_SLUG}"
+      --destination "registry.gitlab.com/frontend/${CI_COMMIT_REF_SLUG}"
       --build-arg BUILD_CMD=build:prod
-
 
 deploy_front_dev:
   stage: deploy
@@ -90,7 +89,7 @@ build_api_image:
       /kaniko/executor
       --context "${CI_PROJECT_DIR}/backend/api"
       --dockerfile "${CI_PROJECT_DIR}/backend/api/Dockerfile"
-      --destination "registry.gitlab.com/ecorium1/rdm/backend/${CI_COMMIT_REF_SLUG}"
+      --destination "registry.gitlab.com/backend/${CI_COMMIT_REF_SLUG}"
 
 deploy_backend_dev:
   stage: deploy

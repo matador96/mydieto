@@ -6,7 +6,6 @@ const errorTemplateForRequest = (err) => {
     status: err.statusCode(),
     type: err.name,
     extra: err.getExtra(),
-    stack: err.getStack(),
   };
 };
 

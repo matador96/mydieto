@@ -12,7 +12,9 @@ export const loginUser = (fields) =>
 export const logoutUser = () => get(`/user/logout`);
 export const getUser = () => get(`/user`);
 
-export const resetUserPassword = (id) => get(`/user/${id}/reset`);
+export const resetPassword = (id) => get(`/user/${id}/reset`);
+
+export const register = () => get(`/register`);
 
 export const getUsers = (params) => get(generateQueryParams(`/users`, params));
 

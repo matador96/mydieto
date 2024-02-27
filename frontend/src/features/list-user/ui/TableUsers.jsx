@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, Modal } from 'antd';
+import { Space, Table, Tag } from 'antd';
 import { getUsersList } from '../model/getUsersList';
 import { Button, VerticalSpace } from '@shared/ui';
-import { Divider, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import ModalUserForm from './ModalUserForm';
-import statuses from '@shared/const/statuses';
 import ModalButtonUserCreate from './ModalButtonUserCreate';
 import CanDo from '@shared/lib/CanDo';
 
-import { deleteUserById } from '@shared/api/all/user';
-import { userRolesColors, userRolesLabels } from '@shared/const/userRoles';
 import {
    getColumnSearchProps,
    onSearchFilterTable,
@@ -37,30 +34,14 @@ const TableUsers = () => {
 
    const columns = [
       {
-         title: 'Логин',
-         dataIndex: 'login',
-         key: 'login',
-         filtered: !!filters?.['login'],
+         title: 'Идентификатор',
+         dataIndex: 'id',
+         key: 'id',
+         filtered: !!filters?.['id'],
          ...getColumnSearchProps({
-            dataIndex: 'login',
+            dataIndex: 'id',
             handleSearch: (searchObj) => onSearchTable(searchObj)
          })
-      },
-      {
-         title: 'Роль',
-         key: 'role',
-         dataIndex: 'role',
-         render: (role) => (
-            <Tag color={userRolesColors[role]} key={role}>
-               {userRolesLabels[role]}
-            </Tag>
-         )
-      },
-      {
-         title: 'Статус',
-         dataIndex: 'status',
-         key: 'status',
-         render: (_) => <Tag color={statuses[_]?.color}>{statuses[_]?.label}</Tag>
       },
       {
          title: 'Имя',
@@ -73,9 +54,16 @@ const TableUsers = () => {
          dataIndex: 'lastName'
       },
       {
-         title: 'Должость',
-         key: 'post',
-         dataIndex: 'post'
+         title: 'Роль',
+         key: 'role',
+         dataIndex: 'role',
+         render: (role) => <Tag>{role}</Tag>
+      },
+      {
+         title: 'Статус',
+         dataIndex: 'status',
+         key: 'status',
+         render: (_) => <Tag>{_}</Tag>
       },
       {
          title: 'Почта',
@@ -90,13 +78,11 @@ const TableUsers = () => {
          key: 'action',
          render: (_, record) => (
             <Space size="middle">
-               <CanDo permission="can_edit_users">
-                  <Tooltip placement="top" title={'Редактировать'}>
-                     <Button onClick={() => setSelectedUser(record)} type="primary">
-                        <EditOutlined />
-                     </Button>
-                  </Tooltip>
-               </CanDo>
+               <Tooltip placement="top" title={'Редактировать'}>
+                  <Button onClick={() => setSelectedUser(record)} type="primary">
+                     <EditOutlined />
+                  </Button>
+               </Tooltip>
             </Space>
          )
       }
@@ -144,11 +130,10 @@ const TableUsers = () => {
    return (
       <>
          <ModalUserForm selectedUser={selectedUser} closeModal={closeModal} />
-         <CanDo permission="can_create_users">
-            <Space style={{ display: 'flex', justifyContent: 'flex-start' }}>
-               <ModalButtonUserCreate closeModal={closeModal} />
-            </Space>
-         </CanDo>
+         {/* 
+         <Space style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <ModalButtonUserCreate closeModal={closeModal} />
+         </Space> */}
 
          <VerticalSpace />
          <Table

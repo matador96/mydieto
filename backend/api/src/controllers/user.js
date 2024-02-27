@@ -3,7 +3,6 @@ const UserService = require("../services/users");
 const Encrypt = require("../core/encrypt");
 const jwt = require("jsonwebtoken");
 const jwtOptions = require("../core/auth/jwtConfig");
-const { userInfoTemplate } = require("../helpers/user");
 const Validations = require("../const/validatorSettings");
 const Statuses = require("../enums/statuses");
 
@@ -57,22 +56,21 @@ module.exports.login = async (req) => {
     });
   }
 
-  const comparePass = await Encrypt.comparePassword(password, user.password);
+  // const comparePass = await Encrypt.comparePassword(password, user.password); // IN MODEL
 
-  if (!comparePass) {
-    throw new ApplicationError("Пароль неверный", {
-      path: "controller",
-    });
-  }
+  // if (!comparePass) {
+  //   throw new ApplicationError("Пароль неверный", {
+  //     path: "controller",
+  //   });
+  // }
 
   const payload = { id: user.id };
 
   const token = jwt.sign(payload, jwtOptions.secretOrKey);
 
-  const userInfo = userInfoTemplate(user);
   return {
     jwt: token,
-    data: { ...userInfo },
+    data: { ...user },
   };
 };
 
@@ -96,12 +94,10 @@ module.exports.get = async (req) => {
     });
   }
 
-  const userInfo = userInfoTemplate(userData);
-
-  const type = userInfo?.seller?.id ? "seller" : "admin"; // admin or seller
+  const userInfo = userData;
 
   return {
-    data: { ...userInfo, type },
+    data: { ...userInfo },
   };
 };
 
@@ -110,10 +106,7 @@ const validationUserFilterFields = [query("login").isString().optional()];
 module.exports.validate = (method) => {
   switch (method) {
     case "login": {
-      return [
-        body("email").isString().optional({ nullable: true }),
-        body("password").isString().optional({ nullable: true }),
-      ];
+      return [body("email").isString(), body("password").isString()];
     }
     case "getUsersWithParams": {
       return [

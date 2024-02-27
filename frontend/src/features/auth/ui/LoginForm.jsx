@@ -2,35 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, Input } from '@shared/ui';
 import { AuthByLoginAndPassword } from '@features/auth/model/services/AuthByLoginAndPassword';
 import { useDispatch } from 'react-redux';
-import { userActions, getUserAuthData } from '@entitles/User';
+import { userActions, isUserAuthorized } from '@entitles/User';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { message, Space } from 'antd';
+import { message, Space, Alert } from 'antd';
 import PasswordRecoveryForm from './PasswordRecoveryForm';
 
 const LoginForm = () => {
    const [isLoading, setIsLoading] = useState(false);
+   const [errorMessage, setErrorMessage] = useState('');
    const [modalVisible, setModalVisible] = useState(false);
    const dispatch = useDispatch();
    const navigate = useNavigate();
-   const auth = useSelector(getUserAuthData);
-   const isUserAuthorized = !!auth?.id;
-   const userType = auth?.type;
+   const isAuthorized = useSelector(isUserAuthorized);
+
    useEffect(() => {
-      if (isUserAuthorized) {
-         navigate(`/${userType}/dashboard`);
+      if (isAuthorized) {
+         navigate(`/`);
       }
-   }, []);
+   }, [isAuthorized]);
 
    const onFinish = (values) => {
+      setErrorMessage('');
       setIsLoading(true);
       AuthByLoginAndPassword(values)
          .then((res) => {
             dispatch(userActions.loginUser(res));
             message.info(`Добро пожаловать ${res.email}!`);
-            navigate(`/${res.type}/dashboard`);
+            navigate(`/`);
          })
-         .catch(() => message.error('Неправильные данные'))
+         .catch((e) => {
+            setErrorMessage(e?.message || 'Ошибка');
+         })
          .finally(() => {
             setIsLoading(false);
          });
@@ -63,19 +66,21 @@ const LoginForm = () => {
             position: 'relative'
          }}
          onFinish={onFinish}
-         onFinishFailed={onFinishFailed}
-      >
+         onFinishFailed={onFinishFailed}>
          <Form.Item
             label="Email"
             name="email"
             rules={[
                {
+                  type: 'email',
+                  message: 'Введите правильную почту'
+               },
+               {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
-            <Input />
+            ]}>
+            <Input type="email" placeholder={'Введите почту'} />
          </Form.Item>
 
          <Form.Item
@@ -86,9 +91,8 @@ const LoginForm = () => {
                   required: true,
                   message: 'Поле не может быть пустым'
                }
-            ]}
-         >
-            <Input.Password />
+            ]}>
+            <Input.Password placeholder={'Введите пароль'} />
          </Form.Item>
 
          <PasswordRecoveryForm visible={modalVisible} onCancel={handleCancel} />
@@ -96,16 +100,18 @@ const LoginForm = () => {
             wrapperCol={{
                offset: 8,
                span: 16
-            }}
-         >
+            }}>
             <Space direction="vertical">
-               <Button
+               {errorMessage ? (
+                  <Alert message={errorMessage} type="error" showIcon />
+               ) : null}
+
+               {/* <Button
                   type="link"
                   onClick={handleForgotPassword}
-                  style={{ padding: '0 3px' }}
-               >
+                  style={{ padding: '0 3px' }}>
                   <span style={{ textDecoration: 'underline' }}>Забыли пароль?</span>
-               </Button>
+               </Button> */}
 
                <Button type="primary" htmlType="submit" loading={isLoading}>
                   Войти

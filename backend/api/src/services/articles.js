@@ -24,17 +24,6 @@ module.exports.getByField = async (field) => {
   return data;
 };
 
-// module.exports.getWithParamsByParentId = async (queryParams) => {
-//   const data = await Articles.findAndCountAll({
-//     ...generateDatabaseSetting({ ...queryParams }, "article"),
-//     include: [{ model: Articles, as: "parentArticle" }],
-//     raw: false,
-//     nest: true,
-//   });
-
-//   return { data: data.rows, count: data.count };
-// };
-
 module.exports.getWithParams = async (queryParams) => {
   const data = await Articles.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "article"),
@@ -60,8 +49,6 @@ module.exports.update = async (obj, whereObj, settings = {}) => {
   await Articles.update(obj, {
     where: whereObj,
     ...settings,
-    // returning: true, Не подходит получение данных после апдейта, так как оно не фильтровано
-    // plain: true,
   });
 
   const updatedArticle = await Articles.findOne({

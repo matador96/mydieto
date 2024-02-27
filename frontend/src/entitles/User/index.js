@@ -2,7 +2,6 @@ import { getUserAuthData } from './model/selectors/getUserAuthData';
 import {
    getUserRoles,
    isUserAdmin,
-   isUserManager,
    isUserAuthorized,
    getUserPermissions
 } from './model/selectors/roleSelectors';
@@ -17,7 +16,6 @@ export {
    getUserRoles,
    isUserAdmin,
    isUserAuthorized,
-   isUserManager,
    UserRole,
    getUserPermissions
 };
