@@ -1,5 +1,5 @@
 const Addresses = require("../models/addresses");
-const Catalogs = require("../models/catalogs");
+const Articles = require("../models/articles");
 const Orders = require("../models/orders");
 const OrderItems = require("../models/orderItems");
 const OrderStatuses = require("../models/orderStatuses");
@@ -13,7 +13,7 @@ module.exports.getById = async (id) => {
       Addresses,
       {
         model: OrderItems,
-        include: Catalogs,
+        include: Articles,
       },
       OrderItems,
       {
@@ -40,16 +40,6 @@ module.exports.getWithParams = async (queryParams) => {
     include: [
       Addresses,
       Sellers,
-      {
-        model: OrderItems,
-        include: [
-          {
-            model: Catalogs,
-            include: [{ model: Catalogs, as: "parentCatalog" }],
-          },
-        ],
-        separate: true,
-      },
       {
         model: OrderStatuses,
         as: "orderStatus",

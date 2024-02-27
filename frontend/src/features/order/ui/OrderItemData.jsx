@@ -166,7 +166,7 @@ function OrderItemData({ order, fetchOrders }) {
             <div
                className="storage-background-image"
                style={{
-                  backgroundImage: `url(${record.catalog.imgUrl || defaulPhotoCard})`
+                  backgroundImage: `url(${record.article.imgUrl || defaulPhotoCard})`
                }}
             />
          )
@@ -177,8 +177,7 @@ function OrderItemData({ order, fetchOrders }) {
          key: 'name',
          render: (_, record) => (
             <Space direction="vertical">
-               <Text>{record.catalog.name}</Text>
-               <Text type="secondary">{record.catalog.parentCatalog.name}</Text>
+               <Text>{record.article.name}</Text>
 
                <OrderItemDeleteModalButton
                   orderItemId={record.id}
@@ -198,7 +197,7 @@ function OrderItemData({ order, fetchOrders }) {
                orderStatus={order.orderStatus.status}
                value={_}
                orderItemId={record.id}
-               unit={record.catalog.unit}
+               unit={record.article.unit}
                fetchOrders={fetchOrders}
             />
          )
@@ -213,7 +212,7 @@ function OrderItemData({ order, fetchOrders }) {
                orderStatus={order.orderStatus.status}
                value={_}
                orderItemId={record.id}
-               unit={record.catalog.unit}
+               unit={record.article.unit}
                fetchOrders={fetchOrders}
             />
          )
@@ -227,7 +226,7 @@ function OrderItemData({ order, fetchOrders }) {
                orderStatus={order.orderStatus.status}
                value={_}
                orderItemId={record.id}
-               unit={record.catalog.unit}
+               unit={record.article.unit}
                fetchOrders={fetchOrders}
             />
          )
@@ -322,10 +321,6 @@ function OrderItemData({ order, fetchOrders }) {
          <Descriptions>
             <Descriptions.Item key={`ФИО`} label="ФИО">
                {order.seller.firstName} {order.seller.lastName}
-            </Descriptions.Item>
-
-            <Descriptions.Item key={`Телефон`} label="Телефон">
-               {order.seller.mobile}
             </Descriptions.Item>
          </Descriptions>
          <Divider orientation="left">Товары</Divider>

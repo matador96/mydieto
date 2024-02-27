@@ -4,7 +4,7 @@ import { Input, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { RoutePath } from '@shared/config/routes';
 import { useLocation } from 'react-router-dom';
-import { extraActions, getFilterCatalog } from '@entitles/Extra';
+import { extraActions, getFilterArticle } from '@entitles/Extra';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import searchIcon from '@shared/assets/images/search.svg';
@@ -15,7 +15,7 @@ const SearchBox = () => {
    const location = useLocation();
    const [str, setStr] = useState('');
    const navigate = useNavigate();
-   const chexBoxValues = useSelector(getFilterCatalog);
+   const chexBoxValues = useSelector(getFilterArticle);
 
    const onChange = (e) => {
       setStr(e.target.value);
@@ -29,19 +29,19 @@ const SearchBox = () => {
 
    const onClick = () => {
       const url = location?.pathname;
-      if (url !== RoutePath['seller-catalogs']) {
-         navigate(RoutePath['seller-catalogs']);
+      if (url !== RoutePath['seller-articles']) {
+         navigate(RoutePath['seller-articles']);
       }
 
       setTimeout(() => {
-         dispatch(extraActions.setFilterCatalog([]));
-         dispatch(extraActions.setSearchCatalog(str));
+         dispatch(extraActions.setFilterArticle([]));
+         dispatch(extraActions.setSearchArticle(str));
       }, 100);
    };
 
    const onClear = () => {
       setStr('');
-      dispatch(extraActions.setSearchCatalog(''));
+      dispatch(extraActions.setSearchArticle(''));
    };
 
    const MyIcon = () => <img src={searchIcon} />;

@@ -4,7 +4,7 @@ const allStatuses = [...Object.values(Statuses)];
 
 const statusesOfAddresses = [...allStatuses];
 const statusesOfAdmins = [...allStatuses];
-const statusesOfCatalogs = [...allStatuses];
+const statusesOfArticles = [...allStatuses];
 const statusesOfManagers = [...allStatuses];
 const statusesOfOrders = [
   Statuses.EVALUATIVE_PRICE,
@@ -19,7 +19,7 @@ module.exports = {
   allStatuses,
   statusesOfAddresses,
   statusesOfAdmins,
-  statusesOfCatalogs,
+  statusesOfArticles,
   statusesOfManagers,
   statusesOfOrders,
   statusesOfOrderItems,

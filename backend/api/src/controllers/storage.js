@@ -18,7 +18,7 @@ module.exports.getWithParams = async (req) => {
 };
 
 module.exports.add = async (req) => {
-  const { quantity, catalogId } = req.body;
+  const { quantity, articleId } = req.body;
 
   const currentSessionUserId = req?.user?.profile?.id;
 
@@ -32,19 +32,19 @@ module.exports.add = async (req) => {
   }
 
   const current = await storageService.getByFields({
-    catalogId,
+    articleId,
     sellerId,
   });
 
   if (!current) {
-    await storageService.create({ catalogId, quantity, sellerId });
+    await storageService.create({ articleId, quantity, sellerId });
   } else {
     await storageService.update(
       {
         quantity: current.quantity + quantity,
       },
       {
-        catalogId,
+        articleId,
         sellerId,
       },
     );
@@ -86,8 +86,6 @@ module.exports.delete = async (req) => {
   return {};
 };
 
-const validationSellerFilterFields = [query("mobile").isString().optional()];
-
 module.exports.validate = (method) => {
   switch (method) {
     case "getSellerById": {
@@ -95,20 +93,7 @@ module.exports.validate = (method) => {
     }
 
     case "getSellersWithParams": {
-      return [
-        ...validationSellerFilterFields,
-        ...Validations.pagination,
-        ...Validations.sorting,
-      ];
-    }
-
-    case "getSellerByMobile": {
-      return [
-        param("mobile")
-          // eslint-disable-next-line no-useless-escape
-          .matches(/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/)
-          .withMessage("Неправильный ввод телефона"),
-      ];
+      return [...Validations.pagination, ...Validations.sorting];
     }
 
     case "create": {
@@ -121,7 +106,6 @@ module.exports.validate = (method) => {
         body("priority").isInt().optional(),
         body("address").optional(),
         body("entityCategories").exists(), // в будущем переделать
-        body("mobile").isString(), // .isMobilePhone("ru-RU")
         body("status").isIn(allStatuses).optional(),
       ];
     }
@@ -137,7 +121,6 @@ module.exports.validate = (method) => {
         body("address").optional(),
         body("priority").isInt().optional(),
         body("entityCategories").optional(), // в будущем переделать
-        body("mobile").isString().optional(), // .isMobilePhone("ru-RU")
         body("status").isIn(allStatuses).optional(),
       ];
     }

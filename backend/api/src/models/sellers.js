@@ -29,11 +29,6 @@ const Sellers = sequelize.define(
       field: "lastName",
       type: DataTypes.STRING,
     },
-    mobile: {
-      field: "mobile",
-      type: DataTypes.STRING,
-      unique: true,
-    },
     status: {
       field: "status",
       type: DataTypes.ENUM(statusesOfSellers),

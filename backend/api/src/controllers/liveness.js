@@ -1,7 +1,7 @@
-const CatalogService = require("../services/catalogs");
+const ArticleService = require("../services/articles");
 
 module.exports.getTestData = async () => {
-  const { data: result } = await CatalogService.getWithParams({
+  const { data: result } = await ArticleService.getWithParams({
     limit: 5,
     page: 1,
   });

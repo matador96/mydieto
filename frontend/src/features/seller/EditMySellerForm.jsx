@@ -81,13 +81,8 @@ const EditMySellerForm = () => {
       const res = await GetSellersList({
          page: 1,
          limit: 10,
-         order: 'desc',
-         mobile: val
+         order: 'desc'
       });
-
-      if (val === initialValues.mobile) {
-         return false;
-      }
 
       if (res?.count > 0) {
          return true;
@@ -142,40 +137,6 @@ const EditMySellerForm = () => {
                <Input className="custom-input" />
             </Form.Item>
 
-            <Form.Item
-               label="Телефон"
-               className="custom-input-container"
-               name="mobile"
-               rules={[
-                  {
-                     required: true,
-                     message: 'Поле не может быть пустым'
-                  },
-                  {
-                     pattern: /^[0-9]{11}$/,
-                     message: 'Неверный формат номера телефона'
-                  },
-                  {
-                     validator: async (_, val) => {
-                        const isExist = await checkNumberIsExist(val);
-
-                        if (isExist) {
-                           return Promise.reject('Такой номер уже есть в базе');
-                        }
-
-                        return Promise.resolve();
-                     }
-                  }
-               ]}>
-               <Input
-                  className="custom-input"
-                  // type="number"
-                  // addonBefore={prefixSelector}
-                  style={{
-                     width: '100%'
-                  }}
-               />
-            </Form.Item>
             <Form.Item
                className="custom-input-container"
                hasFeedback={false}

@@ -2,10 +2,10 @@ const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
 
 const { statusesOfOrderItems } = require("../config/statusSettings");
-const Catalogs = require("./catalogs");
+const Articles = require("./articles");
 const Orders = require("./orders");
 
-const CatalogService = require("../services/catalogs");
+const ArticleService = require("../services/articles");
 const StorageService = require("../services/storage");
 
 const { DatabaseError, ApplicationError } = require("../classes/Errors");
@@ -19,11 +19,11 @@ const OrderItems = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    catalogId: {
-      field: "catalogId",
+    articleId: {
+      field: "articleId",
       type: DataTypes.INTEGER,
       references: {
-        model: "catalogs",
+        model: "articles",
         key: "id",
       },
     },
@@ -62,11 +62,11 @@ const OrderItems = sequelize.define(
           return;
         }
 
-        const catalogId = orderItem.catalogId;
+        const articleId = orderItem.articleId;
 
         const storageItem = await StorageService.getByFields({
           sellerId,
-          catalogId,
+          articleId,
         });
 
         try {
@@ -77,12 +77,12 @@ const OrderItems = sequelize.define(
             { transaction: options.transaction },
           );
         } catch (e) {
-          const catalog = await CatalogService.getById(orderItem.catalogId, {
+          const article = await ArticleService.getById(orderItem.articleId, {
             transaction: options.transaction,
           });
           const message = `На складе не хватает ${Math.abs(
             storageItem.quantity,
-          )} товаров ${catalog.name}`;
+          )} товаров ${article.name}`;
           throw new ApplicationError(message, {
             path: "services",
           });
@@ -93,8 +93,8 @@ const OrderItems = sequelize.define(
   },
 );
 
-OrderItems.belongsTo(Catalogs, {
-  foreignKey: "catalogId",
+OrderItems.belongsTo(Articles, {
+  foreignKey: "articleId",
 });
 
 OrderItems.belongsTo(Orders, {

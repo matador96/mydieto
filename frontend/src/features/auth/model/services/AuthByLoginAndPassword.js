@@ -24,15 +24,14 @@ export const CheckAuth = async () => {
       // TODO по хорошему диспатч должен быть здесь
       const response = await getUser();
 
-      if (response === false) throw new Error(401);
+      // if (response === false) throw new Error(401);
 
       return response;
    } catch (e) {
-      if (e === '401') {
-         return;
-      }
-
-      throw new Error(e.message);
+      // if (e === '401') {
+      //    return;
+      // }
+      // throw new Error(e.message);
    }
 };
 

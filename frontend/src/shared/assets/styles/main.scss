@@ -253,7 +253,6 @@
             font-weight: 600;
             line-height: 43px;
             cursor: pointer;
-            width: 95px;
             height: 100%;
             color: #24292e;
             font-family: Inter;
@@ -261,7 +260,7 @@
             align-items: center;
          }
 
-         .catalog-button-container {
+         .article-button-container {
             border: none !important;
             background: rgba(47, 148, 97, 1) !important;
             color: rgba(255, 255, 255, 1) !important;
@@ -279,14 +278,14 @@
                0px 0px 0px 1px rgba(103, 110, 118, 0.16),
                0px 2px 5px 0px rgba(103, 110, 118, 0.08);
 
-            .button-catalog {
+            .button-article {
                width: 112px;
                height: 24px;
                gap: 10px;
                display: flex;
                align-items: center;
 
-               .button-catalog-iconimg {
+               .button-article-iconimg {
                   color: white;
                   width: 18px;
                   height: 18px;

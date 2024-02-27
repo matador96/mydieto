@@ -1,11 +1,11 @@
 const OrderItems = require("../models/orderItems");
-const Catalogs = require("../models/catalogs");
+const Articles = require("../models/articles");
 const { ApplicationError } = require("./../classes/Errors");
 const { generateDatabaseSetting } = require("../helpers/db");
 
 module.exports.getById = async (id) => {
   const orderItem = await OrderItems.findByPk(id, {
-    include: [Catalogs],
+    include: [Articles],
     raw: false,
     nest: true,
   });
@@ -21,7 +21,7 @@ module.exports.getById = async (id) => {
 module.exports.getWithParams = async (queryParams) => {
   const data = await OrderItems.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "orderItem"),
-    include: [Catalogs],
+    include: [Articles],
     raw: false,
     nest: true,
   });
@@ -46,7 +46,7 @@ module.exports.update = async (obj, whereObj, settings = {}) => {
 
   const updatedOrderItem = await OrderItems.findOne({
     where: whereObj,
-    include: [Catalogs],
+    include: [Articles],
     ...settings,
     raw: false,
     nest: true,

@@ -1,9 +1,9 @@
-import { createCatalog } from '@shared/api/all/catalog';
+import { createArticle } from '@shared/api/all/article';
 
-export const CreateCatalog = async (fields) => {
+export const CreateArticle = async (fields) => {
    try {
       // TODO по хорошему диспатч должен быть здесь
-      const response = await createCatalog(fields);
+      const response = await createArticle(fields);
       if (!response.json) throw new Error();
       return response.json.data;
    } catch (e) {

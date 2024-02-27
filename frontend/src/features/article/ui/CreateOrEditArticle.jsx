@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import CatalogForm from './CatalogForm';
-import { CreateCatalog } from '../model/services/CreateCatalog';
-import { UpdateCatalog } from '../model/services/UpdateCatalog';
-import { GetCatalog } from '../model/services/GetCatalog';
+import ArticleForm from './ArticleForm';
+import { CreateArticle } from '../model/services/CreateArticle';
+import { UpdateArticle } from '../model/services/UpdateArticle';
+import { GetArticle } from '../model/services/GetArticle';
 import _ from 'lodash';
 import { message } from 'antd';
 
-const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
+const CreateOrEditArticle = ({ id = null, callbackOnSuccess = () => {} }) => {
    const isEditForm = !!id;
    const [initialValues, setIntialValues] = useState({ unit: 'kg' });
    const [loadForm, setLoadForm] = useState(false);
@@ -16,7 +16,7 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
          return;
       }
 
-      GetCatalog(id).then((res) => {
+      GetArticle(id).then((res) => {
          setIntialValues({ ...initialValues, ...res });
          setLoadForm(true);
       });
@@ -26,7 +26,7 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
       setLoading(true);
 
       if (isEditForm) {
-         const catalogId = initialValues.id;
+         const articleId = initialValues.id;
 
          const mergedObj = { ...initialValues, ...values };
          const updatedFields = _.pickBy(
@@ -52,7 +52,7 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
             }
          }
 
-         await UpdateCatalog(formData, catalogId)
+         await UpdateArticle(formData, articleId)
             .then(() => {
                callbackOnSuccess();
                message.success('Каталог изменен');
@@ -79,7 +79,7 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
          }
       }
 
-      await CreateCatalog(formDataCreate).then(() => {
+      await CreateArticle(formDataCreate).then(() => {
          setLoading(false);
          callbackOnSuccess();
          message.success('Каталог создан');
@@ -92,7 +92,7 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
    }
 
    return (
-      <CatalogForm
+      <ArticleForm
          initialValues={initialValues}
          isEditForm={isEditForm}
          onSuccess={onSuccess}
@@ -100,4 +100,4 @@ const CreateOrEditCatalog = ({ id = null, callbackOnSuccess = () => {} }) => {
    );
 };
 
-export default CreateOrEditCatalog;
+export default CreateOrEditArticle;

@@ -1,34 +1,33 @@
-const Catalogs = require("../models/catalogs");
+const Articles = require("../models/articles");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
 
 module.exports.getById = async (id, settings = {}) => {
-  const catalog = await Catalogs.findByPk(id, {
+  const article = await Articles.findByPk(id, {
     ...settings,
-    include: [{ model: Catalogs, as: "parentCatalog" }],
     raw: false,
     nest: true,
   });
 
-  if (!catalog)
+  if (!article)
     throw new ApplicationError("Каталог не найден", {
       path: "controllers",
     });
 
-  return catalog;
+  return article;
 };
 
 module.exports.getByField = async (field) => {
-  const data = await Catalogs.findOne({
+  const data = await Articles.findOne({
     where: { ...field },
   });
   return data;
 };
 
 // module.exports.getWithParamsByParentId = async (queryParams) => {
-//   const data = await Catalogs.findAndCountAll({
-//     ...generateDatabaseSetting({ ...queryParams }, "catalog"),
-//     include: [{ model: Catalogs, as: "parentCatalog" }],
+//   const data = await Articles.findAndCountAll({
+//     ...generateDatabaseSetting({ ...queryParams }, "article"),
+//     include: [{ model: Articles, as: "parentArticle" }],
 //     raw: false,
 //     nest: true,
 //   });
@@ -37,9 +36,8 @@ module.exports.getByField = async (field) => {
 // };
 
 module.exports.getWithParams = async (queryParams) => {
-  const data = await Catalogs.findAndCountAll({
-    ...generateDatabaseSetting(queryParams, "catalog"),
-    include: [{ model: Catalogs, as: "parentCatalog" }],
+  const data = await Articles.findAndCountAll({
+    ...generateDatabaseSetting(queryParams, "article"),
     raw: false,
     nest: true,
   });
@@ -48,30 +46,30 @@ module.exports.getWithParams = async (queryParams) => {
 };
 
 module.exports.create = async (obj, settings = {}) => {
-  const catalog = await Catalogs.create(obj, { ...settings }).then(
+  const article = await Articles.create(obj, { ...settings }).then(
     (resultEntity) => {
       const dataObj = resultEntity.get({ plain: true });
       return dataObj;
     },
   );
 
-  return catalog;
+  return article;
 };
 
 module.exports.update = async (obj, whereObj, settings = {}) => {
-  await Catalogs.update(obj, {
+  await Articles.update(obj, {
     where: whereObj,
     ...settings,
     // returning: true, Не подходит получение данных после апдейта, так как оно не фильтровано
     // plain: true,
   });
 
-  const updatedCatalog = await Catalogs.findOne({
+  const updatedArticle = await Articles.findOne({
     where: whereObj,
     ...settings,
     raw: false,
     nest: true,
   });
 
-  return updatedCatalog;
+  return updatedArticle;
 };

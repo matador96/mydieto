@@ -1,8 +1,8 @@
 import { Modal } from 'antd';
 import { useState, useEffect } from 'react';
-import CreateOrEditCatalog from './CreateOrEditCatalog';
+import CreateOrEditArticle from './CreateOrEditArticle';
 
-const ModalCatalogForm = ({ selectedCategory, closeModal }) => {
+const ModalArticleForm = ({ selectedCategory, closeModal }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
 
    useEffect(() => {
@@ -31,7 +31,7 @@ const ModalCatalogForm = ({ selectedCategory, closeModal }) => {
          destroyOnClose={true}
          width={920}>
          {isHaveData && (
-            <CreateOrEditCatalog
+            <CreateOrEditArticle
                id={selectedCategory.id}
                callbackOnSuccess={closeModal}
             />
@@ -40,4 +40,4 @@ const ModalCatalogForm = ({ selectedCategory, closeModal }) => {
    );
 };
 
-export default ModalCatalogForm;
+export default ModalArticleForm;

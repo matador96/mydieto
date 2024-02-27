@@ -1,15 +1,15 @@
 import { Checkbox } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { extraActions, getFilterCatalog } from '@entitles/Extra';
+import { extraActions, getFilterArticle } from '@entitles/Extra';
 
 const FilterCategory = ({ data }) => {
    const dispatch = useDispatch();
-   const chexBoxValues = useSelector(getFilterCatalog);
+   const chexBoxValues = useSelector(getFilterArticle);
 
    const onChange = (values) => {
-      dispatch(extraActions.setSearchCatalog(''));
-      dispatch(extraActions.setFilterCatalog(values));
+      dispatch(extraActions.setSearchArticle(''));
+      dispatch(extraActions.setFilterArticle(values));
    };
 
    return (

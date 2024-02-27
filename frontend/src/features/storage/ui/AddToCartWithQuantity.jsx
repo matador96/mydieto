@@ -7,14 +7,14 @@ import { AddToStorage } from '@features/storage/model/AddToStorage';
 import { message } from 'antd';
 import { unitSettings } from '@shared/const/units';
 
-const AddToCartWithQuantity = ({ catalogId, unit }) => {
+const AddToCartWithQuantity = ({ articleId, unit }) => {
    const [isLoading, setIsLoading] = useState(false);
    const [quantity, setQuantity] = useState(1);
    const [isAdded, setIsAdded] = useState(false);
 
    const addToStorage = () => {
       setIsLoading(true);
-      AddToStorage({ quantity, catalogId }).then(() => {
+      AddToStorage({ quantity, articleId }).then(() => {
          setIsLoading(false);
          message.success(`Добавлено ${quantity} шт в склад`);
          setIsAdded(true);

@@ -189,7 +189,7 @@ const DrawerCart = (props) => {
 
    const createOrder = () => {
       const orderItems = cartData.map((e) => ({
-         catalogId: e.id,
+         articleId: e.id,
          quantity: e.quantity
       }));
 

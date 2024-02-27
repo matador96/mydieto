@@ -1,8 +1,8 @@
-import { getCatalogs } from '@shared/api/all/catalog';
+import { getArticles } from '@shared/api/all/article';
 
-export const GetCatalogsList = async (params) => {
+export const GetArticlesList = async (params) => {
    try {
-      const response = await getCatalogs(params);
+      const response = await getArticles(params);
       if (!response.json) throw new Error();
       return { data: response.json.data, count: response.json.count };
    } catch (e) {

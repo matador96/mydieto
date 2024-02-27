@@ -21,9 +21,9 @@ const StorageCounter = () => {
    }, []);
 
    const fetchData = () => {
-      GetMyStorageCount().then((res) => {
-         setCount(res?.data || 0);
-      });
+      // GetMyStorageCount().then((res) => {
+      //    setCount(res?.data || 0);
+      // });
    };
 
    return (

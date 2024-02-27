@@ -3,13 +3,13 @@ import NotFoundPage from '@pages/general/notfound';
 import NotPermissionPage from '@pages/general/notpermission';
 
 import WelcomePage from '@pages/main';
-import CatalogsPage from '@pages/seller/catalogs';
+import ArticlesPage from '@pages/seller/articles';
 import OrdersPage from '@pages/seller/orders';
 
 import StoragePage from '@pages/seller/storage';
 import LeadsPage from '@pages/seller/leads';
 
-import ManageCatalogsPage from '@pages/admin/catalogs';
+import ManageArticlesPage from '@pages/admin/articles';
 import ManageOrdersPage from '@pages/admin/orders';
 import SellerStoragesPage from '@pages/admin/sellers';
 
@@ -33,14 +33,14 @@ const AppRoutes = {
    // Admin
    ADMIN_PROFILE: 'admin-profile',
    ADMIN_USERS: 'admin-users',
-   ADMIN_CATALOGS: 'admin-catalogs',
+   ADMIN_ARTICLES: 'admin-articles',
    ADMIN_ORDERS: 'admin-orders',
    ADMIN_DASHBOARD: 'admin-dashboard',
    ADMIN_SELLER_STORAGES: 'admin-sellers-storage',
    // Seller
    SELLER_DASHBOARD: 'seller-dashboard',
    SELLER_PROFILE: 'seller-profile',
-   SELLER_CATALOGS: 'seller-catalogs',
+   ARTICLES: 'articles',
    SELLER_ORDERS: 'seller-orders',
    SELLER_LEADS: 'seller-leads',
    SELLER_STORAGE: 'seller-storage'
@@ -65,12 +65,12 @@ export const RoutePath = {
    [AppRoutes.ADMIN_SELLER_STORAGES]: '/admin/storages',
    [AppRoutes.ADMIN_PROFILE]: '/admin/profile',
    // [AppRoutes.ADMIN_USERS]: '/admin/users',
-   [AppRoutes.ADMIN_CATALOGS]: '/admin/catalogs',
+   [AppRoutes.ADMIN_ARTICLES]: '/admin/articles',
    [AppRoutes.ADMIN_ORDERS]: '/admin/orders',
    // Seller
    [AppRoutes.SELLER_DASHBOARD]: '/seller/dashboard',
    [AppRoutes.SELLER_PROFILE]: '/seller/profile',
-   [AppRoutes.SELLER_CATALOGS]: '/seller/catalogs',
+   [AppRoutes.ARTICLES]: '/articles',
    [AppRoutes.SELLER_ORDERS]: '/seller/orders',
    [AppRoutes.SELLER_STORAGE]: '/seller/storage'
    // [AppRoutes.SELLER_LEADS]: '/seller/leads'
@@ -79,7 +79,7 @@ export const RoutePath = {
 export const routeList = {
    [AppRoutes.MAIN]: {
       path: RoutePath[AppRoutes.MAIN],
-      element: <Navigate to={RoutePath[AppRoutes.LOGIN]} />
+      element: <Navigate to={RoutePath[AppRoutes.ARTICLES]} /> // <>sss</> // <Navigate to={RoutePath[AppRoutes.LOGIN]} />
    },
    [AppRoutes.ADMIN_DASHBOARD]: {
       path: RoutePath[AppRoutes.ADMIN_DASHBOARD],
@@ -89,13 +89,13 @@ export const routeList = {
    },
    [AppRoutes.SELLER_DASHBOARD]: {
       path: RoutePath[AppRoutes.SELLER_DASHBOARD],
-      element: <Navigate to={RoutePath[AppRoutes.SELLER_CATALOGS]} />,
+      element: <Navigate to={RoutePath[AppRoutes.ARTICLES]} />,
       layout: AppLayout.sellerLayout,
       authOnly: true
    },
-   [AppRoutes.SELLER_CATALOGS]: {
-      path: RoutePath[AppRoutes.SELLER_CATALOGS],
-      element: <CatalogsPage />,
+   [AppRoutes.ARTICLES]: {
+      path: RoutePath[AppRoutes.ARTICLES],
+      element: <ArticlesPage />,
       authOnly: true
    },
    [AppRoutes.SELLER_ORDERS]: {
@@ -116,9 +116,9 @@ export const routeList = {
    //    authOnly: true,
    //    permission: 'can_view_categories'
    // },
-   [AppRoutes.ADMIN_CATALOGS]: {
-      path: RoutePath[AppRoutes.ADMIN_CATALOGS],
-      element: <ManageCatalogsPage />,
+   [AppRoutes.ADMIN_ARTICLES]: {
+      path: RoutePath[AppRoutes.ADMIN_ARTICLES],
+      element: <ManageArticlesPage />,
       layout: AppLayout.adminLayout,
       authOnly: true
    },

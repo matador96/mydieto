@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input, Select } from '@shared/ui';
 import { Col, Row, Upload, Typography } from 'antd';
-import { GetCatalogsList } from '../model/services/GetCatalogsList';
+import { GetArticlesList } from '../model/services/GetArticlesList';
 import { statusesOfCategories } from '@shared/const/statuses';
 import { unitSettings } from '@shared/const/units';
 import ReactQuill from 'react-quill';
@@ -40,7 +40,7 @@ const formats = [
    'image'
 ];
 
-const CatalogForm = (props) => {
+const ArticleForm = (props) => {
    const [isLoading, setIsLoading] = useState(false);
    // eslint-disable-next-line no-unused-vars
    const [isLoadingCategories, setIsLoadingCategories] = useState(false);
@@ -53,8 +53,7 @@ const CatalogForm = (props) => {
 
    const fetchCategories = () => {
       setIsLoadingCategories(true);
-      GetCatalogsList({
-         parentId: 0,
+      GetArticlesList({
          page: 1,
          limit: 1000,
          sort: 'priority',
@@ -248,7 +247,7 @@ const CatalogForm = (props) => {
                      accept="image/png, image/jpeg"
                      listType="picture-card"
                      fileList={fileList}
-                     className="upload-catalog-img"
+                     className="upload-article-img"
                      beforeUpload={fetchImage}
                      onPreview={null}
                      onRemove={null}
@@ -294,4 +293,4 @@ const CatalogForm = (props) => {
    );
 };
 
-export default CatalogForm;
+export default ArticleForm;

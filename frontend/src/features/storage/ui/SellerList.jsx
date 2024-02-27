@@ -102,10 +102,6 @@ const SellerList = () => {
                      <Descriptions.Item key={`ФИО`} label="ФИО">
                         {e.firstName} {e.lastName}
                      </Descriptions.Item>
-
-                     <Descriptions.Item key={`Телефон`} label="Телефон">
-                        {e.mobile}
-                     </Descriptions.Item>
                   </Descriptions>
 
                   <Divider orientation="left">Адреса продавца</Divider>

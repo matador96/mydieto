@@ -26,8 +26,18 @@ CREATE TABLE
         "userId" INTEGER NOT NULL REFERENCES "users" ("id"),
         "firstName" VARCHAR(100) NOT NULL,
         "lastName" VARCHAR(100) NOT NULL,
-        "mobile" VARCHAR(100) NOT NULL UNIQUE,
         "status" sellers_status DEFAULT 'active' NOT NULL,
+        "createdAt" TIMESTAMPTZ DEFAULT NOW(),
+        "updatedAt" TIMESTAMPTZ
+    );
+
+    CREATE TABLE
+    "articles" (
+        "id" SERIAL PRIMARY KEY,
+        "title" VARCHAR(100) NOT NULL,
+        "userId" INTEGER NOT NULL REFERENCES "users" ("id"),
+        "content" TEXT DEFAULT '',
+        "views" INTEGER NOT NULL DEFAULT 0,
         "createdAt" TIMESTAMPTZ DEFAULT NOW(),
         "updatedAt" TIMESTAMPTZ
     );

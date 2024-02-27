@@ -1,22 +1,22 @@
 /* eslint-disable camelcase */
-import { SET_CATALOG_SEARCH, SET_CATALOG_FILTER } from '../types';
+import { SET_ARTICLE_SEARCH, SET_ARTICLE_FILTER } from '../types';
 
 const initialState = {
-   searchCatalog: '',
-   filterCatalog: []
+   searchArticle: '',
+   filterArticle: []
 };
 
 const extraReducer = (prevState = initialState, action) => {
    switch (action.type) {
-      case SET_CATALOG_SEARCH:
+      case SET_ARTICLE_SEARCH:
          return {
             ...prevState,
-            searchCatalog: action.payload
+            searchArticle: action.payload
          };
-      case SET_CATALOG_FILTER:
+      case SET_ARTICLE_FILTER:
          return {
             ...prevState,
-            filterCatalog: action.payload
+            filterArticle: action.payload
          };
 
       default:

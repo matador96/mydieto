@@ -6,14 +6,14 @@ import {
    UPDATE_ADDRESS_OF_CART
 } from '../types';
 
-const addToCart = (catalog) => (dispatch, getState) => {
+const addToCart = (article) => (dispatch, getState) => {
    const currentCart = getState().cart.items;
    const newList = { ...currentCart };
 
-   if (newList[catalog.id]) {
-      newList[catalog.id].quantity = newList[catalog.id].quantity + catalog.quantity;
+   if (newList[article.id]) {
+      newList[article.id].quantity = newList[article.id].quantity + article.quantity;
    } else {
-      newList[catalog.id] = catalog;
+      newList[article.id] = article;
    }
 
    dispatch({

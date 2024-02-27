@@ -11,24 +11,24 @@ export function RequireAuth({ children, permission }) {
    const location = useLocation();
    const userPermissions = useSelector(getUserPermissions);
 
-   const hasRequiredPermissions = useMemo(() => {
-      if (!permission) return true;
-      return userPermissions.includes(permission);
-   }, [permission, userPermissions]);
+   // const hasRequiredPermissions = useMemo(() => {
+   //    if (!permission) return true;
+   //    return userPermissions.includes(permission);
+   // }, [permission, userPermissions]);
 
-   if (!isUserAuthorized) {
-      return <Navigate to={RoutePath.login} state={{ from: location }} replace />;
-   }
+   // if (!isUserAuthorized) {
+   //    return <Navigate to={RoutePath.login} state={{ from: location }} replace />;
+   // }
 
-   if (!hasRequiredPermissions) {
-      return (
-         <Navigate
-            to={RoutePath.not_permission}
-            state={{ from: location }}
-            replace
-         />
-      );
-   }
+   // if (!hasRequiredPermissions) {
+   //    return (
+   //       <Navigate
+   //          to={RoutePath.not_permission}
+   //          state={{ from: location }}
+   //          replace
+   //       />
+   //    );
+   // }
 
    return children;
 }

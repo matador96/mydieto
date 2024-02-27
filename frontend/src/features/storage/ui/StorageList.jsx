@@ -7,7 +7,7 @@ import { GetStorageMyWithParams } from '../model/GetStorageMyWithParams';
 import { DeleteStorageById } from '../model/DeleteStorageById';
 import { UpdateStorage } from '../model/UpdateStorage';
 
-import { GetCatalogsList } from '@features/catalog/model/services/GetCatalogsList';
+import { GetArticlesList } from '@features/article/model/services/GetArticlesList';
 
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
 import SpinnerInContainer from '@shared/ui/SpinnerInContainer';
@@ -34,11 +34,11 @@ const StorageListQuantityWithSave = (props) => {
       ) {
          dispatch(
             cartActions.addToCart({
-               id: props.storage.catalog.id,
-               name: props.storage.catalog.name,
+               id: props.storage.article.id,
+               name: props.storage.article.name,
                quantity: quantityValue,
-               unit: storage.catalog.unit,
-               imgUrl: storage.catalog.imgUrl
+               unit: storage.article.unit,
+               imgUrl: storage.article.imgUrl
             })
          );
          message.success('Добавлено в корзину');
@@ -62,7 +62,7 @@ const StorageListQuantityWithSave = (props) => {
                   className="storage-item-input"
                   // type="number"
                   // addonAfter={
-                  //    unitSettings.find((e) => e.value === props.storage.catalog.unit)
+                  //    unitSettings.find((e) => e.value === props.storage.article.unit)
                   //       .shortLabel
                   // }
                   value={inputQuantity}
@@ -116,9 +116,8 @@ const StorageList = () => {
       }).then((res) => {
          const storageData = res.data;
 
-         GetCatalogsList({
+         GetArticlesList({
             page: 1,
-            parentId: 0,
             limit: 1000,
             sort: 'priority',
             order: 'asc'
@@ -130,11 +129,11 @@ const StorageList = () => {
             tableData.forEach((e) => {
                let items = [];
                storageData.forEach((o) => {
-                  if (o.catalog.parentId === e.id) {
+                  if (o.article.parentId === e.id) {
                      items.push(o);
                   }
                });
-               newModifiedList.push({ catalog: e, items });
+               newModifiedList.push({ article: e, items });
             });
 
             setMainIsLoading(false);
@@ -253,9 +252,9 @@ const StorageList = () => {
             onClickDeleteChoosed={onClickDeleteChoosed}
          />
          {data.map((storageItem) => (
-            <React.Fragment key={`storage-catalog-${storageItem.id}`}>
+            <React.Fragment key={`storage-article-${storageItem.id}`}>
                <h3 className="storage-item-title">
-                  {storageItem.catalog.name}{' '}
+                  {storageItem.article.name}{' '}
                   <Badge
                      className="item-quantity-badge"
                      count={storageItem.items.length}
@@ -295,7 +294,7 @@ const StorageList = () => {
                               className="storage-background-image"
                               style={{
                                  backgroundImage: `url('${
-                                    item.catalog.imgUrl || defaulPhotoCard
+                                    item.article.imgUrl || defaulPhotoCard
                                  }')`,
                                  marginLeft: '20px'
                               }}
@@ -308,7 +307,7 @@ const StorageList = () => {
                                  <div>
                                     <h3 className="storage-item-name">
                                        {' '}
-                                       {item.catalog.name}
+                                       {item.article.name}
                                     </h3>
                                     <Input
                                        className="storage-item-input"

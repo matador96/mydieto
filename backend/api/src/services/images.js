@@ -1,9 +1,13 @@
-const { generateId, uploadImageFile, deleteImageFile } = require("../core/google/googleDrive");
+const {
+  generateId,
+  uploadImageFile,
+  deleteImageFile,
+} = require("../core/google/googleDrive");
 
-module.exports.uploadImageToDisk = async (imageFile, catalog) => {
+module.exports.uploadImageToDisk = async (imageFile, article) => {
   try {
     const id = await generateId();
-    const fileName = `${id}-${catalog.id}`;
+    const fileName = `${id}-${article.id}`;
     const obj = await uploadImageFile(imageFile, fileName, id);
     return obj;
   } catch (e) {

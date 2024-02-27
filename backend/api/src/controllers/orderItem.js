@@ -45,11 +45,11 @@ module.exports.delete = async (req, res, transaction) => {
   const order = await OrderService.getById(orderItem.orderId);
 
   const sellerId = order.sellerId;
-  const catalogId = orderItem.catalogId;
+  const articleId = orderItem.articleId;
 
   const storageItem = await StorageService.getByFields({
     sellerId,
-    catalogId,
+    articleId,
   });
 
   if (storageItem) {
@@ -84,7 +84,7 @@ module.exports.validate = (method) => {
 
     case "create": {
       return [
-        body("catalogId").isInt(),
+        body("articleId").isInt(),
         body("orderId").isInt(),
         body("quantity").isInt().optional(),
         body("status").isIn(statusesOfOrderItems).optional(),
@@ -94,7 +94,7 @@ module.exports.validate = (method) => {
     case "update": {
       return [
         param("id").isInt(),
-        body("catalogId").isInt().optional(),
+        body("articleId").isInt().optional(),
         body("orderId").isInt().optional(),
         body("quantity").isInt().optional(),
         body("status").isIn(statusesOfOrderItems).optional(),

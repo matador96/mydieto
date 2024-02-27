@@ -1,5 +1,5 @@
 const Storage = require("../models/storage");
-const Catalog = require("../models/catalogs");
+const Article = require("../models/articles");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
 
@@ -43,7 +43,7 @@ module.exports.getByFields = async (fields) => {
 module.exports.getWithParams = async (queryParams) => {
   const data = await Storage.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "storage"),
-    include: [Catalog],
+    include: [Article],
     raw: false,
     nest: true,
   });
@@ -68,12 +68,12 @@ module.exports.update = async (obj, whereObj, settings = {}) => {
     // plain: true,
   });
 
-  const updatedCatalog = await Storage.findOne({
+  const updatedArticle = await Storage.findOne({
     where: whereObj,
     ...settings,
   });
 
-  return updatedCatalog;
+  return updatedArticle;
 };
 
 module.exports.delete = async (whereObj, settings = {}) => {

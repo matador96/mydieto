@@ -2,14 +2,14 @@ const { body, param, query } = require("express-validator");
 const Validations = require("../const/validatorSettings");
 const { allStatuses } = require("../config/statusSettings");
 
-const CatalogService = require("../services/catalogs");
+const ArticleService = require("../services/articles");
 const ImageService = require("../services/images");
 
 module.exports.getById = async (req) => {
   const { id } = req.params;
-  const catalog = await CatalogService.getById(id);
+  const article = await ArticleService.getById(id);
 
-  return { data: catalog };
+  return { data: article };
 };
 
 module.exports.getWithParams = async (req) => {
@@ -17,14 +17,14 @@ module.exports.getWithParams = async (req) => {
   if (!Array.isArray(parentId)) {
     req.query.parentId = [parentId];
   }
-  const result = await CatalogService.getWithParams(req.query);
+  const result = await ArticleService.getWithParams(req.query);
   return { data: result.data, count: result.count };
 };
 
-// module.exports.getCatalogsWithParamsByParentId = async (req) => {
+// module.exports.getArticlesWithParamsByParentId = async (req) => {
 //   const { parentId } = req.params;
 
-//   const result = await CatalogService.getWithParamsByParentId({
+//   const result = await ArticleService.getWithParamsByParentId({
 //     ...req.query,
 //     parentId,
 //   });
@@ -33,35 +33,35 @@ module.exports.getWithParams = async (req) => {
 // };
 
 module.exports.create = async (req, res, transaction) => {
-  const catalogData = {
+  const articleData = {
     ...req.body,
   };
-  let catalog = await CatalogService.create(catalogData, { transaction });
+  let article = await ArticleService.create(articleData, { transaction });
 
   if (req?.files?.image) {
     const image = req?.files?.image;
     if (image) {
-      const imageFromDisk = await ImageService.uploadImageToDisk(image, catalog);
-      catalog = await CatalogService.update(
+      const imageFromDisk = await ImageService.uploadImageToDisk(image, article);
+      article = await ArticleService.update(
         { img: imageFromDisk.id },
-        { id: catalog.id },
+        { id: article.id },
         { transaction },
       );
     }
   }
 
   return {
-    data: catalog,
+    data: article,
   };
 };
 
 module.exports.update = async (req, res, transaction) => {
   const { id } = req.params;
-  const catalogData = {
+  const articleData = {
     ...req.body,
   };
 
-  const prevData = await CatalogService.getById(id, { transaction });
+  const prevData = await ArticleService.getById(id, { transaction });
 
   if (req?.files?.image) {
     const image = req?.files?.image;
@@ -70,13 +70,13 @@ module.exports.update = async (req, res, transaction) => {
         await ImageService.deleteImage(prevData.img);
       }
       const imageFromDisk = await ImageService.uploadImageToDisk(image, prevData);
-      catalogData.img = imageFromDisk.id;
+      articleData.img = imageFromDisk.id;
     }
   }
-  const catalog = await CatalogService.update(catalogData, { id }, { transaction });
+  const article = await ArticleService.update(articleData, { id }, { transaction });
 
   return {
-    data: catalog,
+    data: article,
   };
 };
 
@@ -84,11 +84,11 @@ const validationSellerFilterFields = [];
 
 module.exports.validate = (method) => {
   switch (method) {
-    case "getCatalogById": {
+    case "getArticleById": {
       return [param("id").isInt()];
     }
 
-    case "getCatalogsWithParams": {
+    case "getArticlesWithParams": {
       return [
         ...validationSellerFilterFields,
         ...Validations.pagination,
@@ -101,7 +101,6 @@ module.exports.validate = (method) => {
         body("name").isString(),
         body("img").isString(),
         body("parentId").isInt(),
-        body("priority").isInt(),
         body("unit").isString().optional(),
         body("status").isIn(allStatuses).optional(),
       ];
@@ -114,7 +113,6 @@ module.exports.validate = (method) => {
         body("img").isString().optional(),
         body("unit").isString().optional(),
         body("parentId").isInt().optional(),
-        body("priority").isInt().optional(),
         body("status").isIn(allStatuses).optional(),
       ];
     }

@@ -41,21 +41,21 @@ const StorageListOfSeller = ({ sellerId }) => {
                <>
                   {item.quantity !== 0 ? (
                      <List.Item>
-                        {item.catalog.imgUrl ? (
-                           <img alt={item.catalog.name} src={item.catalog.imgUrl} />
+                        {item.article.imgUrl ? (
+                           <img alt={item.article.name} src={item.article.imgUrl} />
                         ) : (
                            <img alt="default image" src={defaulPhotoCard} />
                         )}
 
                         <List.Item.Meta
                            key={`${item.id}-`}
-                           title={item.catalog.name}
+                           title={item.article.name}
                            description={
                               <>
                                  {item.quantity}{' '}
                                  {
                                     unitSettings.find(
-                                       (e) => e.value === item.catalog.unit
+                                       (e) => e.value === item.article.unit
                                     ).shortLabel
                                  }
                               </>

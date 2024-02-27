@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Space, Table, Tag, Tooltip, Avatar } from 'antd';
 import { Button, VerticalSpace } from '@shared/ui';
-import { GetCatalogsList } from '../model/services/GetCatalogsList';
+import { GetArticlesList } from '../model/services/GetArticlesList';
 import { EditOutlined } from '@ant-design/icons';
-import ModalCatalogForm from './ModalCatalogForm';
+import ModalArticleForm from './ModalArticleForm';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
-import ModalButtonCatalogCreate from './ModalButtonCatalogCreate';
+import ModalButtonArticleCreate from './ModalButtonArticleCreate';
 import CanDo from '@shared/lib/CanDo';
 import { unitSettings } from '@shared/const/units';
 import { statusesOfCategories } from '@shared/const/statuses';
@@ -78,11 +78,9 @@ const NestedTableCategories = ({ id, selectedCategory, setSelectedCategory }) =>
    }, [selectedCategory]);
 
    const fetchData = () => {
-      GetCatalogsList({
-         parentId: id,
+      GetArticlesList({
          page: 1,
          limit: 1000,
-         sort: 'priority',
          order: 'asc'
       }).then((res) => {
          setData(res.data);
@@ -99,7 +97,7 @@ const NestedTableCategories = ({ id, selectedCategory, setSelectedCategory }) =>
    );
 };
 
-const TableCatalogs = () => {
+const TableArticles = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
    const [selectedCategory, setSelectedCategory] = useState(null);
@@ -136,11 +134,9 @@ const TableCatalogs = () => {
       pageSize = pagination.pageSize
    ) => {
       setIsLoading(true);
-      GetCatalogsList({
+      GetArticlesList({
          page: current,
-         parentId: 0,
          limit: pageSize,
-         sort: 'priority',
          order: 'asc'
       }).then((res) => {
          setIsLoading(false);
@@ -167,13 +163,13 @@ const TableCatalogs = () => {
 
    return (
       <>
-         <ModalCatalogForm
+         <ModalArticleForm
             selectedCategory={selectedCategory}
             closeModal={closeModal}
          />
 
          <Space style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <ModalButtonCatalogCreate closeModal={closeModal} />
+            <ModalButtonArticleCreate closeModal={closeModal} />
          </Space>
          <VerticalSpace />
          <Table
@@ -208,4 +204,4 @@ const TableCatalogs = () => {
    );
 };
 
-export default TableCatalogs;
+export default TableArticles;

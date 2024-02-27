@@ -1,14 +1,14 @@
 import React from 'react';
-import CardListCatalogs from '@features/catalog/ui/CardListCatalogs';
+import CardListArticles from '@features/article/ui/CardListArticles';
 import { Title } from '@shared/ui';
 
-const CatalogsPage = () => {
+const ArticlesPage = () => {
    return (
       <>
          <Title style={{ marginBottom: '10px' }}>Каталог плат и деталей</Title>
-         <CardListCatalogs />
+         <CardListArticles />
       </>
    );
 };
 
-export default CatalogsPage;
+export default ArticlesPage;

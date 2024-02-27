@@ -12,11 +12,11 @@ import {
    Typography
 } from 'antd';
 import defaulPhotoCard from '../../../shared/assets/images/platy-meta.jpeg';
-import { GetCatalogsList } from '../model/services/GetCatalogsList';
+import { GetArticlesList } from '../model/services/GetArticlesList';
 import FilterCategory from '@shared/ui/FilterCategory';
 import AddToCartWithQuantity from '@features/storage/ui/AddToCartWithQuantity';
 import SpinnerInContainer from '@shared/ui/SpinnerInContainer';
-import { extraActions, getSearchCatalog, getFilterCatalog } from '@entitles/Extra';
+import { extraActions, getSearchArticle, getFilterArticle } from '@entitles/Extra';
 import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
 
@@ -34,7 +34,7 @@ const info = (content) => {
    });
 };
 
-const CatalogCardsByParentId = ({ items }) => {
+const ArticleCardsByParentId = ({ items }) => {
    return (
       <Row gutter={24} className="custom-row">
          {items.map((item) => (
@@ -59,7 +59,7 @@ const CatalogCardsByParentId = ({ items }) => {
                   actions={[
                      <AddToCartWithQuantity
                         key={`ke${item.id}`}
-                        catalogId={item.id}
+                        articleId={item.id}
                         unit={item.unit}
                      />
                   ]}>
@@ -76,30 +76,28 @@ const CatalogCardsByParentId = ({ items }) => {
    );
 };
 
-const CardListCatalogs = () => {
+const CardListArticles = () => {
    const [initialData, setInitialData] = useState([]);
    const [loading, setLoading] = useState(false);
    const [data, setData] = useState([]);
    const [searchStr, setSearchStr] = useState('');
    const dispatch = useDispatch();
-   const searchText = useSelector(getSearchCatalog);
-   const catalogFilter = useSelector(getFilterCatalog);
+   const searchText = useSelector(getSearchArticle);
+   const articleFilter = useSelector(getFilterArticle);
 
    useEffect(() => {
-      fetchMainCatalog();
+      fetchMainArticle();
    }, []);
 
    useEffect(() => {
-      filterData(searchText, catalogFilter);
-   }, [searchText, catalogFilter]);
+      filterData(searchText, articleFilter);
+   }, [searchText, articleFilter]);
 
-   const fetchMainCatalog = () => {
+   const fetchMainArticle = () => {
       setLoading(true);
-      GetCatalogsList({
+      GetArticlesList({
          page: 1,
-         parentId: 0,
          limit: 1000,
-         sort: 'priority',
          order: 'asc'
       }).then(async (res) => {
          const mainData = res?.data || [];
@@ -108,11 +106,9 @@ const CardListCatalogs = () => {
 
          mainData.forEach((e) =>
             promises.push(
-               GetCatalogsList({
+               GetArticlesList({
                   page: 1,
-                  parentId: e.id,
                   limit: 1000,
-                  sort: 'priority',
                   order: 'asc'
                }).then((res) => dataArr.push({ ...e, items: res?.data || [] }))
             )
@@ -140,7 +136,6 @@ const CardListCatalogs = () => {
                }
 
                if (ctlgFilter.length > 0) {
-                  console.log();
                   return ctlgFilter.includes(item.parentId);
                }
             })
@@ -181,7 +176,7 @@ const CardListCatalogs = () => {
                            />
                         </h2>
 
-                        <CatalogCardsByParentId
+                        <ArticleCardsByParentId
                            id={item.id}
                            items={item?.items || []}
                         />
@@ -194,4 +189,4 @@ const CardListCatalogs = () => {
    );
 };
 
-export default CardListCatalogs;
+export default CardListArticles;

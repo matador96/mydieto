@@ -30,7 +30,7 @@ import { getCartCount } from '@entitles/Cart';
 import StorageCounter from '@features/storage/ui/StorageCounter';
 import Head from '../Head';
 
-import buttonCatalogIcon from '@shared/assets/images/Stroke.svg';
+import buttonArticleIcon from '@shared/assets/images/Stroke.svg';
 import cartIcon from '@shared/assets/images/cart.svg';
 import searchIcon from '@shared/assets/images/search.svg';
 import clearSearchInput from '@shared/assets/images/clearSearchInput.svg';
@@ -53,7 +53,7 @@ const allMenuItems = [
    // getItem('Продавцы', 'users', <UsergroupAddOutlined />),
    // getItem('Журнал действий', 'logs', <AlignLeftOutlined />),
 
-   getItem('Каталог плат и деталей', 'seller-catalogs', <UnorderedListOutlined />),
+   getItem('Каталог плат и деталей', 'seller-articles', <UnorderedListOutlined />),
    getItem('аказы', 'seller-orders', <ShoppingOutlined />)
    // getItem('Мои заказы', 'seller-leads', <UsergroupAddOutlined />)
 ];
@@ -111,41 +111,14 @@ const SellerLayout = (props) => {
                   <div className="erp-header-seller-items">
                      <div className="search-container">
                         <p className="header-logo" onClick={() => navigate('/')}>
-                           РЭЛ
+                           ALTUN
                         </p>
-                        <Button
-                           className="catalog-button-container button-catalog"
-                           onClick={() => navigate('/')}>
-                           <img
-                              className="button-catalog-icon"
-                              src={buttonCatalogIcon}
-                              alt="ascasc"
-                           />
-                           <p>Каталог</p>
-                        </Button>
-                        <SearchBox />
                      </div>
                      <div className="menu-container">
-                        <StorageCounter />
-
-                        <DrawerCart
-                           button={
-                              <div className="menu-items">
-                                 <Badge showZero count={cartCount} status="success">
-                                    <img
-                                       className="menu-items-icon"
-                                       src={cartIcon}
-                                    />
-                                 </Badge>
-                                 <span className="menu-profile-info_login">
-                                    Корзина
-                                 </span>
-                              </div>
-                           }
-                        />
-
-                        <OrderIconComponent />
-                        <MenuProfile isCollapsed={collapsed} />
+                        <Button onClick={() => navigate('/login')}>Войти</Button>
+                        <Button onClick={() => navigate('/register')}>
+                           Регистрация
+                        </Button>
                      </div>
                   </div>
                </Container>

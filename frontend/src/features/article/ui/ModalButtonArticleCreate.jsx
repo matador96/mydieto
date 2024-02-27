@@ -1,9 +1,9 @@
 import { Button, Modal } from 'antd';
 import { useState } from 'react';
-import CreateOrEditCatalog from './CreateOrEditCatalog';
+import CreateOrEditArticle from './CreateOrEditArticle';
 import { PlusOutlined } from '@ant-design/icons';
 
-const ModalButtonCatalogCreate = ({ closeModal }) => {
+const ModalButtonArticleCreate = ({ closeModal }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
 
    const showModal = () => {
@@ -32,12 +32,11 @@ const ModalButtonCatalogCreate = ({ closeModal }) => {
             title={`Создать каталог`}
             footer={null}
             width={600}
-            destroyOnClose={true}
-         >
-            <CreateOrEditCatalog callbackOnSuccess={handleCancel} />
+            destroyOnClose={true}>
+            <CreateOrEditArticle callbackOnSuccess={handleCancel} />
          </Modal>
       </>
    );
 };
 
-export default ModalButtonCatalogCreate;
+export default ModalButtonArticleCreate;

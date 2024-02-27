@@ -19,12 +19,10 @@ const AppRouter = () => {
          //    element = <DefaultLayout>{route.element}</DefaultLayout>;
          // }
 
+         element = <SellerLayout>{route.element}</SellerLayout>;
+
          if (auth?.type === 'admin') {
             element = <AdminLayout>{route.element}</AdminLayout>;
-         }
-
-         if (auth?.type === 'seller') {
-            element = <SellerLayout>{route.element}</SellerLayout>;
          }
 
          if (route.layout === AppLayout.centered) {
@@ -34,13 +32,14 @@ const AppRouter = () => {
          return (
             <Route
                element={
-                  route.authOnly ? (
-                     <RequireAuth permission={route.permission}>
-                        {element}
-                     </RequireAuth>
-                  ) : (
-                     element
-                  )
+                  element
+                  // route.authOnly ? (
+                  //    <RequireAuth permission={route.permission}>
+                  //       {element}
+                  //    </RequireAuth>
+                  // ) : (
+                  //    element
+                  // )
                }
                exact={!!route.exact}
                key={route.path}

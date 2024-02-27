@@ -23,32 +23,30 @@ const AuthProvider = (props) => {
    }, []);
 
    const fetchData = () => {
-      CheckAuth()
-         .then((res) => {
-            if (res?.status === 423) {
-               setIsLoaded(true);
-               logout();
-               Modal.error({
-                  title: res.json.error.message
-               });
-               return;
-            }
-
-            if (res?.json?.data?.email) {
-               dispatch(userActions.loginUser(res?.json?.data));
-            }
-
-            setIsLoaded(true);
-            setIsHaveError(false);
-         })
-         .catch((e) => {
-            if (isHaveError) {
-               setIsHaveError(false);
-            }
-
-            if (e.message !== '401') setIsHaveError(true);
-            setIsLoaded(true);
-         });
+      // CheckAuth()
+      //    .then((res) => {
+      //       if (res?.status === 423) {
+      //          setIsLoaded(true);
+      //          logout();
+      //          Modal.error({
+      //             title: res.json.error.message
+      //          });
+      //          return;
+      //       }
+      //       if (res?.json?.data?.email) {
+      //          dispatch(userActions.loginUser(res?.json?.data));
+      //       }
+      //       setIsLoaded(true);
+      //       setIsHaveError(false);
+      //    })
+      //    .catch((e) => {
+      //       if (isHaveError) {
+      //          setIsHaveError(false);
+      //       }
+      //       if (e.message !== '401') setIsHaveError(true);
+      //       setIsLoaded(true);
+      //    });
+      setIsLoaded(true);
    };
 
    const logout = () => {

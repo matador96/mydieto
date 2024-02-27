@@ -1,7 +1,7 @@
 const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
 // const Sellers = require("./sellers");
-const Catalogs = require("./catalogs");
+const Articles = require("./articles");
 
 const Storage = sequelize.define(
   "storage",
@@ -12,11 +12,11 @@ const Storage = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    catalogId: {
-      field: "catalogId",
+    articleId: {
+      field: "articleId",
       type: DataTypes.INTEGER,
       references: {
-        model: "catalogs",
+        model: "articles",
         key: "id",
       },
     },
@@ -45,8 +45,8 @@ const Storage = sequelize.define(
 //   foreignKey: "sellerId",
 // });
 
-Storage.belongsTo(Catalogs, {
-  foreignKey: "catalogId",
+Storage.belongsTo(Articles, {
+  foreignKey: "articleId",
 });
 
 module.exports = Storage;

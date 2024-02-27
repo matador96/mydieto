@@ -17,7 +17,7 @@ async function tryCatchResponseWrapper(req, res, callback, withTransaction = fal
 const allRoutes = [
   ...require("./admins"),
   ...require("./addresses"),
-  ...require("./catalogs"),
+  ...require("./articles"),
   ...require("./liveness"),
   ...require("./managers"),
   ...require("./orders"),

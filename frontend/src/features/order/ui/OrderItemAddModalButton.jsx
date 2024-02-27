@@ -3,7 +3,7 @@ import { message, Button, Row, Col } from 'antd';
 import { Form, Select } from '@shared/ui';
 import { PlusOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
-import { GetCatalogsList } from '@features/catalog/model/services/GetCatalogsList';
+import { GetArticlesList } from '@features/article/model/services/GetArticlesList';
 import { AddOrderItem } from './../model/services/AddOrderItem';
 
 const OrderItemAddModalButton = ({ order, onAdd }) => {
@@ -18,7 +18,7 @@ const OrderItemAddModalButton = ({ order, onAdd }) => {
 
    const fetchCategories = () => {
       setIsLoadingCategories(true);
-      GetCatalogsList({
+      GetArticlesList({
          page: 1,
          limit: 1000,
          sort: 'priority',
@@ -92,10 +92,10 @@ const OrderItemAddModalButton = ({ order, onAdd }) => {
                layout="vertical">
                <Row gutter={16}>
                   <Col span={24}>
-                     <Form.Item name="catalogId" label="Каталог">
+                     <Form.Item name="articleId" label="Каталог">
                         <Select
                            placeholder="Выберите товар"
-                           name="catalogId"
+                           name="articleId"
                            showSearch
                            optionFilterProp="children"
                            allowClear

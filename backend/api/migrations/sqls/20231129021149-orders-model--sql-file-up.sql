@@ -22,7 +22,7 @@ CREATE TYPE orderItems_status AS ENUM ('active', 'blocked');
 CREATE TABLE
     "orderItems" (
         "id" SERIAL PRIMARY KEY,
-        "catalogId" INTEGER REFERENCES "catalogs" ("id"),
+        "articleId" INTEGER REFERENCES "articles" ("id"),
         "orderId" INTEGER REFERENCES "orders" ("id"),
         "capacity" INTEGER NOT NULL DEFAULT 0,
         "status" orderItems_status DEFAULT 'active' NOT NULL,

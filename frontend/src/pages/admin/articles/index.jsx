@@ -1,14 +1,14 @@
 import React from 'react';
-import TableCatalogs from '@features/catalog/ui/TableCatalogs';
+import TableArticles from '@features/article/ui/TableArticles';
 import { Title } from '@shared/ui';
 
-const ManageCatalogsPage = () => {
+const ManageArticlesPage = () => {
    return (
       <div>
          <Title>Каталог плат и деталей</Title>
-         <TableCatalogs />
+         <TableArticles />
       </div>
    );
 };
 
-export default ManageCatalogsPage;
+export default ManageArticlesPage;

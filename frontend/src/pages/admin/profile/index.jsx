@@ -77,24 +77,6 @@ const SellerForm = () => {
          </Form.Item>
 
          <Form.Item
-            label="Телефон"
-            name="mobile"
-            rules={[
-               {
-                  required: true,
-                  message: 'Поле не может быть пустым'
-               }
-            ]}>
-            <Input
-               type="number"
-               addonBefore={prefixSelector}
-               style={{
-                  width: '100%'
-               }}
-            />
-         </Form.Item>
-
-         <Form.Item
             label="Email"
             name="email"
             rules={[

@@ -36,7 +36,7 @@ const allMenuItems = [
    // getItem('Заявки', 'users', <UsergroupAddOutlined />),
    // getItem('Журнал действий', 'logs', <AlignLeftOutlined />),
 
-   getItem('Каталог', 'admin-catalogs', <UnorderedListOutlined />),
+   getItem('Каталог', 'admin-articles', <UnorderedListOutlined />),
    getItem('Заказы', 'admin-orders', <ContainerOutlined />),
    getItem('Склады', 'admin-sellers-storage', <HddOutlined />)
 ];
