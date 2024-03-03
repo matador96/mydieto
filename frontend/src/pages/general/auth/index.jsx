@@ -3,6 +3,7 @@ import LoginForm from '@features/auth/ui/LoginForm';
 import RegisterForm from '@features/auth/ui/RegisterForm';
 import { Content, Title, Button } from '@shared/ui';
 import { userActions } from '@entitles/User';
+import Container from '@widgets/Container/ui/Container';
 import { useNavigate } from 'react-router-dom';
 import { Card, Row, Col } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
@@ -16,10 +17,10 @@ const AuthPage = ({ isLoginForm = true }) => {
    const navigate = useNavigate();
 
    return (
+      <Container>
       <Row className="auth-page" gutter={[16, 24]}>
          <Col className="auth-page_left" span={24}>
-            <Card
-               title={
+          
                   <>
                      <Button
                         icon={<ArrowLeftOutlined />}
@@ -27,7 +28,7 @@ const AuthPage = ({ isLoginForm = true }) => {
                         style={{ marginRight: '10px' }}></Button>
                      {isLoginForm ? 'Войти в аккаунт' : 'Регистрация'}
                   </>
-               }>
+            
                {isLoginForm ? (
                   <>
                      <LoginForm />
@@ -55,9 +56,10 @@ const AuthPage = ({ isLoginForm = true }) => {
                      </Button>
                   </>
                )}
-            </Card>
+         
          </Col>
       </Row>
+      </Container>
    );
 };
 

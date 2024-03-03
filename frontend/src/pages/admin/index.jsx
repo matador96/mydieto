@@ -2,7 +2,7 @@
 import React from 'react';
 import { Content, Title } from '@shared/ui';
 
-const WelcomePage = () => {
+const AdminPage = () => {
    return (
       <Content>
          <Title>Добро пожаловать в админ панель</Title>
@@ -10,4 +10,4 @@ const WelcomePage = () => {
    );
 };
 
-export default WelcomePage;
+export default AdminPage;

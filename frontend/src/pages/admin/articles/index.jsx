@@ -5,7 +5,7 @@ import { Title } from '@shared/ui';
 const ManageArticlesPage = () => {
    return (
       <div>
-         <Title>Каталог статей</Title>
+         <Title>Список статей</Title>
          <TableArticles />
       </div>
    );

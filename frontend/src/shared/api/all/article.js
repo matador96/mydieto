@@ -12,17 +12,14 @@ export const getArticles = (params) => get(generateQueryParams(`/articles`, para
 
 export const getArticleById = (id) => get(`/article/${id}`);
 
-export const createArticle = async (fields) => {
-   const url = `/article`;
-
-   return await fetch(`${API_URL}${url}`, {
-      method: 'post',
-      body: fields,
-      headers: { ...(await getAuthHeaders()) }
-   }).then((res) => {
-      return res.json().then((json) => requestResult(res, json));
-   });
-};
+export const createArticle = (fields) =>
+   post(
+      '/article',
+      {
+         ...fields
+      },
+      true
+   );
 
 export const updateArticle = async (fields, id) => {
    const url = `/article/${id}`;

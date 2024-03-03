@@ -32,8 +32,8 @@ function getItem(label, key, icon, children, disabled) {
 const allMenuItems = [
    getItem('Панель', 'admin-dashboard', <DashboardOutlined />),
    getItem('Пользователи', 'admin-users', <UsergroupAddOutlined />),
-   getItem('Статьи', 'admin-articles', <FileTextOutlined />),
-   getItem('Категории', 'admin-categories', <TagOutlined />)
+   getItem('Статьи', 'admin-articles', <FileTextOutlined />)
+   // getItem('Категории', 'admin-categories', <TagOutlined />)
 ];
 
 const AdminLayout = (props) => {

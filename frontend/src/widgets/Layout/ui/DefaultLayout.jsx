@@ -1,25 +1,16 @@
-import React, { useEffect } from 'react';
-import { Layout, Button } from 'antd';
-import { isUserAuthorized } from '@entitles/User';
+import React from 'react';
+import { Layout } from 'antd';
 import ProfileMenu from '@features/user/ui/ProfileMenu';
-
 import { useNavigate, useLocation } from 'react-router-dom';
+import logo from '@shared/assets/images/logo.png';
 import Container from '@widgets/Container';
-import { useSelector } from 'react-redux';
+import MenuComponent from '@widgets/Layout/Menu';
 
 const { Footer, Content, Header } = Layout;
 
 const SellerLayout = (props) => {
    const navigate = useNavigate();
    const location = useLocation();
-
-   const isAuthorized = useSelector(isUserAuthorized);
-
-   useEffect(() => {
-      if (isAuthorized) {
-         navigate(`/`);
-      }
-   }, [isAuthorized]);
 
    let pathName = location.pathname.replace('/', '');
 
@@ -33,38 +24,28 @@ const SellerLayout = (props) => {
             minHeight: '100vh'
          }}>
          <Layout style={{ backgroundColor: 'rgba(255, 255, 255, 1)' }}>
-            {' '}
-            <Header className="erp-header-seller">
+            <Header className="dieto-header">
                <Container>
-                  <div className="erp-header-seller-items">
-                     <div className="search-container">
-                        <p className="header-logo" onClick={() => navigate('/')}>
-                           ALTUN
-                        </p>
+                  <div className="dieto-header-items">
+                     <div
+                        className="logo"
+                        onClick={() => navigate('/')}
+                        style={{
+                           backgroundImage: `url(${logo})`
+                        }}
+                     />
+
+                     <div className="menu-items">
+                        <MenuComponent />
                      </div>
-                     <div className="menu-container">
-                        {isUserAuthorized ? (
-                           <ProfileMenu />
-                        ) : (
-                           <Button onClick={() => navigate('/login')}>Войти</Button>
-                        )}
+
+                     <div>
+                        <ProfileMenu />
                      </div>
                   </div>
                </Container>
             </Header>{' '}
-            <Content
-               style={{
-                  margin: '0 16px'
-               }}>
-               <div
-                  style={{
-                     padding: '0 24px',
-                     minHeight: 360,
-                     marginTop: '50px'
-                  }}>
-                  <Container> {props.children} </Container>
-               </div>
-            </Content>
+            <Content>{props.children}</Content>
             <Footer
                style={{
                   backgroundColor: 'rgba(255, 255, 255, 1)',

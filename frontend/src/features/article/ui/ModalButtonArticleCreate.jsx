@@ -1,9 +1,9 @@
 import { Button, Modal } from 'antd';
 import { useState } from 'react';
-import CreateOrEditArticle from './CreateOrEditArticle';
+import SimpleArticleForm from './SimpleArticleForm';
 import { PlusOutlined } from '@ant-design/icons';
 
-const ModalButtonArticleCreate = ({ closeModal }) => {
+const ModalButtonArticleCreate = ({ closeModal = () => {} }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
 
    const showModal = () => {
@@ -23,17 +23,17 @@ const ModalButtonArticleCreate = ({ closeModal }) => {
    return (
       <>
          <Button type="primary" onClick={showModal} icon={<PlusOutlined />}>
-            Создать
+            Написать статью
          </Button>
          <Modal
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
-            title={`Создать каталог`}
+            title={`Написать статью`}
             footer={null}
             width={600}
             destroyOnClose={true}>
-            <CreateOrEditArticle callbackOnSuccess={handleCancel} />
+            <SimpleArticleForm callbackOnSuccess={handleCancel} />
          </Modal>
       </>
    );

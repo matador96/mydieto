@@ -55,7 +55,7 @@ const CreateOrEditArticle = ({ id = null, callbackOnSuccess = () => {} }) => {
          await UpdateArticle(formData, articleId)
             .then(() => {
                callbackOnSuccess();
-               message.success('Каталог изменен');
+               message.success('Статья изменена');
             })
             .catch(() => message.error('Возникла ошибка при сохранении'))
             .finally(() => setLoading(false));
@@ -82,7 +82,7 @@ const CreateOrEditArticle = ({ id = null, callbackOnSuccess = () => {} }) => {
       await CreateArticle(formDataCreate).then(() => {
          setLoading(false);
          callbackOnSuccess();
-         message.success('Каталог создан');
+         message.success('Статья создана');
       });
    };
 

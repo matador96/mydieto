@@ -23,6 +23,9 @@ const Articles = sequelize.define(
     content: {
       type: DataTypes.TEXT,
     },
+    description: {
+      type: DataTypes.TEXT,
+    },
     views: {
       type: DataTypes.INTEGER,
     },

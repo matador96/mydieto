@@ -37,7 +37,30 @@ const PATH_APP = process.env.REACT_APP_ROOT_PATH || '/';
 
 root.render(
    <BrowserRouter basename={PATH_APP}>
-      <ConfigProvider locale={ruRU}>
+      <ConfigProvider
+         locale={ruRU}
+         theme={{
+            components: {
+               Button: {
+                  defaultShadow: 'none',
+                  primaryShadow:
+                     '0px 1px 1px 0px rgba(0, 0, 0, 0.12), 0px 0px 0px 1px rgba(103, 110, 118, 0.16), 0px 2px 5px 0px rgba(103, 110, 118, 0.08)',
+                  dangerShadow:
+                     '0px 1px 1px 0px rgba(0, 0, 0, 0.12), 0px 0px 0px 1px rgba(103, 110, 118, 0.16), 0px 2px 5px 0px rgba(103, 110, 118, 0.08)'
+               }
+            },
+            token: {
+               fontFamily: 'Inter, sans-serif',
+               colorPrimary: '#0b9093',
+               colorLink: '#0b9093',
+               boxShadow:
+                  '0px 1px 1px 0px rgba(0, 0, 0, 0.12), 0px 0px 0px 1px rgba(103, 110, 118, 0.16), 0px 2px 5px 0px rgba(103, 110, 118, 0.08)',
+               boxShadowSecondary:
+                  '0px 1px 1px 0px rgba(0, 0, 0, 0.12), 0px 0px 0px 1px rgba(103, 110, 118, 0.16), 0px 2px 5px 0px rgba(103, 110, 118, 0.08)',
+               boxShadowTertiary:
+                  '0px 1px 1px 0px rgba(0, 0, 0, 0.12), 0px 0px 0px 1px rgba(103, 110, 118, 0.16), 0px 2px 5px 0px rgba(103, 110, 118, 0.08)'
+            }
+         }}>
          <App />
       </ConfigProvider>
    </BrowserRouter>

@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 $base-color: #24292e;
 $successColor: #2f9461;
 
@@ -104,21 +106,17 @@ body {
    }
 }
 .ant-btn {
-   font-size: 12px;
-   text-transform: uppercase;
+   font-size: 14px;
    font-weight: 600;
-   letter-spacing: 0.6px;
+   line-height: 20px;
+   letter-spacing: 0em;
+   border-radius: 100px;
+   min-height: 56px;
+
+   padding: 16px 24px 16px 24px;
 
    .anticon {
       font-size: 14px;
-   }
-
-   &-link {
-      color: $base-color;
-
-      &:hover {
-         color: #4b4b4b !important;
-      }
    }
 
    &-default:not(:disabled):hover,
@@ -128,7 +126,7 @@ body {
    }
 
    &-primary {
-      background-color: $base-color;
+      background-color: $primary-color;
 
       &.ant-btn-dangerous {
          &:not(:disabled):hover,
@@ -139,7 +137,7 @@ body {
 
       &:not(:disabled):hover,
       &:not(:disabled):focus {
-         background-color: #6ad09d !important;
+         background-color: $primary-color !important;
       }
    }
 
@@ -183,12 +181,6 @@ body {
          color: $base-color;
          font-size: 12px;
          font-weight: 500;
-
-         &-selected {
-            background-color: $base-color;
-            border-left: 2px $successColor solid;
-            background: #4fe1472e;
-         }
       }
    }
 

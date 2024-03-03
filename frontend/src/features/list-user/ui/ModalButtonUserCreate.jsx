@@ -5,7 +5,7 @@ import CreateResult from '@features/create-user/ui/CreateResult';
 
 import { PlusOutlined } from '@ant-design/icons';
 
-const ModalButtonUserCreate = ({ closeModal }) => {
+const ModalButtonUserCreate = ({ closeModal = () => {} }) => {
    const [generatedUser, setGeneratedUser] = useState({});
    const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,8 +39,7 @@ const ModalButtonUserCreate = ({ closeModal }) => {
             title={`Создать пользователя`}
             footer={null}
             width={600}
-            destroyOnClose={true}
-         >
+            destroyOnClose={true}>
             <CreateUserForm setGeneratedUser={setGeneratedUser} />
             <CreateResult generatedUser={generatedUser} />
          </Modal>

@@ -6,7 +6,7 @@
    "dependencies": {
       "@ant-design/plots": "^1.2.5",
       "@pbe/react-yandex-maps": "^1.2.5",
-      "antd": "^5.5.1",
+      "antd": "^5.14.2",
       "copy-webpack-plugin": "^11.0.0",
       "dayjs": "^1.11.8",
       "eslint": "^8.50.0",

@@ -21,6 +21,7 @@ CREATE TABLE
         "title" VARCHAR(100) NOT NULL,
         "userId" INTEGER NOT NULL REFERENCES "users" ("id"),
         "content" TEXT DEFAULT '',
+        "description" TEXT DEFAULT '',
         "views" INTEGER NOT NULL DEFAULT 0,
         "createdAt" TIMESTAMPTZ DEFAULT NOW(),
         "status" articles_status DEFAULT 'active' NOT NULL,

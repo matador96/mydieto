@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input } from '@shared/ui';
-import { Col, Row } from 'antd';
+import { CreateArticle } from '../model/services/CreateArticle';
+import { Col, Row, message } from 'antd';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+const { TextArea } = Input;
 
 const modules = {
    toolbar: [
@@ -29,10 +31,10 @@ const formats = [
    'image'
 ];
 
-const ArticleForm = (props) => {
+const SimpleArticleForm = (props) => {
    const [isLoading, setIsLoading] = useState(false);
    const [isDisabledButton, setIsDisabledButton] = useState(true);
-   const { initialValues, onSuccess, isEditForm } = props;
+   const { initialValues, callbackOnSuccess, isEditForm } = props;
    const [form] = Form.useForm();
 
    useEffect(() => {
@@ -40,11 +42,16 @@ const ArticleForm = (props) => {
    }, [form, initialValues]);
 
    const onFinish = (values) => {
-      onSuccess(values, setIsLoading).then(() => {
-         if (isEditForm) {
-            return;
-         }
-      });
+      setIsLoading(true);
+      console.log(values);
+
+      CreateArticle(values)
+         .then(() => {
+            callbackOnSuccess();
+            message.success('Статья создана');
+         })
+         .catch((e) => message.error(e.message))
+         .finally(() => setIsLoading(false));
    };
 
    const onFinishFailed = (errorInfo) => {
@@ -84,6 +91,26 @@ const ArticleForm = (props) => {
 
          <Row gutter={24}>
             <Col span={24}>
+               <Form.Item
+                  name="description"
+                  label="Краткое описание"
+                  rules={[
+                     {
+                        required: true,
+                        message: 'Заполните поле'
+                     }
+                  ]}>
+                  <TextArea
+                     rows={4}
+                     placeholder="Максимум 200 символов"
+                     maxLength={200}
+                  />
+               </Form.Item>
+            </Col>
+         </Row>
+
+         <Row gutter={24}>
+            <Col span={24}>
                <Form.Item name="content" label="Статья">
                   <ReactQuill theme="snow" modules={modules} formats={formats} />
                </Form.Item>
@@ -103,4 +130,4 @@ const ArticleForm = (props) => {
    );
 };
 
-export default ArticleForm;
+export default SimpleArticleForm;

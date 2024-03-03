@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, Space } from 'antd';
+import { Dropdown, Space, Button } from 'antd';
 import { getUserAuthData } from '@entitles/User';
 import { DownOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
@@ -42,6 +42,22 @@ const ProfileMenu = ({ adminMode }) => {
          key: '4'
       }
    ];
+
+   if (!authData?.id) {
+      return (
+         <>
+            <Button
+               onClick={() => navigate('/login')}
+               type="link"
+               style={{ marginRight: '10px' }}>
+               Войти
+            </Button>
+            <Button onClick={() => navigate('/register')} type="primary">
+               Зарегистрироваться
+            </Button>
+         </>
+      );
+   }
 
    return (
       <Dropdown

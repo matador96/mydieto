@@ -10,7 +10,7 @@ module.exports.getById = async (id, settings = {}) => {
   });
 
   if (!article)
-    throw new ApplicationError("Каталог не найден", {
+    throw new ApplicationError("Статья не найдена", {
       path: "controllers",
     });
 

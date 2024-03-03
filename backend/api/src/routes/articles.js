@@ -18,7 +18,7 @@ module.exports = [
   {
     type: "post",
     url: "/api/v1/article",
-    middlewares: [],
+    middlewares: [authenticate],
     withTransaction: true,
     method: ArticleController.create,
   },

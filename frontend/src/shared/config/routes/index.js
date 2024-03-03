@@ -2,11 +2,15 @@ import { AuthPage, LogoutPage } from '@pages/general/auth';
 import NotFoundPage from '@pages/general/notfound';
 import NotPermissionPage from '@pages/general/notpermission';
 
-import WelcomePage from '@pages/main';
+import AdminMainPage from '@pages/admin/index';
+import UserMainPage from '@pages/user/index';
+import MainPage from '@pages/general/main/index';
+
+import ArticleList from '@pages/general/article/list';
+import ArticleById from '@pages/general/article/byId';
+
 import ManageArticlesPage from '@pages/admin/articles';
 import ManageUsersPage from '@pages/admin/users';
-
-import { Navigate } from 'react-router-dom';
 
 const AppRoutes = {
    MAIN: 'main',
@@ -17,6 +21,8 @@ const AppRoutes = {
    LOGOUT: 'logout',
    NOT_FOUND: 'not_found',
    NOT_PERMISSION: 'not_permission',
+   ARTICLES: 'articles',
+   ARTICLE: 'article',
    // Admin
    ADMIN_PROFILE: 'admin-profile',
    ADMIN_USERS: 'admin-users',
@@ -39,6 +45,8 @@ export const RoutePath = {
    [AppRoutes.LOGOUT]: '/logout',
    [AppRoutes.NOT_FOUND]: '/404',
    [AppRoutes.NOT_PERMISSION]: '/401',
+   [AppRoutes.ARTICLES]: '/articles',
+   [AppRoutes.ARTICLE]: '/articles/:id',
    // ADMIN
    [AppRoutes.ADMIN_DASHBOARD]: '/admin/dashboard',
    [AppRoutes.ADMIN_USERS]: '/admin/users',
@@ -49,12 +57,13 @@ export const RoutePath = {
 export const routeList = {
    [AppRoutes.MAIN]: {
       path: RoutePath[AppRoutes.MAIN],
+      element: <MainPage />,
       layout: AppLayout.defaultLayout,
-      element: <Navigate to={RoutePath[AppRoutes.ARTICLES]} /> //
+      authOnly: true
    },
    [AppRoutes.ADMIN_DASHBOARD]: {
       path: RoutePath[AppRoutes.ADMIN_DASHBOARD],
-      element: <WelcomePage />,
+      element: <AdminMainPage />,
       layout: AppLayout.adminLayout,
       authOnly: true
    },
@@ -80,6 +89,18 @@ export const routeList = {
       authOnly: true
    },
 
+   [AppRoutes.ARTICLES]: {
+      path: RoutePath[AppRoutes.ARTICLES],
+      element: <ArticleList />,
+      layout: AppLayout.defaultLayout
+   },
+
+   [AppRoutes.ARTICLE]: {
+      path: RoutePath[AppRoutes.ARTICLE],
+      element: <ArticleById />,
+      layout: AppLayout.defaultLayout
+   },
+
    // [AppRoutes.PROFILE]: {
    //    path: RoutePath[AppRoutes.PROFILE],
    //    element: <ProfilePage />,
@@ -88,17 +109,17 @@ export const routeList = {
    [AppRoutes.LOGIN]: {
       path: RoutePath[AppRoutes.LOGIN],
       element: <AuthPage isLoginForm={true} />,
-      layout: AppLayout.centered
+      layout: AppLayout.defaultLayout
    },
    [AppRoutes.REGISTER]: {
       path: RoutePath[AppRoutes.REGISTER],
       element: <AuthPage isLoginForm={false} />,
-      layout: AppLayout.centered
+      layout: AppLayout.defaultLayout
    },
    [AppRoutes.LOGOUT]: {
       path: RoutePath[AppRoutes.LOGOUT],
       element: <LogoutPage />,
-      layout: AppLayout.centered,
+      layout: AppLayout.defaultLayout,
       authOnly: true
    },
    [AppRoutes.NOT_FOUND]: {
