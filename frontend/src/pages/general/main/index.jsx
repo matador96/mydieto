@@ -8,7 +8,7 @@ import ListOfTags from './components/ListOfTags';
 import TitleWithCounts from './components/TitleWithCounts';
 import FaqTitle from './components/FaqTitle';
 import Footer from './components/Footer';
-import FaqCollapse from './components/FaqCollapse';
+import FaqCollapse from '@features/faq/ui/FaqCollapse';
 import ListOfCourses from './components/ListOfCourses';
 import ListOfSpecialists from './components/ListOfSpecialists';
 

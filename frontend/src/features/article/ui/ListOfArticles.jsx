@@ -3,7 +3,10 @@ import { Space, Card, Row, Col, Button, Flex } from 'antd';
 import { VerticalSpace } from '@shared/ui';
 import { GetArticlesList } from '../model/services/GetArticlesList';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
-import { timestampToNormalDate } from '@shared/utils/tsToTime';
+import { timestampToNormalDDMMYY } from '@shared/utils/tsToTime';
+
+const truncate = (input, maxLength) =>
+   input.length > maxLength ? `${input.substring(0, maxLength)}...` : input;
 
 const TableArticles = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -41,35 +44,29 @@ const TableArticles = () => {
 
    return (
       <>
-         <Row
-            gutter={{
-               xs: 8,
-               sm: 16,
-               md: 24,
-               lg: 32
-            }}
-            justify="start"
-            wrap>
+         <div className="list-of-courses">
             {data.map((item) => (
-               <Col
-                  className="gutter-row"
-                  span={6}
-                  key={item.id}
-                  style={{ minWidth: '240px' }}>
-                  <Card title={item.title} bordered={false} key={item.id}>
-                     <p>{item.description}</p>
-                     <div>Создано пользователем: {item.userId}</div>
-                     <div>Просмотров: {item.views}</div>
-                     <div>
-                        Дата создания: {timestampToNormalDate(item.createdAt)}
+               <div className="article-card" key={item.id}>
+                  <div>
+                     <div className="article-card_title">
+                        {truncate(item.title, 74)}
                      </div>
-                     <div>
-                        Дата изменения: {timestampToNormalDate(item.updateAt)}
+                     <div className="article-card_description">
+                        {truncate(item.description, 220)}
                      </div>
-                  </Card>
-               </Col>
+                  </div>
+
+                  <Button className="article-card_button" type="primary">
+                     Открыть статью
+                  </Button>
+
+                  <div className="article-card_views">Просмотров: {item.views}</div>
+                  <div className="article-card_created">
+                     Дата создания: {timestampToNormalDDMMYY(item.createdAt)}
+                  </div>
+               </div>
             ))}
-         </Row>
+         </div>
 
          <VerticalSpace />
 

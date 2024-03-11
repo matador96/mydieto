@@ -7,6 +7,11 @@ body {
    color: $base-color;
 }
 
+.ant-layout-content {
+   display: flex;
+   flex-direction: column;
+}
+
 .menu.ant-menu {
    position: sticky;
    top: 0;

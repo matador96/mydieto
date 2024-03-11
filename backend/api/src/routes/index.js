@@ -14,7 +14,12 @@ async function tryCatchResponseWrapper(req, res, callback, withTransaction = fal
   }
 }
 
-const allRoutes = [...require("./articles"), ...require("./users")];
+const allRoutes = [
+  ...require("./articles"),
+  ...require("./users"),
+  ...require("./faqs"),
+  ...require("./instructors"),
+];
 
 module.exports = (app) => {
   allRoutes.map((e) =>

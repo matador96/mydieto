@@ -31,8 +31,11 @@ function getItem(label, key, icon, children, disabled) {
 }
 const allMenuItems = [
    getItem('Панель', 'admin-dashboard', <DashboardOutlined />),
+   getItem('Администраторы', 'admin-users', <UsergroupAddOutlined />),
+   getItem('Эксперты', 'admin-instructors', <UsergroupAddOutlined />),
    getItem('Пользователи', 'admin-users', <UsergroupAddOutlined />),
-   getItem('Статьи', 'admin-articles', <FileTextOutlined />)
+   getItem('Статьи', 'admin-articles', <FileTextOutlined />),
+   getItem('Ответы на вопросы', 'admin-faq', <FileTextOutlined />)
    // getItem('Категории', 'admin-categories', <TagOutlined />)
 ];
 

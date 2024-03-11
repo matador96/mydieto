@@ -1,5 +1,5 @@
 const passport = require("passport");
-const Users = require("../../models/users");
+const { Users } = require("../../models/users");
 const jwtOptions = require("../../core/auth/jwtConfig");
 const JwtStrategy = require("passport-jwt").Strategy;
 

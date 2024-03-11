@@ -24,7 +24,6 @@ module.exports.create = async (req, res, transaction) => {
     userId: currentSessionUserId,
   };
 
-  console.log(articleData);
   let article = await ArticleService.create(articleData, { transaction });
   return {
     data: article,

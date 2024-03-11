@@ -5,6 +5,8 @@ import { Col, Row } from 'antd';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
+const { TextArea } = Input;
+
 const modules = {
    toolbar: [
       [{ header: [1, 2, false] }],
@@ -84,6 +86,22 @@ const ArticleForm = (props) => {
 
          <Row gutter={24}>
             <Col span={24}>
+               <Form.Item
+                  name="description"
+                  label="Описание"
+                  rules={[
+                     {
+                        required: true,
+                        message: 'Заполните поле'
+                     }
+                  ]}>
+                  <TextArea
+                     rows={6}
+                     placeholder="Максимум 400 символов"
+                     maxLength={400}
+                  />
+               </Form.Item>
+
                <Form.Item name="content" label="Статья">
                   <ReactQuill theme="snow" modules={modules} formats={formats} />
                </Form.Item>

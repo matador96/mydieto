@@ -1,18 +1,7 @@
-const Users = require("../models/users");
+const { Users, Admins, Instructors, Clients } = require("../models/users");
 const { generateDatabaseSetting } = require("../helpers/db");
 
 const { ApplicationError } = require("./../classes/Errors");
-
-const public_fields = [
-  "id",
-  "email",
-  "role",
-  "status",
-  "firstName",
-  "lastName",
-  "createdAt",
-  "updatedAt",
-];
 
 module.exports.getCount = async () => {
   const data = await Users.count();
@@ -32,7 +21,6 @@ module.exports.getActiveCount = async () => {
 
 module.exports.getUserById = async (id) => {
   const user = await Users.findByPk(id, {
-    attributes: public_fields,
     raw: true,
     nest: true,
     distinct: true,
@@ -59,7 +47,9 @@ module.exports.getByEmail = async (email) => {
 module.exports.getUsersWithParams = async (queryParams) => {
   const data = await Users.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "user"),
-    attributes: public_fields,
+    include: [Admins, Instructors, Clients],
+    raw: true,
+    nest: true,
   });
 
   return { data: data.rows, count: data.count };
@@ -88,7 +78,6 @@ module.exports.updateUser = async (obj, whereObj) => {
   const updatedUser = await Users.findOne({
     where: whereObj,
     //...settings,
-    attributes: public_fields,
   });
 
   return updatedUser;

@@ -46,19 +46,6 @@ const SellerLayout = (props) => {
                </Container>
             </Header>{' '}
             <Content>{props.children}</Content>
-            <Footer
-               style={{
-                  backgroundColor: 'rgba(255, 255, 255, 1)',
-                  color: '#797B7A',
-                  textAlign: 'center',
-                  fontFamily: 'Inter',
-                  fontSize: '16px',
-                  fontStyle: 'normal',
-                  fontWeight: '400',
-                  lineHeight: '24px'
-               }}>
-               © 2022 – {new Date().getFullYear()} Altun. Все права защищены.
-            </Footer>
          </Layout>
       </Layout>
    );

@@ -11,6 +11,8 @@ import ArticleById from '@pages/general/article/byId';
 
 import ManageArticlesPage from '@pages/admin/articles';
 import ManageUsersPage from '@pages/admin/users';
+import ManageInstructorsPage from '@pages/admin/instructors';
+import ManageFaqsPage from '@pages/admin/faqs';
 
 const AppRoutes = {
    MAIN: 'main',
@@ -26,7 +28,9 @@ const AppRoutes = {
    // Admin
    ADMIN_PROFILE: 'admin-profile',
    ADMIN_USERS: 'admin-users',
+   ADMIN_INSTRUCTORS: 'admin-instructors',
    ADMIN_ARTICLES: 'admin-articles',
+   ADMIN_FAQ: 'admin-faq',
    ADMIN_CATEGORIES: 'admin-categories',
    ADMIN_DASHBOARD: 'admin-dashboard'
 };
@@ -50,7 +54,9 @@ export const RoutePath = {
    // ADMIN
    [AppRoutes.ADMIN_DASHBOARD]: '/admin/dashboard',
    [AppRoutes.ADMIN_USERS]: '/admin/users',
+   [AppRoutes.ADMIN_INSTRUCTORS]: '/admin/instructors',
    [AppRoutes.ADMIN_ARTICLES]: '/admin/articles',
+   [AppRoutes.ADMIN_FAQ]: '/admin/faq',
    [AppRoutes.ADMIN_CATEGORIES]: '/admin/categories'
 };
 
@@ -85,6 +91,20 @@ export const routeList = {
    [AppRoutes.ADMIN_ARTICLES]: {
       path: RoutePath[AppRoutes.ADMIN_ARTICLES],
       element: <ManageArticlesPage />,
+      layout: AppLayout.adminLayout,
+      authOnly: true
+   },
+
+   [AppRoutes.ADMIN_FAQ]: {
+      path: RoutePath[AppRoutes.ADMIN_FAQ],
+      element: <ManageFaqsPage />,
+      layout: AppLayout.adminLayout,
+      authOnly: true
+   },
+
+   [AppRoutes.ADMIN_INSTRUCTORS]: {
+      path: RoutePath[AppRoutes.ADMIN_INSTRUCTORS],
+      element: <ManageInstructorsPage />,
       layout: AppLayout.adminLayout,
       authOnly: true
    },

@@ -48,6 +48,16 @@ const statuseTextOfUsersOrders = {
    }
 };
 
+const statusesOfFaqs = {
+   published: {
+      label: 'Опубликован',
+      value: 'published',
+      color: 'green',
+      showInMain: true
+   },
+   archive: { label: 'В архиве', value: 'archive', color: 'grey', showInMain: true }
+};
+
 export default statuses;
 
-export { statusesOfCategories, statuseTextOfUsersOrders };
+export { statusesOfCategories, statuseTextOfUsersOrders, statusesOfFaqs };
