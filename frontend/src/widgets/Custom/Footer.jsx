@@ -6,7 +6,7 @@ import logoInvert from '@shared/assets/images/logoInvert.png';
 const items = [
    { label: 'Главная', url: '/main' },
    { label: 'Курсы', url: '/courses' },
-   { label: 'Специалисты', url: '/main' },
+   { label: 'Эксперты', url: '/instructors' },
    { label: 'Статьи', key: '/articles' },
    { label: 'Контакты', url: '/main' }
 ];

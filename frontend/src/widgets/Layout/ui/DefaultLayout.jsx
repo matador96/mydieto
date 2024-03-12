@@ -4,9 +4,10 @@ import ProfileMenu from '@features/user/ui/ProfileMenu';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '@shared/assets/images/logo.png';
 import Container from '@widgets/Container';
+import Footer from '@widgets/Custom/Footer';
 import MenuComponent from '@widgets/Layout/Menu';
 
-const { Footer, Content, Header } = Layout;
+const { Content, Header } = Layout;
 
 const SellerLayout = (props) => {
    const navigate = useNavigate();
@@ -46,6 +47,7 @@ const SellerLayout = (props) => {
                </Container>
             </Header>{' '}
             <Content>{props.children}</Content>
+            <Footer />
          </Layout>
       </Layout>
    );

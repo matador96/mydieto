@@ -6,6 +6,8 @@ import AdminMainPage from '@pages/admin/index';
 import UserMainPage from '@pages/user/index';
 import MainPage from '@pages/general/main/index';
 
+import InstructorsPage from '@pages/general/instructors/index';
+
 import ArticleList from '@pages/general/article/list';
 import ArticleById from '@pages/general/article/byId';
 
@@ -25,6 +27,9 @@ const AppRoutes = {
    NOT_PERMISSION: 'not_permission',
    ARTICLES: 'articles',
    ARTICLE: 'article',
+   INSTRUCTOR: 'instructor',
+   INSTRUCTORS: 'instructors',
+
    // Admin
    ADMIN_PROFILE: 'admin-profile',
    ADMIN_USERS: 'admin-users',
@@ -51,6 +56,9 @@ export const RoutePath = {
    [AppRoutes.NOT_PERMISSION]: '/401',
    [AppRoutes.ARTICLES]: '/articles',
    [AppRoutes.ARTICLE]: '/articles/:id',
+   [AppRoutes.INSTRUCTORS]: '/instructors',
+   [AppRoutes.INSTRUCTOR]: '/instructors/:id',
+
    // ADMIN
    [AppRoutes.ADMIN_DASHBOARD]: '/admin/dashboard',
    [AppRoutes.ADMIN_USERS]: '/admin/users',
@@ -118,6 +126,18 @@ export const routeList = {
    [AppRoutes.ARTICLE]: {
       path: RoutePath[AppRoutes.ARTICLE],
       element: <ArticleById />,
+      layout: AppLayout.defaultLayout
+   },
+
+   [AppRoutes.INSTRUCTORS]: {
+      path: RoutePath[AppRoutes.INSTRUCTORS],
+      element: <InstructorsPage />,
+      layout: AppLayout.defaultLayout
+   },
+
+   [AppRoutes.INSTRUCTOR]: {
+      path: RoutePath[AppRoutes.INSTRUCTOR],
+      element: <InstructorsPage />,
       layout: AppLayout.defaultLayout
    },
 
