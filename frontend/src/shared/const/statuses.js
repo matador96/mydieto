@@ -58,6 +58,27 @@ const statusesOfFaqs = {
    archive: { label: 'В архиве', value: 'archive', color: 'grey', showInMain: true }
 };
 
+const statusesOfCourses = {
+   published: {
+      label: 'Опубликован',
+      value: 'published',
+      color: 'green',
+      showInMain: true
+   },
+   archive: { label: 'В архиве', value: 'archive', color: 'grey', showInMain: true },
+   blocked: {
+      label: 'Заблокирован',
+      value: 'archive',
+      color: 'grey',
+      showInMain: true
+   }
+};
+
 export default statuses;
 
-export { statusesOfCategories, statuseTextOfUsersOrders, statusesOfFaqs };
+export {
+   statusesOfCategories,
+   statuseTextOfUsersOrders,
+   statusesOfFaqs,
+   statusesOfCourses
+};

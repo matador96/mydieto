@@ -16,7 +16,7 @@ function getItem(label, key, icon, children, disabled) {
 
 const items = [
    getItem('Главная', 'main'),
-   getItem('Курсы', 'admin-users'),
+   getItem('Курсы', 'courses'),
    getItem('Эксперты', 'instructors'),
    getItem('Статьи', 'articles'),
    getItem('Контакты', 'admin-articles')

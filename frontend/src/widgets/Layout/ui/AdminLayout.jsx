@@ -35,6 +35,7 @@ const allMenuItems = [
    getItem('Эксперты', 'admin-instructors', <UsergroupAddOutlined />),
    getItem('Пользователи', 'admin-users', <UsergroupAddOutlined />),
    getItem('Статьи', 'admin-articles', <FileTextOutlined />),
+   getItem('Курсы', 'admin-courses', <FileTextOutlined />),
    getItem('Ответы на вопросы', 'admin-faq', <FileTextOutlined />)
    // getItem('Категории', 'admin-categories', <TagOutlined />)
 ];

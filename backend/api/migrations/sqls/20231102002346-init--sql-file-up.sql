@@ -48,9 +48,10 @@ CREATE TABLE "courses" (
     "title" VARCHAR(100) NOT NULL,
     "content" TEXT DEFAULT '',
     "description" TEXT DEFAULT '',
-    "duration" INTEGER NOT NULL DEFAULT 0,
+    "duration" TEXT NOT NULL DEFAULT '',
     "price" VARCHAR(50) DEFAULT '0',
     "views" INTEGER NOT NULL DEFAULT 0,
+    "tags" TEXT NOT NULL DEFAULT '',
     "createdAt" TIMESTAMPTZ DEFAULT NOW(),
     "status" courses_status DEFAULT 'active' NOT NULL,
     "updatedAt" TIMESTAMPTZ

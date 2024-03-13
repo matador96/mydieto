@@ -19,6 +19,7 @@ const allRoutes = [
   ...require("./users"),
   ...require("./faqs"),
   ...require("./instructors"),
+  ...require("./courses"),
 ];
 
 module.exports = (app) => {

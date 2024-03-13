@@ -7,11 +7,14 @@ import UserMainPage from '@pages/user/index';
 import MainPage from '@pages/general/main/index';
 
 import InstructorsPage from '@pages/general/instructors/index';
+import CoursesPage from '@pages/general/courses/index';
 
 import ArticleList from '@pages/general/article/list';
 import ArticleById from '@pages/general/article/byId';
 
 import ManageArticlesPage from '@pages/admin/articles';
+import ManageCoursesPage from '@pages/admin/courses';
+
 import ManageUsersPage from '@pages/admin/users';
 import ManageInstructorsPage from '@pages/admin/instructors';
 import ManageFaqsPage from '@pages/admin/faqs';
@@ -30,11 +33,15 @@ const AppRoutes = {
    INSTRUCTOR: 'instructor',
    INSTRUCTORS: 'instructors',
 
+   COURSE: 'course',
+   COURSES: 'courses',
+
    // Admin
    ADMIN_PROFILE: 'admin-profile',
    ADMIN_USERS: 'admin-users',
    ADMIN_INSTRUCTORS: 'admin-instructors',
    ADMIN_ARTICLES: 'admin-articles',
+   ADMIN_COURSES: 'admin-courses',
    ADMIN_FAQ: 'admin-faq',
    ADMIN_CATEGORIES: 'admin-categories',
    ADMIN_DASHBOARD: 'admin-dashboard'
@@ -59,11 +66,16 @@ export const RoutePath = {
    [AppRoutes.INSTRUCTORS]: '/instructors',
    [AppRoutes.INSTRUCTOR]: '/instructors/:id',
 
+   [AppRoutes.COURSES]: '/courses',
+   [AppRoutes.COURSE]: '/courses/:id',
+
    // ADMIN
    [AppRoutes.ADMIN_DASHBOARD]: '/admin/dashboard',
    [AppRoutes.ADMIN_USERS]: '/admin/users',
    [AppRoutes.ADMIN_INSTRUCTORS]: '/admin/instructors',
    [AppRoutes.ADMIN_ARTICLES]: '/admin/articles',
+   [AppRoutes.ADMIN_COURSES]: '/admin/courses',
+
    [AppRoutes.ADMIN_FAQ]: '/admin/faq',
    [AppRoutes.ADMIN_CATEGORIES]: '/admin/categories'
 };
@@ -103,6 +115,13 @@ export const routeList = {
       authOnly: true
    },
 
+   [AppRoutes.ADMIN_COURSES]: {
+      path: RoutePath[AppRoutes.ADMIN_COURSES],
+      element: <ManageCoursesPage />,
+      layout: AppLayout.adminLayout,
+      authOnly: true
+   },
+
    [AppRoutes.ADMIN_FAQ]: {
       path: RoutePath[AppRoutes.ADMIN_FAQ],
       element: <ManageFaqsPage />,
@@ -138,6 +157,18 @@ export const routeList = {
    [AppRoutes.INSTRUCTOR]: {
       path: RoutePath[AppRoutes.INSTRUCTOR],
       element: <InstructorsPage />,
+      layout: AppLayout.defaultLayout
+   },
+
+   [AppRoutes.COURSES]: {
+      path: RoutePath[AppRoutes.COURSES],
+      element: <CoursesPage />,
+      layout: AppLayout.defaultLayout
+   },
+
+   [AppRoutes.COURSE]: {
+      path: RoutePath[AppRoutes.COURSE],
+      element: <CoursesPage />,
       layout: AppLayout.defaultLayout
    },
 
