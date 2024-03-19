@@ -3,6 +3,7 @@ import { Button, Form, Input } from '@shared/ui';
 import { Col, Row, Select } from 'antd';
 
 import { statusesOfCourses } from '@shared/const/statuses';
+import SelectInstructor from '@widgets/FormItems/SelectInstructor';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -97,6 +98,23 @@ const CourseForm = (props) => {
                </Form.Item>
 
                <Form.Item
+                  name="instructorId"
+                  label="Эксперт"
+                  rules={[
+                     {
+                        required: true,
+                        message: 'Выберите эксперта'
+                     }
+                  ]}>
+                  <SelectInstructor
+                     disabled={false}
+                     setField={(value) => {
+                        form.setFieldValue('instructorId', value);
+                     }}
+                  />
+               </Form.Item>
+
+               <Form.Item
                   name="status"
                   label="Статус"
                   rules={[
@@ -146,9 +164,9 @@ const CourseForm = (props) => {
                      }
                   ]}>
                   <TextArea
-                     rows={6}
-                     placeholder="Максимум 400 символов"
-                     maxLength={400}
+                     rows={4}
+                     placeholder="Максимум 120 символов"
+                     maxLength={120}
                   />
                </Form.Item>
 

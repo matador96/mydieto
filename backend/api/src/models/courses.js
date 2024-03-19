@@ -1,6 +1,7 @@
 const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
 const { statusesOfCourses } = require("../config/statusSettings");
+const { Instructors } = require("./users");
 
 const Courses = sequelize.define(
   "courses",
@@ -63,5 +64,11 @@ const Courses = sequelize.define(
     timestamps: true,
   },
 );
+
+Courses.belongsTo(Instructors, {
+  foreignKey: "instructorId",
+});
+
+// Courses.hasOne(Instructors, { foreignKey: "id" });
 
 module.exports = Courses;

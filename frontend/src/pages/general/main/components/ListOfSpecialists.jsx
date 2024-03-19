@@ -1,36 +1,12 @@
 /* eslint-disable react/jsx-no-duplicate-props */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Spin } from 'antd';
 import { Button } from '@shared/ui';
 import Container from '@widgets/Container/ui/Container';
+import { useNavigate } from 'react-router-dom';
+import { GetInstructorList } from '@features/list-instructor/model/GetInstructorList';
 
-const items = [
-   {
-      firstName: 'Алина',
-      lastName: 'Маслова',
-      post: 'Нутрицолог, психолог, коуч',
-      age: 30,
-      experience: 5,
-      isNew: true
-   },
-   {
-      firstName: 'Алина',
-      lastName: 'Маслова',
-      post: 'Нутрицолог, психолог, коуч',
-      age: 30,
-      experience: 5,
-      isNew: false
-   },
-   {
-      firstName: 'Алина',
-      lastName: 'Маслова',
-      post: 'Нутрицолог, психолог, коуч',
-      age: 30,
-      experience: 5,
-      isNew: true
-   }
-];
-
-const SpecialistCard = ({ firstName, lastName, post, isNew, age, experience }) => {
+const SpecialistCard = ({ firstName, lastName, posts, isNew, age, experience }) => {
    return (
       <div className="specialist-card">
          {isNew ? <div className="specialist-card_tag">Новый</div> : null}
@@ -40,7 +16,7 @@ const SpecialistCard = ({ firstName, lastName, post, isNew, age, experience }) =
          <div className="specialist-card-name">
             {firstName} {lastName}
          </div>
-         <div className="specialist-card-post">{post}</div>
+         {posts && <div className="specialist-card-post">{posts.join(', ')}</div>}
 
          <div className="specialist-card-extra">{`${age} лет | Опыт ${experience} лет`}</div>
 
@@ -55,16 +31,46 @@ const SpecialistCard = ({ firstName, lastName, post, isNew, age, experience }) =
 };
 
 const ListOfSpecialists = () => {
+   const navigate = useNavigate();
+
+   const [isLoading, setIsLoading] = useState(false);
+   const [data, setData] = useState([]);
+
+   useEffect(() => {
+      fetchData();
+   }, []);
+
+   const fetchData = () => {
+      setIsLoading(true);
+      GetInstructorList({
+         page: 1,
+         limit: 10,
+         sort: 'id',
+         order: 'desc',
+         op: 'or',
+         status: 'active'
+      }).then((res) => {
+         setData(res?.data ? res?.data : []);
+         setIsLoading(false);
+      });
+   };
+
+   if (isLoading) {
+      return <Spin />;
+   }
+
    return (
       <Container>
          <div className="list-of-specialist">
-            {items.map((item, index) => (
+            {data.map((item, index) => (
                <SpecialistCard key={index} {...item} />
             ))}
          </div>
 
          <div className="list-all-button">
-            <Button type="link">Все эксперты</Button>
+            <Button type="link" onClick={() => navigate('/instructors')}>
+               Все эксперты
+            </Button>
          </div>
       </Container>
    );

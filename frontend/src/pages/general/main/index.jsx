@@ -9,6 +9,8 @@ import TitleWithCounts from '@widgets/Custom/TitleWithCounts';
 import FaqTitle from '@widgets/Custom/FaqTitle';
 import FaqCollapse from '@widgets/Custom/FaqCollapse';
 import ListOfCourses from './components/ListOfCourses';
+import { VerticalSpace } from '@shared/ui';
+
 import ListOfSpecialists from './components/ListOfSpecialists';
 
 const MainPage = () => {
@@ -16,15 +18,25 @@ const MainPage = () => {
       <Content>
          <JoinToBlock />
          <ThreeItemsWithUrl />
-         <TitleOfBlocks />
+         <TitleOfBlocks
+            title="Курсы"
+            description="у нас можно получить индивидуальные советы и планы питания, выбрав специалиста в соответствии с вашими потребностями и целями"
+            buttonTitle="Выбрать курс"
+         />
+
          <ListOfTags />
+         <VerticalSpace />
          <ListOfCourses />
 
-         <TitleOfBlocks />
+         <TitleWithCounts />
+         <TitleOfBlocks
+            title="Эксперты"
+            description="на нашем сайте вы найдёте лучших диетологов и нутрициологов, готовых поделиться своими знаниями и опытом"
+            buttonTitle="Выбрать эксперта"
+         />
          <ListOfTags />
 
          <ListOfSpecialists />
-         <TitleWithCounts />
          <FaqTitle />
          <FaqCollapse />
       </Content>

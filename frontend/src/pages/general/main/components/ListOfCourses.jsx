@@ -1,93 +1,77 @@
-/* eslint-disable react/jsx-no-duplicate-props */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@shared/ui';
+import { Spin } from 'antd';
+import { GetCoursesList } from '@features/course/model/services/GetCoursesList';
 import Container from '@widgets/Container/ui/Container';
+import { truncateText } from '@shared/utils/text';
 
-const items = [
-   {
-      firstName: 'Алина',
-      lastName: 'Маслова',
-      post: 'Нутрицолог, психолог, коуч',
-      isPopular: true,
-      expDate: '2 недели',
-      title: 'Антихрупкость мозга',
-      description:
-         'Омолоди свой мозг и сделай его антихрупким с нашими видеуроками. Присоединяйся и тренируй не только тело, но и разум.'
-   },
-   {
-      firstName: 'Алина',
-      lastName: 'Маслова',
-      post: 'Нутрицолог, психолог, коуч',
-      isPopular: true,
-      expDate: '2 недели',
-      title: 'Антихрупкость мозга',
-      description:
-         'Омолоди свой мозг и сделай его антихрупким с нашими видеуроками. Присоединяйся и тренируй не только тело, но и разум.'
-   },
-   {
-      firstName: 'Алина',
-      lastName: 'Маслова',
-      post: 'Нутрицолог, психолог, коуч',
-      isPopular: true,
-      expDate: '2 недели',
-      title: 'Антихрупкость мозга',
-      description:
-         'Омолоди свой мозг и сделай его антихрупким с нашими видеуроками. Присоединяйся и тренируй не только тело, но и разум.'
-   },
-   {
-      firstName: 'Алина',
-      lastName: 'Маслова',
-      post: 'Нутрицолог, психолог, коуч',
-      isPopular: true,
-      expDate: '2 недели',
-      title: 'Антихрупкость мозга',
-      description:
-         'Омолоди свой мозг и сделай его антихрупким с нашими видеуроками. Присоединяйся и тренируй не только тело, но и разум.'
-   }
-];
-
-const CourseCard = ({
-   firstName,
-   lastName,
-   post,
-   isPopular,
-   expDate,
-   title,
-   description
-}) => {
+const CourseCard = ({ instructor, isPopular, duration, title, description }) => {
    return (
       <div className="course-card">
-         <div className="course-card_tag">{isPopular ? 'Популярное' : null}</div>
+         {isPopular && <div className="course-card_tag">Популярное</div>}
 
-         <div className="course-card_author">
-            <div className="course-card_author-avatar"></div>
-            <div>
-               <div className="course-card_author-name">
-                  {firstName} {lastName}
+         {instructor && (
+            <div className="course-card_author">
+               <div className="course-card_author-avatar"></div>
+               <div>
+                  <div className="course-card_author-name">
+                     {instructor.firstName} {instructor.lastName}
+                  </div>
+                  {instructor.posts && (
+                     <div className="course-card_author-post">
+                        {instructor.posts.join(', ')}
+                     </div>
+                  )}
                </div>
-               <div className="course-card_author-post">{post}</div>
             </div>
-         </div>
+         )}
 
          <div>
             <div className="course-card_title">{title}</div>
-            <div className="course-card_description">{description}</div>
+            <div className="course-card_description">
+               {truncateText(description, 110)}
+            </div>
          </div>
 
-         <Button className="course-card_button" type="primary">
-            Подробнее о курсе
-         </Button>
+         <div className="course-card_exp">Срок прохождения: {duration}</div>
 
-         <div className="course-card_exp">Срок прохождения: {expDate}</div>
+         <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+            <Button className="course-card_button" type="primary">
+               Подробнее о курсе
+            </Button>
+         </div>
       </div>
    );
 };
 
-const ListOfCourses = () => {
+const ListOfCourses = ({ className }) => {
+   const [isLoading, setIsLoading] = useState(false);
+   const [data, setData] = useState([]);
+
+   useEffect(() => {
+      fetchData();
+   }, []);
+
+   const fetchData = () => {
+      setIsLoading(true);
+      GetCoursesList({
+         page: 1,
+         limit: 4,
+         status: 'active'
+      }).then((res) => {
+         setData(res?.data ? res?.data : []);
+         setIsLoading(false);
+      });
+   };
+
+   if (isLoading) {
+      return <Spin />;
+   }
+
    return (
       <Container>
-         <div className="list-of-courses">
-            {items.map((item, index) => (
+         <div className={`list-of-courses ${className}`}>
+            {data.map((item, index) => (
                <CourseCard key={index} {...item} />
             ))}
          </div>

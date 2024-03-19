@@ -2,6 +2,8 @@ const Courses = require("../models/courses");
 const { generateDatabaseSetting } = require("../helpers/db");
 const { ApplicationError } = require("./../classes/Errors");
 
+const { Instructors } = require("../models/users");
+
 module.exports.getById = async (id, settings = {}) => {
   const data = await Courses.findByPk(id, {
     ...settings,
@@ -27,6 +29,7 @@ module.exports.getByField = async (field) => {
 module.exports.getWithParams = async (queryParams) => {
   const data = await Courses.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "course"),
+    include: [Instructors],
     raw: false,
     nest: true,
   });
