@@ -12,6 +12,11 @@ module.exports.getWithParams = async (req) => {
   return { data: result.data, count: result.count };
 };
 
+module.exports.getTags = async () => {
+  const result = await CourseService.getTags();
+  return { data: result.data };
+};
+
 module.exports.create = async (req, res, transaction) => {
   const currentSessionUserId = req?.user?.profile?.id;
 

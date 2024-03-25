@@ -94,6 +94,10 @@ const Instructors = sequelize.define(
       field: "experience",
       type: DataTypes.INTEGER,
     },
+    marker: {
+      field: "marker",
+      type: DataTypes.STRING,
+    },
 
     posts: {
       field: "posts",

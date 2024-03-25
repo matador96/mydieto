@@ -35,6 +35,7 @@ CREATE TABLE "instructors" (
     "age" INTEGER NOT NULL,
     "experience" INTEGER NOT NULL,
     "about" TEXT,
+    "marker" TEXT DEFAULT '',
     "posts" TEXT NOT NULL DEFAULT '',
     "createdAt" TIMESTAMPTZ DEFAULT NOW(),
     "updatedAt" TIMESTAMPTZ
@@ -47,8 +48,9 @@ CREATE TABLE "courses" (
     "instructorId" INTEGER NOT NULL REFERENCES "instructors" ("id"),
     "title" VARCHAR(100) NOT NULL,
     "content" TEXT DEFAULT '',
+    "marker" TEXT DEFAULT '',
     "description" TEXT DEFAULT '',
-    "duration" TEXT NOT NULL DEFAULT '',
+    "duration" INTEGER NOT NULL DEFAULT 0,
     "price" VARCHAR(50) DEFAULT '0',
     "views" INTEGER NOT NULL DEFAULT 0,
     "tags" TEXT NOT NULL DEFAULT '',

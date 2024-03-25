@@ -15,6 +15,12 @@ module.exports = [
     method: CourseController.getWithParams,
   },
   {
+    type: "get",
+    url: "/api/v1/tags/course",
+    middlewares: [],
+    method: CourseController.getTags,
+  },
+  {
     type: "post",
     url: "/api/v1/course",
     middlewares: [authenticate],

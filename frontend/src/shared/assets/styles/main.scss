@@ -437,6 +437,10 @@ body {
    flex-direction: row;
    gap: 20px;
    flex-wrap: wrap;
+
+   button {
+      text-transform: capitalize;
+   }
 }
 
 .title-of-blocks-with-count {

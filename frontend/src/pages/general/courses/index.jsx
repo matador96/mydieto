@@ -22,7 +22,7 @@ const InstructorsPage = () => {
             description="у нас можно найти полезные статьи, видео и блоги экспертов и подобрать индивидуальный план питания"
          />
 
-         <ListOfTags />
+         <ListOfTags type="instructor" />
          <VerticalSpace />
 
          <Container>

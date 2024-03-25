@@ -54,16 +54,17 @@ const InstructorForm = (props) => {
                <Form.Item
                   label="Email"
                   name="email"
-                  rules={[
-                     {
-                        type: 'email',
-                        message: 'Введите правильную почту'
-                     },
-                     {
-                        required: true,
-                        message: 'Поле не может быть пустым'
-                     }
-                  ]}>
+                  // rules={[
+                  //    {
+                  //       type: 'email',
+                  //       message: 'Введите правильную почту'
+                  //    },
+                  //    {
+                  //       required: true,
+                  //       message: 'Поле не может быть пустым'
+                  //    }
+                  // ]}
+               >
                   <Input
                      disabled={isEditForm}
                      type="email"
@@ -117,6 +118,21 @@ const InstructorForm = (props) => {
                         width: '100%'
                      }}
                      placeholder="Выберите или создайте должности"
+                  />
+               </Form.Item>
+
+               <Form.Item name="marker" label="Маркер">
+                  <Select
+                     style={{
+                        width: '100%'
+                     }}
+                     defaultValue=""
+                     placeholder="Выберите маркер"
+                     options={[
+                        { value: '', label: 'Без маркера' },
+                        { value: 'Популярный', label: 'Популярный' },
+                        { value: 'Новый', label: 'Новый' }
+                     ]}
                   />
                </Form.Item>
 

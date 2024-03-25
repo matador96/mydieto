@@ -87,14 +87,14 @@ const CourseForm = (props) => {
 
                <Form.Item
                   name="duration"
-                  label="Срок прохождения"
+                  label="Срок прохождения в часах (1 день = 8 часов)"
                   rules={[
                      {
                         required: true,
                         message: 'Введите название'
                      }
                   ]}>
-                  <Input />
+                  <Input type="number" />
                </Form.Item>
 
                <Form.Item
@@ -139,7 +139,22 @@ const CourseForm = (props) => {
                   />
                </Form.Item>
 
-               <Form.Item label="Теги" name="posts">
+               <Form.Item name="marker" label="Маркер">
+                  <Select
+                     style={{
+                        width: '100%'
+                     }}
+                     defaultValue=""
+                     placeholder="Выберите маркер"
+                     options={[
+                        { value: '', label: 'Без маркера' },
+                        { value: 'Популярный', label: 'Популярный' },
+                        { value: 'Новый', label: 'Новый' }
+                     ]}
+                  />
+               </Form.Item>
+
+               <Form.Item label="Теги" name="tags">
                   <Select
                      mode="tags"
                      allowClear

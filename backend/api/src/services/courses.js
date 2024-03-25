@@ -26,6 +26,25 @@ module.exports.getByField = async (field) => {
   return data;
 };
 
+module.exports.getTags = async () => {
+  let tags = new Set();
+  let data = await Courses.findAll({
+    attributes: ["tags"],
+    raw: false,
+  });
+
+  data = JSON.stringify(data);
+  data = JSON.parse(data);
+
+  data.forEach((item) => {
+    item.tags.forEach((tag) => {
+      tags.add(tag);
+    });
+  });
+
+  return { data: [...tags] };
+};
+
 module.exports.getWithParams = async (queryParams) => {
   const data = await Courses.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "course"),

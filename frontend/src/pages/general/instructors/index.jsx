@@ -22,7 +22,7 @@ const InstructorsPage = () => {
          <TitleWithCounts />
          <SearchInstructorBlock />
 
-         <ListOfTags />
+         <ListOfTags type="instructor" />
 
          <FaqTitle />
          <FaqCollapse />

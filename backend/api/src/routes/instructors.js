@@ -10,6 +10,13 @@ module.exports = [
     withTransaction: true,
     method: InstructorController.getWithParams,
   },
+
+  {
+    type: "get",
+    url: "/api/v1/tags/instructor",
+    middlewares: [],
+    method: InstructorController.getTags,
+  },
   {
     type: "post",
     url: "/api/v1/instructor",

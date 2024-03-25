@@ -4,11 +4,19 @@ import { Spin } from 'antd';
 import { GetCoursesList } from '@features/course/model/services/GetCoursesList';
 import Container from '@widgets/Container/ui/Container';
 import { truncateText } from '@shared/utils/text';
+import { getDurationInDaysOrWeeks } from '@shared/utils/tsToTime';
 
-const CourseCard = ({ instructor, isPopular, duration, title, description }) => {
+const CourseCard = ({
+   instructor,
+   isPopular,
+   duration,
+   title,
+   description,
+   marker
+}) => {
    return (
       <div className="course-card">
-         {isPopular && <div className="course-card_tag">Популярное</div>}
+         {marker && <div className="course-card_tag">{marker}</div>}
 
          {instructor && (
             <div className="course-card_author">
@@ -33,7 +41,9 @@ const CourseCard = ({ instructor, isPopular, duration, title, description }) => 
             </div>
          </div>
 
-         <div className="course-card_exp">Срок прохождения: {duration}</div>
+         <div className="course-card_exp">
+            Срок прохождения: {getDurationInDaysOrWeeks(duration)}
+         </div>
 
          <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
             <Button className="course-card_button" type="primary">

@@ -23,6 +23,25 @@ module.exports.getById = async (id) => {
   return user;
 };
 
+module.exports.getTags = async () => {
+  let tags = new Set();
+  let data = await Instructors.findAll({
+    attributes: ["posts"],
+    raw: false,
+  });
+
+  data = JSON.stringify(data);
+  data = JSON.parse(data);
+
+  data.forEach((item) => {
+    item.posts.forEach((tag) => {
+      tags.add(tag);
+    });
+  });
+
+  return { data: [...tags] };
+};
+
 module.exports.getWithParams = async (queryParams) => {
   const data = await Instructors.findAndCountAll({
     ...generateDatabaseSetting(queryParams, "user"),

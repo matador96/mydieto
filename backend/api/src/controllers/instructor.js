@@ -33,6 +33,11 @@ module.exports.getById = async (req) => {
   return { data };
 };
 
+module.exports.getTags = async () => {
+  const result = await InstructorService.getTags();
+  return { data: result.data };
+};
+
 module.exports.update = async (req) => {
   const { id } = req.params;
   const userObj = { ...req.body };

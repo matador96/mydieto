@@ -6,10 +6,10 @@ import Container from '@widgets/Container/ui/Container';
 import { useNavigate } from 'react-router-dom';
 import { GetInstructorList } from '@features/list-instructor/model/GetInstructorList';
 
-const SpecialistCard = ({ firstName, lastName, posts, isNew, age, experience }) => {
+const SpecialistCard = ({ firstName, lastName, posts, marker, age, experience }) => {
    return (
       <div className="specialist-card">
-         {isNew ? <div className="specialist-card_tag">Новый</div> : null}
+         {marker ? <div className="specialist-card_tag">{marker}</div> : null}
 
          <div className="specialist-card-avatar"></div>
 
@@ -44,7 +44,7 @@ const ListOfSpecialists = () => {
       setIsLoading(true);
       GetInstructorList({
          page: 1,
-         limit: 10,
+         limit: 3,
          sort: 'id',
          order: 'desc',
          op: 'or',

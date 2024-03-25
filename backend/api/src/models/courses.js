@@ -27,9 +27,13 @@ const Courses = sequelize.define(
     description: {
       type: DataTypes.TEXT,
     },
+    marker: {
+      field: "marker",
+      type: DataTypes.STRING,
+    },
 
     duration: {
-      type: DataTypes.TEXT,
+      type: DataTypes.INTEGER,
     },
 
     tags: {

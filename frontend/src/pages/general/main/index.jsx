@@ -17,14 +17,14 @@ const MainPage = () => {
    return (
       <Content>
          <JoinToBlock />
-         <ThreeItemsWithUrl />
+         {/* <ThreeItemsWithUrl /> */}
          <TitleOfBlocks
             title="Курсы"
             description="у нас можно получить индивидуальные советы и планы питания, выбрав специалиста в соответствии с вашими потребностями и целями"
             buttonTitle="Выбрать курс"
          />
 
-         <ListOfTags />
+         <ListOfTags type="course" />
          <VerticalSpace />
          <ListOfCourses />
 
@@ -34,7 +34,7 @@ const MainPage = () => {
             description="на нашем сайте вы найдёте лучших диетологов и нутрициологов, готовых поделиться своими знаниями и опытом"
             buttonTitle="Выбрать эксперта"
          />
-         <ListOfTags />
+         <ListOfTags type="instructor" />
 
          <ListOfSpecialists />
          <FaqTitle />
