@@ -4,6 +4,7 @@ import { Spin } from 'antd';
 import { GetCoursesList } from '@features/course/model/services/GetCoursesList';
 import Container from '@widgets/Container/ui/Container';
 import { truncateText } from '@shared/utils/text';
+import { useNavigate } from 'react-router-dom';
 import { getDurationInDaysOrWeeks } from '@shared/utils/tsToTime';
 
 const CourseCard = ({
@@ -12,8 +13,11 @@ const CourseCard = ({
    duration,
    title,
    description,
-   marker
+   marker,
+   id
 }) => {
+   const navigate = useNavigate();
+
    return (
       <div className="course-card">
          {marker && <div className="course-card_tag">{marker}</div>}
@@ -46,7 +50,10 @@ const CourseCard = ({
          </div>
 
          <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
-            <Button className="course-card_button" type="primary">
+            <Button
+               className="course-card_button"
+               type="primary"
+               onClick={() => navigate(`/courses/${id}`)}>
                Подробнее о курсе
             </Button>
          </div>
@@ -54,7 +61,7 @@ const CourseCard = ({
    );
 };
 
-const ListOfCourses = ({ className }) => {
+const ListOfCourses = ({ className, tag, showMore = false, defaultLimit = 4 }) => {
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
 
@@ -62,33 +69,44 @@ const ListOfCourses = ({ className }) => {
       fetchData();
    }, []);
 
-   const fetchData = () => {
+   useEffect(() => {
+      fetchData(tag);
+   }, [tag]);
+
+   const fetchData = (choosedTag) => {
       setIsLoading(true);
-      GetCoursesList({
-         page: 1,
-         limit: 4,
-         status: 'active'
-      }).then((res) => {
+      GetCoursesList(
+         {
+            page: 1,
+            limit: defaultLimit
+            // status: 'active'
+         },
+         choosedTag ? `{"tags":{"$like":"%25${choosedTag}%25"}}` : null
+      ).then((res) => {
          setData(res?.data ? res?.data : []);
          setIsLoading(false);
       });
    };
 
-   if (isLoading) {
-      return <Spin />;
-   }
+   // if (isLoading) {
+   //    return <Spin />;
+   // }
 
    return (
       <Container>
-         <div className={`list-of-courses ${className}`}>
+         <div
+            className={`list-of-courses ${className}`}
+            style={{ mihHeight: '700px' }}>
             {data.map((item, index) => (
                <CourseCard key={index} {...item} />
             ))}
          </div>
 
-         <div className="list-all-button">
-            <Button type="link">Все программы</Button>
-         </div>
+         {showMore && (
+            <div className="list-all-button">
+               <Button type="link">Показать еще</Button>
+            </div>
+         )}
       </Container>
    );
 };

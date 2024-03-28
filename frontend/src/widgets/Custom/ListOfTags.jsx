@@ -5,13 +5,14 @@ import { Spin } from 'antd';
 import Container from '@widgets/Container/ui/Container';
 import { getTags } from '@shared/api/all/tags';
 
-const ListOfTags = ({ type }) => {
+const ListOfTags = ({ type, setChoosed = () => {} }) => {
    const [isLoading, setIsLoading] = useState(false);
+   const label = type === 'instructor' ? 'Все эксперты' : 'Все направления';
    const [data, setData] = useState([
       {
-         label: 'Все направления',
-         key: 'Все направления',
-         value: 'Все направления',
+         label: label,
+         key: '',
+         value: label,
          active: true
       }
    ]);
@@ -36,6 +37,15 @@ const ListOfTags = ({ type }) => {
       });
    };
 
+   const onClick = (k) => {
+      let newData = data.map((item) => ({
+         ...item,
+         active: item.key === k
+      }));
+      setData(newData);
+      setChoosed(k);
+   };
+
    if (isLoading) {
       return <Spin />;
    }
@@ -44,7 +54,10 @@ const ListOfTags = ({ type }) => {
       <Container>
          <div className="list-of-tags">
             {data.map((item, index) => (
-               <Button key={index} type={item.active ? 'primary' : 'default'}>
+               <Button
+                  key={index}
+                  type={item.active ? 'primary' : 'default'}
+                  onClick={() => onClick(item.key)}>
                   {item.label}
                </Button>
             ))}

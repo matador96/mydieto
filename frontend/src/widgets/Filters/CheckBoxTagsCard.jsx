@@ -2,7 +2,7 @@
 import React from 'react';
 import { Checkbox } from 'antd';
 
-const CheckBoxTagsCard = ({ title }) => {
+const CheckBoxTagsCard = ({ title, list, onChange }) => {
    return (
       <div className="card-style-2">
          <div className="card-style-2_title">{title}</div>
@@ -10,8 +10,8 @@ const CheckBoxTagsCard = ({ title }) => {
             <div className="card-style-2_content_item">
                <Checkbox.Group
                   className="checkbox-group-1"
-                  options={['Apple', 'Pear', 'Orange']}
-                  defaultValue={['Apple']}
+                  options={list}
+                  onChange={onChange}
                />
             </div>
          </div>

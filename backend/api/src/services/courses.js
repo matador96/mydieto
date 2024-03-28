@@ -7,6 +7,7 @@ const { Instructors } = require("../models/users");
 module.exports.getById = async (id, settings = {}) => {
   const data = await Courses.findByPk(id, {
     ...settings,
+    include: [Instructors],
     raw: false,
     nest: true,
   });
@@ -46,12 +47,20 @@ module.exports.getTags = async () => {
 };
 
 module.exports.getWithParams = async (queryParams) => {
-  const data = await Courses.findAndCountAll({
+  // http://localhost:3002/api/v1/instructors?whereQuery={"firstName": {"$like":"%25атерин%25"}}
+
+  const settings = {
     ...generateDatabaseSetting(queryParams, "course"),
     include: [Instructors],
     raw: false,
     nest: true,
-  });
+  };
+
+  if (queryParams.whereQuery) {
+    settings.where = JSON.parse(queryParams.whereQuery);
+  }
+
+  const data = await Courses.findAndCountAll(settings);
 
   return { data: data.rows, count: data.count };
 };

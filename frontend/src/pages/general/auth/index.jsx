@@ -13,22 +13,42 @@ import { Logout } from '@features/auth/model/services/AuthByLoginAndPassword';
 
 import { useDispatch } from 'react-redux';
 
+const LoginBlock = () => {
+   return (
+      <div className="auth-block">
+         <div className="auth-block_title">Вход</div>
+         <LoginForm />
+      </div>
+   );
+};
+
+const RegisterBlock = () => {
+   return (
+      <div className="auth-block">
+         <div className="auth-block_title">Регистрация</div>
+         <RegisterForm />
+      </div>
+   );
+};
+
 const AuthPage = ({ isLoginForm = true }) => {
    const navigate = useNavigate();
 
    return (
       <Container>
-      <Row className="auth-page" gutter={[16, 24]}>
-         <Col className="auth-page_left" span={24}>
-          
-                  <>
-                     <Button
-                        icon={<ArrowLeftOutlined />}
-                        onClick={() => navigate(-1)}
-                        style={{ marginRight: '10px' }}></Button>
-                     {isLoginForm ? 'Войти в аккаунт' : 'Регистрация'}
-                  </>
-            
+         {isLoginForm ? <LoginBlock /> : null}
+         {!isLoginForm ? <RegisterBlock /> : null}
+
+         {/* <Row className="auth-page" gutter={[16, 24]}>
+            <Col className="auth-page_left" span={24}>
+               <>
+                  <Button
+                     icon={<ArrowLeftOutlined />}
+                     onClick={() => navigate(-1)}
+                     style={{ marginRight: '10px' }}></Button>
+                  {isLoginForm ? 'Войти в аккаунт' : 'Регистрация'}
+               </>
+
                {isLoginForm ? (
                   <>
                      <LoginForm />
@@ -56,9 +76,8 @@ const AuthPage = ({ isLoginForm = true }) => {
                      </Button>
                   </>
                )}
-         
-         </Col>
-      </Row>
+            </Col>
+         </Row> */}
       </Container>
    );
 };

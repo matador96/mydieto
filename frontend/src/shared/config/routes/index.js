@@ -8,6 +8,7 @@ import MainPage from '@pages/general/main/index';
 
 import InstructorsPage from '@pages/general/instructors/index';
 import CoursesPage from '@pages/general/courses/index';
+import CoursePage from '@pages/general/courses/one';
 
 import ArticleList from '@pages/general/article/list';
 import ArticleById from '@pages/general/article/byId';
@@ -168,7 +169,7 @@ export const routeList = {
 
    [AppRoutes.COURSE]: {
       path: RoutePath[AppRoutes.COURSE],
-      element: <CoursesPage />,
+      element: <CoursePage />,
       layout: AppLayout.defaultLayout
    },
 

@@ -18,7 +18,7 @@ const SpecialistCard = ({
    const navigate = useNavigate();
 
    return (
-      <div className="specialist-card">
+      <div className="specialist-card" style={{ minWidth: '276px' }}>
          {marker ? <div className="specialist-card_tag">{marker}</div> : null}
 
          <div className="specialist-card-avatar"></div>
@@ -43,7 +43,7 @@ const SpecialistCard = ({
    );
 };
 
-const ListOfSpecialists = ({ post, showMore = false, defaultLimit = 3 }) => {
+const ListOfSpecialistsSlider = ({ post }) => {
    const navigate = useNavigate();
 
    const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,7 @@ const ListOfSpecialists = ({ post, showMore = false, defaultLimit = 3 }) => {
       GetInstructorList(
          {
             page: 1,
-            limit: defaultLimit
+            limit: 4
             // sort: 'id',
             // order: 'desc',
             // op: 'or',
@@ -86,14 +86,8 @@ const ListOfSpecialists = ({ post, showMore = false, defaultLimit = 3 }) => {
                <SpecialistCard key={index} {...item} />
             ))}
          </div>
-
-         {showMore && (
-            <div className="list-all-button">
-               <Button type="link">Показать еще</Button>
-            </div>
-         )}
       </Container>
    );
 };
 
-export default ListOfSpecialists;
+export default ListOfSpecialistsSlider;

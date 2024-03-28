@@ -1,6 +1,11 @@
 import { get, put, post, generateQueryParams } from '../fetch.js';
 
-export const getCourses = (params) => get(generateQueryParams(`/courses`, params));
+export const getCourses = (params, whereQuery) =>
+   get(
+      `${generateQueryParams(`/courses`, params)}${
+         whereQuery ? `&whereQuery=${whereQuery}` : ''
+      }`
+   );
 
 export const getCourseById = (id) => get(`/course/${id}`);
 

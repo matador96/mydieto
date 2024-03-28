@@ -43,11 +43,19 @@ module.exports.getTags = async () => {
 };
 
 module.exports.getWithParams = async (queryParams) => {
-  const data = await Instructors.findAndCountAll({
+  // http://localhost:3002/api/v1/instructors?whereQuery={"firstName": {"$like":"%25атерин%25"}}
+
+  const settings = {
     ...generateDatabaseSetting(queryParams, "user"),
     raw: false,
     nest: true,
-  });
+  };
+
+  if (queryParams.whereQuery) {
+    settings.where = JSON.parse(queryParams.whereQuery);
+  }
+
+  const data = await Instructors.findAndCountAll(settings);
 
   return { data: data.rows, count: data.count };
 };

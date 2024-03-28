@@ -2,7 +2,7 @@
 import React from 'react';
 import { Input } from 'antd';
 
-const SearchCard = () => {
+const SearchCard = ({ onChange }) => {
    return (
       <div className="card-style-2">
          <div className="card-style-2_title">Поиск по курсам</div>
@@ -12,6 +12,7 @@ const SearchCard = () => {
                   type="text"
                   className="input-style-1"
                   placeholder="Название курса"
+                  onChange={onChange}
                />
             </div>
          </div>

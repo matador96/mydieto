@@ -54,21 +54,16 @@ const LoginForm = () => {
    return (
       <Form
          name="basic"
-         labelCol={{
-            span: 8
-         }}
-         wrapperCol={{
-            span: 16
-         }}
          style={{
             maxWidth: 460,
-            minWidth: 320,
-            position: 'relative'
+            minWidth: 320
          }}
+         layout="vertical"
          onFinish={onFinish}
          onFinishFailed={onFinishFailed}>
          <Form.Item
             label="Email"
+            required
             name="email"
             rules={[
                {
@@ -80,11 +75,12 @@ const LoginForm = () => {
                   message: 'Поле не может быть пустым'
                }
             ]}>
-            <Input type="email" placeholder={'Введите почту'} />
+            <Input type="email" placeholder={'Введите e-mail'} />
          </Form.Item>
 
          <Form.Item
             label="Пароль"
+            required
             name="password"
             rules={[
                {
@@ -96,27 +92,28 @@ const LoginForm = () => {
          </Form.Item>
 
          <PasswordRecoveryForm visible={modalVisible} onCancel={handleCancel} />
-         <Form.Item
-            wrapperCol={{
-               offset: 8,
-               span: 16
-            }}>
-            <Space direction="vertical">
-               {errorMessage ? (
-                  <Alert message={errorMessage} type="error" showIcon />
-               ) : null}
-
-               {/* <Button
+         <Form.Item>
+            {errorMessage ? (
+               <Alert
+                  message={errorMessage}
+                  type="error"
+                  showIcon
+                  style={{ width: '100%', marginBottom: '15px' }}
+               />
+            ) : null}
+            {/* <Button
                   type="link"
                   onClick={handleForgotPassword}
                   style={{ padding: '0 3px' }}>
                   <span style={{ textDecoration: 'underline' }}>Забыли пароль?</span>
-               </Button> */}
-
-               <Button type="primary" htmlType="submit" loading={isLoading}>
-                  Войти
-               </Button>
-            </Space>
+               </Button> */}{' '}
+            <Button
+               type="primary"
+               htmlType="submit"
+               loading={isLoading}
+               style={{ width: '100%' }}>
+               Войти
+            </Button>
          </Form.Item>
       </Form>
    );

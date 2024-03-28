@@ -3,6 +3,8 @@ import React from 'react';
 import { Button } from '@shared/ui';
 import Container from '@widgets/Container/ui/Container';
 import CountUp from 'react-countup';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRightOutlined } from '@ant-design/icons';
 
 const CountWithTitle = ({ count, title, minWidth = 'auto' }) => {
    return (
@@ -17,6 +19,8 @@ const CountWithTitle = ({ count, title, minWidth = 'auto' }) => {
 };
 
 const TitleWithCounts = () => {
+   const navigate = useNavigate();
+
    return (
       <Container>
          <div className="title-of-blocks-with-count">
@@ -35,7 +39,9 @@ const TitleWithCounts = () => {
                   целями
                </div>
                <div className="title-of-blocks-with-count_right-button">
-                  <Button type="primary">Присоединиться</Button>
+                  <Button type="link" onClick={() => navigate('/register')}>
+                     Присоединиться <ArrowRightOutlined />
+                  </Button>
                </div>
             </div>
          </div>

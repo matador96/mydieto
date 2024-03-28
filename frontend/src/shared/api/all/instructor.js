@@ -2,8 +2,12 @@ import { get, post, put, generateQueryParams } from '../fetch.js';
 
 export const getInstructorById = (id) => get(`/instructor/${id}`);
 
-export const getInstructors = (params) =>
-   get(generateQueryParams(`/instructors`, params));
+export const getInstructors = (params, whereQuery) =>
+   get(
+      `${generateQueryParams(`/instructors`, params)}${
+         whereQuery ? `&whereQuery=${whereQuery}` : ''
+      }`
+   );
 
 export const createInstructor = (fields) =>
    post(
