@@ -22,7 +22,8 @@ const InstructorsPage = () => {
             title="Эксперты"
             buttonUrl="/register"
             description="на нашем сайте вы найдёте лучших диетологов и нутрициологов, готовых поделиться своими знаниями и опытом"
-         />
+         />{' '}
+         <VerticalSpace />
          <Title>Популярное</Title>
          <VerticalSpace />
          <VerticalSpace />

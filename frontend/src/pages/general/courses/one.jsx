@@ -49,7 +49,8 @@ const CoursePage = () => {
       <Content>
          {data.map((item) => (
             <>
-               <JoinToBlockCourse title={item.title} instructor={item.instructor} />
+               <JoinToBlockCourse title={item.title} instructor={item.instructor} />{' '}
+               <VerticalSpace />
                <TitleOfBlocks title="О курсе" />
                <VerticalSpace />
                <VerticalSpace />

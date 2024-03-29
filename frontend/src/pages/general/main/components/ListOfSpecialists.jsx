@@ -43,7 +43,12 @@ const SpecialistCard = ({
    );
 };
 
-const ListOfSpecialists = ({ post, showMore = false, defaultLimit = 3 }) => {
+const ListOfSpecialists = ({
+   post,
+   showMore = false,
+   defaultLimit = 3,
+   className = ''
+}) => {
    const navigate = useNavigate();
 
    const [isLoading, setIsLoading] = useState(false);
@@ -81,7 +86,7 @@ const ListOfSpecialists = ({ post, showMore = false, defaultLimit = 3 }) => {
 
    return (
       <Container>
-         <div className="list-of-specialist">
+         <div className={`list-of-specialist ${className}`}>
             {data.map((item, index) => (
                <SpecialistCard key={index} {...item} />
             ))}

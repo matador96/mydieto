@@ -19,7 +19,7 @@ const items = [
    getItem('Курсы', 'courses'),
    getItem('Эксперты', 'instructors'),
    getItem('Статьи', 'articles'),
-   getItem('Контакты', 'admin-articles')
+   getItem('Контакты', 'contacts')
 ];
 
 const MenuComponent = () => {

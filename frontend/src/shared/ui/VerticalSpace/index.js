@@ -1,7 +1,7 @@
 import { Row } from 'antd';
 
-const VerticalSpace = ({ margin = 10 }) => (
-   <Row style={{ marginBottom: margin, marginTop: margin }}></Row>
+const VerticalSpace = ({ height = 20 }) => (
+   <Row style={{ height: `${height}px` }}></Row>
 );
 
 export default VerticalSpace;

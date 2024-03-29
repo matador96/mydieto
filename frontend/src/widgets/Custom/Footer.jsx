@@ -9,11 +9,11 @@ import { useNavigate } from 'react-router-dom';
 import TelegramIconWhite from '@shared/assets/icons/TelegramIconWhite';
 
 const items = [
-   { label: 'Главная', key: '/main' },
+   { label: 'Главная', key: '/' },
    { label: 'Курсы', key: '/courses' },
    { label: 'Эксперты', key: '/instructors' },
    { label: 'Статьи', key: '/articles' },
-   { label: 'Контакты', key: '/main' }
+   { label: 'Контакты', key: '/contacts' }
 ];
 
 const Footer = () => {

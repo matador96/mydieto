@@ -9,6 +9,8 @@ import MainPage from '@pages/general/main/index';
 import InstructorsPage from '@pages/general/instructors/index';
 import CoursesPage from '@pages/general/courses/index';
 import CoursePage from '@pages/general/courses/one';
+import ContactsPage from '@pages/general/contacts/index';
+import InstructorPage from '@pages/general/instructors/one';
 
 import ArticleList from '@pages/general/article/list';
 import ArticleById from '@pages/general/article/byId';
@@ -36,6 +38,7 @@ const AppRoutes = {
 
    COURSE: 'course',
    COURSES: 'courses',
+   CONTACTS: 'contacts',
 
    // Admin
    ADMIN_PROFILE: 'admin-profile',
@@ -66,6 +69,8 @@ export const RoutePath = {
    [AppRoutes.ARTICLE]: '/articles/:id',
    [AppRoutes.INSTRUCTORS]: '/instructors',
    [AppRoutes.INSTRUCTOR]: '/instructors/:id',
+
+   [AppRoutes.CONTACTS]: '/contacts',
 
    [AppRoutes.COURSES]: '/courses',
    [AppRoutes.COURSE]: '/courses/:id',
@@ -157,7 +162,13 @@ export const routeList = {
 
    [AppRoutes.INSTRUCTOR]: {
       path: RoutePath[AppRoutes.INSTRUCTOR],
-      element: <InstructorsPage />,
+      element: <InstructorPage />,
+      layout: AppLayout.defaultLayout
+   },
+
+   [AppRoutes.CONTACTS]: {
+      path: RoutePath[AppRoutes.CONTACTS],
+      element: <ContactsPage />,
       layout: AppLayout.defaultLayout
    },
 

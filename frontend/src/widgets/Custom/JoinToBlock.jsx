@@ -14,7 +14,7 @@ const JoinToBlock = ({
    const navigate = useNavigate();
 
    return (
-      <div style={{ margin: '65px 0' }}>
+      <div style={{ margin: '65px 0 30px 0' }}>
          <Container>
             <div
                className="join-to-block"

@@ -95,7 +95,8 @@ const CoursesPage = () => {
             title="Курсы"
             description="у нас можно найти полезные статьи, видео и блоги экспертов и подобрать индивидуальный план питания"
             buttonUrl="/register"
-         />
+         />{' '}
+         <VerticalSpace />
          {/* <ListOfTags type="instructor" /> */}
          {/* <VerticalSpace /> */}
          <ListOfCoursesWithFilters />

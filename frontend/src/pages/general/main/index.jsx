@@ -64,9 +64,7 @@ const MainPage = () => {
             buttonTitle="Выбрать курс"
             buttonUrl="/courses"
          />
-
          <CourseMainPageComponent />
-
          <TitleWithCounts />
          <TitleOfBlocks
             title="Эксперты"
@@ -74,9 +72,7 @@ const MainPage = () => {
             buttonTitle="Выбрать эксперта"
             buttonUrl="/instructors"
          />
-
          <InstructorMainPageComponent />
-
          <FaqTitle />
          <FaqCollapse />
       </Content>

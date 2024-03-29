@@ -7,6 +7,16 @@ body {
    color: #2d2d2d;
 }
 
+#root {
+   min-height: 100vh;
+}
+
+.list-of-specialist.fourElements {
+   .specialist-card {
+      min-width: 275px;
+   }
+}
+
 .course-videos {
    display: flex;
    gap: 40px;
@@ -865,7 +875,7 @@ body {
          }
 
          &-button {
-            margin-bottom: 18px;
+            margin-bottom: 10px;
             button {
                font-family: Inter;
                font-size: 18px;
@@ -976,6 +986,107 @@ body {
             letter-spacing: 0em;
             text-align: left;
          }
+      }
+   }
+}
+.join-to-block-instructor {
+   background-color: #eef1f6;
+   width: 100%;
+   height: 462px;
+   display: flex;
+   flex-direction: column;
+   border-radius: 32px;
+   padding: 29px 40px;
+   background-repeat: no-repeat;
+   background-position: bottom right;
+
+   &_title {
+      color: $primary-color;
+      font-family: Russo One;
+      font-size: 48px;
+      font-weight: 400;
+      line-height: 48px;
+      text-align: left;
+      margin-top: 24px;
+   }
+
+   &_posts {
+      margin-top: 15px;
+      text-transform: capitalize;
+      font-family: Inter;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 28px;
+      text-align: left;
+      color: #2d2d2d;
+   }
+
+   &_stats {
+      margin: 24px 0 60px 0;
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+
+      &_label {
+         //styleName: Body/xl/Medium;
+         font-family: Inter;
+         font-size: 20px;
+         font-weight: 500;
+         line-height: 30px;
+         text-align: left;
+         color: #2d2d2d;
+      }
+
+      &_count {
+         font-family: Russo One;
+         font-size: 72px;
+         font-weight: 400;
+         line-height: 90px;
+         letter-spacing: -0.02em;
+         text-align: left;
+         color: #2d2d2d;
+         position: relative;
+
+         .count-with-title_count_plus {
+            right: -26px;
+            top: -0px;
+         }
+
+         &_extra {
+            //styleName: Body/xl/Semi Bold;
+            font-family: Inter;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 30px;
+            text-align: left;
+            margin-left: 10px;
+            color: #0b9093;
+         }
+      }
+   }
+
+   &_button {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 28px;
+      letter-spacing: 0em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #0b9093;
+      color: #fff;
+      width: 241px;
+      height: 64px;
+      padding: 18px 26px 18px 26px;
+      gap: 14px;
+      border-radius: 100px;
+
+      svg {
+         color: #fff;
+      }
+
+      &:hover {
+         cursor: pointer;
       }
    }
 }
