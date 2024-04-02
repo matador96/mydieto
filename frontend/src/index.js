@@ -17,6 +17,10 @@ TimeAgo.addDefaultLocale(ru);
 
 import tz from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
+
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 import { loadAndSavePaginationPageSize } from '@widgets/Pagination/ui/Pagination';
 
 import { ConfigProvider } from 'antd';

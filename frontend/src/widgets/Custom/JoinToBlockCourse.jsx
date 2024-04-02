@@ -24,43 +24,45 @@ const JoinToBlockCourse = ({
                style={{
                   backgroundImage: `url(${RonaldoPhoto})`
                }}>
-               <Breadcrumb
-                  separator=">"
-                  items={[
-                     {
-                        title: 'Главная',
-                        href: '/'
-                     },
-                     {
-                        title: 'Курсы',
-                        href: '/courses'
-                     },
-                     {
-                        title: title
-                     }
-                  ]}
-               />
+               <div style={{ width: '70%' }}>
+                  <Breadcrumb
+                     separator=">"
+                     items={[
+                        {
+                           title: 'Главная',
+                           href: '/'
+                        },
+                        {
+                           title: 'Курсы',
+                           href: '/courses'
+                        },
+                        {
+                           title: title
+                        }
+                     ]}
+                  />
 
-               <div className="join-to-block-course_title">{title}</div>
+                  <div className="join-to-block-course_title">{title}</div>
 
-               <div
-                  className="course-card_author jointoblockcourse"
-                  style={{ marginTop: '24px', marginBottom: '60px' }}>
-                  <div className="course-card_author-avatar"></div>
-                  <div>
-                     <div className="course-card_author-name">
-                        {instructor.firstName} {instructor.lastName}
-                     </div>
-                     {instructor.posts && (
-                        <div className="course-card_author-post">
-                           {instructor.posts.join(', ')}
+                  <div
+                     className="course-card_author jointoblockcourse"
+                     style={{ marginTop: '24px', marginBottom: '60px' }}>
+                     <div className="course-card_author-avatar"></div>
+                     <div>
+                        <div className="course-card_author-name">
+                           {instructor.firstName} {instructor.lastName}
                         </div>
-                     )}
+                        {instructor.posts && (
+                           <div className="course-card_author-post">
+                              {instructor.posts.join(', ')}
+                           </div>
+                        )}
+                     </div>
                   </div>
-               </div>
 
-               <div className="join-to-block-course_button">
-                  Присоединиться <RightArrowCircleWhite />
+                  <div className="join-to-block-course_button">
+                     Присоединиться <RightArrowCircleWhite />
+                  </div>
                </div>
             </div>
          </Container>

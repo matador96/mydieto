@@ -12,6 +12,7 @@ import ListOfCourses from './components/ListOfCourses';
 import { VerticalSpace } from '@shared/ui';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import ListOfSpecialistsSlider from '@features/list-instructor/ui/ListOfSpecialistsSlider';
 
 import ListOfSpecialists from './components/ListOfSpecialists';
 
@@ -38,6 +39,7 @@ const InstructorMainPageComponent = () => {
       <>
          <ListOfTags type="instructor" setChoosed={setPost} />
          <VerticalSpace />
+         {/* <ListOfSpecialistsSlider post={post} /> */}
          <ListOfSpecialists post={post} />
          <div className="list-all-button">
             <Button type="link" onClick={() => navigate('/instructors')}>
@@ -72,6 +74,7 @@ const MainPage = () => {
             buttonTitle="Выбрать эксперта"
             buttonUrl="/instructors"
          />
+
          <InstructorMainPageComponent />
          <FaqTitle />
          <FaqCollapse />

@@ -1,15 +1,19 @@
-import { memo, Suspense, useCallback } from 'react';
+import { memo, Suspense, useCallback, useLayoutEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getUserAuthData } from '@entitles/User';
 import { AdminLayout, CenteredLayout, DefaultLayout } from '@widgets/Layout';
 import { PageLoader } from '@widgets/PageLoader';
-import { Navigate } from 'react-router-dom';
 import { routeList, AppLayout } from '@shared/config/routes';
-import { RequireAuth } from './RequireAuth';
+import { useLocation } from 'react-router-dom';
 
 const AppRouter = () => {
    const auth = useSelector(getUserAuthData);
+   const { pathname } = useLocation();
+
+   useLayoutEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+   }, [pathname]);
 
    const renderWithWrapper = useCallback(
       (route) => {

@@ -4,6 +4,7 @@ import { Spin } from 'antd';
 import { Button } from '@shared/ui';
 import Container from '@widgets/Container/ui/Container';
 import { useNavigate } from 'react-router-dom';
+import Slider from 'react-slick';
 import { GetInstructorList } from '@features/list-instructor/model/GetInstructorList';
 
 const SpecialistCard = ({
@@ -57,6 +58,18 @@ const ListOfSpecialistsSlider = ({ post }) => {
       fetchData(post);
    }, [post]);
 
+   const settings = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      arrows: true,
+      pauseOnHover: true,
+      pauseOnFocus: true,
+      pauseOnDotsHover: true
+   };
+
    const fetchData = (choosedPost) => {
       setIsLoading(true);
       GetInstructorList(
@@ -78,6 +91,9 @@ const ListOfSpecialistsSlider = ({ post }) => {
    // if (isLoading) {
    //    return <Spin />;
    // }
+
+   //  <div>
+   // <Slider {...settings}>
 
    return (
       <Container>

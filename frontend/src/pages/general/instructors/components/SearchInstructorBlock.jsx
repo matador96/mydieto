@@ -5,14 +5,12 @@ import { Input } from 'antd';
 
 const SearchInstructorBlock = () => {
    return (
-      <Content>
-         <div className="search-instructor-block">
-            <div className="search-instructor-block_title">Поиск по экспертам</div>
-            <div className="search-instructor-block_input">
-               <Input placeholder="Поиск по ФИО" />
-            </div>
+      <div className="search-instructor-block">
+         <div className="search-instructor-block_title">Поиск по экспертам</div>
+         <div className="search-instructor-block_input">
+            <Input placeholder="Поиск по ФИО" />
          </div>
-      </Content>
+      </div>
    );
 };
 

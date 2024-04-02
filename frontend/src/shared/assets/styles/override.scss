@@ -209,6 +209,10 @@ body {
             &:hover {
                border-bottom: none !important;
             }
+
+            &.ant-menu-item-selected {
+               color: #0b9093;
+            }
          }
       }
       &-item,

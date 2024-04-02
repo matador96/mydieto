@@ -1,3 +1,7 @@
 import { Spin } from '@shared/ui';
 
-export const PageLoader = () => <Spin />;
+export const PageLoader = () => (
+   <div className="pageloader">
+      <Spin size="large" />
+   </div>
+);

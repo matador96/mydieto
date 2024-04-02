@@ -7,8 +7,15 @@ body {
    color: #2d2d2d;
 }
 
-#root {
-   min-height: 100vh;
+main {
+   min-height: 90vh !important;
+}
+
+.pageloader {
+   min-height: 80vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .list-of-specialist.fourElements {
@@ -1094,13 +1101,15 @@ body {
 .join-to-block-course {
    background-color: #eef1f6;
    width: 100%;
-   height: 462px;
    display: flex;
    flex-direction: column;
    border-radius: 32px;
    padding: 96px 40px;
    background-repeat: no-repeat;
    background-position: bottom right;
+   min-height: 462px;
+   justify-content: center;
+   padding: 30px 40px;
 
    &_title {
       color: $primary-color;
