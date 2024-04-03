@@ -9,7 +9,7 @@ import ListOfTags from '@widgets/Custom/ListOfTags';
 import Reviews from '@widgets/Custom/Reviews';
 import { VerticalSpace } from '@shared/ui';
 import ListOfSpecialists from '@pages/general/main/components/ListOfSpecialists';
-
+import ListOfCoursesSlider from '@pages/general/main/components/ListOfCoursesSlider';
 import RightArrowCircleWhite from '@shared/assets/icons/RightArrowCircleWhite';
 import Container from '@widgets/Container/ui/Container';
 import JoinToBlockInstructor from '@widgets/Custom/JoinToBlockInstructor';
@@ -74,7 +74,7 @@ const InstructorPage = () => {
          <VerticalSpace />
          <TitleOfBlocks title="Курсы" />
          <VerticalSpace />
-         <ListOfCourses className="twoelements" defaultLimit={2} />
+         <ListOfCoursesSlider className="twoelements" min={2} />
          <VerticalSpace />
          <VerticalSpace /> <VerticalSpace />
          <Reviews />
@@ -84,11 +84,7 @@ const InstructorPage = () => {
          <VerticalSpace />
          <VerticalSpace />
          <TitleOfBlocks title="Другие эксперты" />
-         <ListOfSpecialists
-            className="fourElements"
-            showMore={false}
-            defaultLimit={4}
-         />
+         <ListOfSpecialistsSlider showMore={true} min={4} />
          <VerticalSpace />
          <VerticalSpace />
          <VerticalSpace />

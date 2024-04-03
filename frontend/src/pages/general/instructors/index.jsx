@@ -8,7 +8,7 @@ import Reviews from '@widgets/Custom/Reviews';
 import { VerticalSpace } from '@shared/ui';
 import ListOfSpecialists from '@pages/general/main/components/ListOfSpecialists';
 
-import ListOfCourses from '@pages/general/main/components/ListOfCourses';
+import ListOfCoursesSlider from '@pages/general/main/components/ListOfCoursesSlider';
 import ListOfSpecialistsSlider from '@features/list-instructor/ui/ListOfSpecialistsSlider';
 import FaqTitle from '@widgets/Custom/FaqTitle';
 import FaqCollapse from '@widgets/Custom/FaqCollapse';
@@ -27,7 +27,7 @@ const InstructorsPage = () => {
          <Title>Популярное</Title>
          <VerticalSpace />
          <VerticalSpace />
-         <ListOfSpecialistsSlider showMore={true} />
+         <ListOfSpecialistsSlider showMore={true} min={4} />
          <VerticalSpace />
          <VerticalSpace />
          <TitleWithCounts />
@@ -41,7 +41,7 @@ const InstructorsPage = () => {
          <VerticalSpace />
          <VerticalSpace />
          <VerticalSpace />
-         <ListOfCourses className="twoelements" defaultLimit={2} />
+         <ListOfCoursesSlider className="twoelements" min={2} />
          <VerticalSpace />
          <FaqTitle />
          <FaqCollapse />

@@ -104,7 +104,7 @@ const CoursesPage = () => {
          <Reviews /> <VerticalSpace />
          <VerticalSpace />
          <TitleWithCounts />
-         <ListOfSpecialistsSlider />
+         <ListOfSpecialistsSlider min={4} />
          <VerticalSpace />
          <VerticalSpace />
          <FaqTitle />

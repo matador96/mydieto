@@ -7,6 +7,120 @@ body {
    color: #2d2d2d;
 }
 
+.controls {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-bottom: 30px;
+   margin-top: 15px;
+   gap: 60px;
+}
+
+.list-of-courses-slider {
+   margin: -10px -20px;
+
+   .course-card {
+      width: 600px;
+      margin: 30px 20px;
+
+      .course-card_title,
+      .course-card_author-post {
+         text-overflow: ellipsis;
+         overflow: hidden;
+         white-space: nowrap;
+      }
+
+      .course-card_title {
+         width: 80%;
+      }
+
+      .course-card_author-post {
+         width: 400px;
+      }
+   }
+}
+
+.list-of-specialist-slider-4 {
+   margin: -10px -20px;
+
+   .specialist-card {
+      width: 275px;
+      margin: 30px 20px;
+   }
+   // .slick-list {
+   //    // padding: 20px;
+
+   //    .slick-track {
+   //       // gap: 40px;
+   //       // display: flex;
+   //       // justify-content: center;
+
+   //       .slick-slide {
+   //          margin: 20px 0;
+   //          // width: 387px !important;
+   //       }
+   //    }
+   // }
+}
+
+.list-of-specialist-slider-3 .slick-list {
+   margin: -10px -20px;
+
+   .specialist-card {
+      width: 387px;
+      margin: 35px 20px;
+   }
+
+   // .slick-track {
+   //    // gap: 40px;
+   //    // display: flex;
+   //    // justify-content: center;
+
+   //    .slick-slide {
+   //       margin: 20px 0;
+   //       // width: 387px !important;
+   //    }
+
+   //    .slick-slide:first-child {
+   //       margin-left: 0;
+   //    }
+
+   //    .slick-slide:last-child {
+   //       margin-right: 0;
+   //    }
+   // }
+}
+
+.controls button {
+   width: 40px;
+   height: 40px;
+   border: 0;
+   box-shadow:
+      0px 1px 1px 0px #0000001f,
+      0px 0px 0px 1px #676e7629,
+      0px 2px 5px 0px #676e7614;
+
+   background: #fff;
+   border-radius: 8px;
+   cursor: pointer;
+   transition: background-color 0.5s ease-out;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   svg {
+      color: #0b9093;
+   }
+}
+
+.controls button:hover {
+   background-color: #0b9093;
+
+   svg {
+      color: #fff;
+   }
+}
+
 main {
    min-height: 90vh !important;
 }
@@ -201,6 +315,21 @@ main {
       display: flex;
       justify-content: space-between;
    }
+
+   &_list3 {
+      margin: -10px -20px;
+      .review-card {
+         margin: 30px 20px;
+      }
+   }
+
+   // .slick-slide:first-child .review-card {
+   //    margin-left: 0;
+   // }
+
+   // .slick-slide:last-child .review-card {
+   //    margin-right: 0;
+   // }
 }
 
 .checkbox-group-1 {

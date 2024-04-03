@@ -67,9 +67,7 @@ const TableCourses = () => {
                </div>
             ))}
          </div>
-
          <VerticalSpace />
-
          {!!pagination.total && (
             <Pagination
                pagination={pagination}

@@ -4,6 +4,8 @@ import Container from '@widgets/Container/ui/Container';
 import { Rate } from 'antd';
 import RightArrowIconWhite from '@shared/assets/icons/RightArrowIconWhite';
 
+import Slider from 'react-slick';
+
 function shuffleAndTrimArray(array, limit = 3) {
    // Рандомизируем массив
    for (let i = array.length - 1; i > 0; i--) {
@@ -215,14 +217,55 @@ const ReviewCard = ({ commentForCourse, firstName, lastName, comment, rating }) 
    );
 };
 
+const settings = {
+   // dots: false,
+   // infinite: true,
+   // speed: 500,
+   // slidesToShow: 3,
+   // slidesToScroll: 1,
+   // arrows: true,
+   // pauseOnHover: true,
+   // pauseOnFocus: true,
+   // pauseOnDotsHover: true
+   arrows: false,
+   slidesToShow: 3,
+   slidesToScroll: 1,
+   infinite: false,
+   speed: 500,
+   autoplay: false,
+   responsive: [
+      {
+         breakpoint: 1024,
+         settings: {
+            slidesToShow: 2
+         }
+      },
+      {
+         breakpoint: 700,
+         settings: {
+            slidesToShow: 1
+         }
+      },
+      {
+         breakpoint: 500,
+         settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+         }
+      }
+   ]
+};
+
 const Reviews = () => {
    return (
       <div className="reviews">
          <Container>
-            <div className="reviews_list">
-               {shuffleAndTrimArray(arrayOfReviews, 3).map((review, index) => (
-                  <ReviewCard key={`${review.firstName}${index}`} {...review} />
-               ))}
+            <div className="reviews_list3">
+               <Slider {...settings}>
+                  {shuffleAndTrimArray(arrayOfReviews, 8).map((review, index) => (
+                     <ReviewCard key={`${review.firstName}${index}`} {...review} />
+                  ))}{' '}
+               </Slider>
             </div>
          </Container>
       </div>

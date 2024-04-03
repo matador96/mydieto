@@ -38,9 +38,8 @@ const InstructorMainPageComponent = () => {
    return (
       <>
          <ListOfTags type="instructor" setChoosed={setPost} />
-         <VerticalSpace />
-         {/* <ListOfSpecialistsSlider post={post} /> */}
-         <ListOfSpecialists post={post} />
+         <ListOfSpecialistsSlider post={post} />
+         {/* <ListOfSpecialists post={post} /> */}
          <div className="list-all-button">
             <Button type="link" onClick={() => navigate('/instructors')}>
                Все эксперты

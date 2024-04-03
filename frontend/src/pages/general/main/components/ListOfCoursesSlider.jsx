@@ -1,64 +1,73 @@
-/* eslint-disable react/jsx-no-duplicate-props */
-import React, { useEffect, useState, useRef } from 'react';
-import { Spin } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@shared/ui';
+import { Spin } from 'antd';
+import { GetCoursesList } from '@features/course/model/services/GetCoursesList';
 import Container from '@widgets/Container/ui/Container';
+import { truncateText } from '@shared/utils/text';
 import { useNavigate } from 'react-router-dom';
+import { getDurationInDaysOrWeeks } from '@shared/utils/tsToTime';
 import Slider from 'react-slick';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
-import { GetInstructorList } from '@features/list-instructor/model/GetInstructorList';
 
-const SpecialistCard = ({
-   firstName,
-   lastName,
-   posts,
+const CourseCard = ({
+   instructor,
+   isPopular,
+   duration,
+   title,
+   description,
    marker,
-   age,
-   experience,
    id
 }) => {
    const navigate = useNavigate();
 
    return (
-      <div className="specialist-card" style={{ minWidth: '276px' }}>
-         {marker ? <div className="specialist-card_tag">{marker}</div> : null}
+      <div className="course-card">
+         {marker && <div className="course-card_tag">{marker}</div>}
 
-         <div className="specialist-card-avatar"></div>
+         {instructor && (
+            <div className="course-card_author">
+               <div className="course-card_author-avatar"></div>
+               <div>
+                  <div className="course-card_author-name">
+                     {instructor.firstName} {instructor.lastName}
+                  </div>
+                  {instructor.posts && (
+                     <div className="course-card_author-post">
+                        {instructor.posts.join(', ')}
+                     </div>
+                  )}
+               </div>
+            </div>
+         )}
 
-         <div className="specialist-card-name">
-            {firstName} {lastName}
+         <div style={{ width: '100%' }}>
+            <div className="course-card_title">{title}</div>
+            <div className="course-card_description">
+               {truncateText(description, 70)}
+            </div>
          </div>
-         {posts && <div className="specialist-card-post">{posts.join(', ')}</div>}
 
-         <div className="specialist-card-extra">{`${age} лет | Опыт ${experience} лет`}</div>
+         <div className="course-card_exp">
+            Срок прохождения: {getDurationInDaysOrWeeks(duration)}
+         </div>
 
-         <Button className="specialist-card-button" type="primary">
-            Записаться
-         </Button>
-         <Button
-            className="specialist-card-button"
-            type="link"
-            onClick={() => navigate(`/instructors/${id}`)}>
-            Подробнее{' '}
-         </Button>
+         <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+            <Button
+               className="course-card_button"
+               type="primary"
+               onClick={() => navigate(`/courses/${id}`)}>
+               Подробнее о курсе
+            </Button>
+         </div>
       </div>
    );
 };
 
-const ListOfSpecialistsSlider = ({ post, min = 3 }) => {
-   const navigate = useNavigate();
+const ListOfCoursesSlider = ({ className, min = 2 }) => {
    const sliderRef = useRef(null);
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
    const [currentIndex, setCurrentIndex] = useState(0);
-
-   useEffect(() => {
-      fetchData();
-   }, []);
-
-   useEffect(() => {
-      fetchData(post);
-   }, [post]);
 
    const minimalSlides = min;
    const slidesToScroll = 1;
@@ -107,23 +116,22 @@ const ListOfSpecialistsSlider = ({ post, min = 3 }) => {
       ]
    };
 
-   const fetchData = (choosedPost) => {
+   useEffect(() => {
+      fetchData();
+   }, []);
+
+   const fetchData = (choosedTag) => {
       setIsLoading(true);
-      GetInstructorList(
+      GetCoursesList(
          {
             page: 1,
-            limit: 8
-            // sort: 'id',
-            // order: 'desc',
-            // op: 'or',
+            limit: 10
             // status: 'active'
          },
-         choosedPost ? `{"posts":{"$like":"%25${choosedPost}%25"}}` : null
+         choosedTag ? `{"tags":{"$like":"%25${choosedTag}%25"}}` : null
       ).then((res) => {
          setData(res?.data ? res?.data : []);
-         setTimeout(() => {
-            setIsLoading(false);
-         }, 1000);
+         setIsLoading(false);
       });
    };
 
@@ -134,7 +142,7 @@ const ListOfSpecialistsSlider = ({ post, min = 3 }) => {
                display: 'flex',
                justifyContent: 'center',
                alignItems: 'center',
-               height: '450px'
+               height: '350px'
             }}>
             <Spin size="large" />
          </div>
@@ -157,10 +165,12 @@ const ListOfSpecialistsSlider = ({ post, min = 3 }) => {
 
    return (
       <Container>
-         <div className={`list-of-specialist-slider-${min}`}>
+         <div
+            className={`list-of-courses-slider ${className}`}
+            style={{ mihHeight: '350px' }}>
             <Slider {...settings} ref={sliderRef}>
                {data.map((item, index) => (
-                  <SpecialistCard key={index} {...item} />
+                  <CourseCard key={index} {...item} />
                ))}
             </Slider>
          </div>
@@ -179,4 +189,4 @@ const ListOfSpecialistsSlider = ({ post, min = 3 }) => {
    );
 };
 
-export default ListOfSpecialistsSlider;
+export default ListOfCoursesSlider;
