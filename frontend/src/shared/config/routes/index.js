@@ -12,8 +12,8 @@ import CoursePage from '@pages/general/courses/one';
 import ContactsPage from '@pages/general/contacts/index';
 import InstructorPage from '@pages/general/instructors/one';
 
-import ArticleList from '@pages/general/article/list';
-import ArticleById from '@pages/general/article/byId';
+import ArticlesPage from '@pages/general/article/index';
+import ArticlePage from '@pages/general/article/one';
 
 import ManageArticlesPage from '@pages/admin/articles';
 import ManageCoursesPage from '@pages/admin/courses';
@@ -144,13 +144,13 @@ export const routeList = {
 
    [AppRoutes.ARTICLES]: {
       path: RoutePath[AppRoutes.ARTICLES],
-      element: <ArticleList />,
+      element: <ArticlesPage />,
       layout: AppLayout.defaultLayout
    },
 
    [AppRoutes.ARTICLE]: {
       path: RoutePath[AppRoutes.ARTICLE],
-      element: <ArticleById />,
+      element: <ArticlePage />,
       layout: AppLayout.defaultLayout
    },
 

@@ -57,7 +57,7 @@ const TableCourses = () => {
                   </div>
 
                   <Button className="article-card_button" type="primary">
-                     Открыть статью
+                     Открыть курс
                   </Button>
 
                   <div className="article-card_views">Просмотров: {item.views}</div>

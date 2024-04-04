@@ -4,6 +4,7 @@ import { VerticalSpace } from '@shared/ui';
 import { GetArticlesList } from '../model/services/GetArticlesList';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import { timestampToNormalDDMMYY } from '@shared/utils/tsToTime';
+import { useNavigate } from 'react-router-dom';
 
 const truncate = (input, maxLength) =>
    input.length > maxLength ? `${input.substring(0, maxLength)}...` : input;
@@ -11,6 +12,7 @@ const truncate = (input, maxLength) =>
 const TableArticles = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
+   const navigate = useNavigate();
    const [pagination, setPagination] = useState({ ...initialPaginationSettings() });
 
    useEffect(() => {
@@ -56,7 +58,10 @@ const TableArticles = () => {
                      </div>
                   </div>
 
-                  <Button className="article-card_button" type="primary">
+                  <Button
+                     className="article-card_button"
+                     type="primary"
+                     onClick={() => navigate(`/articles/${item.id}`)}>
                      Открыть статью
                   </Button>
 

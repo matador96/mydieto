@@ -51,8 +51,8 @@ const ListOfCoursesWithFilters = () => {
       setFilterParams({ ...filterParams, search: e.target.value });
    };
 
-   const onChangeCheckBox = (type, value) => {
-      setFilterParams({ ...filterParams, [type]: value });
+   const onChangeCheckBox = (type, checkedValues) => {
+      setFilterParams({ ...filterParams, [type]: checkedValues });
    };
 
    return (
@@ -65,23 +65,31 @@ const ListOfCoursesWithFilters = () => {
                <CheckBoxTagsCard
                   title={'Направления'}
                   list={dataTags}
-                  onChange={onChangeCheckBox}
+                  onChange={(checkedValues) =>
+                     onChangeCheckBox('tags', checkedValues)
+                  }
                />
                <VerticalSpace />
                <VerticalSpace />
                <CheckBoxTagsCard
                   title={'Срок обучения'}
-                  onChange={onChangeCheckBox}
+                  onChange={(checkedValues) =>
+                     onChangeCheckBox('duration', checkedValues)
+                  }
                   list={[
-                     { label: 'до 1 недели', value: '100' },
-                     { label: 'до 2 недель', value: '200' },
-                     { label: 'до 3 недель', value: '300' }
+                     { label: 'до 1 недели', value: 7 * 8 },
+                     { label: 'до 2 недель', value: 7 * 8 * 2 },
+                     { label: 'до 3 недель', value: 7 * 8 * 3 }
                   ]}
                />
             </Col>
 
             <Col span={16}>
-               <ListOfCourses className="fullwidth" showMore={true} />
+               <ListOfCourses
+                  className="fullwidth"
+                  showMore={true}
+                  filterParams={filterParams}
+               />
             </Col>
          </Row>
       </Container>

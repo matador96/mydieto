@@ -6,7 +6,7 @@ import TitleOfBlocks from '../main/components/TitleOfBlocks';
 import ListOfArticles from '@features/article/ui/ListOfArticles';
 import { VerticalSpace } from '@shared/ui';
 
-const ArticleList = () => {
+const ArticlesPage = () => {
    return (
       <Content>
          <Container>
@@ -18,4 +18,4 @@ const ArticleList = () => {
    );
 };
 
-export default ArticleList;
+export default ArticlesPage;

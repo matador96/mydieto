@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-duplicate-props */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Content } from '@shared/ui';
 import Title from '@widgets/Custom/Title';
 import TitleWithCounts from '@widgets/Custom/TitleWithCounts';
@@ -14,6 +14,68 @@ import FaqTitle from '@widgets/Custom/FaqTitle';
 import FaqCollapse from '@widgets/Custom/FaqCollapse';
 import JoinToBlock from '@widgets/Custom/JoinToBlock';
 import SearchInstructorBlock from './components/SearchInstructorBlock';
+
+const ListOfInstructorsWithFilters = () => {
+   const [isLoading, setIsLoading] = useState(false);
+   const [post, setPost] = useState(null);
+   const [search, setSearch] = useState('');
+   const [filterParams, setFilterParams] = useState({
+      search: '',
+      tags: [],
+      duration: []
+   });
+
+   const onChangeSearch = (e) => {
+      setFilterParams({ ...filterParams, search: e.target.value });
+   };
+
+   const onChangeCheckBox = (type, value) => {
+      setFilterParams({ ...filterParams, [type]: value });
+   };
+
+   return (
+      <>
+         <SearchInstructorBlock setSearch={setSearch} />
+         <ListOfTags type="instructor" setChoosed={setPost} />
+         <VerticalSpace />
+         <ListOfSpecialists
+            showMore={true}
+            defaultLimit={6}
+            post={post}
+            search={search}
+         />
+      </>
+      // <Container>
+      //    <Row gutter={24}>
+      //       <Col span={8}>
+      //          <SearchCard onChange={onChangeSearch} />
+      //          <VerticalSpace />
+      //          <VerticalSpace />
+      //          <CheckBoxTagsCard
+      //             title={'Направления'}
+      //             list={dataTags}
+      //             onChange={onChangeCheckBox}
+      //          />
+      //          <VerticalSpace />
+      //          <VerticalSpace />
+      //          <CheckBoxTagsCard
+      //             title={'Срок обучения'}
+      //             onChange={onChangeCheckBox}
+      //             list={[
+      //                { label: 'до 1 недели', value: '100' },
+      //                { label: 'до 2 недель', value: '200' },
+      //                { label: 'до 3 недель', value: '300' }
+      //             ]}
+      //          />
+      //       </Col>
+
+      //       <Col span={16}>
+      //          <ListOfCourses className="fullwidth" showMore={true} />
+      //       </Col>
+      //    </Row>
+      // </Container>
+   );
+};
 
 const InstructorsPage = () => {
    return (
@@ -31,10 +93,7 @@ const InstructorsPage = () => {
          <VerticalSpace />
          <VerticalSpace />
          <TitleWithCounts />
-         <SearchInstructorBlock />
-         <ListOfTags type="instructor" />
-         <VerticalSpace />
-         <ListOfSpecialists showMore={true} defaultLimit={9} />
+         <ListOfInstructorsWithFilters />
          <VerticalSpace />
          <VerticalSpace />
          <Reviews />

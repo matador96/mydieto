@@ -47,35 +47,61 @@ const ListOfSpecialists = ({
    post,
    showMore = false,
    defaultLimit = 3,
-   className = ''
+   className = '',
+   search = ''
 }) => {
    const navigate = useNavigate();
 
    const [isLoading, setIsLoading] = useState(false);
+   const [limit, setLimit] = useState(defaultLimit);
    const [data, setData] = useState([]);
 
    useEffect(() => {
-      fetchData();
+      fetchData({});
    }, []);
 
    useEffect(() => {
-      fetchData(post);
-   }, [post]);
+      fetchData({ choosedPost: post });
+   }, [post, search]);
 
-   const fetchData = (choosedPost) => {
+   const fetchData = ({ choosedPost = post, limit = defaultLimit }) => {
       setIsLoading(true);
+      let query = '';
+      if (search) {
+         query = `"$or":[
+            {"firstName":{"$like":"%25${search}%25"}},
+            {"lastName":{"$like":"%25${search}%25"}}]`;
+      }
+
+      if (choosedPost) {
+         if (query) {
+            query = query + ',';
+         }
+
+         query =
+            query +
+            `"$and":[{
+            "posts":{"$like":"%25${choosedPost}%25"}
+         }]`;
+      }
+
+      if (query) {
+         query = `{${query}}`;
+      }
+
       GetInstructorList(
          {
             page: 1,
-            limit: defaultLimit
+            limit: limit
             // sort: 'id',
             // order: 'desc',
             // op: 'or',
             // status: 'active'
          },
-         choosedPost ? `{"posts":{"$like":"%25${choosedPost}%25"}}` : null
+         query
       ).then((res) => {
          setData(res?.data ? res?.data : []);
+         setLimit(limit);
          setIsLoading(false);
       });
    };
@@ -94,7 +120,11 @@ const ListOfSpecialists = ({
 
          {showMore && (
             <div className="list-all-button">
-               <Button type="link">Показать еще</Button>
+               <Button
+                  type="link"
+                  onClick={() => fetchData({ choosedPost: post, limit: limit + 3 })}>
+                  Показать еще
+               </Button>
             </div>
          )}
       </Container>

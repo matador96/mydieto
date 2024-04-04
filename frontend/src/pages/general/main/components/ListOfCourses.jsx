@@ -61,29 +61,57 @@ const CourseCard = ({
    );
 };
 
-const ListOfCourses = ({ className, tag, showMore = false, defaultLimit = 4 }) => {
+const ListOfCourses = ({
+   className,
+   filterParams,
+   showMore = false,
+   defaultLimit = 4
+}) => {
    const [isLoading, setIsLoading] = useState(false);
    const [data, setData] = useState([]);
+   const [limit, setLimit] = useState(defaultLimit);
 
    useEffect(() => {
       fetchData();
    }, []);
 
    useEffect(() => {
-      fetchData(tag);
-   }, [tag]);
+      fetchData({ ...filterParams, limit: defaultLimit });
+   }, [filterParams]);
 
-   const fetchData = (choosedTag) => {
+   const fetchData = (params) => {
       setIsLoading(true);
+
+      let queryParams = [];
+
+      // Кривовато работает
+
+      if (params?.search) {
+         queryParams.push(`"$and":[{"title":{"$like":"%25${params.search}%25"}}]`);
+      }
+
+      if (params?.tags && params?.tags?.length) {
+         params?.tags.map((e) => {
+            queryParams.push(`"$or":[{"tags":{"$like":"%25${e}%25"}}]`);
+         });
+      }
+
+      if (params?.duration && params?.duration?.length) {
+         params?.duration.map((e) => {
+            queryParams.push(`"$or":[{"duration":{"$lte":"${e}"}}]`);
+         });
+      }
+
       GetCoursesList(
          {
             page: 1,
-            limit: defaultLimit
+            limit: params?.limit || defaultLimit
             // status: 'active'
          },
-         choosedTag ? `{"tags":{"$like":"%25${choosedTag}%25"}}` : null
+         `{${queryParams.join(',')}}`
       ).then((res) => {
          setData(res?.data ? res?.data : []);
+         setLimit(limit);
          setIsLoading(false);
       });
    };
@@ -102,11 +130,15 @@ const ListOfCourses = ({ className, tag, showMore = false, defaultLimit = 4 }) =
             ))}
          </div>
 
-         {showMore && (
+         {showMore && data.length ? (
             <div className="list-all-button">
-               <Button type="link">Показать еще</Button>
+               <Button
+                  type="link"
+                  onClick={() => fetchData({ ...filterParams, limit: limit + 3 })}>
+                  Показать еще
+               </Button>
             </div>
-         )}
+         ) : null}
       </Container>
    );
 };

@@ -7,6 +7,7 @@ import ListOfTags from '@widgets/Custom/ListOfTags';
 import Reviews from '@widgets/Custom/Reviews';
 import { getDurationInDaysOrWeeks } from '@shared/utils/tsToTime';
 import { GetCourse } from '@features/course/model/services/GetCourse';
+import ListOfCoursesSlider from '@pages/general/main/components/ListOfCoursesSlider';
 
 import RightArrowCircleWhite from '@shared/assets/icons/RightArrowCircleWhite';
 import { useParams } from 'react-router-dom';
@@ -143,7 +144,8 @@ const CoursePage = () => {
          <TitleOfBlocks title="Другие курсы" />
          <VerticalSpace />
          <VerticalSpace />
-         <ListOfCourses className="twoelements" defaultLimit={2} />
+
+         <ListOfCoursesSlider className="twoelements" min={2} />
          <VerticalSpace />
          <FaqTitle />
          <FaqCollapse />
