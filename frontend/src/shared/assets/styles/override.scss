@@ -7,19 +7,53 @@ body {
    color: $base-color;
 }
 
-.ant-input {
+label.ant-form-item-required::after {
+   display: inline-block !important;
+   margin-inline-end: 4px !important;
+   color: #ff4d4f !important;
+   font-size: 14px !important;
+   font-family: SimSun, sans-serif !important;
+   line-height: 1 !important;
+   content: '*' !important;
+   visibility: visible !important;
+}
+
+label.ant-form-item-required::before {
+   display: none !important;
+}
+
+.ant-form-item-control-input-content .ant-input-affix-wrapper,
+.ant-form-item-control-input-content > input,
+.ant-form-item-control-input-content .ant-picker,
+.ant-select .ant-select-selector {
    min-height: 44px;
    padding: 10px 14px 10px 14px;
    border-radius: 8px;
    background: #ffffff;
-   border: 0;
+   border: 0 !important;
    box-shadow:
       0px 1px 1px 0px #0000001f,
       0px 0px 0px 1px #676e7629,
       0px 2px 5px 0px #676e7614 !important;
 }
+.ant-select {
+   .ant-select-arrow {
+      height: 22px !important;
+   }
+}
 
-.ant-checkbox-wrapper {
+.ant-input-prefix {
+   //styleName: Body/md/Regular;
+   font-family: Inter;
+   font-size: 16px;
+   font-weight: 400;
+   line-height: 24px;
+   text-align: left;
+   color: #676e76;
+   padding-right: 3px;
+}
+
+.checkbox-group-1 .ant-checkbox-wrapper {
    line-height: 24px;
    font-family: Inter;
    font-size: 20px;
@@ -28,6 +62,25 @@ body {
    text-align: left;
    gap: 12px;
 }
+
+.avatar-uploader {
+   display: flex !important;
+   align-items: center;
+   justify-content: center;
+
+   &:hover {
+      cursor: pointer;
+   }
+
+   .ant-upload-select {
+      margin: 0 !important;
+      height: 100px !important;
+      width: 100px !important;
+      border: 0 !important;
+      background: #f6f7f9 !important;
+   }
+}
+
 .ant-checkbox-wrapper .ant-checkbox-inner {
    border: 2px solid #0b9093;
    width: 24px;
@@ -277,9 +330,7 @@ body {
 .custom-input-container.ant-form-item-has-error
    .ant-form-item-control-input
    .ant-input-affix-wrapper,
-.custom-input-container.ant-form-item-has-error
-   .ant-form-item-control-input
-   .ant-input {
+.custom-input-container.ant-form-item-has-error .ant-form-item-control-input {
    border-color: #ff4d4f; /* Красный цвет границы для Input при ошибке */
 }
 .custom-input-container .ant-form-item-explain-error {

@@ -5,8 +5,17 @@ import { useDispatch } from 'react-redux';
 import { userActions, isUserAuthorized } from '@entitles/User';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { message, Space, Alert } from 'antd';
+import { message, Modal, Alert } from 'antd';
 import PasswordRecoveryForm from './PasswordRecoveryForm';
+
+const resetPasswort = () => {
+   Modal.info({
+      title: 'Восстановить пароль',
+      width: 400,
+      content: <div>Некая форма позже будет</div>,
+      onOk() {}
+   });
+};
 
 const LoginForm = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -92,6 +101,25 @@ const LoginForm = () => {
          </Form.Item>
 
          <PasswordRecoveryForm visible={modalVisible} onCancel={handleCancel} />
+
+         <div
+            style={{
+               marginBottom: '10px',
+               display: 'flex',
+               justifyContent: 'flex-end',
+               marginTop: '-10px'
+            }}>
+            <a
+               className="login-form-forgot"
+               href=""
+               onClick={(e) => {
+                  e.preventDefault();
+                  resetPasswort();
+               }}>
+               Забыли пароль?
+            </a>
+         </div>
+
          <Form.Item>
             {errorMessage ? (
                <Alert
@@ -111,7 +139,7 @@ const LoginForm = () => {
                type="primary"
                htmlType="submit"
                loading={isLoading}
-               style={{ width: '100%' }}>
+               style={{ width: '100%', marginTop: 10 }}>
                Войти
             </Button>
          </Form.Item>

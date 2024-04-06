@@ -24,7 +24,7 @@ const LoginBlock = () => {
 
 const RegisterBlock = () => {
    return (
-      <div className="auth-block">
+      <div className="auth-block register">
          <div className="auth-block_title">Регистрация</div>
          <RegisterForm />
       </div>

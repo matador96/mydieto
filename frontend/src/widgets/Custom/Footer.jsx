@@ -53,7 +53,7 @@ const Footer = () => {
                         style={{
                            width: '100%'
                         }}>
-                        <Input defaultValue="" placeHolder="Введите почту" />
+                        <Input defaultValue="" placeholder="Введите почту" />
                         <Button type="primary">Подписаться</Button>
                      </Space.Compact>
                   </div>
