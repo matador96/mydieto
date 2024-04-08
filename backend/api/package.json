@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "Admin Panel Api application",
+  "description": "MyDieto application",
   "main": "server.js",
   "type": "commonjs",
   "engines": {

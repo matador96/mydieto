@@ -36,17 +36,20 @@ const LoginForm = () => {
       setIsLoading(true);
       AuthByLoginAndPassword(values)
          .then((res) => {
+            setTimeout(() => {
+               setIsLoading(false);
             dispatch(userActions.loginUser(res));
             message.info(`Добро пожаловать ${res.email}!`);
             navigate(`/`);
+         }, 1000);
          })
          .catch((e) => {
+            setIsLoading(false);
             setErrorMessage(e?.message || 'Ошибка');
          })
-         .finally(() => {
-            setIsLoading(false);
-         });
    };
+
+  
 
    const onFinishFailed = () => {
       setIsLoading(false);

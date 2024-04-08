@@ -59,6 +59,20 @@ CREATE TABLE "courses" (
     "updatedAt" TIMESTAMPTZ
 );
 
+CREATE TYPE reviews_status AS ENUM ('active', 'archived');
+
+CREATE TABLE "reviews" (
+    "id" SERIAL PRIMARY KEY,
+    "instructorId" INTEGER NOT NULL REFERENCES "instructors" ("id"),
+    "courseId" INTEGER NOT NULL REFERENCES "courses" ("id"),
+    "userId" INTEGER NOT NULL REFERENCES "users" ("id"),
+    "comment" TEXT DEFAULT '',
+    "rating" INTEGER NOT NULL DEFAULT 0,
+    "status" reviews_status DEFAULT 'active' NOT NULL,
+    "createdAt" TIMESTAMPTZ DEFAULT NOW(),
+    "updatedAt" TIMESTAMPTZ
+);
+
 CREATE TYPE articles_status AS ENUM ('active', 'blocked', 'archived');
 
 CREATE TABLE "articles" (

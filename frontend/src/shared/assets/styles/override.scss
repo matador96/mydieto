@@ -220,6 +220,10 @@ label.ant-form-item-required::before {
 
    &-primary {
       background-color: $primary-color;
+      box-shadow:
+         0px 1px 1px 0px #0000001f,
+         0px 0px 0px 1px #676e7629,
+         0px 2px 5px 0px #676e7614;
 
       &.ant-btn-dangerous {
          &:not(:disabled):hover,

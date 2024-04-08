@@ -20,6 +20,7 @@ const allRoutes = [
   ...require("./faqs"),
   ...require("./instructors"),
   ...require("./courses"),
+  ...require("./reviews"),
 ];
 
 module.exports = (app) => {

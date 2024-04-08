@@ -2,6 +2,7 @@ const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
 const { statusesOfCourses } = require("../config/statusSettings");
 const { Instructors } = require("./users");
+const Reviews = require("./reviews");
 
 const Courses = sequelize.define(
   "courses",
@@ -71,6 +72,10 @@ const Courses = sequelize.define(
 
 Courses.belongsTo(Instructors, {
   foreignKey: "instructorId",
+});
+
+Reviews.belongsTo(Courses, {
+  foreignKey: "courseId",
 });
 
 // Courses.hasOne(Instructors, { foreignKey: "id" });

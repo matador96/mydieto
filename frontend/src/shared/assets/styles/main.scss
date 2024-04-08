@@ -7,6 +7,60 @@ body {
    color: #2d2d2d;
 }
 
+.rate-big {
+   svg {
+      font-size: 38px;
+   }
+}
+
+.profile-page {
+   display: flex;
+   gap: 40px;
+   margin-top: 65px;
+
+   &_menu {
+      gap: 35px;
+      display: flex;
+      flex-direction: column;
+
+      &-item {
+         color: #2d2d2d;
+         font-family: Inter;
+         font-size: 16px;
+         font-weight: 500;
+         line-height: 24px;
+         text-align: center;
+         gap: 10px;
+         display: flex;
+         justify-content: flex-start;
+         align-items: center;
+
+         &:hover {
+            color: #0b9093;
+            cursor: pointer;
+
+            svg {
+               color: #0b9093;
+
+               path {
+                  stroke: #0b9093;
+               }
+            }
+         }
+      }
+   }
+
+   &_left {
+      box-shadow:
+         0px 15px 35px 0px #676e7614,
+         0px 5px 15px 0px #0000001f;
+      width: 244px;
+      min-height: 255px;
+      padding: 24px;
+      border-radius: 16px;
+   }
+}
+
 .login-form-forgot {
    color: #2f80ed;
    //styleName: Body/sm/Medium;

@@ -11,7 +11,8 @@ const TitleComponent = (props) => {
          document.title = props.children;
       }
    } else {
-      document.title = 'Admin Panel';
+      document.title =
+         'MyDieto - уникальный маркетплейс, созданный для тех, кто стремится к правильному питанию и заботится о своём здоровье';
    }
 
    return <Title {...props} />;

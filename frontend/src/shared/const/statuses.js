@@ -31,6 +31,11 @@ const statusesOfCategories = {
    archive: { label: 'Скрыт', value: 'archive', color: 'grey' }
 };
 
+const statusesOfReviews = {
+   active: { label: 'Активный', value: 'active', color: 'green' },
+   archived: { label: 'Скрыт', value: 'archived', color: 'grey' }
+};
+
 const statuseTextOfUsersOrders = {
    seller: {
       onEvaluation: 'Ожидает оценки от покупателя',
@@ -80,5 +85,6 @@ export {
    statusesOfCategories,
    statuseTextOfUsersOrders,
    statusesOfFaqs,
-   statusesOfCourses
+   statusesOfCourses,
+   statusesOfReviews
 };

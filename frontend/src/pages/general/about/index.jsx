@@ -4,13 +4,13 @@ import { Content } from '@shared/ui';
 import Container from '@widgets/Container/ui/Container';
 import TitleOfBlocks from '../main/components/TitleOfBlocks';
 
-const ContactsPage = () => {
+const AboutPage = () => {
    return (
       <Content>
-         <TitleOfBlocks title="Контакты" />
+         <TitleOfBlocks title="О нас" />
          <Container> Какие то контакты</Container>
       </Content>
    );
 };
 
-export default ContactsPage;
+export default AboutPage;

@@ -13,7 +13,7 @@ const items = [
    { label: 'Курсы', key: '/courses' },
    { label: 'Эксперты', key: '/instructors' },
    { label: 'Статьи', key: '/articles' },
-   { label: 'Контакты', key: '/contacts' }
+   { label: 'О нас', key: '/about' }
 ];
 
 const Footer = () => {

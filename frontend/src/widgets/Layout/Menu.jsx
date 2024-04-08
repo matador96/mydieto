@@ -16,10 +16,10 @@ function getItem(label, key, icon, children, disabled) {
 
 const items = [
    getItem('Главная', 'main'),
+   getItem('О нас', 'about'),
    getItem('Курсы', 'courses'),
    getItem('Эксперты', 'instructors'),
-   getItem('Статьи', 'articles'),
-   getItem('Контакты', 'contacts')
+   getItem('Статьи', 'articles')
 ];
 
 const MenuComponent = () => {

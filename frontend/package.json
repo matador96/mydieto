@@ -1,7 +1,7 @@
 {
    "name": "client",
    "version": "0.1.0",
-   "description": "Admin Panel Client application",
+   "description": "MyDieto Client application",
    "private": true,
    "dependencies": {
       "@ant-design/plots": "^1.2.5",

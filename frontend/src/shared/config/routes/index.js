@@ -3,13 +3,14 @@ import NotFoundPage from '@pages/general/notfound';
 import NotPermissionPage from '@pages/general/notpermission';
 
 import AdminMainPage from '@pages/admin/index';
-import UserMainPage from '@pages/user/index';
+import ProfilePage from '@pages/user/profile';
+
 import MainPage from '@pages/general/main/index';
 
 import InstructorsPage from '@pages/general/instructors/index';
 import CoursesPage from '@pages/general/courses/index';
 import CoursePage from '@pages/general/courses/one';
-import ContactsPage from '@pages/general/contacts/index';
+import AboutPage from '@pages/general/about/index';
 import InstructorPage from '@pages/general/instructors/one';
 
 import ArticlesPage from '@pages/general/article/index';
@@ -21,6 +22,7 @@ import ManageCoursesPage from '@pages/admin/courses';
 import ManageUsersPage from '@pages/admin/users';
 import ManageInstructorsPage from '@pages/admin/instructors';
 import ManageFaqsPage from '@pages/admin/faqs';
+import ManageReviewsPage from '@pages/admin/reviews';
 
 const AppRoutes = {
    MAIN: 'main',
@@ -38,7 +40,7 @@ const AppRoutes = {
 
    COURSE: 'course',
    COURSES: 'courses',
-   CONTACTS: 'contacts',
+   ABOUT: 'about',
 
    // Admin
    ADMIN_PROFILE: 'admin-profile',
@@ -47,6 +49,7 @@ const AppRoutes = {
    ADMIN_ARTICLES: 'admin-articles',
    ADMIN_COURSES: 'admin-courses',
    ADMIN_FAQ: 'admin-faq',
+   ADMIN_REVIEWS: 'admin-reviews',
    ADMIN_CATEGORIES: 'admin-categories',
    ADMIN_DASHBOARD: 'admin-dashboard'
 };
@@ -70,7 +73,7 @@ export const RoutePath = {
    [AppRoutes.INSTRUCTORS]: '/instructors',
    [AppRoutes.INSTRUCTOR]: '/instructors/:id',
 
-   [AppRoutes.CONTACTS]: '/contacts',
+   [AppRoutes.ABOUT]: '/about',
 
    [AppRoutes.COURSES]: '/courses',
    [AppRoutes.COURSE]: '/courses/:id',
@@ -81,6 +84,7 @@ export const RoutePath = {
    [AppRoutes.ADMIN_INSTRUCTORS]: '/admin/instructors',
    [AppRoutes.ADMIN_ARTICLES]: '/admin/articles',
    [AppRoutes.ADMIN_COURSES]: '/admin/courses',
+   [AppRoutes.ADMIN_REVIEWS]: '/admin/reviews',
 
    [AppRoutes.ADMIN_FAQ]: '/admin/faq',
    [AppRoutes.ADMIN_CATEGORIES]: '/admin/categories'
@@ -135,6 +139,13 @@ export const routeList = {
       authOnly: true
    },
 
+   [AppRoutes.ADMIN_REVIEWS]: {
+      path: RoutePath[AppRoutes.ADMIN_REVIEWS],
+      element: <ManageReviewsPage />,
+      layout: AppLayout.adminLayout,
+      authOnly: true
+   },
+
    [AppRoutes.ADMIN_INSTRUCTORS]: {
       path: RoutePath[AppRoutes.ADMIN_INSTRUCTORS],
       element: <ManageInstructorsPage />,
@@ -166,9 +177,9 @@ export const routeList = {
       layout: AppLayout.defaultLayout
    },
 
-   [AppRoutes.CONTACTS]: {
-      path: RoutePath[AppRoutes.CONTACTS],
-      element: <ContactsPage />,
+   [AppRoutes.ABOUT]: {
+      path: RoutePath[AppRoutes.ABOUT],
+      element: <AboutPage />,
       layout: AppLayout.defaultLayout
    },
 
@@ -184,11 +195,11 @@ export const routeList = {
       layout: AppLayout.defaultLayout
    },
 
-   // [AppRoutes.PROFILE]: {
-   //    path: RoutePath[AppRoutes.PROFILE],
-   //    element: <ProfilePage />,
-   //    authOnly: true
-   // },
+   [AppRoutes.PROFILE]: {
+      path: RoutePath[AppRoutes.PROFILE],
+      element: <ProfilePage />,
+      authOnly: true
+   },
    [AppRoutes.LOGIN]: {
       path: RoutePath[AppRoutes.LOGIN],
       element: <AuthPage isLoginForm={true} />,
