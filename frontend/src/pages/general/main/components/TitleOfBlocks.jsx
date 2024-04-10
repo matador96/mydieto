@@ -5,7 +5,13 @@ import Container from '@widgets/Container/ui/Container';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
-const TitleOfBlocks = ({ title, description, buttonTitle, buttonUrl }) => {
+const TitleOfBlocks = ({
+   title,
+   description,
+   buttonTitle,
+   buttonUrl,
+   isCentered = false
+}) => {
    const navigate = useNavigate();
 
    return (
@@ -15,7 +21,8 @@ const TitleOfBlocks = ({ title, description, buttonTitle, buttonUrl }) => {
                <div
                   className={`title-of-blocks-block_left ${
                      description ? '' : 'width100'
-                  }`}>
+                  } 
+                  ${isCentered ? 'center' : ''}`}>
                   {title}
                </div>
                {description && (
@@ -23,11 +30,13 @@ const TitleOfBlocks = ({ title, description, buttonTitle, buttonUrl }) => {
                      <div className="title-of-blocks-block_right-description">
                         {description}
                      </div>
-                     <div className="title-of-blocks-block_right-button">
-                        <Button type="link" onClick={() => navigate(buttonUrl)}>
-                           {buttonTitle} <ArrowRightOutlined />
-                        </Button>
-                     </div>
+                     {buttonUrl ? (
+                        <div className="title-of-blocks-block_right-button">
+                           <Button type="link" onClick={() => navigate(buttonUrl)}>
+                              {buttonTitle} <ArrowRightOutlined />
+                           </Button>
+                        </div>
+                     ) : null}
                   </div>
                )}
             </div>
