@@ -5,6 +5,7 @@ import { Button } from '@shared/ui';
 import Container from '@widgets/Container/ui/Container';
 import { useNavigate } from 'react-router-dom';
 import { GetInstructorList } from '@features/list-instructor/model/GetInstructorList';
+import ModalMakeAnApointmet from '@widgets/Custom/ModalMakeAnApointmet';
 
 const SpecialistCard = ({
    firstName,
@@ -30,9 +31,15 @@ const SpecialistCard = ({
 
          <div className="specialist-card-extra">{`${age} лет | Опыт ${experience} лет`}</div>
 
-         <Button className="specialist-card-button" type="primary">
-            Записаться
-         </Button>
+         <ModalMakeAnApointmet
+            instructorId={id}
+            button={
+               <Button className="specialist-card-button" type="primary">
+                  Записаться
+               </Button>
+            }
+         />
+
          <Button
             className="specialist-card-button"
             type="link"
