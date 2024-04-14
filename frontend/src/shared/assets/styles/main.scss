@@ -7,6 +7,15 @@ body {
    color: #2d2d2d;
 }
 
+.profile-menu-avatar {
+   &:hover {
+      cursor: pointer;
+   }
+   img {
+      object-fit: contain;
+   }
+}
+
 .title-in-modal {
    //styleName: Headings/xs/Semi Bold;
    font-family: Inter;

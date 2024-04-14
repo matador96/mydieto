@@ -2,6 +2,8 @@ const sequelize = require("../core/db");
 const { DataTypes } = require("sequelize");
 const { statusesOfUsers } = require("../config/statusSettings");
 const Reviews = require("./reviews");
+const { cryptPassword, comparePassword } = require("../core/encrypt");
+const bcrypt = require("bcrypt");
 
 const Users = sequelize.define(
   "users",
@@ -150,6 +152,27 @@ const Clients = sequelize.define(
     },
     lastName: {
       field: "lastName",
+      type: DataTypes.STRING,
+    },
+    timezone: {
+      field: "timezone",
+      type: DataTypes.STRING,
+    },
+    mobile: {
+      field: "mobile",
+      type: DataTypes.STRING,
+      unique: true,
+    },
+    birthday: {
+      field: "birthday",
+      type: DataTypes.STRING,
+    },
+    imageId: {
+      field: "imageId",
+      type: DataTypes.STRING,
+    },
+    imageUrl: {
+      field: "imageUrl",
       type: DataTypes.STRING,
     },
   },

@@ -23,6 +23,11 @@ CREATE TABLE "clients" (
     "userId" INTEGER NOT NULL REFERENCES "users" ("id"),
     "firstName" VARCHAR(100) NOT NULL,
     "lastName" VARCHAR(100) NOT NULL,
+    "birthday" DATE NOT NULL,
+    "timezone" TEXT DEFAULT '',
+    "mobile" VARCHAR(100) NOT NULL UNIQUE,
+    "imageId" TEXT DEFAULT '',
+    "imageUrl" TEXT DEFAULT '',
     "createdAt" TIMESTAMPTZ DEFAULT NOW(),
     "updatedAt" TIMESTAMPTZ
 );

@@ -21,6 +21,7 @@ const allRoutes = [
   ...require("./instructors"),
   ...require("./courses"),
   ...require("./reviews"),
+  ...require("./clients"),
 ];
 
 module.exports = (app) => {

@@ -21,6 +21,7 @@ module.exports.getActiveCount = async () => {
 
 module.exports.getUserById = async (id) => {
   const user = await Users.findByPk(id, {
+    include: [Admins, Instructors, Clients],
     raw: true,
     nest: true,
     distinct: true,

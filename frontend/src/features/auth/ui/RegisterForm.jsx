@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Input } from '@shared/ui';
 
-import { Register } from '@features/auth/model/services/Register';
+import { RegisterClient } from '@features/auth/model/services/RegisterClient';
 
 import { AuthByLoginAndPassword } from '@features/auth/model/services/AuthByLoginAndPassword';
 import { useDispatch } from 'react-redux';
@@ -20,7 +20,8 @@ import {
    Upload,
    Image,
    Flex,
-   Modal
+   Modal,
+   Alert
 } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
 import { timeZoneList } from '@shared/const/timezone';
@@ -90,6 +91,7 @@ const getBase64 = (file) =>
 
 const RegisterForm = () => {
    const [loading, setLoading] = useState(false);
+   const [errorMessage, setErrorMessage] = useState('');
    const [isLoading, setIsLoading] = useState(false);
    const dispatch = useDispatch();
    const navigate = useNavigate();
@@ -102,26 +104,39 @@ const RegisterForm = () => {
 
    useEffect(() => {
       if (isUserAuthorized) {
-         navigate(`/${userType}/dashboard`);
+         navigate(`/`);
       }
    }, []);
 
    const onFinish = (values) => {
-      setIsLoading(true);
+      //      setIsLoading(true);
 
-      Register(values)
-         .then(() => {
+      const formDataCreate = new FormData();
+
+      console.log(values);
+
+      for (let key in values) {
+         formDataCreate.append(key, values[key]);
+      }
+
+      if (image) {
+         formDataCreate.append('image', image.originFileObj, image.name);
+      }
+
+      RegisterClient(formDataCreate)
+         .then((res) => {
+            console.log(res);
             AuthByLoginAndPassword({
                email: values.email,
                password: values.password
             }).then((res) => {
                dispatch(userActions.loginUser(res));
                message.info(`Добро пожаловать ${res.email}!`);
-               navigate(`/${res.type}/dashboard`);
+               navigate(`/`);
                setIsLoading(false);
             });
          })
-         .catch((e) => message.error(e.message))
+         .catch((e) => setErrorMessage(e.message))
          .finally(() => {
             setIsLoading(false);
          });
@@ -165,7 +180,7 @@ const RegisterForm = () => {
                      justify="center"
                      align="center">
                      <Upload
-                        name="avatar"
+                        name="image"
                         listType="picture-circle"
                         className="avatar-uploader"
                         onPreview={() => {}}
@@ -245,7 +260,7 @@ const RegisterForm = () => {
             <Col span={12}>
                <Form.Item
                   label="Дата рождения"
-                  name="dateOfBirth"
+                  name="birthday"
                   rules={[
                      {
                         required: true,
@@ -280,12 +295,12 @@ const RegisterForm = () => {
             <Col span={12}>
                <Form.Item
                   label="Номер телефона"
-                  name="phone"
+                  name="mobile"
                   rules={[{ required: true, message: 'Поле не может быть пустым' }]}>
                   <MaskedInput
                      prefix="RU"
                      mask="+7 (000) 000-0000"
-                     name="phone"
+                     name="mobile"
                      placeholder="Введите номер телефона"
                   />
                </Form.Item>
@@ -375,6 +390,17 @@ const RegisterForm = () => {
                </Form.Item>
             </Col>{' '}
          </Row>
+
+         {errorMessage && (
+            <Col className="gutter-row" span={24} className="stats-card-count-col">
+               <Alert
+                  message={errorMessage.replace('Error: ', '')}
+                  type="error"
+                  showIcon
+                  style={{ marginBottom: '15px' }}
+               />
+            </Col>
+         )}
 
          <Form.Item>
             <Button type="primary" htmlType="submit" loading={isLoading}>

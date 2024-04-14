@@ -63,7 +63,7 @@ const InstructorPage = () => {
                         <div
                            className="join-to-block-course_button"
                            style={{ width: '300px' }}>
-                           Другие курсы эксперта <RightArrowCircleWhite />
+                           Курсы эксперта <RightArrowCircleWhite />
                         </div>
                      </div>
                   </div>

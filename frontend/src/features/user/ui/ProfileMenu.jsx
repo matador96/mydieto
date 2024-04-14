@@ -67,9 +67,12 @@ const ProfileMenu = ({ adminMode }) => {
          </Button>
          <Avatar
             size={40}
+            onClick={() => navigate('/profile')}
+            src={authData?.client?.imageUrl}
             icon={<UserOutlined />}
+            className="profile-menu-avatar"
             style={{
-               backgroundColor: '#87d068'
+               backgroundColor: 'rgb(11 144 147)'
             }}
          />
       </div>

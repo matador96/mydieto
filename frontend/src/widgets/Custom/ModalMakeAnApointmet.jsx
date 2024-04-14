@@ -19,7 +19,6 @@ const ModalMakeAnApointmet = ({ closeModal = () => {}, button, instructorId }) =
          setIsLoading(true);
          GetInstructorById(instructorId)
             .then((data) => {
-               console.log(data);
                setInstructor(data);
             })
             .finally(() => {
