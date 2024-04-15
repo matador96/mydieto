@@ -13,18 +13,24 @@ const SpecialistCard = ({
    firstName,
    lastName,
    posts,
+   imageUrl,
    marker,
    age,
    experience,
    id
 }) => {
    const navigate = useNavigate();
+   const imageStyle = imageUrl
+      ? {
+           backgroundImage: `url(${imageUrl})`
+        }
+      : {};
 
    return (
       <div className="specialist-card" style={{ minWidth: '276px' }}>
          {marker ? <div className="specialist-card_tag">{marker}</div> : null}
 
-         <div className="specialist-card-avatar"></div>
+         <div className="specialist-card-avatar" style={{ ...imageStyle }}></div>
 
          <div className="specialist-card-name">
             {firstName} {lastName}

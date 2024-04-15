@@ -101,6 +101,14 @@ const Instructors = sequelize.define(
       field: "marker",
       type: DataTypes.STRING,
     },
+    imageId: {
+      field: "imageId",
+      type: DataTypes.STRING,
+    },
+    imageUrl: {
+      field: "imageUrl",
+      type: DataTypes.STRING,
+    },
 
     posts: {
       field: "posts",
@@ -112,10 +120,10 @@ const Instructors = sequelize.define(
           return [];
         }
 
-        return JSON.parse(list);
+        return list.split(",").map((item) => item.trim());
       },
       set(value) {
-        this.setDataValue("posts", JSON.stringify(value));
+        this.setDataValue("posts", value);
       },
     },
 

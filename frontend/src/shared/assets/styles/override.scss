@@ -25,7 +25,8 @@ label.ant-form-item-required::before {
 .ant-form-item-control-input-content .ant-input-affix-wrapper,
 .ant-form-item-control-input-content > input,
 .ant-form-item-control-input-content .ant-picker,
-.ant-select .ant-select-selector {
+.ant-select .ant-select-selector,
+.ant-input-number-input-wrap > input {
    min-height: 44px;
    padding: 10px 14px 10px 14px;
    border-radius: 8px;

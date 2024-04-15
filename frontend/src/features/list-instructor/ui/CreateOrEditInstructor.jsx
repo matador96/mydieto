@@ -35,14 +35,14 @@ const CreateOrEditInstructor = ({ id = null, callbackOnSuccess = () => {} }) => 
 
       if (isEditForm) {
          const id = initialValues.id;
-         const mergedObj = { ...initialValues, ...values };
+         // const mergedObj = { ...initialValues, ...values };
 
-         const updatedFields = _.pickBy(
-            mergedObj,
-            (v, k) => !_.isEqual(initialValues[k], v)
-         );
+         // const updatedFields = _.pickBy(
+         //    mergedObj,
+         //    (v, k) => !_.isEqual(initialValues[k], v)
+         // );
 
-         await UpdateInstructor({ ...updatedFields }, id)
+         await UpdateInstructor(values, id)
             .then(() => {
                callbackOnSuccess();
                message.success('Эксперт изменен');
@@ -56,7 +56,7 @@ const CreateOrEditInstructor = ({ id = null, callbackOnSuccess = () => {} }) => 
          return;
       }
 
-      await CreateInstructor({ ...values })
+      await CreateInstructor(values)
          .then(() => {
             message.success('Эксперт создан');
             callbackOnSuccess();

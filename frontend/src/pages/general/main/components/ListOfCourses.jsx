@@ -17,14 +17,21 @@ const CourseCard = ({
    id
 }) => {
    const navigate = useNavigate();
+   const imageStyle = instructor?.imageUrl
+      ? { backgroundImage: `url(${instructor?.imageUrl})` }
+      : {};
 
    return (
       <div className="course-card">
          {marker && <div className="course-card_tag">{marker}</div>}
 
          {instructor && (
-            <div className="course-card_author">
-               <div className="course-card_author-avatar"></div>
+            <div
+               className="course-card_author"
+               onClick={() => navigate(`/instructors/${instructor.id}`)}>
+               <div
+                  className="course-card_author-avatar"
+                  style={{ ...imageStyle }}></div>
                <div>
                   <div className="course-card_author-name">
                      {instructor.firstName} {instructor.lastName}

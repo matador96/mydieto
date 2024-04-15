@@ -16,6 +16,11 @@ const JoinToBlockCourse = ({
    }
 }) => {
    const navigate = useNavigate();
+
+   const imageStyle = instructor?.imageUrl
+      ? { backgroundImage: `url(${instructor?.imageUrl})` }
+      : {};
+
    return (
       <div style={{ margin: '65px 0 30px 0' }}>
          <Container>
@@ -46,8 +51,11 @@ const JoinToBlockCourse = ({
 
                   <div
                      className="course-card_author jointoblockcourse"
-                     style={{ marginTop: '24px', marginBottom: '60px' }}>
-                     <div className="course-card_author-avatar"></div>
+                     style={{ marginTop: '24px', marginBottom: '60px' }}
+                     onClick={() => navigate(`/instructors/${instructor.id}`)}>
+                     <div
+                        className="course-card_author-avatar"
+                        style={{ ...imageStyle }}></div>
                      <div>
                         <div className="course-card_author-name">
                            {instructor.firstName} {instructor.lastName}

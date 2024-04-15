@@ -28,6 +28,7 @@ module.exports.getTags = async () => {
   let data = await Instructors.findAll({
     attributes: ["posts"],
     raw: false,
+    nest: true,
   });
 
   data = JSON.stringify(data);

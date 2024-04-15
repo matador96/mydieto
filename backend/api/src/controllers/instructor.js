@@ -2,6 +2,8 @@ const { body } = require("express-validator");
 const InstructorService = require("../services/instructors");
 const UserService = require("../services/users");
 const Encrypt = require("../core/encrypt");
+const { uploadImageFile, deleteImageFile } = require("../core/s3");
+require("dotenv").config();
 
 module.exports.getWithParams = async (req) => {
   const result = await InstructorService.getWithParams(req.query);
@@ -19,7 +21,20 @@ module.exports.create = async (req, res, transaction) => {
 
   const createdUser = await UserService.createUser(userData, { transaction });
   instructorData.userId = createdUser.id;
-  await InstructorService.create(instructorData, { transaction });
+
+  let imageObj = {};
+
+  if (req?.files?.image) {
+    const image = req?.files?.image;
+    if (image) {
+      imageObj = await uploadImageFile(req?.files?.image);
+    }
+  }
+
+  await InstructorService.create(
+    { ...instructorData, ...imageObj },
+    { transaction },
+  );
 
   return {
     data: createdUser,
@@ -41,7 +56,27 @@ module.exports.getTags = async () => {
 module.exports.update = async (req) => {
   const { id } = req.params;
   const userObj = { ...req.body };
-  const userData = await InstructorService.update({ ...userObj }, { id });
+
+  let imageObj = {};
+
+  if (req?.files?.image) {
+    const image = req?.files?.image;
+    if (image) {
+      imageObj = await uploadImageFile(req?.files?.image);
+
+      InstructorService.getById(id).then((instructor) => {
+        if (instructor.imageId) {
+          const imageId = instructor.imageId;
+          deleteImageFile(process.env.MINIO_BUCKET_FOLDER, imageId);
+        }
+      });
+    }
+  }
+
+  const userData = await InstructorService.update(
+    { ...userObj, ...imageObj },
+    { id },
+  );
 
   return {
     data: userData,

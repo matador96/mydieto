@@ -17,14 +17,14 @@ import ListOfSpecialistsSlider from '@features/list-instructor/ui/ListOfSpeciali
 import ListOfSpecialists from './components/ListOfSpecialists';
 
 const CourseMainPageComponent = () => {
-   const [tag, setTag] = useState(null);
+   const [tag, setTag] = useState('');
    const navigate = useNavigate();
 
    return (
       <>
          <ListOfTags type="course" setChoosed={setTag} />
          <VerticalSpace />
-         <ListOfCourses tag={tag} />
+         <ListOfCourses filterParams={{ tags: [tag] }} />
          <div className="list-all-button" onClick={() => navigate('/courses')}>
             <Button type="link">Все курсы</Button>
          </div>

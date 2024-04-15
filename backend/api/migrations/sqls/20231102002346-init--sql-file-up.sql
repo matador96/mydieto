@@ -39,6 +39,8 @@ CREATE TABLE "instructors" (
     "lastName" VARCHAR(100) NOT NULL,
     "age" INTEGER NOT NULL,
     "experience" INTEGER NOT NULL,
+    "imageId" TEXT DEFAULT '',
+    "imageUrl" TEXT DEFAULT '',
     "about" TEXT,
     "marker" TEXT DEFAULT '',
     "posts" TEXT NOT NULL DEFAULT '',

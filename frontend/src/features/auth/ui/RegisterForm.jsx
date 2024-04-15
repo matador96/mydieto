@@ -113,8 +113,6 @@ const RegisterForm = () => {
 
       const formDataCreate = new FormData();
 
-      console.log(values);
-
       for (let key in values) {
          formDataCreate.append(key, values[key]);
       }

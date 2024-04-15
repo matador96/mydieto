@@ -49,6 +49,10 @@ const ModalMakeAnApointmet = ({ closeModal = () => {}, button, instructorId }) =
       closeModal();
    };
 
+   const imageStyle = instructor?.imageUrl
+      ? { backgroundImage: `url(${instructor?.imageUrl})` }
+      : {};
+
    return (
       <>
          <div onClick={showModal} style={{ width: '100%' }}>
@@ -65,7 +69,9 @@ const ModalMakeAnApointmet = ({ closeModal = () => {}, button, instructorId }) =
                   <div
                      className="course-card_author"
                      style={{ marginBottom: '12px' }}>
-                     <div className="course-card_author-avatar"></div>
+                     <div
+                        className="course-card_author-avatar"
+                        style={{ ...imageStyle }}></div>
                      <div>
                         <div className="course-card_author-name">
                            {instructor.firstName} {instructor.lastName}

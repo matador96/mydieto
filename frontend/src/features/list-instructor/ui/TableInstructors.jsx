@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag } from 'antd';
+import { Space, Table, Avatar } from 'antd';
 import { GetInstructorList } from '../model/GetInstructorList';
 import { Button, VerticalSpace } from '@shared/ui';
 import { Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import Pagination, { initialPaginationSettings } from '@widgets/Pagination';
 import ModalInstructorForm from './ModalInstructorForm';
+import { UserOutlined } from '@ant-design/icons';
 import ModalButtonInstructorCreate from './ModalButtonInstructorCreate';
 
 import {
@@ -33,7 +34,7 @@ const TableInstructors = () => {
 
    const columns = [
       {
-         title: 'Идентификатор',
+         title: 'ID',
          dataIndex: 'id',
          key: 'id',
          filtered: !!filters?.['id'],
@@ -41,6 +42,22 @@ const TableInstructors = () => {
             dataIndex: 'id',
             handleSearch: (searchObj) => onSearchTable(searchObj)
          })
+      },
+      {
+         title: '',
+         key: 'imageUrl',
+         dataIndex: 'imageUrl',
+         render: (_) => (
+            <Avatar
+               size={40}
+               src={_}
+               icon={<UserOutlined />}
+               className="profile-menu-avatar"
+               style={{
+                  backgroundColor: 'rgb(11 144 147)'
+               }}
+            />
+         )
       },
       {
          title: 'Имя',
